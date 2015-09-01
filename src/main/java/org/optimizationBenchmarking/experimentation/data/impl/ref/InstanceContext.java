@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.impl.ref;
 
+import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.parsers.LooseByteParser;
 import org.optimizationBenchmarking.utils.parsers.LooseDoubleParser;
@@ -441,13 +442,13 @@ public final class InstanceContext extends _NamedContext<Instance> {
    * @param bound
    *          the lower bound
    */
-  public synchronized final void setLowerBound(final Dimension dim,
+  public synchronized final void setLowerBound(final IDimension dim,
       final Number bound) {
     final int index;
     final Number n;
     final Number[] bounds;
 
-    index = this.__dimIdx(dim);
+    index = this.__dimIdx((Dimension) dim);
     if ((n = (bounds = this.m_lower)[index]) != null) {
       if (n.equals(bound)) {
         return;
@@ -499,8 +500,8 @@ public final class InstanceContext extends _NamedContext<Instance> {
    *          the dimension
    * @return the upper bound
    */
-  public synchronized final Number getUpperBound(final Dimension dim) {
-    return this.m_upper[this.__dimIdx(dim)];
+  public synchronized final Number getUpperBound(final IDimension dim) {
+    return this.m_upper[this.__dimIdx((Dimension) dim)];
   }
 
   /**

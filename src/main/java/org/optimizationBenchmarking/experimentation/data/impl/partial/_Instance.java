@@ -1,6 +1,10 @@
 package org.optimizationBenchmarking.experimentation.data.impl.partial;
 
+import java.util.LinkedHashMap;
+
 import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractInstance;
+import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 
 /**
  * An internal, modifiable implementation of the
@@ -16,6 +20,11 @@ final class _Instance extends AbstractInstance {
 
   /** the feature setting */
   private _FeatureSetting m_setting;
+
+  /** the lower bounds */
+  private LinkedHashMap<_Dimension, Number> m_lower;
+  /** the upper bounds */
+  private LinkedHashMap<_Dimension, Number> m_upper;
 
   /**
    * Create the abstract instance.
@@ -43,10 +52,100 @@ final class _Instance extends AbstractInstance {
   @Override
   public final _FeatureSetting getFeatureSetting() {
     if (this.m_setting == null) {
-      this.m_setting = new _FeatureSetting(//
-          ((_Experiments) (((_Instances) (this.getOwner())).//
-              getOwner())).getFeatures());
+      this.m_setting = new _FeatureSetting();
     }
     return this.m_setting;
+  }
+
+  /**
+   * Set the lower bound for a given dimension
+   *
+   * @param dim
+   *          the dimension
+   * @param value
+   *          the bound
+   */
+  final void _setLower(final _Dimension dim, final Number value) {
+    Number old;
+
+    if (this.m_lower == null) {
+      old = null;
+      this.m_lower = new LinkedHashMap<>();
+    } else {
+      old = this.m_lower.get(dim);
+    }
+    if (old != null) {
+      if (EComparison.equals(old, value)) {
+        return;
+      }
+      throw new IllegalStateException(//
+          "Lower bound dimension '" //$NON-NLS-1$
+              + dim.m_name + //
+              "' has already been set to '" + old + //$NON-NLS-1$
+              "' and cannot be set to '" + value + //$NON-NLS-1$
+              "' in instance '" + this.m_name + //$NON-NLS-1$
+              '\'' + '.');
+
+    }
+    this.m_lower.put(dim, value);
+  }
+
+  /**
+   * Set the upper bound for a given dimension
+   *
+   * @param dim
+   *          the dimension
+   * @param value
+   *          the bound
+   */
+  final void _setUpper(final _Dimension dim, final Number value) {
+    Number old;
+
+    if (this.m_upper == null) {
+      old = null;
+      this.m_upper = new LinkedHashMap<>();
+    } else {
+      old = this.m_upper.get(dim);
+    }
+    if (old != null) {
+      if (EComparison.equals(old, value)) {
+        return;
+      }
+      throw new IllegalStateException(//
+          "Upper bound dimension '" //$NON-NLS-1$
+              + dim.m_name + //
+              "' has already been set to '" + old + //$NON-NLS-1$
+              "' and cannot be set to '" + value + //$NON-NLS-1$
+              "' in instance '" + this.m_name + //$NON-NLS-1$
+              '\'' + '.');
+
+    }
+    this.m_upper.put(dim, value);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final Number getUpperBound(final IDimension dim) {
+    final Number num;
+    if (this.m_upper != null) {
+      num = this.m_upper.get(dim);
+      if (num != null) {
+        return null;
+      }
+    }
+    return super.getUpperBound(dim);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final Number getLowerBound(final IDimension dim) {
+    final Number num;
+    if (this.m_lower != null) {
+      num = this.m_lower.get(dim);
+      if (num != null) {
+        return null;
+      }
+    }
+    return super.getLowerBound(dim);
   }
 }

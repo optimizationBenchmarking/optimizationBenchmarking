@@ -5,10 +5,12 @@ import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractName
 import org.optimizationBenchmarking.experimentation.data.impl.flat.AbstractFlatExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
+import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimensionSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeatureSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
+import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
 import org.optimizationBenchmarking.utils.parsers.NumberParser;
 
 /**
@@ -114,5 +116,118 @@ public final class PartialExperimentSetBuilder extends
   public final IExperimentSet getExperimentSet() {
     this.getDimensionSet();
     return this.m_set;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void featureDeclare(final String name, final String desc) {
+    _Feature feature;
+
+    feature = this.m_set.getFeatures()._getFeatureForName(name);
+    if (desc != null) {
+      feature.m_description = AbstractNamedElement.mergeDescriptions(
+          feature.m_description, desc);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void instanceBegin(final boolean forceNew) {
+    this.m_set.getInstances()._getInstance(forceNew);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void instanceEnd() {
+    this.m_set.getInstances().m_needsNew = true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void instanceSetName(final String name) {
+    this.m_set.getInstances()._getInstance(false).m_name = //
+    AbstractNamedElement.formatName(name);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void instanceSetDescription(final String description) {
+    this.m_set.getInstances()._getInstance(false).m_name = //
+    AbstractNamedElement.formatDescription(description);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void instanceAddDescription(final String description) {
+    final _Instance instance;
+    instance = this.m_set.getInstances()._getInstance(false);
+    instance.m_description = AbstractNamedElement.mergeDescriptions(
+        instance.m_description, description);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void instanceSetFeatureValue(final String featureName,
+      final String featureDescription, final Object featureValue,
+      final String featureValueDescription) {
+    final _Feature feature;
+    final _FeatureValue value;
+
+    feature = this.m_set.getFeatures()._getFeatureForName(featureName);
+    if (featureDescription != null) {
+      feature.m_description = AbstractNamedElement.mergeDescriptions(
+          feature.m_description, featureDescription);
+    }
+    value = feature._getValue(featureValue);
+    if (featureValueDescription != null) {
+      value.m_description = AbstractNamedElement.mergeDescriptions(
+          value.m_description, featureValueDescription);
+    }
+    this.m_set.getInstances()._getInstance(false).getFeatureSetting()
+        ._setFeatureValue(value);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void instanceSetLowerBound(final IDimension dim,
+      final Number bound) {
+    this.m_set.getInstances()._getInstance(false)._setLower(//
+        ((_Dimension) dim), bound);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void instanceSetLowerBound(final Object dim,
+      final Object bound) {
+    final Number nbound;
+
+    nbound = AnyNumberParser.INSTANCE.parseObject(bound);
+    if (dim instanceof IDimension) {
+      this.instanceSetLowerBound(((IDimension) dim), nbound);
+    }
+    this.instanceSetLowerBound(this.m_set.getDimensions()
+        ._getDimensionForName(String.valueOf(dim)), nbound);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void instanceSetUpperBound(final IDimension dim,
+      final Number bound) {
+    this.m_set.getInstances()._getInstance(false)._setUpper(//
+        ((_Dimension) dim), bound);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void instanceSetUpperBound(final Object dim,
+      final Object bound) {
+    final Number nbound;
+
+    nbound = AnyNumberParser.INSTANCE.parseObject(bound);
+    if (dim instanceof IDimension) {
+      this.instanceSetUpperBound(((IDimension) dim), nbound);
+    }
+    this.instanceSetUpperBound(this.m_set.getDimensions()
+        ._getDimensionForName(String.valueOf(dim)), nbound);
   }
 }

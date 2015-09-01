@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractFeatureSetting;
-import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractNamedElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeatureValue;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 
@@ -14,18 +14,9 @@ final class _FeatureSetting extends AbstractFeatureSetting {
   /** the feature list */
   private final ArrayList<_FeatureValue> m_features;
 
-  /** the owning feature set */
-  private final _Features m_owner;
-
-  /**
-   * create
-   *
-   * @param owner
-   *          the owning features
-   */
-  _FeatureSetting(final _Features owner) {
+  /** create */
+  _FeatureSetting() {
     super();
-    this.m_owner = owner;
     this.m_features = new ArrayList<>();
   }
 
@@ -39,27 +30,26 @@ final class _FeatureSetting extends AbstractFeatureSetting {
   /**
    * Set the given feature
    *
-   * @param feature
-   *          the feature name
-   * @param value
-   *          the value to set
-   * @return the feature value object
+   * @param featureValue
+   *          the feature value
    */
-  final _FeatureValue _setFeature(final String feature, final Object value) {
-    final String useName;
-    final _FeatureValue nv;
-
-    useName = AbstractNamedElement.formatName(feature);
+  final void _setFeatureValue(final _FeatureValue featureValue) {
+    final IFeature feature;
+    feature = featureValue.getOwner();
 
     for (final _FeatureValue fvalue : this.m_features) {
-      if (EComparison.equals(((_Feature) (fvalue.getOwner())).m_name,
-          useName)) {
-        return fvalue;
+      if (EComparison.equals(fvalue.getOwner(), feature)) {
+        if (fvalue == featureValue) {
+          return;
+        }
+        throw new IllegalStateException("Feature '" + //$NON-NLS-1$
+            feature.getName() + //
+            "' has already been set to '" + fvalue.getName() + //$NON-NLS-1$
+            "' and cannot be set to '" + featureValue.getName() + //$NON-NLS-1$
+            '\'' + '.');
       }
     }
 
-    nv = this.m_owner._getFeatureForName(feature)._getValue(value);
-    this.m_features.add(nv);
-    return nv;
+    this.m_features.add(featureValue);
   }
 }

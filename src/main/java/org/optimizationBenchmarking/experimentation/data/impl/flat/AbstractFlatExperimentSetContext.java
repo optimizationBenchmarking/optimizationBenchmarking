@@ -3,10 +3,10 @@ package org.optimizationBenchmarking.experimentation.data.impl.flat;
 import org.optimizationBenchmarking.experimentation.data.impl.DimensionDirectionParser;
 import org.optimizationBenchmarking.experimentation.data.impl.DimensionTypeParser;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.DataPoint;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Dimension;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
+import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimensionSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeatureSet;
@@ -372,7 +372,8 @@ public abstract class AbstractFlatExperimentSetContext {
    * @param bound
    *          the lower bound
    */
-  public void instanceSetLowerBound(final Dimension dim, final Number bound) {
+  public void instanceSetLowerBound(final IDimension dim,
+      final Number bound) {
     // this method does nothing, yet - implement it in a sub-class
   }
 
@@ -400,7 +401,8 @@ public abstract class AbstractFlatExperimentSetContext {
    * @param bound
    *          the upper bound
    */
-  public void instanceSetUpperBound(final Dimension dim, final Number bound) {
+  public void instanceSetUpperBound(final IDimension dim,
+      final Number bound) {
     // this method does nothing, yet - implement it in a sub-class
   }
 

@@ -53,5 +53,4 @@ public abstract class AbstractInstance extends AbstractNamedElement
   public Number getLowerBound(final IDimension dim) {
     return Double.valueOf(Double.NEGATIVE_INFINITY);
   }
-
 }

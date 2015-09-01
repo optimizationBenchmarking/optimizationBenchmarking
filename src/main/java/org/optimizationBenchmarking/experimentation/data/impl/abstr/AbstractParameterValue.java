@@ -39,4 +39,10 @@ public abstract class AbstractParameterValue extends AbstractPropertyValue
   public boolean isUnspecified() {
     return false;
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public String getName() {
+    return String.valueOf(this.getValue());
+  }
 }

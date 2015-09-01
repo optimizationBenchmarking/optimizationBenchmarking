@@ -3,7 +3,6 @@ package org.optimizationBenchmarking.experimentation.data.impl.flat;
 import java.util.Arrays;
 
 import org.optimizationBenchmarking.experimentation.data.impl.ref.DataPoint;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Dimension;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.DimensionContext;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.DimensionSet;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentContext;
@@ -17,6 +16,7 @@ import org.optimizationBenchmarking.experimentation.data.impl.ref.InstanceSet;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.RunContext;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
+import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.utils.parsers.NumberParser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -878,7 +878,7 @@ public class FlatExperimentSetContext extends
   /** {@inheritDoc} */
   @Override
   public synchronized final void instanceSetLowerBound(
-      final Dimension dim, final Number bound) {
+      final IDimension dim, final Number bound) {
     final InstanceContext context;
 
     context = this.__instanceEnsure(false);
@@ -914,7 +914,7 @@ public class FlatExperimentSetContext extends
   /** {@inheritDoc} */
   @Override
   public synchronized final void instanceSetUpperBound(
-      final Dimension dim, final Number bound) {
+      final IDimension dim, final Number bound) {
     final InstanceContext context;
 
     context = this.__instanceEnsure(false);
