@@ -101,5 +101,4 @@ public class SeparatorBasedStringIterator extends _StringIterator {
 
     return super.next(); // throw
   }
-
 }

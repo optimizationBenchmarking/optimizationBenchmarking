@@ -1,69 +1,125 @@
 package org.optimizationBenchmarking.utils.text.tokenizers;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
-
-import org.optimizationBenchmarking.utils.collections.iterators.IterableIterator;
+import org.optimizationBenchmarking.utils.EmptyUtils;
 
 /**
- * <p>
  * An iterator iterating over lines in a string. A string may consist of
  * multiple lines, separated by {@code '\n'} or {@code '\r'} or
  * combinations thereof. This iterator provides successive access to these
  * lines.
- * </p>
- * <p>
- * TODO: This is a preliminary, quick and dirty implementation. It is based
- * on the ideas provided at http://stackoverflow.com/questions/9259411,
- * i.e., on using a {@link java.io.BufferedReader} plugged on top of a
- * {@code java.io.StringReader}. This wastes memory and time and should be
- * replaced with an implementation working on the string directly.
- * </p>
  */
-public final class LineIterator extends IterableIterator<String> {
+public final class LineIterator extends _StringIterator {
 
-  /** the reader */
-  private final BufferedReader m_br;
+  /** the should we trim lines? */
+  private final boolean m_trimLines;
 
-  /** the next string */
-  private String m_next;
+  /** should we return empty strings as null? */
+  private final boolean m_emptyAsNull;
 
   /**
-   * create the line iterator
+   * Create the CSV iterator
    *
-   * @param source
-   *          the source string
+   * @param string
+   *          the string to iterate over
+   * @param trimLines
+   *          the should we trim lines?
+   * @param emptyAsNull
+   *          should we return empty strings as null?
    */
-  public LineIterator(final String source) {
-    super();
-    this.m_br = new BufferedReader(new StringReader(source));
+  public LineIterator(final String string, final boolean trimLines,
+      final boolean emptyAsNull) {
+    super(string);
+
+    this.m_trimLines = trimLines;
+    this.m_emptyAsNull = emptyAsNull;
+    this.m_curEnd = (-1);
   }
 
   /** {@inheritDoc} */
   @Override
   public final boolean hasNext() {
+    final int len;
+    final String s;
+    final int oldEnd;
+    int start, end, i;
+
     if (this.m_next == null) {
-      try {
-        this.m_next = this.m_br.readLine();
-      } catch (final IOException ignore) {
-        // well, ignore
+      s = this.m_string;
+      if (s == null) {
+        return false;
       }
+      len = s.length();
+
+      oldEnd = this.m_curEnd;
+
+      if (oldEnd >= len) {
+        return false;
+      }
+
+      if (this.m_trimLines) {
+        trimmer1: for (i = oldEnd; (++i) < len;) {
+          if (s.charAt(i) > ' ') {
+            break trimmer1;
+          }
+        }
+      } else {
+        trimmer3: for (i = oldEnd; (++i) < len;) {
+          if (s.charAt(i) != '\r') {
+            break trimmer3;
+          }
+        }
+      }
+      start = i;
+
+      finder: for (i = (start - 1); (++i) < len;) {
+        if (s.charAt(i) == '\n') {
+          break finder;
+        }
+      }
+
+      end = i;
+      if (this.m_trimLines) {
+        trimmer2: for (; (--i) >= 0;) {
+          if (s.charAt(i) > ' ') {
+            break trimmer2;
+          }
+        }
+      } else {
+        trimmer4: for (; (--i) >= 0;) {
+          if (s.charAt(i) != '\r') {
+            break trimmer4;
+          }
+        }
+      }
+
+      this.m_curEnd = end;
+      if (start <= i) {
+        this.m_next = this.m_string.substring(start, (i + 1));
+        return true;
+      }
+      if (((start <= 0) || ((oldEnd <= 0) && (start >= len)))
+          && (end >= len) && (i < 0)) {
+        return false;
+      }
+
+      this.m_next = EmptyUtils.EMPTY_STRING;
+      return true;
     }
-    return (this.m_next != null);
+    return true;
   }
 
   /** {@inheritDoc} */
   @Override
   public final String next() {
-    final String next;
+    final String ret;
 
     if (this.hasNext()) {
-      next = this.m_next;
+      ret = this.m_next;
       this.m_next = null;
-      return next;
+      return (((ret == EmptyUtils.EMPTY_STRING) && this.m_emptyAsNull) ? null
+          : ret);
     }
 
-    return super.next();
+    return super.next(); // throw
   }
 }

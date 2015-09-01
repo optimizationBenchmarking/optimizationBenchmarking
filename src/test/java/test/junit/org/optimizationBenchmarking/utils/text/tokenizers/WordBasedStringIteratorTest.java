@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.optimizationBenchmarking.utils.text.tokenizers.WordBasedStringIterator;
 
-/** the csv iterator test */
+/** the word-based iterator test */
 public class WordBasedStringIteratorTest {
 
   /** create */
