@@ -324,7 +324,7 @@ public abstract class AbstractFlatExperimentSetContext {
    */
   public void instanceSetFeatureValue(final String featureName,
       final Object featureValue) {
-    // this method does nothing, yet - implement it in a sub-class
+    this.instanceSetFeatureValue(featureName, featureValue, null);
   }
 
   /**
@@ -340,7 +340,7 @@ public abstract class AbstractFlatExperimentSetContext {
    */
   public void instanceSetFeatureValue(final String featureName,
       final Object featureValue, final String featureValueDescription) {
-    // this method does nothing, yet - implement it in a sub-class
+    this.instanceSetFeatureValue(featureName, null, featureValue, null);
   }
 
   /**
