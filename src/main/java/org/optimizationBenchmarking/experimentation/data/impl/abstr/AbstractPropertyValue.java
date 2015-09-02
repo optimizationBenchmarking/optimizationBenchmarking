@@ -31,4 +31,10 @@ public abstract class AbstractPropertyValue extends AbstractNamedElement
   public boolean isGeneralized() {
     return false;
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public String getName() {
+    return String.valueOf(this.getValue());
+  }
 }

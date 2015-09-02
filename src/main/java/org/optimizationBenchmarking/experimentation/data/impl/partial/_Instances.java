@@ -75,7 +75,7 @@ final class _Instances extends AbstractInstanceSet {
    */
   final _Instance _getInstanceForName(final String name) {
     final String useName;
-    final _Instance ninstance;
+    _Instance ninstance;
 
     useName = AbstractNamedElement.formatName(name);
     for (final _Instance instance : this.m_instanceList) {
@@ -85,6 +85,9 @@ final class _Instances extends AbstractInstanceSet {
     }
 
     ninstance = this._getInstance(false);
+    if (ninstance.m_name != null) {
+      ninstance = this._getInstance(true);
+    }
     ninstance.m_name = useName;
     return ninstance;
   }

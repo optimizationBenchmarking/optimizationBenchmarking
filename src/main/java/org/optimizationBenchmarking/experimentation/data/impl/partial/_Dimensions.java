@@ -75,7 +75,7 @@ final class _Dimensions extends AbstractDimensionSet {
    */
   final _Dimension _getDimensionForName(final String name) {
     final String useName;
-    final _Dimension ndim;
+    _Dimension ndim;
 
     useName = AbstractNamedElement.formatName(name);
     for (final _Dimension dim : this.m_dimensionList) {
@@ -85,6 +85,9 @@ final class _Dimensions extends AbstractDimensionSet {
     }
 
     ndim = this._getDimension(false);
+    if (ndim.m_name != null) {
+      ndim = this._getDimension(true);
+    }
     ndim.m_name = useName;
     return ndim;
   }

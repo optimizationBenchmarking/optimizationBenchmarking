@@ -152,7 +152,7 @@ public final class PartialExperimentSetBuilder extends
   /** {@inheritDoc} */
   @Override
   public final void instanceSetDescription(final String description) {
-    this.m_set.getInstances()._getInstance(false).m_name = //
+    this.m_set.getInstances()._getInstance(false).m_description = //
     AbstractNamedElement.formatDescription(description);
   }
 

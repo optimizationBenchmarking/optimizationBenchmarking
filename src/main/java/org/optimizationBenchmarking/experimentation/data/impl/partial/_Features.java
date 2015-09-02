@@ -75,7 +75,7 @@ final class _Features extends AbstractFeatureSet {
    */
   final _Feature _getFeatureForName(final String name) {
     final String useName;
-    final _Feature nfeature;
+    _Feature nfeature;
 
     useName = AbstractNamedElement.formatName(name);
     for (final _Feature feature : this.m_featureList) {
@@ -85,6 +85,9 @@ final class _Features extends AbstractFeatureSet {
     }
 
     nfeature = this._getFeature(false);
+    if (nfeature.m_name != null) {
+      nfeature = this._getFeature(true);
+    }
     nfeature.m_name = useName;
     return nfeature;
   }

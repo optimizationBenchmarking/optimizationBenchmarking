@@ -35,6 +35,7 @@ final class _FeatureSetting extends AbstractFeatureSetting {
    */
   final void _setFeatureValue(final _FeatureValue featureValue) {
     final IFeature feature;
+
     feature = featureValue.getOwner();
 
     for (final _FeatureValue fvalue : this.m_features) {
