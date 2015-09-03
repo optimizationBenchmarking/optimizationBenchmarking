@@ -22,9 +22,9 @@ final class _Instance extends AbstractInstance {
   private _FeatureSetting m_setting;
 
   /** the lower bounds */
-  private LinkedHashMap<_Dimension, Number> m_lower;
+  private LinkedHashMap<String, Number> m_lower;
   /** the upper bounds */
-  private LinkedHashMap<_Dimension, Number> m_upper;
+  private LinkedHashMap<String, Number> m_upper;
 
   /**
    * Create the abstract instance.
@@ -65,7 +65,7 @@ final class _Instance extends AbstractInstance {
    * @param value
    *          the bound
    */
-  final void _setLower(final _Dimension dim, final Number value) {
+  final void _setLower(final String dim, final Number value) {
     Number old;
 
     if (this.m_lower == null) {
@@ -80,7 +80,7 @@ final class _Instance extends AbstractInstance {
       }
       throw new IllegalStateException(//
           "Lower bound dimension '" //$NON-NLS-1$
-              + dim.m_name + //
+              + dim + //
               "' has already been set to '" + old + //$NON-NLS-1$
               "' and cannot be set to '" + value + //$NON-NLS-1$
               "' in instance '" + this.m_name + //$NON-NLS-1$
@@ -98,7 +98,7 @@ final class _Instance extends AbstractInstance {
    * @param value
    *          the bound
    */
-  final void _setUpper(final _Dimension dim, final Number value) {
+  final void _setUpper(final String dim, final Number value) {
     Number old;
 
     if (this.m_upper == null) {
@@ -113,7 +113,7 @@ final class _Instance extends AbstractInstance {
       }
       throw new IllegalStateException(//
           "Upper bound dimension '" //$NON-NLS-1$
-              + dim.m_name + //
+              + dim + //
               "' has already been set to '" + old + //$NON-NLS-1$
               "' and cannot be set to '" + value + //$NON-NLS-1$
               "' in instance '" + this.m_name + //$NON-NLS-1$
@@ -128,9 +128,9 @@ final class _Instance extends AbstractInstance {
   public final Number getUpperBound(final IDimension dim) {
     final Number num;
     if (this.m_upper != null) {
-      num = this.m_upper.get(dim);
+      num = this.m_upper.get(dim.getName());
       if (num != null) {
-        return null;
+        return num;
       }
     }
     return super.getUpperBound(dim);
@@ -141,9 +141,9 @@ final class _Instance extends AbstractInstance {
   public final Number getLowerBound(final IDimension dim) {
     final Number num;
     if (this.m_lower != null) {
-      num = this.m_lower.get(dim);
+      num = this.m_lower.get(dim.getName());
       if (num != null) {
-        return null;
+        return num;
       }
     }
     return super.getLowerBound(dim);

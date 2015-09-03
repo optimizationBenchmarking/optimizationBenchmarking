@@ -192,7 +192,7 @@ public final class PartialExperimentSetBuilder extends
   public final void instanceSetLowerBound(final IDimension dim,
       final Number bound) {
     this.m_set.getInstances()._getInstance(false)._setLower(//
-        ((_Dimension) dim), bound);
+        dim.getName(), bound);
   }
 
   /** {@inheritDoc} */
@@ -202,8 +202,10 @@ public final class PartialExperimentSetBuilder extends
     final Number nbound;
 
     nbound = AnyNumberParser.INSTANCE.parseObject(bound);
+
     if (dim instanceof IDimension) {
       this.instanceSetLowerBound(((IDimension) dim), nbound);
+      return;
     }
     this.instanceSetLowerBound(this.m_set.getDimensions()
         ._getDimensionForName(String.valueOf(dim)), nbound);
@@ -214,7 +216,7 @@ public final class PartialExperimentSetBuilder extends
   public final void instanceSetUpperBound(final IDimension dim,
       final Number bound) {
     this.m_set.getInstances()._getInstance(false)._setUpper(//
-        ((_Dimension) dim), bound);
+        dim.getName(), bound);
   }
 
   /** {@inheritDoc} */
@@ -226,6 +228,7 @@ public final class PartialExperimentSetBuilder extends
     nbound = AnyNumberParser.INSTANCE.parseObject(bound);
     if (dim instanceof IDimension) {
       this.instanceSetUpperBound(((IDimension) dim), nbound);
+      return;
     }
     this.instanceSetUpperBound(this.m_set.getDimensions()
         ._getDimensionForName(String.valueOf(dim)), nbound);

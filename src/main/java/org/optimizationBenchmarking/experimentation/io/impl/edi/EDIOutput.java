@@ -347,6 +347,7 @@ public final class EDIOutput extends XMLOutputTool<Object> implements
    * @param job
    *          the job
    */
+  @SuppressWarnings("incomplete-switch")
   private static final void __writeInstanceSet(
       final IInstanceSet instances, final XMLElement dest, final IOJob job) {
     final HashSet<Object> hashSet;
@@ -356,7 +357,9 @@ public final class EDIOutput extends XMLOutputTool<Object> implements
     IFeature feature;
     Number lower, upper;
     NumberParser<?> parser;
-    boolean x, y;
+    EPrimitiveType dataType;
+    boolean x, y, isInt;
+    double d;
 
     logger = job.getLogger();
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
@@ -412,58 +415,166 @@ public final class EDIOutput extends XMLOutputTool<Object> implements
           }
         }
 
-        for (final IDimension dimension : dimensions) {
+        dimLoop: for (final IDimension dimension : dimensions) {
+          parser = dimension.getParser();
+          dataType = dimension.getDataType();
           lower = i.getLowerBound(dimension);
           upper = i.getUpperBound(dimension);
-          parser = dimension.getParser();
 
-          if (dimension.getDataType().isInteger()) {
-            x = (lower.longValue() > parser.getLowerBoundLong());
-            y = (upper.longValue() < parser.getUpperBoundLong());
-            if (x || y) {
-              try (final XMLElement dim = inst.element()) {
-                dim.name(EDI.NAMESPACE_URI, EDI.ELEMENT_BOUNDS);
+          isInt = true;
+          x = (lower != null);
+          y = (upper != null);
 
-                dim.attributeEncoded(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_DIMENSION, dimension.getName());
+          if (!(x || y)) {
+            continue dimLoop;
+          }
+
+          // We need to check whether a dimension bound is actually
+          // relevant and should be stored. Sometimes, the available data
+          // may be incomplete (e.g., when generated via the
+          // PartialExperimentSetBuilder). Therefore, the check is a bit
+          // more complex.
+          if (dataType != null) {
+
+            isInt = dataType.isInteger();
+
+            if (parser != null) {
+              if (isInt) {
                 if (x) {
-                  dim.attributeRaw(EDI.NAMESPACE_URI,
-                      EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
-                      Long.toString(lower.longValue()));
+                  x = (lower.longValue() > parser.getLowerBoundLong());
                 }
                 if (y) {
-                  dim.attributeRaw(EDI.NAMESPACE_URI,
-                      EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
-                      Long.toString(upper.longValue()));
+                  y = (upper.longValue() < parser.getUpperBoundLong());
+                }
+              } else {
+                if (x) {
+                  x = (lower.doubleValue() > parser.getLowerBoundDouble());
+                }
+                if (y) {
+                  y = (upper.doubleValue() < parser.getUpperBoundDouble());
                 }
               }
 
+              if (!(x || y)) {
+                continue dimLoop;
+              }
             }
 
-          } else {
-
-            x = (lower.doubleValue() > parser.getLowerBoundDouble());
-            y = (upper.doubleValue() < parser.getUpperBoundDouble());
-            if (x || y) {
-              try (final XMLElement dim = inst.element()) {
-                dim.name(EDI.NAMESPACE_URI, EDI.ELEMENT_BOUNDS);
-
-                dim.attributeEncoded(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_DIMENSION, dimension.getName());
+            switch (dataType) {
+              case BYTE: {
                 if (x) {
-                  dim.attributeRaw(
-                      EDI.NAMESPACE_URI,
-                      EDI.ATTRIBUTE_FLOAT_LOWER_BOUND,
-                      XMLNumberAppender.INSTANCE.toString(
-                          lower.doubleValue(), ETextCase.IN_SENTENCE));
+                  x = (lower.byteValue() > Byte.MIN_VALUE);
                 }
                 if (y) {
-                  dim.attributeRaw(
-                      EDI.NAMESPACE_URI,
-                      EDI.ATTRIBUTE_FLOAT_UPPER_BOUND,
-                      XMLNumberAppender.INSTANCE.toString(
-                          upper.doubleValue(), ETextCase.IN_SENTENCE));
+                  y = (upper.byteValue() < Byte.MAX_VALUE);
                 }
+                break;
+              }
+              case SHORT: {
+                if (x) {
+                  x = (lower.shortValue() > Short.MIN_VALUE);
+                }
+                if (y) {
+                  y = (upper.shortValue() < Short.MAX_VALUE);
+                }
+                break;
+              }
+              case INT: {
+                if (x) {
+                  x = (lower.intValue() > Integer.MIN_VALUE);
+                }
+                if (y) {
+                  y = (upper.intValue() < Integer.MAX_VALUE);
+                }
+                break;
+              }
+              case LONG: {
+                if (x) {
+                  x = (lower.longValue() > Long.MIN_VALUE);
+                }
+                if (y) {
+                  y = (upper.longValue() < Integer.MAX_VALUE);
+                }
+                break;
+              }
+              case FLOAT: {
+                if (x) {
+                  x = (lower.floatValue() > Float.NEGATIVE_INFINITY);
+                }
+                if (y) {
+                  y = (upper.floatValue() < Float.POSITIVE_INFINITY);
+                }
+                isInt = false;
+                break;
+              }
+              case DOUBLE: {
+                if (x) {
+                  x = (lower.doubleValue() > Double.NEGATIVE_INFINITY);
+                }
+                if (y) {
+                  y = (upper.doubleValue() < Double.POSITIVE_INFINITY);
+                }
+                isInt = false;
+                break;
+              }
+            }
+
+            if (!(x || y)) {
+              continue dimLoop;
+            }
+          } else {
+
+            // Check based finiteness
+            if (x) {
+              d = lower.doubleValue();
+              if ((d <= Double.NEGATIVE_INFINITY) || (d != d)) {
+                x = false;
+              }
+            }
+
+            if (y) {
+              d = upper.doubleValue();
+              if ((d >= Double.POSITIVE_INFINITY) || (d != d)) {
+                y = false;
+              }
+            }
+          }
+
+          // done checking bounds
+          if (!(x || y)) {
+            continue dimLoop;
+          }
+
+          try (final XMLElement dim = inst.element()) {
+            dim.name(EDI.NAMESPACE_URI, EDI.ELEMENT_BOUNDS);
+            dim.attributeEncoded(EDI.NAMESPACE_URI,
+                EDI.ATTRIBUTE_DIMENSION, dimension.getName());
+
+            if (isInt) {
+              if (x) {
+                dim.attributeRaw(EDI.NAMESPACE_URI,
+                    EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
+                    Long.toString(lower.longValue()));
+              }
+              if (y) {
+                dim.attributeRaw(EDI.NAMESPACE_URI,
+                    EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
+                    Long.toString(upper.longValue()));
+              }
+            } else {
+              if (x) {
+                dim.attributeRaw(
+                    EDI.NAMESPACE_URI,
+                    EDI.ATTRIBUTE_FLOAT_LOWER_BOUND,
+                    XMLNumberAppender.INSTANCE.toString(
+                        lower.doubleValue(), ETextCase.IN_SENTENCE));
+              }
+              if (y) {
+                dim.attributeRaw(
+                    EDI.NAMESPACE_URI,
+                    EDI.ATTRIBUTE_FLOAT_UPPER_BOUND,
+                    XMLNumberAppender.INSTANCE.toString(
+                        upper.doubleValue(), ETextCase.IN_SENTENCE));
               }
             }
           }
