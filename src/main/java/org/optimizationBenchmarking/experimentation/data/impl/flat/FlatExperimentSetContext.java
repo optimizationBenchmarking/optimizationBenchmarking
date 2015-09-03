@@ -1260,7 +1260,7 @@ public class FlatExperimentSetContext extends
   /** {@inheritDoc} */
   @Override
   @SuppressWarnings("fallthrough")
-  public final synchronized void parameterSetValue(
+  public final synchronized void experimentSetParameterValue(
       final String parameterName, final Object parameterValue) {
     final ExperimentContext context;
     Throwable error;
@@ -1317,7 +1317,7 @@ public class FlatExperimentSetContext extends
   /** {@inheritDoc} */
   @Override
   @SuppressWarnings("fallthrough")
-  public final synchronized void parameterSetValue(
+  public final synchronized void experimentSetParameterValue(
       final String parameterName, final Object parameterValue,
       final String parameterValueDescription) {
     final ExperimentContext context;
@@ -1379,7 +1379,7 @@ public class FlatExperimentSetContext extends
   /** {@inheritDoc} */
   @Override
   @SuppressWarnings("fallthrough")
-  public final synchronized void parameterSetValue(
+  public final synchronized void experimentSetParameterValue(
       final String parameterName, final String parameterDescription,
       final Object parameterValue, final String parameterValueDescription) {
 

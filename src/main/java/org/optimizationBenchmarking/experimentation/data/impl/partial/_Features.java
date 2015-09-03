@@ -6,7 +6,6 @@ import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractFeat
 import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractNamedElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 
 /** the feature set */
@@ -25,10 +24,8 @@ final class _Features extends AbstractFeatureSet {
    * @param owner
    *          the owner
    */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
   _Features(final _Experiments owner) {
     super(owner);
-    this.m_features = ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW));
     this.m_featureList = new ArrayList<>();
     this.m_needsNew = true;
   }

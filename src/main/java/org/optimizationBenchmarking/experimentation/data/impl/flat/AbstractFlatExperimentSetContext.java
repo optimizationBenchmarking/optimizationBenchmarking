@@ -499,7 +499,7 @@ public abstract class AbstractFlatExperimentSetContext {
    * @param parameterValue
    *          the parameter value
    */
-  public void parameterSetValue(final String parameterName,
+  public void experimentSetParameterValue(final String parameterName,
       final Object parameterValue) {
     // this method does nothing, yet - implement it in a sub-class
   }
@@ -515,7 +515,7 @@ public abstract class AbstractFlatExperimentSetContext {
    * @param parameterValueDescription
    *          the parameter value description
    */
-  public void parameterSetValue(final String parameterName,
+  public void experimentSetParameterValue(final String parameterName,
       final Object parameterValue, final String parameterValueDescription) {
     // this method does nothing, yet - implement it in a sub-class
   }
@@ -533,7 +533,7 @@ public abstract class AbstractFlatExperimentSetContext {
    * @param parameterValueDescription
    *          the parameter value description
    */
-  public void parameterSetValue(final String parameterName,
+  public void experimentSetParameterValue(final String parameterName,
       final String parameterDescription, final Object parameterValue,
       final String parameterValueDescription) {
     // this method does nothing, yet - implement it in a sub-class

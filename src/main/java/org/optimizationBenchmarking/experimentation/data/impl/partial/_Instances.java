@@ -6,7 +6,6 @@ import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractInst
 import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractNamedElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 
 /** the basic instance set */
@@ -25,10 +24,8 @@ final class _Instances extends AbstractInstanceSet {
    * @param owner
    *          the owner
    */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
   _Instances(final _Experiments owner) {
     super(owner);
-    this.m_instances = ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW));
     this.m_instanceList = new ArrayList<>();
     this.m_needsNew = true;
   }

@@ -6,7 +6,6 @@ import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractDime
 import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractNamedElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 
 /** the basic dimension set */
@@ -25,10 +24,8 @@ final class _Dimensions extends AbstractDimensionSet {
    * @param owner
    *          the owner
    */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
   _Dimensions(final _Experiments owner) {
     super(owner);
-    this.m_dimensions = ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW));
     this.m_dimensionList = new ArrayList<>();
     this.m_needsNew = true;
   }

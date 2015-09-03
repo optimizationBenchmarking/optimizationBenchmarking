@@ -114,19 +114,30 @@ public final class PartialExperimentSetBuilder extends
   /** {@inheritDoc} */
   @Override
   public final IExperimentSet getExperimentSet() {
-    this.getDimensionSet();
     return this.m_set;
   }
 
   /** {@inheritDoc} */
   @Override
   public final void featureDeclare(final String name, final String desc) {
-    _Feature feature;
+    final _Feature feature;
 
     feature = this.m_set.getFeatures()._getFeatureForName(name);
     if (desc != null) {
       feature.m_description = AbstractNamedElement.mergeDescriptions(
           feature.m_description, desc);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void parameterDeclare(final String name, final String desc) {
+    final _Parameter parameter;
+
+    parameter = this.m_set.getParameters()._getParameterForName(name);
+    if (desc != null) {
+      parameter.m_description = AbstractNamedElement.mergeDescriptions(
+          parameter.m_description, desc);
     }
   }
 
@@ -232,5 +243,69 @@ public final class PartialExperimentSetBuilder extends
     }
     this.instanceSetUpperBound(this.m_set.getDimensions()
         ._getDimensionForName(String.valueOf(dim)), nbound);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void experimentBegin(final boolean forceNew) {
+    this.m_set._getExperiment(forceNew);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void experimentEnd() {
+    this.m_set.m_needsNew = true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void experimentSetName(final String name) {
+    this.m_set._getExperiment(false).m_name = //
+    AbstractNamedElement.formatName(name);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void experimentSetDescription(final String description) {
+    this.m_set._getExperiment(false).m_description = //
+    AbstractNamedElement.formatDescription(description);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void experimentAddDescription(final String description) {
+    final _Experiment experiment;
+    experiment = this.m_set._getExperiment(false);
+    experiment.m_description = AbstractNamedElement.mergeDescriptions(
+        experiment.m_description, description);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void experimentSetParameterValue(
+      final String parameterName, final String parameterDescription,
+      final Object parameterValue, final String parameterValueDescription) {
+    final _Parameter parameter;
+    final _ParameterValue value;
+
+    parameter = this.m_set.getParameters()._getParameterForName(
+        parameterName);
+    if (parameterDescription != null) {
+      parameter.m_description = AbstractNamedElement.mergeDescriptions(
+          parameter.m_description, parameterDescription);
+    }
+    value = parameter._getValue(parameterValue);
+    if (parameterValueDescription != null) {
+      value.m_description = AbstractNamedElement.mergeDescriptions(
+          value.m_description, parameterValueDescription);
+    }
+    this.m_set._getExperiment(false).getParameterSetting()
+        ._setParameterValue(value);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void flush() {
+    this.m_set._flush();
   }
 }

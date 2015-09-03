@@ -329,7 +329,7 @@ final class _EDIContentHandler extends DelegatingHandler {
    *          the attributes
    */
   private final void __startParameter(final Attributes atts) {
-    this.m_context.parameterSetValue(//
+    this.m_context.experimentSetParameterValue(//
         DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
             EDI.ATTRIBUTE_NAME),//
         DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
