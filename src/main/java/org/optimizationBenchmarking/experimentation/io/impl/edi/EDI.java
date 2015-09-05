@@ -65,11 +65,9 @@ public enum EDI implements IXMLFileType {
   /** the dimension element */
   static final String ELEMENT_DIMENSION = "dimension"; //$NON-NLS-1$
   /** the dimensions element */
-  static final String ELEMENT_DIMENSIONS = "dimensions"; //$NON-NLS-1$
+  public static final String ELEMENT_DIMENSIONS = "dimensions"; //$NON-NLS-1$
   /** the experiment element */
-  static final String ELEMENT_EXPERIMENT = "experiment"; //$NON-NLS-1$
-  // /** the namespace prefix */
-  //  static final String NAMESPACE_PREFIX = "edi"; //$NON-NLS-1$
+  public static final String ELEMENT_EXPERIMENT = "experiment"; //$NON-NLS-1$
 
   /** the experiment set tag */
   static final String ELEMENT_EXPERIMENT_DATA = "experimentData"; //$NON-NLS-1$
@@ -84,7 +82,7 @@ public enum EDI implements IXMLFileType {
   /** the instance runs element */
   static final String ELEMENT_INSTANCE_RUNS = "instanceRuns"; //$NON-NLS-1$
   /** the instances element */
-  static final String ELEMENT_INSTANCES = "instances"; //$NON-NLS-1$
+  public static final String ELEMENT_INSTANCES = "instances"; //$NON-NLS-1$
   /** the int element */
   static final String ELEMENT_INT = "i"; //$NON-NLS-1$
   /** the parameter element */
