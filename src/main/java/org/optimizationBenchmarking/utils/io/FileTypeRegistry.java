@@ -118,7 +118,8 @@ public final class FileTypeRegistry {
    * @param fileSuffix
    *          the file name suffix / extension (such as {@code tex},
    *          {@code png}, or {@code java})
-   * @return the type belonging to the given file suffix
+   * @return the type, or {@code null} if none could be found belonging to
+   *         the given file suffix
    */
   public final IFileType getTypeForSuffix(final String fileSuffix) {
     return this.__getTypeForID(FileTypeRegistry
@@ -148,7 +149,8 @@ public final class FileTypeRegistry {
    *
    * @param namespace
    *          the XML namespace
-   * @return the type belonging to the given namespace
+   * @return the type, or {@code null} if none could be found belonging to
+   *         the given namespace
    */
   public final IFileType getTypeForNamespace(final String namespace) {
     return this.__getTypeForID(FileTypeRegistry
@@ -180,7 +182,8 @@ public final class FileTypeRegistry {
    *
    * @param namespace
    *          the XML namespace
-   * @return the type belonging to the given namespace
+   * @return the type, or {@code null} if none could be found belonging to
+   *         the given namespace
    */
   public final IFileType getTypeForNamespace(final URI namespace) {
     return this.__getTypeForID(FileTypeRegistry
@@ -307,7 +310,8 @@ public final class FileTypeRegistry {
    *
    * @param mimeType
    *          the mime type
-   * @return the type belonging to the given mime type
+   * @return the type, or {@code null} if none could be found belonging to
+   *         the given mime type
    */
   public final IFileType getTypeForMimeType(final String mimeType) {
     return this.__getTypeForID(FileTypeRegistry
@@ -319,7 +323,8 @@ public final class FileTypeRegistry {
    *
    * @param path
    *          the path
-   * @return the corresponding file type
+   * @return the corresponding file type, or {@code null} if none could be
+   *         found belonging to the given mime type
    */
   public final IFileType getTypeForPath(final Path path) {
     final String suffix;
@@ -408,7 +413,7 @@ public final class FileTypeRegistry {
    *
    * @param id
    *          the id object
-   * @return the type
+   * @return the type, or {@code null} if none could be found
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   private final IFileType __getTypeForID(final Object id) {
@@ -431,7 +436,7 @@ public final class FileTypeRegistry {
 
     queue = this.m_queue;
     synchronized (queue) {
-      for (;;) {
+      queueLoop: for (;;) {
         if (queue.isEmpty()) {
           return null;
         }
@@ -447,28 +452,28 @@ public final class FileTypeRegistry {
           if (got != null) {
             return got;
           }
-          continue;
-        }
-
-        if (current instanceof Iterable) {
-          queue.set(0, ((Iterable) current).iterator());
-          continue;
+          continue queueLoop;
         }
 
         if (current instanceof Iterator) {
           iterator = ((Iterator) current);
           if (iterator.hasNext()) {
             queue.add(0, iterator.next());
-            continue;
+            continue queueLoop;
           }
           queue.remove(0);
         }
 
-        if (current instanceof Object[]) {
+        if (current instanceof Iterable) {
+          queue.set(0, ((Iterable) current).iterator());
+          continue queueLoop;
+        }
+
+        if (current instanceof Enum[]) {
           queue.remove(0);
           b = false;
           synchronized (map) {
-            for (final Object o : ((Object[]) current)) {
+            for (final Enum o : ((Enum[]) current)) {
               if (FileTypeRegistry.__put(map, ((IFileType) o))) {
                 b = true;
               }
@@ -480,7 +485,7 @@ public final class FileTypeRegistry {
           if (got != null) {
             return got;
           }
-          continue;
+          continue queueLoop;
         }
 
         if (current instanceof Class<?>) {
@@ -488,10 +493,11 @@ public final class FileTypeRegistry {
           clazz = ((Class) current);
           FileTypeRegistry.__validateClass(clazz);
           queue.add(0, clazz.getEnumConstants());
-          continue;
+          continue queueLoop;
         }
 
         if (current instanceof ImmutableAssociation) {
+          queue.remove(0);
           assoc = ((ImmutableAssociation) current);
           current = assoc.getKey();
           if (current != null) {
@@ -506,7 +512,7 @@ public final class FileTypeRegistry {
               return assoc.getValue();
             }
           }
-          continue;
+          continue queueLoop;
         }
 
         if (current instanceof String) {

@@ -2,6 +2,7 @@ package test.junit.org.optimizationBenchmarking.utils.io;
 
 import java.net.URI;
 import java.util.HashSet;
+import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,6 +10,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.FileTypeRegistry;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.xml.IXMLFileType;
+import org.optimizationBenchmarking.utils.math.random.RandomUtils;
 
 /**
  * A test for the file type registry.
@@ -122,6 +124,43 @@ public class FileTypeRegistryTest {
           }
         }
       }
+    }
+  }
+
+  /** check if we cannot find non-existing types */
+  @Test(timeout = 3600000)
+  public void testNoneExisting() {
+    final HashSet<String> all;
+    final Random random;
+    String rand;
+    int i;
+
+    all = new HashSet<>();
+    for (final Class<? extends IFileType> clazz : FileTypeRegistryTest
+        .__getClasses()) {
+      for (final IFileType ift : clazz.getEnumConstants()) {
+        all.add(ift.getDefaultSuffix());
+        all.add(ift.getName());
+        all.add(ift.getMIMEType());
+        if (ift instanceof IXMLFileType) {
+          all.add(((IXMLFileType) ift).getNamespace());
+        }
+      }
+    }
+
+    random = new Random();
+
+    for (i = 100; i >= 0; i--) {
+      do {
+        rand = RandomUtils.longToString(RandomUtils.DEFAULT_CHARSET,
+            random.nextLong());
+      } while (all.contains(rand));
+      Assert.assertNull(FileTypeRegistry.getInstance().getTypeForSuffix(
+          rand));
+      Assert.assertNull(FileTypeRegistry.getInstance().getTypeForMimeType(
+          rand));
+      Assert.assertNull(FileTypeRegistry.getInstance()
+          .getTypeForNamespace(rand));
     }
   }
 }
