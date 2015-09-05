@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 import org.optimizationBenchmarking.utils.io.IFileType;
 
 /** the HTML file types */
-public enum EWebFileTypes implements IFileType {
+public enum EWebFileType implements IFileType {
 
   /** the CSS file type */
   CSS() {

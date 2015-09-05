@@ -270,7 +270,7 @@ final class _XHTML10Document extends Document {
                   t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
         }
 
-        this.getFileCollector().addFile(path, EWebFileTypes.CSS);
+        this.getFileCollector().addFile(path, EWebFileType.CSS);
       }
     } finally {
       super.postProcess(usedStyles, paths);

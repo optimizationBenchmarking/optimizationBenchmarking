@@ -6,6 +6,7 @@ import java.net.URL;
 
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
+import org.optimizationBenchmarking.utils.io.FileTypeRegistry;
 import org.optimizationBenchmarking.utils.io.xml.IXMLFileType;
 import org.optimizationBenchmarking.utils.io.xml.XMLFileType;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
@@ -345,4 +346,11 @@ public enum EDI implements IXMLFileType {
         + "' is not a valid data type identifier."); //$NON-NLS-1$
   }
 
+  static {
+    final FileTypeRegistry reg;
+
+    reg = FileTypeRegistry.getInstance();
+    reg.register(EDI_XML);
+    reg.associateSuffix("edi", EDI_XML);//$NON-NLS-1$
+  }
 }
