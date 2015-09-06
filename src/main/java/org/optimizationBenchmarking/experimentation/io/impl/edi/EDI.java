@@ -348,7 +348,7 @@ public enum EDI implements IXMLFileType {
     final FileTypeRegistry reg;
 
     reg = FileTypeRegistry.getInstance();
-    reg.register(EDI_XML);
+    reg.registerClass(EDI.class);
     reg.associateSuffix("edi", EDI_XML);//$NON-NLS-1$
   }
 }

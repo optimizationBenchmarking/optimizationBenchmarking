@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 
+import org.optimizationBenchmarking.utils.io.FileTypeRegistry;
 import org.optimizationBenchmarking.utils.io.xml.IXMLFileType;
 import org.optimizationBenchmarking.utils.io.xml.XMLFileType;
 
@@ -76,5 +77,9 @@ public enum EvaluationXML implements IXMLFileType {
       return u;
     }
     return EvaluationXML.NAMESPACE_URI.toURL();
+  }
+
+  static {
+    FileTypeRegistry.getInstance().registerClass(EvaluationXML.class);
   }
 }
