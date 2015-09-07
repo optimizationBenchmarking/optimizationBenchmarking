@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.text.textOutput;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.text.CharacterIterator;
 
 import org.optimizationBenchmarking.utils.hash.HashUtils;
@@ -154,7 +156,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
    *          the number of characters to store
    * @return the old length
    */
-  private final int _add(final int len) {
+  private final int __add(final int len) {
     int curLen, newLen, alloc;
     char[] data;
 
@@ -176,13 +178,55 @@ public class MemoryTextOutput extends AbstractTextOutput implements
     return curLen;
   }
 
+  /**
+   * Read all the characters from the given reader into this buffer.
+   *
+   * @param reader
+   *          the reader
+   * @throws IOException
+   *           if i/o fails
+   */
+  public final void appendAll(final Reader reader) throws IOException {
+    int curSize, newLen, read;
+    char[] data;
+
+    if (reader == null) {
+      throw new IllegalArgumentException("Reader cannot be null.");//$NON-NLS-1$
+    }
+
+    data = this.m_data;
+    curSize = this.m_size;
+
+    for (;;) {
+      if (curSize >= data.length) {
+        if ((newLen = Math.max(curSize, (curSize + 4096))) <= curSize) {
+          throw new IllegalStateException(//
+              "Internal buffer too big: cannot add 4096 characters to the existing " + //$NON-NLS-1$
+                  curSize + " ones, the result would be " + //$NON-NLS-1$
+                  newLen);
+        }
+
+        this.m_data = new char[Math.max(((newLen + 2) << 1), newLen)];
+        System.arraycopy(data, 0, this.m_data, 0, curSize);
+        data = this.m_data;
+      }
+
+      read = reader.read(data, curSize, (data.length - curSize));
+      if (read <= 0) {
+        return;
+      }
+      curSize += read;
+      this.m_size = curSize;
+    }
+  }
+
   /** {@inheritDoc} */
   @Override
   public final void append(final char[] add, final int start, final int end) {
     int old, len;
     len = (end - start);
     if (len > 0) {
-      old = this._add(len);
+      old = this.__add(len);
       System.arraycopy(add, start, this.m_data, old, len);
     }
   }
@@ -203,7 +247,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
       return this;
     }
 
-    len = this._add(len);
+    len = this.__add(len);
     data = this.m_data;
 
     if (csq instanceof String) {
@@ -228,7 +272,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
   public final MemoryTextOutput append(final char c) {
     final int idx;
 
-    idx = this._add(1);
+    idx = this.__add(1);
     this.m_data[idx] = c;
     return this;
   }
@@ -239,7 +283,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
     int len;
 
     if ((len = (end - start)) > 0) {
-      len = this._add(len);
+      len = this.__add(len);
       s.getChars(start, end, this.m_data, len);
     }
   }
@@ -281,7 +325,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
       end++;
     }
 
-    end += this._add(end);
+    end += this.__add(end);
     buf = this.m_data;
 
     while (abs >= 65536) {
@@ -361,7 +405,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
     }
     end += i;
 
-    end += this._add(end);
+    end += this.__add(end);
     buf = this.m_data;
 
     // Get 2 digits/iteration using longs until quotient fits into an int
@@ -460,7 +504,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
     end = iterator.getEndIndex();
 
     if (index < end) {
-      offset = this._add(end - index);
+      offset = this.__add(end - index);
       dest = this.m_data;
       while (index < end) {
         iterator.setIndex(index++);
