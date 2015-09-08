@@ -10,11 +10,11 @@ public enum ESimpleDateFormat {
   /** the date in {@code yyyy-MMM-dd} format */
   DATE("yyyy-MM-dd"), //$NON-NLS-1$
 
-  /** the date and time in {@code yyyy-MMM-dd hh:mm:ss} format */
-  DATE_TIME("yyyy-MM-dd hh:mm:ss"), //$NON-NLS-1$
+  /** the date and time in {@code yyyy-MMM-dd HH:mm:ss} format */
+  DATE_TIME("yyyy-MM-dd HH:mm:ss"), //$NON-NLS-1$
 
-  /** the date and time in {@code yyyy-MMM-dd hh:mm} format */
-  DATE_TIME_MIN("yyyy-MM-dd hh:mm"); //$NON-NLS-1$
+  /** the date and time in {@code yyyy-MMM-dd HH:mm} format */
+  DATE_TIME_MIN("yyyy-MM-dd HH:mm"); //$NON-NLS-1$
 
   /** the format string */
   private final String m_format;
