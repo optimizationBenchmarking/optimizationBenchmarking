@@ -109,7 +109,7 @@ public final class Definition extends _DefSet<Parameter<?>> {
       // The configuration was null or empty or this definition is empty
       // and does not allow additional parameters.
       if (paramSize <= 0) {// The latter case given above.
-        return Dump.emptyDumpForDefinition(this);
+        return new Dump(new ImmutableAssociation[0], this.m_allowsMore);
       }
 
       // Fill the array with associations of parameters to null.
