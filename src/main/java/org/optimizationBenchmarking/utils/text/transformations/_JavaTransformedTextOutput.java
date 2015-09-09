@@ -189,7 +189,7 @@ class _JavaTransformedTextOutput extends _TransformedTextOutput {
               throw new IllegalStateException();
             }
           }
-          this.m_out.append(currentChar);
+          this.m_out.append((char) currentChar);
           continue outer;
         }
 
@@ -295,7 +295,7 @@ class _JavaTransformedTextOutput extends _TransformedTextOutput {
               throw new IllegalStateException();
             }
           }
-          this.m_out.append(currentChar);
+          this.m_out.append((char) currentChar);
           continue outer;
         }
 
@@ -399,7 +399,7 @@ class _JavaTransformedTextOutput extends _TransformedTextOutput {
               throw new IllegalStateException();
             }
           }
-          this.m_out.append(currentChar);
+          this.m_out.append((char) currentChar);
           continue outer;
         }
 
