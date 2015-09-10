@@ -79,17 +79,22 @@ final class _LaTeX extends _LaTeXToolBase {
     static final Path PATH;
 
     static {
+      final Path[] visitFirst;
       Path path;
+
+      visitFirst = _LaTeXToolChainComponent._visitBefore(//
+          new String[] { "/usr/bin/latex" }, //$NON-NLS-1$
+          _LaTeXToolChainComponent._getDefaultVisitFirst());
 
       path = PathUtils.findFirstInPath(new AndPredicate<>(
           new FileNamePredicate(true, "latex" //$NON-NLS-1$
           ), CanExecutePredicate.INSTANCE),//
-          IsFilePredicate.INSTANCE, null);
+          IsFilePredicate.INSTANCE, visitFirst);
       if (path == null) {
         path = PathUtils.findFirstInPath(new AndPredicate<>(
             new FileNamePredicate(true, "cslatex" //$NON-NLS-1$
             ), CanExecutePredicate.INSTANCE),//
-            IsFilePredicate.INSTANCE, null);
+            IsFilePredicate.INSTANCE, visitFirst);
       }
 
       PATH = path;

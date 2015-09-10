@@ -29,6 +29,7 @@ final class _Ps2Pdf extends _LaTeXToolChainComponent {
     super();
 
     final Logger logger;
+    final Path[] visitFirst;
     Path path;
 
     logger = Configuration.getGlobalLogger();
@@ -37,27 +38,29 @@ final class _Ps2Pdf extends _LaTeXToolChainComponent {
           "Now trying to find ps2pdf executable.");//$NON-NLS-1$
     }
 
+    visitFirst = this._getVisitFirst();
+
     path = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "pspdf",//$NON-NLS-1$
             "ps2pdf",//$NON-NLS-1$
             "pstopdf"//$NON-NLS-1$
         ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
+        IsFilePredicate.INSTANCE, visitFirst);
     if (path == null) {
       path = PathUtils.findFirstInPath(new AndPredicate<>(
           new FileNamePredicate(true, "ps2pdf14"//$NON-NLS-1$
           ), CanExecutePredicate.INSTANCE),//
-          IsFilePredicate.INSTANCE, null);
+          IsFilePredicate.INSTANCE, visitFirst);
       if (path == null) {
         path = PathUtils.findFirstInPath(new AndPredicate<>(
             new FileNamePredicate(true, "ps2pdf13"//$NON-NLS-1$
             ), CanExecutePredicate.INSTANCE),//
-            IsFilePredicate.INSTANCE, null);
+            IsFilePredicate.INSTANCE, visitFirst);
         if (path == null) {
           path = PathUtils.findFirstInPath(new AndPredicate<>(
               new FileNamePredicate(true, "ps2pdf12"//$NON-NLS-1$
               ), CanExecutePredicate.INSTANCE),//
-              IsFilePredicate.INSTANCE, null);
+              IsFilePredicate.INSTANCE, visitFirst);
         }
       }
     }
@@ -70,6 +73,14 @@ final class _Ps2Pdf extends _LaTeXToolChainComponent {
       + "' found.") : //$NON-NLS-1$
           "No ps2pdf executable found.");//$NON-NLS-1$
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final Path[] _getVisitFirst() {
+    return _LaTeXToolChainComponent._visitBefore(
+        new String[] { "/usr/bin/ps2pdf" }, //$NON-NLS-1$
+        super._getVisitFirst());
   }
 
   /** {@inheritDoc} */

@@ -28,24 +28,35 @@ final class _Dvi2Ps extends _LaTeXToolChainComponent {
   _Dvi2Ps() {
     super();
     final Logger logger;
+    final Path[] visitFirst;
 
     logger = Configuration.getGlobalLogger();
     if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
       logger.config("Now trying to find dvips executable.");//$NON-NLS-1$
     }
 
+    visitFirst = this._getVisitFirst();
+
     this.m_executable = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "dvips",//$NON-NLS-1$
             "dvi2ps",//$NON-NLS-1$
             "dvitops"//$NON-NLS-1$
         ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
+        IsFilePredicate.INSTANCE, visitFirst);
 
     if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
       logger.config((this.m_executable != null) ? //
       ("Dvips executable '" + this.m_executable + "' found.") : //$NON-NLS-1$//$NON-NLS-2$
           "No dvips executable found.");//$NON-NLS-1$
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final Path[] _getVisitFirst() {
+    return _LaTeXToolChainComponent._visitBefore(
+        new String[] { "/usr/bin/dvips" }, //$NON-NLS-1$
+        super._getVisitFirst());
   }
 
   /** {@inheritDoc} */

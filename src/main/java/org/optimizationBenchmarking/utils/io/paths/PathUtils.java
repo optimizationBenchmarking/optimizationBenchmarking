@@ -21,6 +21,8 @@ import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.config.Configuration;
@@ -922,21 +924,21 @@ public final class PathUtils {
 
     visitorWrapper.m_inUserDefinedTemplates = true;
     pathSet = visitFirst;
-    for (;;) {
+    mainLoop: for (;;) {
       if (pathSet != null) {
-        for (Path p : pathSet) {
-          if (p == null) {
-            continue;
+        for (Path path : pathSet) {
+          if (path == null) {
+            continue mainLoop;
           }
 
           if (visitorWrapper.m_inUserDefinedTemplates) {
-            p = PathUtils.normalize(p);
+            path = PathUtils.normalize(path);
           }
 
-          Files.walkFileTree(p, visitorWrapper);
+          Files.walkFileTree(path, visitorWrapper);
           if (((r = visitorWrapper.m_lastResult) == null)
               || (r == FileVisitResult.TERMINATE)) {
-            break;
+            break mainLoop;
           }
         }
       }
@@ -945,7 +947,7 @@ public final class PathUtils {
         pathSet = __PathLoader.PATH_ARRAY;
         visitorWrapper.m_inUserDefinedTemplates = false;
       } else {
-        break;
+        break mainLoop;
       }
     }
 
@@ -978,6 +980,7 @@ public final class PathUtils {
       final IPredicate<BasicFileAttributes> attsPredicate,
       final Path[] visitFirst) {
     final __FindFirst ff;
+    Logger root;
 
     if ((pathPredicate == null) && (attsPredicate == null)) {
       return null;
@@ -987,8 +990,13 @@ public final class PathUtils {
 
     try {
       PathUtils.visitPath(ff, visitFirst);
-    } catch (final Throwable t) {
-      //
+    } catch (final Throwable error) {
+      root = Configuration.getGlobalLogger();
+      if ((root != null) && (root.isLoggable(Level.WARNING))) {
+        root.log(Level.WARNING,//
+            "Error during the process of locating a file in the PATH.", //$NON-NLS-1$
+            error);
+      }
     }
 
     return ff.m_found;
@@ -1142,7 +1150,7 @@ public final class PathUtils {
       for (final String key : new String[] {//
       "ProgramFiles", //$NON-NLS-1$
           "ProgramFiles(x86)", //$NON-NLS-1$
-          "ProgramW6432)", //$NON-NLS-1$
+          "ProgramW6432", //$NON-NLS-1$
           "CommonProgramFiles", //$NON-NLS-1$
           "CommonProgramFiles(x86)", //$NON-NLS-1$
           "CommonProgramW6432", //$NON-NLS-1$
@@ -1616,18 +1624,14 @@ public final class PathUtils {
      */
     private static final boolean __add(final Path p, final Object id,
         final HashSet<Object> s) {
-      boolean ret;
+      final boolean reta, retb;
 
       synchronized (s) {
-        ret = s.add(p);
-        if (!ret) {
-          return false;
-        }
-        if (id == null) {
-          return true;
-        }
-        return s.add(id);
+        reta = s.add(p);
+        retb = ((id != null) ? s.add(id) : reta);
       }
+
+      return (reta && retb);
     }
 
     /** {@inheritDoc} */
@@ -1637,7 +1641,8 @@ public final class PathUtils {
 
       if ((dir == null) || (attrs == null)
           || (!(__PathVisitor.__add(dir, attrs.fileKey(), this.m_done)))) {
-        return ((this.m_lastResult == FileVisitResult.TERMINATE) ? FileVisitResult.TERMINATE
+        return ((this.m_lastResult == FileVisitResult.TERMINATE)//
+        ? FileVisitResult.TERMINATE//
             : FileVisitResult.SKIP_SUBTREE);
       }
 
@@ -1649,6 +1654,7 @@ public final class PathUtils {
     @Override
     public final FileVisitResult visitFile(final Path file,
         final BasicFileAttributes attrs) throws IOException {
+
       if ((file != null) && (attrs != null)) {
         return (this.m_lastResult = this.m_visitor.visitFile(file, attrs));
       }
@@ -1670,12 +1676,14 @@ public final class PathUtils {
     @Override
     public final FileVisitResult visitFileFailed(final Path file,
         final IOException exc) throws IOException {
-      if ((file != null)
-          && ((!(this.m_inUserDefinedTemplates)) || (!(exc instanceof NoSuchFileException)))) {
+      if ((file != null)//
+          && ((!(this.m_inUserDefinedTemplates)) || //
+          (!(exc instanceof NoSuchFileException)))) {
         return (this.m_lastResult = this.m_visitor.visitFileFailed(file,
             exc));
       }
-      return ((this.m_lastResult == FileVisitResult.TERMINATE) ? FileVisitResult.TERMINATE
+      return ((this.m_lastResult == FileVisitResult.TERMINATE) //
+      ? FileVisitResult.TERMINATE //
           : FileVisitResult.CONTINUE);
     }
 
@@ -1685,7 +1693,8 @@ public final class PathUtils {
         final IOException exc) throws IOException {
 
       if (dir == null) {
-        return ((this.m_lastResult == FileVisitResult.TERMINATE) ? FileVisitResult.TERMINATE
+        return ((this.m_lastResult == FileVisitResult.TERMINATE)//
+        ? FileVisitResult.TERMINATE //
             : FileVisitResult.CONTINUE);
       }
       return (this.m_lastResult = this.m_visitor.postVisitDirectory(dir,

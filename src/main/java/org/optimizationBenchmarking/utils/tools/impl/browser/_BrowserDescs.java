@@ -1,17 +1,16 @@
 package org.optimizationBenchmarking.utils.tools.impl.browser;
 
 import org.optimizationBenchmarking.utils.collections.iterators.IterableIterator;
-import org.optimizationBenchmarking.utils.collections.maps.StringMapCI;
+import org.optimizationBenchmarking.utils.io.EOSFamily;
 
 /** An iterator for browser descriptions */
-final class _BrowserDescs extends
-    IterableIterator<StringMapCI<_BrowserDesc>> {
+final class _BrowserDescs extends IterableIterator<_BrowserMap> {
 
   /** the index */
   private int m_index;
 
   /** the map */
-  private final StringMapCI<_BrowserDesc> m_map;
+  private final _BrowserMap m_map;
 
   /** the unreliable browser desc */
   private _BrowserDesc m_unreliable;
@@ -19,7 +18,7 @@ final class _BrowserDescs extends
   /** create */
   _BrowserDescs() {
     super();
-    this.m_map = new StringMapCI<>();
+    this.m_map = new _BrowserMap();
   }
 
   /** {@inheritDoc} */
@@ -30,8 +29,8 @@ final class _BrowserDescs extends
 
   /** {@inheritDoc} */
   @Override
-  public final StringMapCI<_BrowserDesc> next() {
-    final StringMapCI<_BrowserDesc> map;
+  public final _BrowserMap next() {
+    final _BrowserMap map;
 
     map = this.m_map;
     map.clear();
@@ -41,9 +40,14 @@ final class _BrowserDescs extends
       case 0: {
         // Browsers which I can execute and wait for their termination
         // reliably.
-        map.put("iexplore", //$NON-NLS-1$
-            new _BrowserDesc(true, true,
-                new String[] { "-noframemerging" })); //$NON-NLS-1$
+        if (EOSFamily.DETECTED == EOSFamily.Windows) {
+          map.put("iexplore", //$NON-NLS-1$
+              new _BrowserDesc(true, true,
+                  new String[] { "-noframemerging" }), //$NON-NLS-1$
+              new String[] {//
+              "C:/Program Files/Internet Explorer/iexplore.exe"//$NON-NLS-1$
+              });
+        }
         return map;
       }
 
@@ -51,22 +55,52 @@ final class _BrowserDescs extends
         // Browsers which may terminated whenever they want, but at least I
         // know them.
         this.m_unreliable = new _BrowserDesc(false);
-        map.put("firefox", this.m_unreliable); //$NON-NLS-1$
-        map.put("opera", this.m_unreliable); //$NON-NLS-1$
+        map.put("firefox", this.m_unreliable, //$NON-NLS-1$
+            (EOSFamily.DETECTED == EOSFamily.Windows)//
+            ? new String[] {//
+            "C:/Program Files/Mozilla Firefox/",//$NON-NLS-1$
+                "C:/Program Files (x86)/Mozilla Firefox/",//$NON-NLS-1$
+                "C:/Program Files/mozilla.org/Mozilla/",//$NON-NLS-1$
+            }
+                : new String[] {//
+                "/usr/bin/firefox"//$NON-NLS-1$
+                });
+
+        map.put("opera", this.m_unreliable, //$NON-NLS-1$
+            (EOSFamily.DETECTED == EOSFamily.Windows)//
+            ? new String[] {//
+            "C:/Program Files (x86)/Opera",//$NON-NLS-1$
+                "C:/Program Files/Opera"//$NON-NLS-1$
+            }
+                : new String[] {//
+                "/usr/bin/opera",//$NON-NLS-1$
+                });
         map.put("chromium", this.m_unreliable); //$NON-NLS-1$ // not tested, probably same as below
-        map.put("chromium-browser", this.m_unreliable); //$NON-NLS-1$
+        map.put("chromium-browser", this.m_unreliable, //$NON-NLS-1$
+            new String[] {//
+            "/usr/bin/chromium-browser",//$NON-NLS-1$
+            });
         map.put("chrome", this.m_unreliable); //$NON-NLS-1$
         return map;
       }
 
       case 2: {
         // Browsers I have never used, so I know nothing about them.
-        map.put("edge", this.m_unreliable); //$NON-NLS-1$
-        map.put("spartan", this.m_unreliable); //$NON-NLS-1$
+
+        if (EOSFamily.DETECTED == EOSFamily.Windows) {
+          map.put("edge", this.m_unreliable); //$NON-NLS-1$
+          map.put("spartan", this.m_unreliable); //$NON-NLS-1$
+        }
         map.put("iceweasel", this.m_unreliable); //$NON-NLS-1$
         map.put("safari", this.m_unreliable); //$NON-NLS-1$
         map.put("netscape", this.m_unreliable); //$NON-NLS-1$
-        map.put("seamonkey", this.m_unreliable); //$NON-NLS-1$
+        map.put("seamonkey", this.m_unreliable, //$NON-NLS-1$
+            (EOSFamily.DETECTED == EOSFamily.Windows)//
+            ? new String[] {//
+            "C:/Program Files/mozilla.org/SeaMonkey/",//$NON-NLS-1$
+                "C:/Program Files/SeaMonkey/"//$NON-NLS-1$
+            }
+                : null);
         map.put("konqueror", this.m_unreliable); //$NON-NLS-1$
         map.put("kmelon", this.m_unreliable); //$NON-NLS-1$
         map.put("konquerer", this.m_unreliable); //$NON-NLS-1$
@@ -77,12 +111,14 @@ final class _BrowserDescs extends
       }
 
       case 3: {
-        // Programs which are not actual programs but instead run the
+        // Programs which are not actual browsers but instead run the
         // system default browser for us.
         map.put("xdg-open", this.m_unreliable); //$NON-NLS-1$
         map.put("gnome-open", this.m_unreliable); //$NON-NLS-1$
         map.put("cygstart", this.m_unreliable); //$NON-NLS-1$
-        map.put("explorer", this.m_unreliable); //$NON-NLS-1$
+        if (EOSFamily.DETECTED == EOSFamily.Windows) {
+          map.put("explorer", this.m_unreliable); //$NON-NLS-1$
+        }
         map.put("open", this.m_unreliable); //$NON-NLS-1$
         return map;
       }

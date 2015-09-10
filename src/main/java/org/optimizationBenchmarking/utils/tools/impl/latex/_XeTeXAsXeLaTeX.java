@@ -57,7 +57,10 @@ final class _XeTeXAsXeLaTeX extends _LaTeXUsedAsToolBase {
     static final Path PATH = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "xetex" //$NON-NLS-1$
         ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
+        IsFilePredicate.INSTANCE,//
+        _LaTeXToolChainComponent._visitBefore(//
+            new String[] { "/usr/bin/xetex" },//$NON-NLS-1$
+            _LaTeXToolChainComponent._getDefaultVisitFirst()));
   }
 
   /** the description */

@@ -54,13 +54,16 @@ final class _LuaTeXAsLuaLaTeX extends _LaTeXUsedAsToolBase {
     /** the path to the LuaTeX executable */
     static final Path PATH = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "luatex" //$NON-NLS-1$
-            ), CanExecutePredicate.INSTANCE),//
-            IsFilePredicate.INSTANCE, null);
+        ), CanExecutePredicate.INSTANCE),//
+        IsFilePredicate.INSTANCE, //
+        _LaTeXToolChainComponent._visitBefore(//
+            new String[] { "/usr/bin/luatex" },//$NON-NLS-1$
+            _LaTeXToolChainComponent._getDefaultVisitFirst()));
   }
 
   /** the description */
   private static final class __LuaTeXAsLuaLaTeXDesc extends
-  _LaTeXToolChainComponentDesc {
+      _LaTeXToolChainComponentDesc {
 
     /** the description */
     static final _LaTeXToolChainComponentDesc DESC_WITHOUT_EPS = new __LuaTeXAsLuaLaTeXDesc(

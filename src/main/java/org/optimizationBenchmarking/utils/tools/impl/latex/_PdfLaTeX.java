@@ -81,6 +81,9 @@ final class _PdfLaTeX extends _LaTeXToolBase {
     static final Path PATH = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "pdflatex" //$NON-NLS-1$
         ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
+        IsFilePredicate.INSTANCE,//
+        _LaTeXToolChainComponent._visitBefore(//
+            new String[] { "/usr/bin/pdflatex" },//$NON-NLS-1$
+            _LaTeXToolChainComponent._getDefaultVisitFirst()));
   }
 }

@@ -30,33 +30,36 @@ final class _GhostScript extends _LaTeXToolChainComponent {
 
     Path path;
     final Logger logger;
+    final Path[] visitFirst;
 
     logger = Configuration.getGlobalLogger();
     if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
       logger.config("Now trying to find GhostScript executable.");//$NON-NLS-1$
     }
 
+    visitFirst = this._getVisitFirst();
+
     path = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "gswin64c",//$NON-NLS-1$
             "gs"//$NON-NLS-1$
         ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
+        IsFilePredicate.INSTANCE, visitFirst);
     if (path == null) {
       path = PathUtils.findFirstInPath(new AndPredicate<>(
           new FileNamePredicate(true, "gswin32c"//$NON-NLS-1$
           ), CanExecutePredicate.INSTANCE),//
-          IsFilePredicate.INSTANCE, null);
+          IsFilePredicate.INSTANCE, visitFirst);
       if (path == null) {
         path = PathUtils.findFirstInPath(new AndPredicate<>(
             new FileNamePredicate(true, "gswin64"//$NON-NLS-1$
             ), CanExecutePredicate.INSTANCE),//
-            IsFilePredicate.INSTANCE, null);
+            IsFilePredicate.INSTANCE, visitFirst);
         if (path == null) {
 
           path = PathUtils.findFirstInPath(new AndPredicate<>(
               new FileNamePredicate(true, "gswin32"//$NON-NLS-1$
               ), CanExecutePredicate.INSTANCE),//
-              IsFilePredicate.INSTANCE, null);
+              IsFilePredicate.INSTANCE, visitFirst);
         }
       }
     }
@@ -189,6 +192,15 @@ final class _GhostScript extends _LaTeXToolChainComponent {
   @Override
   final ELaTeXFileType _produces() {
     return ELaTeXFileType.PDF;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final Path[] _getVisitFirst() {
+    return _LaTeXToolChainComponent._visitBefore(new String[] {//
+        "C:/Program Files/gs",//$NON-NLS-1$
+            "/usr/bin/gs" }, //$NON-NLS-1$
+        super._getVisitFirst());
   }
 
   /**

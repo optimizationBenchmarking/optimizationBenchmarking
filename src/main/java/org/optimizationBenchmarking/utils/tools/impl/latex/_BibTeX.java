@@ -29,6 +29,7 @@ final class _BibTeX extends _LaTeXToolChainComponent {
     super();
 
     final Logger logger;
+    final Path[] visitFirst;
     Path path;
 
     logger = Configuration.getGlobalLogger();
@@ -36,16 +37,18 @@ final class _BibTeX extends _LaTeXToolChainComponent {
       logger.config("Now trying to find BibTeX executable.");//$NON-NLS-1$
     }
 
+    visitFirst = this._getVisitFirst();
+
     path = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "bibtex",//$NON-NLS-1$
             "bibtex.original" //$NON-NLS-1$
         ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
+        IsFilePredicate.INSTANCE, visitFirst);
     if (path == null) {
       path = PathUtils.findFirstInPath(new AndPredicate<>(
           new FileNamePredicate(true, "miktex-bibtex" //$NON-NLS-1$
           ), CanExecutePredicate.INSTANCE),//
-          IsFilePredicate.INSTANCE, null);
+          IsFilePredicate.INSTANCE, visitFirst);
     }
     this.m_executable = path;
 
@@ -54,6 +57,14 @@ final class _BibTeX extends _LaTeXToolChainComponent {
       ("BibTeX executable '" + path + "' found.") : //$NON-NLS-1$//$NON-NLS-2$
           "No BibTeX executable found.");//$NON-NLS-1$
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final Path[] _getVisitFirst() {
+    return _LaTeXToolChainComponent._visitBefore(
+        new String[] { "/usr/bin/bibtex" }, //$NON-NLS-1$
+        super._getVisitFirst());
   }
 
   /** {@inheritDoc} */

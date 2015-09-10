@@ -24,7 +24,15 @@ final class _XeLaTeX extends _LaTeXToolBase {
     return PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "xelatex" //$NON-NLS-1$
         ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
+        IsFilePredicate.INSTANCE, this._getVisitFirst());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final Path[] _getVisitFirst() {
+    return _LaTeXToolChainComponent._visitBefore(
+        new String[] { "/usr/bin/xelatex" }, //$NON-NLS-1$
+        super._getVisitFirst());
   }
 
   /** {@inheritDoc} */

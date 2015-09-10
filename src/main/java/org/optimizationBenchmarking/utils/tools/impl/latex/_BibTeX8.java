@@ -29,22 +29,33 @@ final class _BibTeX8 extends _LaTeXToolChainComponent {
     super();
 
     final Logger logger;
+    final Path[] visitFirst;
 
     logger = Configuration.getGlobalLogger();
     if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
       logger.config("Now trying to find BibTeX8 executable.");//$NON-NLS-1$
     }
 
+    visitFirst = this._getVisitFirst();
+
     this.m_executable = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "bibtex8" //$NON-NLS-1$
         ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
+        IsFilePredicate.INSTANCE, visitFirst);
 
     if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
       logger.config((this.m_executable != null) ? //
       ("BibTeX8 executable '" + this.m_executable + "' found.") : //$NON-NLS-1$//$NON-NLS-2$
           "No BibTeX8 executable found.");//$NON-NLS-1$
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final Path[] _getVisitFirst() {
+    return _LaTeXToolChainComponent._visitBefore(
+        new String[] { "/usr/bin/bibtex8" }, //$NON-NLS-1$
+        super._getVisitFirst());
   }
 
   /** {@inheritDoc} */

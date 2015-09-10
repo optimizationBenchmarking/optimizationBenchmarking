@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.collections.maps.StringMapCI;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicate;
@@ -92,6 +91,7 @@ public final class Browser extends Tool implements IConfigurableJobTool {
       String name;
       _BrowserDesc desc;
       Path path;
+      int size;
 
       // Nowadays, browser run several processes and may re-use existing
       // processes. If the browser is open and a new one started, for our
@@ -111,12 +111,16 @@ public final class Browser extends Tool implements IConfigurableJobTool {
       desc = null;
       desktop = null;
 
-      looper: for (final StringMapCI<_BrowserDesc> browsers : new _BrowserDescs()) {
+      looper: for (final _BrowserMap browsers : new _BrowserDescs()) {
+        size = browsers.size();
+        if (size <= 0) {
+          continue;
+        }
         path = PathUtils.findFirstInPath(new AndPredicate<>(
             new FileNamePredicate(true,//
-                browsers.keySet().toArray(new String[browsers.size()])),//
+                browsers.keySet().toArray(new String[size])),//
             CanExecutePredicate.INSTANCE),//
-            IsFilePredicate.INSTANCE, null);
+            IsFilePredicate.INSTANCE, browsers._getVisitFirst());
         if (path != null) {
           name = PathUtils.getFileNameWithoutExtension(path);
           desc = browsers.get(name);

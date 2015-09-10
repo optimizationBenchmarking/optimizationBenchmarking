@@ -23,8 +23,16 @@ final class _LuaLaTeX extends _LaTeXToolBase {
   final Path _getExecutable() {
     return PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "lualatex" //$NON-NLS-1$
-            ), CanExecutePredicate.INSTANCE),//
-            IsFilePredicate.INSTANCE, null);
+        ), CanExecutePredicate.INSTANCE),//
+        IsFilePredicate.INSTANCE, this._getVisitFirst());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final Path[] _getVisitFirst() {
+    return _LaTeXToolChainComponent._visitBefore(
+        new String[] { "/usr/bin/lualatex" }, //$NON-NLS-1$
+        super._getVisitFirst());
   }
 
   /** {@inheritDoc} */
@@ -48,7 +56,7 @@ final class _LuaLaTeX extends _LaTeXToolBase {
 
   /** the description */
   private static final class __LuaLaTeXDesc extends
-  _LaTeXToolChainComponentDesc {
+      _LaTeXToolChainComponentDesc {
 
     /** the description */
     static final _LaTeXToolChainComponentDesc DESC_WITHOUT_EPS = new __LuaLaTeXDesc(

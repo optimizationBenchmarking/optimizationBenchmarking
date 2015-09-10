@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -248,5 +249,65 @@ abstract class _LaTeXToolChainComponent implements ITextable {
     }
 
     return retval;
+  }
+
+  /**
+   * Get the paths to visit first when trying to detect a LaTeX component's
+   * installation
+   *
+   * @return the paths to visit first
+   */
+  Path[] _getVisitFirst() {
+    return _LaTeXToolChainComponent._getDefaultVisitFirst();
+  }
+
+  /**
+   * Get the default path to be visited first on the search for a LaTeX
+   * installation
+   *
+   * @return the default path to be visited first on the search for a LaTeX
+   *         installation
+   */
+  static final Path[] _getDefaultVisitFirst() {
+    return __DefaultVisitFirst.PATHS;
+  }
+
+  /**
+   * merge the paths
+   *
+   * @param after
+   *          the paths to visit after the paths to visit before
+   * @param before
+   *          the before paths
+   * @return the paths
+   */
+  static final Path[] _visitBefore(final String[] before,
+      final Path[] after) {
+    final Path[] res, paths;
+    int i;
+
+    paths = ((after != null) ? after : _LaTeXToolChainComponent
+        ._getDefaultVisitFirst());
+    res = new Path[before.length + paths.length];
+    for (i = 0; i < before.length; i++) {
+      res[i] = Paths.get(before[i]);
+    }
+    System.arraycopy(paths, 0, res, i, paths.length);
+    return paths;
+  }
+
+  /** The holder for path elements to visit first */
+  private static final class __DefaultVisitFirst {
+    /** some path elements to visit first, in order to speed up the search */
+    static final Path[] PATHS = {
+        Paths.get("C:/Program Files/MiKTeX 3.0/miktex/bin"), //$NON-NLS-1$
+        Paths.get("C:/Program Files/MiKTeX 2.9/miktex/bin"), //$NON-NLS-1$
+        Paths.get("C:/Program Files/MiKTeX 2.8/miktex/bin"), //$NON-NLS-1$
+        Paths.get("C:/Program Files/MiKTeX 2.7/miktex/bin"), //$NON-NLS-1$
+        Paths.get("C:/Program Files (x86)/MiKTeX 3.0/miktex/bin"), //$NON-NLS-1$
+        Paths.get("C:/Program Files (x86)/MiKTeX 2.9/miktex/bin"), //$NON-NLS-1$
+        Paths.get("C:/Program Files (x86)/MiKTeX 2.8/miktex/bin"), //$NON-NLS-1$
+        Paths.get("C:/Program Files (x86)/MiKTeX 2.7/miktex/bin"), //$NON-NLS-1$
+    };
   }
 }
