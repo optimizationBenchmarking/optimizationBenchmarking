@@ -9,9 +9,9 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.CharBuffer;
 
-import org.optimizationBenchmarking.utils.io.NullWriter;
 import org.optimizationBenchmarking.utils.io.encoding.IStreamEncoded;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
+import org.optimizationBenchmarking.utils.io.nul.NullWriter;
 import org.optimizationBenchmarking.utils.text.CharArrayCharSequence;
 import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.TextUtils;

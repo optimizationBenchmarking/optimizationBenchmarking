@@ -70,10 +70,10 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
  * potentially much more memory consuming.
  * </p>
  */
-public final class ProcessExecutor extends Tool {
+public final class ExternalProcessExecutor extends Tool {
 
   /** create */
-  ProcessExecutor() {
+  ExternalProcessExecutor() {
     super();
   }
 
@@ -97,17 +97,17 @@ public final class ProcessExecutor extends Tool {
   }
 
   /**
-   * Get the instance of the process executor
+   * Get the instance of the external process executor
    *
-   * @return the instance of the process executor
+   * @return the instance of the external process executor
    */
-  public static final ProcessExecutor getInstance() {
+  public static final ExternalProcessExecutor getInstance() {
     return ProcessExecutorLoader.INSTANCE;
   }
 
-  /** the loader of the ProcessExecutor */
+  /** the loader of the external process executor */
   private static final class ProcessExecutorLoader {
     /** the globally shared instance of the external process tool */
-    static final ProcessExecutor INSTANCE = new ProcessExecutor();
+    static final ExternalProcessExecutor INSTANCE = new ExternalProcessExecutor();
   }
 }

@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.io;
+package org.optimizationBenchmarking.utils.io.nul;
 
 import java.io.InputStream;
 

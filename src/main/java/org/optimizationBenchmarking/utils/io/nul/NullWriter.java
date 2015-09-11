@@ -1,12 +1,8 @@
-package org.optimizationBenchmarking.utils.io;
+package org.optimizationBenchmarking.utils.io.nul;
 
 import java.io.Writer;
 
-/**
- * An writer that throws away all its input.
- *
- * @since 0.9.8
- */
+/** A writer that throws away all its input. */
 public final class NullWriter extends Writer {
 
   /** the globally shared instance */
@@ -49,7 +45,6 @@ public final class NullWriter extends Writer {
   /** {@inheritDoc} */
   @Override
   public final void write(final char cbuf[], final int off, final int len) {//
-
   }
 
   /** {@inheritDoc} */
@@ -65,12 +60,10 @@ public final class NullWriter extends Writer {
   /** {@inheritDoc} */
   @Override
   public final void flush() {//
-
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void close() {
-    //
+  public final void close() { //
   }
 }

@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
-import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessExecutor;
 
 /** check whether a program produces the output we'd expect from {@code R} */
 final class _RAtLeastVersion3Criterion implements IPredicate<Path> {
@@ -23,13 +23,13 @@ final class _RAtLeastVersion3Criterion implements IPredicate<Path> {
   /** {@inheritDoc} */
   @Override
   public final boolean check(final Path object) {
-    ProcessExecutor executor;
+    ExternalProcessExecutor executor;
     ExternalProcessBuilder esb;
     String s;
     boolean hasRVersion, hasRFoundation;
     int i;
 
-    executor = ProcessExecutor.getInstance();
+    executor = ExternalProcessExecutor.getInstance();
     if (executor.canUse()) {
       esb = executor.use();
       esb.setExecutable(object);

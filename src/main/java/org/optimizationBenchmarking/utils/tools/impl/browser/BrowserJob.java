@@ -60,8 +60,10 @@ public final class BrowserJob extends ToolJob implements Closeable {
    * if he has closed the browser.
    *
    * @return the return value
+   * @throws IOException
+   *           if i/o fails
    */
-  public final int waitFor() {
+  public final int waitFor() throws IOException {
     final ExternalProcess proc;
 
     proc = this.m_process;

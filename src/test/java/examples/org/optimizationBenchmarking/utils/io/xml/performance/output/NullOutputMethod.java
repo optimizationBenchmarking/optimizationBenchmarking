@@ -2,7 +2,7 @@ package examples.org.optimizationBenchmarking.utils.io.xml.performance.output;
 
 import java.io.Writer;
 
-import org.optimizationBenchmarking.utils.io.NullWriter;
+import org.optimizationBenchmarking.utils.io.nul.NullWriter;
 
 /** An output method throwing all data away */
 public class NullOutputMethod extends OutputMethod {

@@ -17,7 +17,7 @@ import org.optimizationBenchmarking.utils.io.paths.TempDir;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
-import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessExecutor;
 import org.optimizationBenchmarking.utils.tools.spec.IConfigurableToolJobBuilder;
 
 /**
@@ -72,7 +72,7 @@ public final class BrowserJobBuilder extends
     url = this.m_url.toExternalForm();
 
     executable = Browser._BrowserPath.PATH;
-    epb = ProcessExecutor.getInstance().use();
+    epb = ExternalProcessExecutor.getInstance().use();
 
     epb.setLogger(logger);
     epb.setStdErr(EProcessStream.IGNORE);

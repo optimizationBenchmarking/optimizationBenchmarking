@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.predicates.AndPredicate;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
-import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessExecutor;
 
 /**
  * <p>
@@ -65,7 +65,7 @@ public final class R extends MathEngineTool {
     ArrayList<Path> list;
     HashSet<String> params;
     int size;
-    ProcessExecutor exec;
+    ExternalProcessExecutor exec;
     ExternalProcessBuilder builder;
     final String[] wantedParams;
     final String enc;
@@ -74,7 +74,7 @@ public final class R extends MathEngineTool {
     r = null;
     params = null;
 
-    exec = ProcessExecutor.getInstance();
+    exec = ExternalProcessExecutor.getInstance();
 
     if ((exec != null) && (exec.canUse())) {
 

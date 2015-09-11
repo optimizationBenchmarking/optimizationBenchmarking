@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.FileProducerTool;
-import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessExecutor;
 import org.optimizationBenchmarking.utils.tools.spec.IConfigurableJobTool;
 
 /**
@@ -79,14 +79,14 @@ public class LaTeX extends FileProducerTool implements
   /** {@inheritDoc} */
   @Override
   public final boolean canUse() {
-    return ProcessExecutor.getInstance().canUse();
+    return ExternalProcessExecutor.getInstance().canUse();
   }
 
   /** {@inheritDoc} */
   @Override
   public final void checkCanUse() {
     try {
-      ProcessExecutor.getInstance().checkCanUse();
+      ExternalProcessExecutor.getInstance().checkCanUse();
     } catch (final Throwable t) {
       throw new UnsupportedOperationException(
           "Cannot use LaTeX tool since we cannot execute external processes.",//$NON-NLS-1$

@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.predicates.AndPredicate;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
-import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessExecutor;
 
 /**
  * <p>
@@ -49,7 +49,7 @@ public final class ExternalProcessTest {
     System.out.println("echo: " + program); //$NON-NLS-1$
     System.out.flush();
     if (program != null) {
-      pb = ProcessExecutor.getInstance().use();
+      pb = ExternalProcessExecutor.getInstance().use();
       pb.setLogger(logger);
       pb.setDirectory(PathUtils.getTempDir());
       pb.setStdOut(EProcessStream.REDIRECT_TO_LOGGER);
@@ -73,7 +73,7 @@ public final class ExternalProcessTest {
     System.out.println("latex: " + program); //$NON-NLS-1$
     System.out.flush();
     if (program != null) {
-      pb = ProcessExecutor.getInstance().use();
+      pb = ExternalProcessExecutor.getInstance().use();
       pb.setLogger(logger);
       pb.setDirectory(PathUtils.getTempDir());
       pb.setStdOut(EProcessStream.REDIRECT_TO_LOGGER);
@@ -97,7 +97,7 @@ public final class ExternalProcessTest {
     System.out.println("java: " + program); //$NON-NLS-1$
     System.out.flush();
     if (program != null) {
-      pb = ProcessExecutor.getInstance().use();
+      pb = ExternalProcessExecutor.getInstance().use();
       pb.setLogger(logger);
       pb.setDirectory(PathUtils.getTempDir());
       pb.setStdOut(EProcessStream.REDIRECT_TO_LOGGER);

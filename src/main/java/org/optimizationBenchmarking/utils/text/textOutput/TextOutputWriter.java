@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.text.textOutput;
 
 import java.io.Writer;
 
-import org.optimizationBenchmarking.utils.io.NullWriter;
+import org.optimizationBenchmarking.utils.io.nul.NullWriter;
 
 /**
  * A {@link java.io.Writer} wrapped around a

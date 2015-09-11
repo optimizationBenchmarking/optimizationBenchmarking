@@ -12,18 +12,17 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
-import org.optimizationBenchmarking.utils.io.NullInputStream;
-import org.optimizationBenchmarking.utils.io.NullOutputStream;
+import org.optimizationBenchmarking.utils.io.nul.NullInputStream;
+import org.optimizationBenchmarking.utils.io.nul.NullOutputStream;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.parallel.ByteProducerConsumerBuffer;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
-import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
 
 /**
  * A builder for external processes.
  */
 public final class ExternalProcessBuilder extends
-    ToolJobBuilder<ExternalProcess, ExternalProcessBuilder> {
+    _BasicProcessBuilder<ExternalProcess, ExternalProcessBuilder> {
 
   /** an atomic process counter */
   private static final AtomicLong PROC_ID = new AtomicLong();
@@ -56,13 +55,8 @@ public final class ExternalProcessBuilder extends
     this.setStdIn(EProcessStream.AS_STREAM);
   }
 
-  /**
-   * Set the executable
-   *
-   * @param path
-   *          the path to the executable
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder setExecutable(final Path path) {
     String s;
 
@@ -76,13 +70,8 @@ public final class ExternalProcessBuilder extends
     return this;
   }
 
-  /**
-   * Add a string command line argument
-   *
-   * @param s
-   *          the string command line argument
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder addStringArgument(final String s) {
     if (this.m_command.isEmpty()) {
       throw new IllegalStateException(//
@@ -96,41 +85,22 @@ public final class ExternalProcessBuilder extends
     return this;
   }
 
-  /**
-   * Add a path command line argument
-   *
-   * @param path
-   *          the path command line argument
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder addPathArgument(final Path path) {
     return this.addStringArgument(PathUtils.getPhysicalPath(path, false));
   }
 
-  /**
-   * Set a string environment variable for the sub-process
-   *
-   * @param key
-   *          the key
-   * @param value
-   *          the value
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder putEnvironmentString(
       final String key, final String value) {
     this.m_pb.environment().put(key, value);
     return this;
   }
 
-  /**
-   * Set a path environment variable for the sub-process
-   *
-   * @param key
-   *          the key
-   * @param value
-   *          the value
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder putEnvironmentPath(final String key,
       final Path value) {
     final String s;
@@ -138,47 +108,29 @@ public final class ExternalProcessBuilder extends
     return this.putEnvironmentString(key, s);
   }
 
-  /**
-   * Remove an environment variable
-   *
-   * @param key
-   *          the variable to remove
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder removeEnvironmentVar(final String key) {
     this.m_pb.environment().remove(key);
     return this;
   }
 
-  /**
-   * Clear the environment, i.e., delete all variables
-   *
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder clearEnvironment() {
     this.m_pb.environment().clear();
     return this;
   }
 
-  /**
-   * Set the directory in which the process should be executed
-   *
-   * @param dir
-   *          the directory
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder setDirectory(final Path dir) {
     this.m_pb.directory(PathUtils.getPhysicalFile(dir));
     return this;
   }
 
-  /**
-   * Set the stdin stream definition
-   *
-   * @param def
-   *          the stream definition
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder setStdIn(final EProcessStream def) {
     final Redirect redirect;
     if ((def != null) && (def != EProcessStream.REDIRECT_TO_LOGGER)
@@ -190,26 +142,16 @@ public final class ExternalProcessBuilder extends
     throw new IllegalArgumentException("Cannot set stdin to " + def); //$NON-NLS-1$
   }
 
-  /**
-   * Read the stdin of this process from the given path
-   *
-   * @param source
-   *          the source
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder readStdInFrom(final Path source) {
     this.m_pb.redirectInput(PathUtils.getPhysicalFile(source));
     this.m_stdin = EProcessStream.REDIRECT_TO_PATH;
     return this;
   }
 
-  /**
-   * Set the stdout stream definition
-   *
-   * @param def
-   *          the stream definition
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder setStdOut(final EProcessStream def) {
     final Redirect redirect;
     if ((def != null) && ((redirect = def.m_redir) != null)) {
@@ -220,16 +162,8 @@ public final class ExternalProcessBuilder extends
     throw new IllegalArgumentException("Cannot set stdout to " + def); //$NON-NLS-1$
   }
 
-  /**
-   * Store the stdout of this process to the given path
-   *
-   * @param dest
-   *          the destination
-   * @param append
-   *          should we append to the file identified by {@code dest} if it
-   *          exists ({@code true}) or overwrite it ({@code false})?
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder writeStdOutTo(final Path dest,
       final boolean append) {
     final File file;
@@ -255,13 +189,8 @@ public final class ExternalProcessBuilder extends
     }
   }
 
-  /**
-   * Set the stderr stream definition
-   *
-   * @param def
-   *          the stream definition
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder setStdErr(final EProcessStream def) {
     final Redirect redirect;
 
@@ -274,16 +203,8 @@ public final class ExternalProcessBuilder extends
     throw new IllegalArgumentException("Cannot set stderr to " + def); //$NON-NLS-1$
   }
 
-  /**
-   * Store the stderr of this process to the given path
-   *
-   * @param dest
-   *          the destination
-   * @param append
-   *          should we append to the file identified by {@code dest} if it
-   *          exists ({@code true}) or overwrite it ({@code false})?
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder writeStdErrTo(final Path dest,
       final boolean append) {
     final File file;
@@ -336,14 +257,8 @@ public final class ExternalProcessBuilder extends
     }
   }
 
-  /**
-   * Should stdout and stderr be merged?
-   *
-   * @param merge
-   *          {@code true} if stdout and stderr should be merged,
-   *          {@code false} if they are separate streams
-   * @return this builder
-   */
+  /** {@inheritDoc} */
+  @Override
   public final ExternalProcessBuilder setMergeStdOutAndStdErr(
       final boolean merge) {
     this.__validateMerge(merge);
@@ -353,7 +268,7 @@ public final class ExternalProcessBuilder extends
 
   /** {@inheritDoc} */
   @Override
-  protected void validate() {
+  protected final void validate() {
     super.validate();
     if (this.m_command.size() <= 0) {
       throw new IllegalArgumentException(//
@@ -433,7 +348,7 @@ public final class ExternalProcessBuilder extends
       return null; // never reached
     }
 
-    external = new ExternalProcess(process, log, name);
+    external = new ExternalProcess(process, log, name, this.m_closer);
 
     realStreams = 0;
 

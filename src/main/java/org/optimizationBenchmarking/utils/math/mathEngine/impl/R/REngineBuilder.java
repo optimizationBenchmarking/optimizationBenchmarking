@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.abstr.MathEngineBuilder;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
-import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessExecutor;
 
 /**
  * The builder for an R engine.
@@ -30,7 +30,7 @@ public final class REngineBuilder extends
 
     log = this.getLogger();
 
-    builder = ProcessExecutor.getInstance().use();
+    builder = ExternalProcessExecutor.getInstance().use();
     r = R.getInstance();
     builder.setExecutable(r.m_rBinary);
 

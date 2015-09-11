@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
-import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessExecutor;
 
 /** a tool using which is used as another tool */
 abstract class _LaTeXUsedAsToolBase extends _LaTeXToolChainComponent {
@@ -235,7 +235,7 @@ abstract class _LaTeXUsedAsToolBase extends _LaTeXToolChainComponent {
               " to '" + tex) + '\'') + '.'); //$NON-NLS-1$
     }
 
-    builder = ProcessExecutor.getInstance().use();
+    builder = ExternalProcessExecutor.getInstance().use();
     builder.setDirectory(job._getDirectory());
     builder.setExecutable(exec);
     if (this.m_formatArg != null) {

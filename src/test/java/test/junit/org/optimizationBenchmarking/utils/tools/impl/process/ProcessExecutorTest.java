@@ -1,14 +1,14 @@
 package test.junit.org.optimizationBenchmarking.utils.tools.impl.process;
 
-import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessExecutor;
 
 import test.junit.org.optimizationBenchmarking.utils.tools.ToolTest;
 
 /**
  * Test the
- * {@link org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor}
+ * {@link org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessExecutor}
  */
-public class ProcessExecutorTest extends ToolTest<ProcessExecutor> {
+public class ProcessExecutorTest extends ToolTest<ExternalProcessExecutor> {
 
   /** create */
   public ProcessExecutorTest() {
@@ -17,7 +17,7 @@ public class ProcessExecutorTest extends ToolTest<ProcessExecutor> {
 
   /** {@inheritDoc} */
   @Override
-  protected ProcessExecutor getInstance() {
-    return ProcessExecutor.getInstance();
+  protected ExternalProcessExecutor getInstance() {
+    return ExternalProcessExecutor.getInstance();
   }
 }

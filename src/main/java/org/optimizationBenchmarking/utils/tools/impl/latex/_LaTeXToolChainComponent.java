@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
-import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessExecutor;
 
 /** A component of a tool chain */
 abstract class _LaTeXToolChainComponent implements ITextable {
@@ -188,7 +188,7 @@ abstract class _LaTeXToolChainComponent implements ITextable {
       return EmptyUtils.EMPTY_STRINGS;
     }
 
-    builder = ProcessExecutor.getInstance().use();
+    builder = ExternalProcessExecutor.getInstance().use();
     builder.setDirectory(PathUtils.getTempDir());
     builder.setExecutable(executable);
     builder.addStringArgument(helpOption);

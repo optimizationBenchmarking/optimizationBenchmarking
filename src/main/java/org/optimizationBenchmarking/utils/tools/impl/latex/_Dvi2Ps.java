@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
-import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessExecutor;
 
 /** the tool which turns DVI documents into PS documents */
 final class _Dvi2Ps extends _LaTeXToolChainComponent {
@@ -105,7 +105,7 @@ final class _Dvi2Ps extends _LaTeXToolChainComponent {
       logger.info((("Applying dvips to '" + dvi) + '\'') + '.'); //$NON-NLS-1$
     }
 
-    builder = ProcessExecutor.getInstance().use();
+    builder = ExternalProcessExecutor.getInstance().use();
     builder.setDirectory(job._getDirectory());
     builder.setExecutable(exec);
     builder.addPathArgument(dvi);

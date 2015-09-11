@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.io.paths.predicates.FileNamePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.IsFilePredicate;
 import org.optimizationBenchmarking.utils.predicates.AndPredicate;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
-import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessExecutor;
 import org.optimizationBenchmarking.utils.tools.spec.IConfigurableJobTool;
 
 /**
@@ -35,7 +35,7 @@ public final class Browser extends Tool implements IConfigurableJobTool {
   @Override
   public final boolean canUse() {
     return (_BrowserPath.DESKTOP != null)
-        || ((ProcessExecutor.getInstance().canUse()
+        || ((ExternalProcessExecutor.getInstance().canUse()
             && (_BrowserPath.PATH != null) && (_BrowserPath.DESC != null)));
   }
 
@@ -43,7 +43,7 @@ public final class Browser extends Tool implements IConfigurableJobTool {
   @Override
   public final void checkCanUse() {
     if (_BrowserPath.DESKTOP == null) {
-      ProcessExecutor.getInstance().checkCanUse();
+      ExternalProcessExecutor.getInstance().checkCanUse();
       if (_BrowserPath.PATH == null) {
         throw new IllegalStateException(//
             "Cannot use the browser tool, since no web browser could be detected."); //$NON-NLS-1$
