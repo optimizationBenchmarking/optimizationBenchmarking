@@ -45,13 +45,30 @@ public final class TextProcess extends BasicProcess {
   /** {@inheritDoc} */
   @Override
   public final int waitFor() throws IOException {
-    return this.m_proc.waitFor();
+    int res;
+
+    res = (-1);
+    try {
+      if (this.m_in != null) {
+        this.m_in.flush();
+      }
+    } finally {
+      res = this.m_proc.waitFor();
+    }
+
+    return res;
   }
 
   /** {@inheritDoc} */
   @Override
   public final void close() throws IOException {
-    this.m_proc.close();
+    try {
+      if (this.m_in != null) {
+        this.m_in.flush();
+      }
+    } finally {
+      this.m_proc.close();
+    }
   }
 
   /**
