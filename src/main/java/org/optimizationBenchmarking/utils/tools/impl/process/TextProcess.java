@@ -76,7 +76,7 @@ public final class TextProcess extends BasicProcess {
    *
    * @return the standard input stream of the process
    */
-  public synchronized final BufferedWriter getStdIn() {
+  public final BufferedWriter getStdIn() {
     final OutputStream os;
     if (this.m_in == null) {
       os = this.m_proc.getStdIn();
@@ -94,7 +94,7 @@ public final class TextProcess extends BasicProcess {
    *
    * @return the standard output stream of the process
    */
-  public synchronized final BufferedReader getStdOut() {
+  public final BufferedReader getStdOut() {
     final InputStream is;
     if (this.m_out == null) {
       is = this.m_proc.getStdOut();
@@ -112,7 +112,7 @@ public final class TextProcess extends BasicProcess {
    *
    * @return the standard error stream of the process
    */
-  public synchronized final BufferedReader getStdError() {
+  public final BufferedReader getStdError() {
     final InputStream is;
     if (this.m_err == null) {
       is = this.m_proc.getStdError();
