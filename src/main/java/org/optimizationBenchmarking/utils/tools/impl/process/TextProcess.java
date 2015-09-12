@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.io.nul.NullInputStream;
 import org.optimizationBenchmarking.utils.io.nul.NullOutputStream;
 
 /** A process with which we can communicate via text. */
-public final class TextProcess extends BasicProcess {
+public final class TextProcess extends _BasicProcess {
 
   /** the wrapped external process */
   private final ExternalProcess m_proc;

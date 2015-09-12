@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.parallel.ByteProducerConsumerBuffer;
  * An external process with which you can communicate via standard streams
  * that cannot deadlock.
  */
-public final class ExternalProcess extends BasicProcess {
+public final class ExternalProcess extends _BasicProcess {
 
   /** the wrapped process instance */
   Process m_process;

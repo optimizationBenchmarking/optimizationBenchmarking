@@ -9,23 +9,16 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
 /**
  * A base class for processes.
  */
-public abstract class BasicProcess extends ToolJob implements Closeable {
-
-  /** the closer */
-  IProcessCloser<BasicProcess> m_closer;
+public abstract class AbstractProcess extends ToolJob implements Closeable {
 
   /**
    * create
    *
    * @param log
    *          the logger to use
-   * @param closer
-   *          the process closer
    */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  BasicProcess(final Logger log, final IProcessCloser closer) {
+  protected AbstractProcess(final Logger log) {
     super(log);
-    this.m_closer = closer;
   }
 
   /**
@@ -45,19 +38,4 @@ public abstract class BasicProcess extends ToolJob implements Closeable {
    */
   @Override
   public abstract void close() throws IOException;
-
-  /**
-   * Invoke the process closer
-   *
-   * @throws IOException
-   *           if i/o fails
-   */
-  final void _beforeClose() throws IOException {
-    final IProcessCloser<BasicProcess> closer;
-    closer = this.m_closer;
-    if (closer != null) {
-      this.m_closer = null;
-      closer.beforeClose(this);
-    }
-  }
 }

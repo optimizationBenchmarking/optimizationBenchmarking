@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.tools.impl.process;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.logging.Logger;
 
 /**
  * A builder for text processes.
@@ -143,9 +144,14 @@ public final class TextProcessBuilder extends
     final _TextProcessBridge bridge;
     final ExternalProcess proc;
     final TextProcess tp;
+    final Logger logger;
 
     bridge = new _TextProcessBridge();
     this.m_builder.setProcessCloser(bridge);
+    logger = this.getLogger();
+    if (logger != null) {
+      this.m_builder.setLogger(logger);
+    }
 
     proc = this.m_builder.create();
     tp = new TextProcess(proc, this.m_closer);

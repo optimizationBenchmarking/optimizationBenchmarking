@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.tools.impl.process;
 import java.io.IOException;
 
 /** a bridge for invoking the process closer */
-final class _TextProcessBridge implements IProcessCloser<BasicProcess> {
+final class _TextProcessBridge implements IProcessCloser<_BasicProcess> {
 
   /** the target text process */
   TextProcess m_target;
@@ -15,7 +15,7 @@ final class _TextProcessBridge implements IProcessCloser<BasicProcess> {
 
   /** {@inheritDoc} */
   @Override
-  public final void beforeClose(final BasicProcess process)
+  public final void beforeClose(final _BasicProcess process)
       throws IOException {
     final TextProcess target;
 
