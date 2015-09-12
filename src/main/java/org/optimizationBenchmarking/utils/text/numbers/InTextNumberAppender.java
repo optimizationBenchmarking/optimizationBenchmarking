@@ -50,9 +50,14 @@ public final class InTextNumberAppender extends NumberAppender {
   /** {@inheritDoc} */
   @Override
   public final String toString(final long v, final ETextCase textCase) {
-    if ((v < 0) || (v >= InTextNumberAppender.SMALL_NUMBERS.length)
-        || ((textCase != null) && (textCase != ETextCase.IN_SENTENCE))) {
-      return super.toString(v, textCase);
+    final String str;
+    if ((v >= 0) && (v < InTextNumberAppender.SMALL_NUMBERS.length)) {
+      str = InTextNumberAppender.SMALL_NUMBERS[(int) v];
+      if (textCase == ETextCase.IN_SENTENCE) {
+        return str;
+      }
+      return (textCase.adjustCaseOfFirstCharInWord(str.charAt(0))//
+      + str.substring(1));
     }
     return Long.toString(v);
   }
@@ -72,9 +77,14 @@ public final class InTextNumberAppender extends NumberAppender {
   /** {@inheritDoc} */
   @Override
   public final String toString(final int v, final ETextCase textCase) {
-    if ((v < 0) || (v >= InTextNumberAppender.SMALL_NUMBERS.length)
-        || ((textCase != null) && (textCase != ETextCase.IN_SENTENCE))) {
-      return super.toString(v, textCase);
+    final String str;
+    if ((v >= 0) && (v < InTextNumberAppender.SMALL_NUMBERS.length)) {
+      str = InTextNumberAppender.SMALL_NUMBERS[v];
+      if (textCase == ETextCase.IN_SENTENCE) {
+        return str;
+      }
+      return (textCase.adjustCaseOfFirstCharInWord(str.charAt(0))//
+      + str.substring(1));
     }
     return Integer.toString(v);
   }
