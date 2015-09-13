@@ -5,20 +5,14 @@ permalink: /
 ---
 
 # Introduction
-This is the main repository of the *optimizationBenchmarking.org* framework, a `Java 1.7` software designed
-to make the evaluation, benchmarking, and comparison of [optimization](http://en.wikipedia.org/wiki/Mathematical_optimization) or
-[Machine Learning](http://en.wikipedia.org/wiki/Machine_learning) algorithms easier.
-It can load log files created by an optimization or Machine Learning algorithm implementation, evaluate
-how the implementation has progressed over time, and compare its performance to other algorithms (or implementations) -- over several different benchmark cases.
-It can create reports in [LaTeX](http://en.wikipedia.org/wiki/LaTeX) (ready for publication) or
-[XHTML](http://en.wikipedia.org/wiki/XHTML) formats or export its findings in
-text files which may later be loaded by other applications.
+This is the main repository of the *optimizationBenchmarking.org* framework, a `Java 1.7` software designed to make the evaluation, benchmarking, and comparison of [optimization](http://en.wikipedia.org/wiki/Mathematical_optimization) or [Machine Learning](http://en.wikipedia.org/wiki/Machine_learning) algorithms easier.
+It can load log files created by an optimization or Machine Learning algorithm implementation, evaluate how the implementation has progressed over time, and compare its performance to other algorithms (or implementations) -- over several different benchmark cases.
+It can create reports in [LaTeX](http://en.wikipedia.org/wiki/LaTeX) (ready for publication) or [XHTML](http://en.wikipedia.org/wiki/XHTML) formats or export its findings in text files which may later be loaded by other applications.
 
 
 ## Downloads
 The current version of this software is [{{ site.data.currentVersion.currentVersion }}]({{ site.data.currentVersion.currentVersionRepo }}).
-A stand-alone `jar` is provided [here]({{ site.data.currentVersion.currentVersionStandAloneJarURL }}) and
-a set of slides introducing the whole framework and providing examples can be found
+You can download the [GUI]({{ site.data.currentVersion.currentVersionStandAloneGUIJarURL }}) as stand-alone `jar`, as well as a stand-alone command line [program]({{ site.data.currentVersion.currentVersionStandAloneJarURL }}). A set of slides introducing the whole framework and providing examples can be found
 [here]({{ site.data.documentation.evaluatorSlidesURL }}).
 
 ## Examples

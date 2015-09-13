@@ -1,3 +1,4 @@
-currentVersion: 0.8.3
-currentVersionRepo: http://optimizationbenchmarking.github.io/optimizationBenchmarking/repo/optimizationBenchmarking/org/optimizationBenchmarking/0.8.3/
-currentVersionStandAloneJarURL: http://optimizationbenchmarking.github.io/optimizationBenchmarking/repo/optimizationBenchmarking/org/optimizationBenchmarking/0.8.3/optimizationBenchmarking-0.8.3-full.jar
+currentVersion: 0.8.4
+currentVersionRepo: http://optimizationbenchmarking.github.io/optimizationBenchmarking/repo/optimizationBenchmarking/org/optimizationBenchmarking/0.8.4/
+currentVersionStandAloneJarURL: http://optimizationbenchmarking.github.io/optimizationBenchmarking/repo/optimizationBenchmarking/org/optimizationBenchmarking/0.8.4/optimizationBenchmarking-0.8.4-full.jar
+currentVersionStandAloneGUIJarURL: https://github.com/optimizationBenchmarking/optimizationBenchmarkingGui/releases/download/v0.8.4/optimizationBenchmarkingGui-0.8.4-full.jar
