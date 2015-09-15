@@ -13,5 +13,4 @@ public abstract class MathEngineTool extends Tool implements
   protected MathEngineTool() {
     super();
   }
-
 }

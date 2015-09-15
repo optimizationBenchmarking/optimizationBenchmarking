@@ -18,5 +18,4 @@ public abstract class MathEngineBuilder<J extends MathEngine, R extends MathEngi
   protected MathEngineBuilder() {
     super();
   }
-
 }

@@ -55,5 +55,4 @@ public abstract class Tool extends HashObject implements ITool {
   public void toText(final ITextOutput textOut) {
     textOut.append(this.toString());
   }
-
 }

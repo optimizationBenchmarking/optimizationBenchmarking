@@ -1,12 +1,17 @@
 package org.optimizationBenchmarking.utils.math.mathEngine.impl.R;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.abstr.MathEngineBuilder;
-import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
-import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessExecutor;
+import org.optimizationBenchmarking.utils.tools.impl.process.TextProcess;
+import org.optimizationBenchmarking.utils.tools.impl.process.TextProcessBuilder;
+import org.optimizationBenchmarking.utils.tools.impl.process.TextProcessExecutor;
 
 /**
  * The builder for an R engine.
@@ -23,14 +28,17 @@ public final class REngineBuilder extends
   @SuppressWarnings("resource")
   @Override
   public final REngine create() throws IOException {
-    final ExternalProcessBuilder builder;
+    final TextProcessBuilder builder;
     final Logger log;
     final TempDir temp;
+    final TextProcess tp;
+    final BufferedWriter bw;
     final R r;
+    String line;
 
     log = this.getLogger();
 
-    builder = ExternalProcessExecutor.getInstance().use();
+    builder = TextProcessExecutor.getInstance().use();
     r = R.getInstance();
     builder.setExecutable(r.m_rBinary);
 
@@ -41,8 +49,25 @@ public final class REngineBuilder extends
       builder.addStringArgument(s);
     }
     builder.setLogger(log);
+    builder.setProcessCloser(new _RCloser());
 
-    return new REngine(builder.create(), temp, log);
+    tp = builder.create();
+    bw = tp.getStdIn();
+
+    try (final InputStream is = REngineBuilder.class
+        .getResourceAsStream("init.txt")) { //$NON-NLS-1$
+      try (final InputStreamReader isr = new InputStreamReader(is)) {
+        try (final BufferedReader br = new BufferedReader(isr)) {
+          while ((line = br.readLine()) != null) {
+            bw.write(line);
+            bw.newLine();
+          }
+        }
+      }
+    }
+
+    bw.flush();
+
+    return new REngine(tp, temp, log);
   }
-
 }

@@ -8,15 +8,12 @@ import java.util.HashSet;
 
 import org.optimizationBenchmarking.utils.EmptyUtils;
 import org.optimizationBenchmarking.utils.config.Configuration;
-import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
-import org.optimizationBenchmarking.utils.io.encoding.TextEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.FileNamePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.IsFilePredicate;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.abstr.MathEngineTool;
 import org.optimizationBenchmarking.utils.predicates.AndPredicate;
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessExecutor;
@@ -68,7 +65,6 @@ public final class R extends MathEngineTool {
     ExternalProcessExecutor exec;
     ExternalProcessBuilder builder;
     final String[] wantedParams;
-    final String enc;
     String s;
 
     r = null;
@@ -141,7 +137,6 @@ public final class R extends MathEngineTool {
                 ep.getStdOut())) {
               try (final BufferedReader br = new BufferedReader(isr)) {
                 params = new HashSet<>();
-                enc = "--encoding";//$NON-NLS-1$
 
                 wantedParams = new String[] {//
                 "--vanilla", //$NON-NLS-1$
@@ -154,7 +149,7 @@ public final class R extends MathEngineTool {
                     "--no-restore-data", //$NON-NLS-1$
                     "--no-restore-history", //$NON-NLS-1$
                     "--no-restore", //$NON-NLS-1$
-                    enc, };
+                };
 
                 findParams: while ((s = br.readLine()) != null) {
                   s = s.trim();
@@ -167,11 +162,6 @@ public final class R extends MathEngineTool {
                       }
                     }
                   }
-                }
-
-                if (params.contains(enc)) {
-                  params.remove(enc);
-                  params.add(enc + '=' + R._encoding().name());
                 }
               }
             }
@@ -221,21 +211,6 @@ public final class R extends MathEngineTool {
   @Override
   public final String toString() {
     return "R Process Automator"; //$NON-NLS-1$
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void toText(final ITextOutput textOut) {
-    textOut.append(this.toString());
-  }
-
-  /**
-   * Get the name of the encoding to use
-   *
-   * @return the name of the encoding to use
-   */
-  static final TextEncoding _encoding() {
-    return StreamEncoding.getUTF8();
   }
 
   /** create the R engine */
