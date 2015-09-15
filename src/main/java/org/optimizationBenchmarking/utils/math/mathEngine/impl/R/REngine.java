@@ -22,7 +22,6 @@ import org.optimizationBenchmarking.utils.parsers.LooseDoubleParser;
 import org.optimizationBenchmarking.utils.parsers.LooseLongParser;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 import org.optimizationBenchmarking.utils.text.ETextCase;
-import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
 import org.optimizationBenchmarking.utils.tools.impl.process.TextProcess;
 
@@ -268,23 +267,17 @@ public final class REngine extends MathEngine {
   @SuppressWarnings("resource")
   private final String __getScalar(final String variable) {
     final BufferedWriter out;
-    String str;
-    int idx;
 
     this.__checkState();
 
     try {
       out = this.m_process.getStdIn();
+      out.write("cat("); //$NON-NLS-1$
       out.write(variable);
-      out.write(';');
+      out.write(");cat('\n');"); //$NON-NLS-1$
       out.newLine();
       out.flush();
-      str = this.m_process.getStdOut().readLine();
-      idx = str.lastIndexOf(']');
-      if (idx > 0) {
-        return TextUtils.prepare(str.substring(idx + 1));
-      }
-      return TextUtils.prepare(str);
+      return this.m_process.getStdOut().readLine();
     } catch (final Throwable ioe) {
       this.__handleError(ioe);
     }
@@ -425,7 +418,7 @@ public final class REngine extends MathEngine {
     try {
       this.__assignmentBegin(variable);
       this.m_process.getStdIn()
-      .write(value ? REngine.TRUE : REngine.FALSE);
+          .write(value ? REngine.TRUE : REngine.FALSE);
       this.__assignmentEnd(variable);
     } catch (final Throwable error) {
       this.__handleError(error);
