@@ -216,7 +216,7 @@ public abstract class MathEngineTest extends TestBase {
         if (random.nextBoolean() && (!(variables.isEmpty()))) {
           variable = variables.get(random.nextInt(variables.size()));
 
-          MathEngineTest.__assertDoubleEquals(//
+          MathEngineTest._assertDoubleEquals(//
               values.get(variable).doubleValue(), //
               engine.getDouble(variable));
         } else {
@@ -229,7 +229,7 @@ public abstract class MathEngineTest extends TestBase {
         if (values.put(variable, value) == null) {
           variables.add(variable);
         }
-        MathEngineTest.__assertDoubleEquals(//
+        MathEngineTest._assertDoubleEquals(//
             value.doubleValue(), engine.getDouble(variable));
       }
 
@@ -248,8 +248,7 @@ public abstract class MathEngineTest extends TestBase {
    * @param b
    *          the second matrix
    */
-  private static final void __compareMatrices(final IMatrix a,
-      final IMatrix b) {
+  static final void _compareMatrices(final IMatrix a, final IMatrix b) {
     final int n, m;
     final boolean isInt;
     int i, j;
@@ -282,7 +281,7 @@ public abstract class MathEngineTest extends TestBase {
     } else {
       for (i = m; (--i) >= 0;) {
         for (j = n; (--j) >= 0;) {
-          MathEngineTest.__assertDoubleEquals(a.getDouble(i, j),
+          MathEngineTest._assertDoubleEquals(a.getDouble(i, j),
               b.getDouble(i, j));
         }
       }
@@ -297,8 +296,7 @@ public abstract class MathEngineTest extends TestBase {
    * @param b
    *          the second double
    */
-  private static final void __assertDoubleEquals(final double a,
-      final double b) {
+  static final void _assertDoubleEquals(final double a, final double b) {
     if ((Math.nextUp(a) >= Math.nextAfter(b, Double.NEGATIVE_INFINITY)) && //
         (Math.nextUp(b) >= Math.nextAfter(a, Double.NEGATIVE_INFINITY))) {
       return;
@@ -375,7 +373,7 @@ public abstract class MathEngineTest extends TestBase {
         if (random.nextBoolean() && (!(variables.isEmpty()))) {
           variable = variables.get(random.nextInt(variables.size()));
 
-          MathEngineTest.__compareMatrices(values.get(variable),
+          MathEngineTest._compareMatrices(values.get(variable),
               engine.getMatrix(variable));
         } else {
           variable = RandomUtils.longToString(RandomUtils.DEFAULT_CHARSET,
@@ -388,8 +386,7 @@ public abstract class MathEngineTest extends TestBase {
         if (values.put(variable, value) == null) {
           variables.add(variable);
         }
-        MathEngineTest
-            .__compareMatrices(value, engine.getMatrix(variable));
+        MathEngineTest._compareMatrices(value, engine.getMatrix(variable));
       }
 
     } catch (final AssertionError ae) {
@@ -430,7 +427,7 @@ public abstract class MathEngineTest extends TestBase {
         if (random.nextBoolean() && (!(variables.isEmpty()))) {
           variable = variables.get(random.nextInt(variables.size()));
 
-          MathEngineTest.__compareMatrices(values.get(variable),
+          MathEngineTest._compareMatrices(values.get(variable),
               engine.getMatrix(variable));
         } else {
           variable = RandomUtils.longToString(RandomUtils.DEFAULT_CHARSET,
@@ -445,8 +442,7 @@ public abstract class MathEngineTest extends TestBase {
         if (values.put(variable, value) == null) {
           variables.add(variable);
         }
-        MathEngineTest
-            .__compareMatrices(value, engine.getMatrix(variable));
+        MathEngineTest._compareMatrices(value, engine.getMatrix(variable));
       }
 
     } catch (final AssertionError ae) {

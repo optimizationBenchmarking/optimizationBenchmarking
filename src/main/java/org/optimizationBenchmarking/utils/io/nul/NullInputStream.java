@@ -2,7 +2,10 @@ package org.optimizationBenchmarking.utils.io.nul;
 
 import java.io.InputStream;
 
-/** An input stream which does not provide any data. */
+/**
+ * An input stream which does not provide any data. It will never throw any
+ * exception.
+ */
 public final class NullInputStream extends InputStream {
 
   /** the null input stream */
@@ -92,5 +95,4 @@ public final class NullInputStream extends InputStream {
   public final boolean markSupported() {
     return true;
   }
-
 }

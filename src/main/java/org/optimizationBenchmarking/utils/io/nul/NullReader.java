@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.io.nul;
 import java.io.IOException;
 import java.io.Reader;
 
-/** A reader which reads nothing. */
+/** A reader which reads nothing. It will never throw any exception. */
 public final class NullReader extends Reader {
 
   /** the globally shared instance of the null reader */
@@ -56,19 +56,17 @@ public final class NullReader extends Reader {
   /** {@inheritDoc} */
   @Override
   public final boolean markSupported() {
-    return false;
+    return true;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void mark(final int readAheadLimit) throws IOException {
-    super.mark(readAheadLimit);
+  public final void mark(final int readAheadLimit) {//
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void reset() throws IOException {
-    super.reset();
+  public final void reset() {//
   }
 
   /** {@inheritDoc} */
@@ -76,5 +74,4 @@ public final class NullReader extends Reader {
   public final void close() {
     //
   }
-
 }

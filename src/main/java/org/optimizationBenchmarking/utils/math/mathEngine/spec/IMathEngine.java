@@ -117,7 +117,15 @@ public interface IMathEngine extends IToolJob, Closeable {
    * @param variable
    *          the variable
    */
-  public abstract void dipose(final String variable);
+  public abstract void dispose(final String variable);
+
+  /**
+   * Execute the given script.
+   *
+   * @param script
+   *          the script to execute.
+   */
+  public abstract void execute(final Iterable<String> script);
 
   /** {@inheritDoc} */
   @Override

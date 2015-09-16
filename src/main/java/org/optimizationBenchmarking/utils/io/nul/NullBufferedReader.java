@@ -3,7 +3,10 @@ package org.optimizationBenchmarking.utils.io.nul;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-/** A buffered reader which reads nothing. */
+/**
+ * A buffered reader which reads nothing. It will never throw any
+ * exception.
+ */
 public final class NullBufferedReader extends BufferedReader {
 
   /** the globally shared instance of the null reader */

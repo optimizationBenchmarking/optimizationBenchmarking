@@ -166,7 +166,7 @@ public final class REngine extends MathEngine {
   /** {@inheritDoc} */
   @SuppressWarnings("resource")
   @Override
-  public final void dipose(final String variable) {
+  public final void dispose(final String variable) {
     final BufferedWriter bw;
 
     this.__checkState();
@@ -530,8 +530,8 @@ public final class REngine extends MathEngine {
       try {
         first = true;
         if (matrix.isIntegerMatrix()) {
-          for (i = 0; i < m; i++) {
-            for (j = 0; j < n; j++) {
+          for (j = 0; j < n; j++) {
+            for (i = 0; i < m; i++) {
               if (first) {
                 first = false;
               } else {
@@ -541,8 +541,8 @@ public final class REngine extends MathEngine {
             }
           }
         } else {
-          for (i = 0; i < m; i++) {
-            for (j = 0; j < n; j++) {
+          for (j = 0; j < n; j++) {
+            for (i = 0; i < m; i++) {
               if (first) {
                 first = false;
               } else {
@@ -595,7 +595,7 @@ public final class REngine extends MathEngine {
         out.write(",ncol=");//$NON-NLS-1$
         out.write(Integer.toString(n));
         out.write(",byrow="); //$NON-NLS-1$
-        out.write(REngine.TRUE);
+        out.write(REngine.FALSE);
         out.write(')');
         this.__assignmentEnd(variable);
       } finally {
@@ -651,6 +651,25 @@ public final class REngine extends MathEngine {
       }
     } catch (final Throwable ioe) {
       this.__handleError(ioe);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings("resource")
+  @Override
+  public final void execute(final Iterable<String> script) {
+    final BufferedWriter bw;
+
+    bw = this.m_process.getStdIn();
+    try {
+      bw.newLine();
+      for (final String line : script) {
+        bw.write(line);
+        bw.newLine();
+      }
+      bw.newLine();
+    } catch (final Throwable error) {
+      this.__handleError(error);
     }
   }
 }

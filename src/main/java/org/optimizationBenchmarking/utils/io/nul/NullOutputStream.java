@@ -42,5 +42,4 @@ public final class NullOutputStream extends OutputStream {
   public final void close() {
     // do nothing
   }
-
 }
