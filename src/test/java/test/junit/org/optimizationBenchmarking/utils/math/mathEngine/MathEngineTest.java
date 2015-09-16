@@ -229,9 +229,8 @@ public abstract class MathEngineTest extends TestBase {
         if (values.put(variable, value) == null) {
           variables.add(variable);
         }
-        Assert.assertEquals(//
-            value.doubleValue(), engine.getDouble(variable),//
-            Double.MIN_VALUE);
+        MathEngineTest.__assertDoubleEquals(//
+            value.doubleValue(), engine.getDouble(variable));
       }
 
     } catch (final AssertionError ae) {
@@ -390,7 +389,7 @@ public abstract class MathEngineTest extends TestBase {
           variables.add(variable);
         }
         MathEngineTest
-        .__compareMatrices(value, engine.getMatrix(variable));
+            .__compareMatrices(value, engine.getMatrix(variable));
       }
 
     } catch (final AssertionError ae) {
@@ -447,7 +446,7 @@ public abstract class MathEngineTest extends TestBase {
           variables.add(variable);
         }
         MathEngineTest
-        .__compareMatrices(value, engine.getMatrix(variable));
+            .__compareMatrices(value, engine.getMatrix(variable));
       }
 
     } catch (final AssertionError ae) {
