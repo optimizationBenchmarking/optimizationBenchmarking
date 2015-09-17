@@ -60,6 +60,7 @@ public class REngineTest extends MathEngineTest {
 
       MathEngineTest._compareMatrices(matrixAInverse,
           engine.getMatrix("aInverse")); //$NON-NLS-1$
+      Assert.assertEquals(3, engine.getLong("numClusters")); //$NON-NLS-1$
     }
   }
 }

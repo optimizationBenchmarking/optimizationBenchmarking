@@ -1,1 +1,3 @@
 aInverse<-solve(a);
+library("cluster");
+numClusters<-length(kmeans(iris[1:4],3)[[7]]);
