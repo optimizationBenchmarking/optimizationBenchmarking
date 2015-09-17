@@ -316,8 +316,11 @@ final class _RandomDocumentExampleTermination extends Thread {
   @Override
   public final void run() {
     long time;
-    boolean done;
+    boolean done, drop;
+    int emergencyFlushLabels;
+    ArrayList<ILabel> labels;
 
+    emergencyFlushLabels = 0;
     for (;;) {
 
       synchronized (this) {
@@ -345,15 +348,49 @@ final class _RandomDocumentExampleTermination extends Thread {
         }
         if ((time = System.currentTimeMillis()) >= this.m_end) {
           // We cannot immediately stop, as there may be allocated labels
-          // which have not yet been used. Ignoring this may lead to errors
-          // in the document (it should not, but let's be sure to make a
-          // consistent example...). However, we can ignore any example
-          // element that has not yet been included, as this may at most
-          // leave some possible example away, i.e., lead to a less
-          // comprehensive example.
-          for (final AtomicBoolean atomic : this.m_done) {
-            atomic.set(true);
+          // which have not yet been used. So first we declare all elements
+          // for which no labels are needed to be placed anymore as
+          // finished. If we are still running three minutes after that, we
+          // declare all elements as finished and drop all allocated
+          // labels. This may lead to errors in the document (it should
+          // not, but let's put effort into to make a consistent
+          // example...).
+          // However, we can ignore any example element that has not yet
+          // been included, as this may at most leave some possible example
+          // away, i.e., lead to a less comprehensive example. As I am not
+          // sure (yes, I wrote the code some time ago) whether dropping
+          // elements but not clearing the associated pending labels may
+          // lead to deadlocks, I added the emergency label dropping
+          // discussed above.
+
+          ++emergencyFlushLabels;
+          for (final _ERandomDocumentExampleElements element : _ERandomDocumentExampleElements.ELEMENTS) {
+
+            drop = false;
+            if (element.m_label != null) {
+              labels = this.m_autoAllocatedLabels[element.m_label
+                  .ordinal()];
+              synchronized (labels) {
+                drop = labels.isEmpty();
+                if ((!drop) && ((emergencyFlushLabels > 180) && //
+                    ((emergencyFlushLabels % _ERandomDocumentExampleElements.ELEMENTS.length) == //
+                    element.ordinal()))) {
+                  // The funny % part is to drop one label type at a time.
+                  // Maybe this can reduce the number of potential may-be
+                  // errors another little bit.
+                  drop = true;
+                  labels.clear();
+                }
+              }
+            } else {
+              drop = true;
+            }
+
+            if (drop) {
+              this.m_done[element.ordinal()].set(true);
+            }
           }
+
           this.__checkAllDone();
           done = true;
         }
