@@ -17,6 +17,7 @@ cache:
 install:
   - sudo apt-get -q -y -f update
   - sudo apt-get -q -y -f install texlive
+  - sudo apt-get -q -y -f install r-base r-base-dev
   
 # custom build step
 script: mvn -C -B test compile

@@ -62,7 +62,7 @@ public abstract class MathEngineTest extends TestBase {
     try (final IMathEngine engine = tool.use().create()) {
       Assert.assertNotNull(engine);
 
-      for (count = 20000; (--count) >= 0;) {
+      for (count = 100; (--count) >= 0;) {
 
         if (random.nextBoolean() && (!(variables.isEmpty()))) {
           variable = variables.get(random.nextInt(variables.size()));
@@ -130,7 +130,7 @@ public abstract class MathEngineTest extends TestBase {
     try (final IMathEngine engine = tool.use().create()) {
       Assert.assertNotNull(engine);
 
-      for (count = 20000; (--count) >= 0;) {
+      for (count = 100; (--count) >= 0;) {
 
         if (random.nextBoolean() && (!(variables.isEmpty()))) {
           variable = variables.get(random.nextInt(variables.size()));
@@ -213,7 +213,7 @@ public abstract class MathEngineTest extends TestBase {
     try (final IMathEngine engine = tool.use().create()) {
       Assert.assertNotNull(engine);
 
-      for (count = 20000; (--count) >= 0;) {
+      for (count = 100; (--count) >= 0;) {
 
         if (random.nextBoolean() && (!(variables.isEmpty()))) {
           variable = variables.get(random.nextInt(variables.size()));
@@ -407,7 +407,7 @@ public abstract class MathEngineTest extends TestBase {
     try (final IMathEngine engine = tool.use().create()) {
       Assert.assertNotNull(engine);
 
-      for (count = 100; (--count) >= 0;) {
+      for (count = 25; (--count) >= 0;) {
 
         if (random.nextBoolean() && (!(variables.isEmpty()))) {
           variable = variables.get(random.nextInt(variables.size()));
@@ -483,7 +483,7 @@ public abstract class MathEngineTest extends TestBase {
     try (final IMathEngine engine = tool.use().create()) {
       Assert.assertNotNull(engine);
 
-      for (count = 1000; (--count) >= 0;) {
+      for (count = 100; (--count) >= 0;) {
 
         if (random.nextBoolean() && (!(variables.isEmpty()))) {
           variable = variables.get(random.nextInt(variables.size()));
