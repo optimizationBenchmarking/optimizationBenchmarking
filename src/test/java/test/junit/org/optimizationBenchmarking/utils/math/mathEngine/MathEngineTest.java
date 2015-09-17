@@ -143,7 +143,9 @@ public abstract class MathEngineTest extends TestBase {
               random.nextLong());
         }
 
-        value = Long.valueOf(MathEngineTest.__randomLong(random));
+        value = Long.valueOf(random.nextBoolean() //
+        ? MathEngineTest.__randomLong(random)
+            : random.nextInt());
         engine.setLong(variable, value.longValue());
         if (values.put(variable, value) == null) {
           variables.add(variable);
@@ -315,10 +317,12 @@ public abstract class MathEngineTest extends TestBase {
    *          the n
    * @param random
    *          the random number generator
+   * @param type
+   *          0 == {@code long} 1 == {@code double}, 2== {@code int}
    * @return the matrix
    */
   private static final IMatrix __randomMatrix(final int m, final int n,
-      final Random random) {
+      final int type, final Random random) {
     final MatrixBuilder mb;
     int i, j;
 
@@ -326,26 +330,61 @@ public abstract class MathEngineTest extends TestBase {
     mb.setM(m);
     mb.setN(n);
 
-    if (random.nextBoolean()) {
-      for (i = m; (--i) >= 0;) {
-        for (j = n; (--j) >= 0;) {
-          mb.append(MathEngineTest.__randomLong(random));
+    switch (type) {
+      case 0: {
+        for (i = m; (--i) >= 0;) {
+          for (j = n; (--j) >= 0;) {
+            mb.append(MathEngineTest.__randomLong(random));
+          }
         }
+        break;
       }
-    } else {
-      for (i = m; (--i) >= 0;) {
-        for (j = n; (--j) >= 0;) {
-          mb.append(MathEngineTest.__randomDouble(random));
+      case 1: {
+        for (i = m; (--i) >= 0;) {
+          for (j = n; (--j) >= 0;) {
+            mb.append(MathEngineTest.__randomDouble(random));
+          }
         }
+        break;
+      }
+      default: {
+        for (i = m; (--i) >= 0;) {
+          for (j = n; (--j) >= 0;) {
+            mb.append(random.nextInt());
+          }
+        }
+        break;
       }
     }
 
     return mb.make();
   }
 
-  /** test whether we can read and write matrices */
+  /** test whether we can read and write {@code double} matrices */
   @Test(timeout = 3600000)
-  public void testMatrixIO() {
+  public final void testDoubleMatrixIO() {
+    this.__testMatrixIO(1);
+  }
+
+  /** test whether we can read and write {@code long} matrices */
+  @Test(timeout = 3600000)
+  public final void testLongMatrixIO() {
+    this.__testMatrixIO(0);
+  }
+
+  /** test whether we can read and write {@code int} matrices */
+  @Test(timeout = 3600000)
+  public final void testIntegerMatrixIO() {
+    this.__testMatrixIO(2);
+  }
+
+  /**
+   * test whether we can read and write matrices
+   *
+   * @param type
+   *          0 == {@code long} 1 == {@code double}, 2== {@code int}
+   */
+  private final void __testMatrixIO(final int type) {
     final IMathEngineTool tool;
     final Random random;
     final HashMap<String, IMatrix> values;
@@ -368,7 +407,7 @@ public abstract class MathEngineTest extends TestBase {
     try (final IMathEngine engine = tool.use().create()) {
       Assert.assertNotNull(engine);
 
-      for (count = 333; (--count) >= 0;) {
+      for (count = 100; (--count) >= 0;) {
 
         if (random.nextBoolean() && (!(variables.isEmpty()))) {
           variable = variables.get(random.nextInt(variables.size()));
@@ -381,7 +420,7 @@ public abstract class MathEngineTest extends TestBase {
         }
 
         value = MathEngineTest.__randomMatrix((1 + random.nextInt(100)),
-            (1 + random.nextInt(100)), random);
+            (1 + random.nextInt(100)), type, random);
         engine.setMatrix(variable, value);
         if (values.put(variable, value) == null) {
           variables.add(variable);
@@ -396,9 +435,31 @@ public abstract class MathEngineTest extends TestBase {
     }
   }
 
-  /** test whether we can read and write vectors */
+  /** test whether we can read and write {@code long} vectors */
   @Test(timeout = 3600000)
-  public void testVectorIO() {
+  public final void testLongVectorIO() {
+    this.__testVectorIO(0);
+  }
+
+  /** test whether we can read and write {@code double} vectors */
+  @Test(timeout = 3600000)
+  public final void testDoubleVectorIO() {
+    this.__testVectorIO(1);
+  }
+
+  /** test whether we can read and write {@code int} vectors */
+  @Test(timeout = 3600000)
+  public final void testIntVectorIO() {
+    this.__testVectorIO(2);
+  }
+
+  /**
+   * test whether we can read and write vectors
+   *
+   * @param type
+   *          0 == {@code long} 1 == {@code double}, 2== {@code int}
+   */
+  private final void __testVectorIO(final int type) {
     final IMathEngineTool tool;
     final Random random;
     final HashMap<String, IMatrix> values;
@@ -437,7 +498,7 @@ public abstract class MathEngineTest extends TestBase {
         one = random.nextBoolean();
         value = MathEngineTest.__randomMatrix(
             (one ? 1 : (1 + random.nextInt(100))),
-            (one ? (1 + random.nextInt(100)) : 1), random);
+            (one ? (1 + random.nextInt(100)) : 1), type, random);
         engine.setMatrix(variable, value);
         if (values.put(variable, value) == null) {
           variables.add(variable);

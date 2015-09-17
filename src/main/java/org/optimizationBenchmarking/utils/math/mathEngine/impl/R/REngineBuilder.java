@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.io.paths.TempDir;
+import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.abstr.MathEngineBuilder;
 import org.optimizationBenchmarking.utils.tools.impl.process.TextProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.TextProcessBuilder;
@@ -30,7 +30,6 @@ public final class REngineBuilder extends
   public final REngine create() throws IOException {
     final TextProcessBuilder builder;
     final Logger log;
-    final TempDir temp;
     final TextProcess tp;
     final BufferedWriter bw;
     final R r;
@@ -42,9 +41,7 @@ public final class REngineBuilder extends
     r = R.getInstance();
     builder.setExecutable(r.m_rBinary);
 
-    temp = new TempDir();
-
-    builder.setDirectory(temp.getPath());
+    builder.setDirectory(PathUtils.getTempDir());
     for (final String s : r.m_params) {
       builder.addStringArgument(s);
     }
@@ -68,6 +65,6 @@ public final class REngineBuilder extends
 
     bw.flush();
 
-    return new REngine(tp, temp, log);
+    return new REngine(tp, log);
   }
 }

@@ -50,6 +50,8 @@ public class REngineTest extends MathEngineTest {
 
     try (final IMathEngine engine = tool.use().create()) {
       engine.setMatrix("a", matrixA); //$NON-NLS-1$
+      MathEngineTest._compareMatrices(matrixA, engine.getMatrix("a")); //$NON-NLS-1$
+
       try (final StreamLineIterator script = new StreamLineIterator(
           REngineTest.class,//
           "RTestScript.txt")) { //$NON-NLS-1$

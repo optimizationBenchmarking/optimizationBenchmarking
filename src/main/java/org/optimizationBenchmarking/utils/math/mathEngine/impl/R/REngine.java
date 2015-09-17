@@ -3,17 +3,12 @@ package org.optimizationBenchmarking.utils.math.mathEngine.impl.R;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
-import org.optimizationBenchmarking.utils.io.paths.PathUtils;
-import org.optimizationBenchmarking.utils.io.paths.TempDir;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.abstr.MathEngine;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.MatrixBuilder;
@@ -33,9 +28,6 @@ public final class REngine extends MathEngine {
 
   /** the instance of {@code R} */
   private TextProcess m_process;
-
-  /** the temporary directory in which we run {@code R} */
-  private TempDir m_temp;
 
   /** the id of the engine */
   private final String m_id;
@@ -66,21 +58,18 @@ public final class REngine extends MathEngine {
    *
    * @param process
    *          the process
-   * @param temp
-   *          the temporary directory
    * @param logger
    *          the logger, or {@code null} if none should be used
    * @throws IOException
    *           if it must
    */
-  REngine(final TextProcess process, final TempDir temp,
-      final Logger logger) throws IOException {
+  REngine(final TextProcess process, final Logger logger)
+      throws IOException {
     super(logger);
 
     this.m_process = process;
-    this.m_temp = temp;
 
-    this.m_id = (('#') + //
+    this.m_id = (("REngine #") + //$NON-NLS-1$
     Long.toString(REngine.ENGINE_ID.incrementAndGet()));
 
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
@@ -103,18 +92,6 @@ public final class REngine extends MathEngine {
   }
 
   /**
-   * create a temporary file
-   *
-   * @return the file
-   * @throws IOException
-   *           if it must
-   */
-  private final Path __tempFile() throws IOException {
-    return PathUtils.normalize(Files.createTempFile(this.m_temp.getPath(),
-        null, ".dat")); //$NON-NLS-1$
-  }
-
-  /**
    * Handle an error
    *
    * @param t
@@ -130,36 +107,23 @@ public final class REngine extends MathEngine {
   @Override
   public final void close() {
     TextProcess proc;
-    TempDir temp;
 
     this.m_closed = true;
 
     proc = this.m_process;
     this.m_process = null;
-    temp = this.m_temp;
-    this.m_temp = null;
 
-    try {
-      if (proc != null) {
+    if (proc != null) {
+      try {
         try {
-          try {
-            proc.waitFor();
-          } finally {
-            proc.close();
-          }
-        } catch (final Throwable error) {
-          this.__handleError(error);
+          proc.waitFor();
+        } finally {
+          proc.close();
         }
-        proc = null;
+      } catch (final Throwable error) {
+        this.__handleError(error);
       }
-    } finally {
-      if (temp != null) {
-        try {
-          temp.close();
-        } catch (final Throwable error) {
-          this.__handleError(error);
-        }
-      }
+      proc = null;
     }
   }
 
@@ -431,7 +395,7 @@ public final class REngine extends MathEngine {
     this.__checkState();
     try {
       this.__assignmentBegin(variable);
-      this.m_process.getStdIn().write(REngine.__longToString(value));
+      REngine.__writeLong(value, this.m_process.getStdIn());
       this.__assignmentEnd(variable);
     } catch (final Throwable error) {
       this.__handleError(error);
@@ -443,21 +407,27 @@ public final class REngine extends MathEngine {
    *
    * @param d
    *          the {@code double}
-   * @return the string
+   * @param dest
+   *          the destination writer
+   * @throws IOException
+   *           if i/o failse
    */
-  private static final String __doubleToString(final double d) {
+  private static final void __writeDouble(final double d,
+      final BufferedWriter dest) throws IOException {
     if (d != d) {
-      return REngine.NAN;
+      dest.write(REngine.NAN);
+      return;
     }
     if (d <= Double.NEGATIVE_INFINITY) {
-      return REngine.NEGATIVE_INFINITY;
+      dest.write(REngine.NEGATIVE_INFINITY);
+      return;
     }
     if (d >= Double.POSITIVE_INFINITY) {
-      return REngine.POSITIVE_INFINITY;
+      dest.write(REngine.POSITIVE_INFINITY);
+      return;
     }
-
-    return SimpleNumberAppender.INSTANCE
-        .toString(d, ETextCase.IN_SENTENCE);
+    dest.write(SimpleNumberAppender.INSTANCE.toString(d,
+        ETextCase.IN_SENTENCE));
   }
 
   /**
@@ -465,10 +435,20 @@ public final class REngine extends MathEngine {
    *
    * @param d
    *          the {@code long}
-   * @return the string
+   * @param dest
+   *          the writer
+   * @throws IOException
+   *           if i/o fails
    */
-  private static final String __longToString(final long d) {
-    return Long.toString(d);
+  private static final void __writeLong(final long d,
+      final BufferedWriter dest) throws IOException {
+    if ((d >= Integer.MIN_VALUE) && (d <= Integer.MAX_VALUE)) {
+      dest.write("as.integer("); //$NON-NLS-1$
+      dest.write(Integer.toString((int) d));
+      dest.write(')');
+    } else {
+      dest.write(Long.toString(d));
+    }
   }
 
   /** {@inheritDoc} */
@@ -477,7 +457,7 @@ public final class REngine extends MathEngine {
     this.__checkState();
     try {
       this.__assignmentBegin(variable);
-      this.m_process.getStdIn().write(REngine.__doubleToString(value));
+      REngine.__writeDouble(value, this.m_process.getStdIn());
       this.__assignmentEnd(variable);
     } catch (final Throwable error) {
       this.__handleError(error);
@@ -485,145 +465,32 @@ public final class REngine extends MathEngine {
   }
 
   /**
-   * write a vector
+   * Set a matrix or vector
    *
-   * @param matrix
-   *          the matrix
-   * @param m
-   *          the m
-   * @param n
-   *          the n
-   * @return the temp file to delete after usage, if any
-   * @throws IOException
-   *           if i/o fails
+   * @param variable
+   *          the variable
+   * @param value
+   *          the value
+   * @param isVector
+   *          is the value a vector ({@code true}) or a matrix (
+   *          {@code false})?
    */
   @SuppressWarnings("resource")
-  private final Path __writeVector(final IMatrix matrix, final int m,
-      final int n) throws IOException {
-    final int size;
-    final Path temp;
-    final BufferedWriter dest, out;
-    final char separator;
-    int i, j;
-    boolean first;
+  private final void __setMatrix(final String variable,
+      final IMatrix value, final boolean isVector) {
 
-    size = (m * n);
-    out = this.m_process.getStdIn();
-    if (size > 20) {
-      temp = this.__tempFile();
-      dest = new BufferedWriter(new OutputStreamWriter(
-          PathUtils.openOutputStream(temp)));
-      out.write("scan(\"");//$NON-NLS-1$
-      out.write(PathUtils.getPhysicalPath(temp, true));
-      out.write("\",n=");//$NON-NLS-1$
-      out.write(Integer.toString(size));
-      out.write(",quiet=");//$NON-NLS-1$
-      out.write(REngine.TRUE);
-      separator = ' ';
-    } else {
-      temp = null;
-      dest = out;
-      out.write("c(");//$NON-NLS-1$
-      separator = ',';
-    }
-    try {
-      try {
-        first = true;
-        if (matrix.isIntegerMatrix()) {
-          for (j = 0; j < n; j++) {
-            for (i = 0; i < m; i++) {
-              if (first) {
-                first = false;
-              } else {
-                dest.write(separator);
-              }
-              dest.write(REngine.__longToString(matrix.getLong(i, j)));
-            }
-          }
-        } else {
-          for (j = 0; j < n; j++) {
-            for (i = 0; i < m; i++) {
-              if (first) {
-                first = false;
-              } else {
-                dest.write(separator);
-              }
-              dest.write(REngine.__doubleToString(matrix.getDouble(i, j)));
-            }
-          }
-        }
-      } finally {
-        if (dest != out) {
-          dest.close();
-        }
-      }
-
-      out.write(')');
-    } catch (final Throwable error) {
-      if (temp != null) {
-        PathUtils.delete(temp);
-      }
-      this.__handleError(error);
-    }
-
-    return temp;
-  }
-
-  /** {@inheritDoc} */
-  @SuppressWarnings("resource")
-  @Override
-  public final void setMatrix(final String variable, final IMatrix value) {
     final BufferedWriter out;
     final int m, n;
-    final Path path;
+    int i, j, q;
+    boolean first;
 
     if (value == null) {
       this.__handleError(//
       new IllegalArgumentException("Cannot load null matrix.")); //$NON-NLS-1$
     }
-
     m = value.m();
     n = value.n();
-    out = this.m_process.getStdIn();
-    try {
-      this.__assignmentBegin(variable);
-      out.write("matrix("); //$NON-NLS-1$
-      path = this.__writeVector(value, m, n);
-      try {
-        out.write(",nrow=");//$NON-NLS-1$
-        out.write(Integer.toString(m));
-        out.write(",ncol=");//$NON-NLS-1$
-        out.write(Integer.toString(n));
-        out.write(",byrow="); //$NON-NLS-1$
-        out.write(REngine.FALSE);
-        out.write(')');
-        this.__assignmentEnd(variable);
-      } finally {
-        if (path != null) {
-          PathUtils.delete(path);
-        }
-      }
-    } catch (final Throwable ioe) {
-      this.__handleError(ioe);
-    }
-  }
-
-  /** {@inheritDoc} */
-  @SuppressWarnings("resource")
-  @Override
-  public final void setVector(final String variable, final IMatrix value) {
-    final BufferedWriter out;
-    final int m, n;
-    final Path path;
-
-    if (value == null) {
-      this.__handleError(new IllegalArgumentException(//
-          "Cannot load null matrix as vector.")); //$NON-NLS-1$
-    }
-
-    m = value.m();
-    n = value.n();
-    if ((m != 1) && (n != 1)) {
+    if (isVector && ((m != 1) && (n != 1))) {
       this.__handleError(new IllegalArgumentException(//
           ((("A vector must be a matrix with either only one row or only one column, but you passed in a "//$NON-NLS-1$
           + m) + 'x') + n)
@@ -633,25 +500,64 @@ public final class REngine extends MathEngine {
     out = this.m_process.getStdIn();
     try {
       this.__assignmentBegin(variable);
-      out.write("matrix("); //$NON-NLS-1$
-      path = this.__writeVector(value, m, n);
-      try {
-        out.write(",nrow=");//$NON-NLS-1$
-        out.write(Integer.toString(m));
-        out.write(",ncol=");//$NON-NLS-1$
-        out.write(Integer.toString(n));
-        out.write(",byrow="); //$NON-NLS-1$
-        out.write(REngine.TRUE);
-        out.write(')');
-        this.__assignmentEnd(variable);
-      } finally {
-        if (path != null) {
-          PathUtils.delete(path);
+      out.write("matrix(c("); //$NON-NLS-1$
+
+      first = true;
+      q = 0;
+      if (value.isIntegerMatrix()) {
+        for (j = 0; j < n; j++) {
+          for (i = 0; i < m; i++) {
+            if (first) {
+              first = false;
+            } else {
+              out.write(',');
+              if (((++q) % 20) == 0) {
+                out.newLine();
+              }
+            }
+            REngine.__writeLong(value.getLong(i, j), out);
+          }
+        }
+      } else {
+        for (j = 0; j < n; j++) {
+          for (i = 0; i < m; i++) {
+            if (first) {
+              first = false;
+            } else {
+              out.write(',');
+              if (((++q) % 20) == 0) {
+                out.newLine();
+              }
+            }
+            REngine.__writeDouble(value.getDouble(i, j), out);
+          }
         }
       }
+
+      out.write("),nrow=");//$NON-NLS-1$
+      out.write(Integer.toString(m));
+      out.write(",ncol=");//$NON-NLS-1$
+      out.write(Integer.toString(n));
+      out.write(",byrow="); //$NON-NLS-1$
+      out.write(REngine.FALSE);
+      out.write(')');
+      this.__assignmentEnd(variable);
+
     } catch (final Throwable ioe) {
       this.__handleError(ioe);
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void setMatrix(final String variable, final IMatrix value) {
+    this.__setMatrix(variable, value, false);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void setVector(final String variable, final IMatrix value) {
+    this.__setMatrix(variable, value, true);
   }
 
   /** {@inheritDoc} */
@@ -668,6 +574,7 @@ public final class REngine extends MathEngine {
         bw.newLine();
       }
       bw.newLine();
+      bw.flush();
     } catch (final Throwable error) {
       this.__handleError(error);
     }
