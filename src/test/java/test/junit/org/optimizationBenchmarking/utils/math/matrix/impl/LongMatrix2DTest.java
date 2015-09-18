@@ -18,8 +18,7 @@ public class LongMatrix2DTest extends MatrixTest<LongMatrix2D> {
   @Override
   protected LongMatrix2D getInstance() {
     final Random r;
-    final long[][] data;
-    int i, j, k, type;
+    int i, j;
 
     r = new Random();
 
@@ -70,30 +69,49 @@ public class LongMatrix2DTest extends MatrixTest<LongMatrix2D> {
       }
     }
 
+    return LongMatrix2DTest._create(i, j, r);
+  }
+
+  /**
+   * Create the long matrix of the given dimensions
+   *
+   * @param i
+   *          the number of rows
+   * @param j
+   *          the number of columns
+   * @param r
+   *          the random number generator
+   * @return the metrix
+   */
+  static final LongMatrix2D _create(final int i, final int j,
+      final Random r) {
+    final long[][] data;
+    int k, z, type;
+
     k = r.nextInt(i * j * 10);
     data = new long[i][j];
     type = r.nextInt(4);
     for (final long[] d : data) {
-      for (i = d.length; (--i) >= 0;) {
+      for (z = d.length; (--z) >= 0;) {
         k++;
         switch (type) {
           case 0: {
-            d[i] = ((byte) k);
+            d[z] = ((byte) k);
             break;
             /** byte */
           }
           case 1: {
-            d[i] = ((short) k);
+            d[z] = ((short) k);
             break;
             /** short */
           }
           case 2: {
-            d[i] = k;
+            d[z] = k;
             break;
             /** int */
           }
           default: {
-            d[i] = (((((((long) k) * k) * k) * k) * k) * k);
+            d[z] = (((((((long) k) * k) * k) * k) * k) * k);
             break;
             /** long */
           }

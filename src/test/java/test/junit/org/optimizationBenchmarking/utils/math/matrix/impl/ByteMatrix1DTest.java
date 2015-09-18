@@ -18,8 +18,7 @@ public class ByteMatrix1DTest extends MatrixTest<ByteMatrix1D> {
   @Override
   protected ByteMatrix1D getInstance() {
     final Random r;
-    final byte[] data;
-    int i, j, k, l;
+    int i, j;
 
     r = new Random();
 
@@ -70,6 +69,25 @@ public class ByteMatrix1DTest extends MatrixTest<ByteMatrix1D> {
       }
     }
 
+    return ByteMatrix1DTest._create(i, j, r);
+  }
+
+  /**
+   * Create the byte matrix of the given dimensions
+   *
+   * @param i
+   *          the number of rows
+   * @param j
+   *          the number of columns
+   * @param r
+   *          the random number generator
+   * @return the metrix
+   */
+  static final ByteMatrix1D _create(final int i, final int j,
+      final Random r) {
+    final byte[] data;
+    int k, l;
+
     k = r.nextInt();
     l = (i * j);
     data = new byte[l];
@@ -79,5 +97,4 @@ public class ByteMatrix1DTest extends MatrixTest<ByteMatrix1D> {
 
     return new ByteMatrix1D(data, i, j);
   }
-
 }

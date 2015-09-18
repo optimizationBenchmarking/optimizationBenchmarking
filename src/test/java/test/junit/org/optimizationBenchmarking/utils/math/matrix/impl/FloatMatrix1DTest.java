@@ -18,8 +18,7 @@ public class FloatMatrix1DTest extends MatrixTest<FloatMatrix1D> {
   @Override
   protected FloatMatrix1D getInstance() {
     final Random r;
-    final float[] data;
-    int i, j, k, l, type;
+    int i, j;
 
     r = new Random();
 
@@ -70,6 +69,25 @@ public class FloatMatrix1DTest extends MatrixTest<FloatMatrix1D> {
       }
     }
 
+    return FloatMatrix1DTest._create(i, j, r);
+  }
+
+  /**
+   * Create the float matrix of the given dimensions
+   *
+   * @param i
+   *          the number of rows
+   * @param j
+   *          the number of columns
+   * @param r
+   *          the random number generator
+   * @return the metrix
+   */
+  static final FloatMatrix1D _create(final int i, final int j,
+      final Random r) {
+    final float[] data;
+    int k, l, type;
+
     k = r.nextInt();
     l = (i * j);
     data = new float[l];
@@ -107,5 +125,4 @@ public class FloatMatrix1DTest extends MatrixTest<FloatMatrix1D> {
 
     return new FloatMatrix1D(data, i, j);
   }
-
 }

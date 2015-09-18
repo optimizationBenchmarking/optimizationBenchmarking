@@ -18,9 +18,7 @@ public class IntMatrix1DTest extends MatrixTest<IntMatrix1D> {
   @Override
   protected IntMatrix1D getInstance() {
     final Random r;
-    final int[] data;
-    final int type;
-    int i, j, k, l;
+    int i, j;
 
     r = new Random();
 
@@ -71,6 +69,24 @@ public class IntMatrix1DTest extends MatrixTest<IntMatrix1D> {
       }
     }
 
+    return IntMatrix1DTest._create(i, j, r);
+  }
+
+  /**
+   * Create the int matrix of the given dimensions
+   *
+   * @param i
+   *          the number of rows
+   * @param j
+   *          the number of columns
+   * @param r
+   *          the random number generator
+   * @return the metrix
+   */
+  static final IntMatrix1D _create(final int i, final int j, final Random r) {
+    final int[] data;
+    int k, l, type;
+
     type = r.nextInt(3);
     k = r.nextInt();
     l = (i * j);
@@ -99,5 +115,4 @@ public class IntMatrix1DTest extends MatrixTest<IntMatrix1D> {
 
     return new IntMatrix1D(data, i, j);
   }
-
 }

@@ -18,8 +18,7 @@ public class DoubleMatrix2DTest extends MatrixTest<DoubleMatrix2D> {
   @Override
   protected DoubleMatrix2D getInstance() {
     final Random r;
-    final double[][] data;
-    int i, j, k, type;
+    int i, j;
 
     r = new Random();
 
@@ -70,41 +69,60 @@ public class DoubleMatrix2DTest extends MatrixTest<DoubleMatrix2D> {
       }
     }
 
+    return DoubleMatrix2DTest._create(i, j, r);
+  }
+
+  /**
+   * Create the double matrix of the given dimensions
+   *
+   * @param i
+   *          the number of rows
+   * @param j
+   *          the number of columns
+   * @param r
+   *          the random number generator
+   * @return the metrix
+   */
+  static final DoubleMatrix2D _create(final int i, final int j,
+      final Random r) {
+    final double[][] data;
+    int k, z, type;
+
     k = r.nextInt();
     type = r.nextInt(6);
     data = new double[i][j];
     for (final double[] d : data) {
-      for (i = d.length; (--i) >= 0;) {
+      for (z = d.length; (--z) >= 0;) {
         k++;
 
         switch (type) {
           case 0: {
-            d[i] = ((byte) k);
+            d[z] = ((byte) k);
             break;
             /** byte */
           }
           case 1: {
-            d[i] = ((short) k);
+            d[z] = ((short) k);
             break;
             /** short */
           }
           case 2: {
-            d[i] = k;
+            d[z] = k;
             break;
             /** int */
           }
           case 3: {
-            d[i] = (((((((long) k) * k) * k) * k) * k) * k);
+            d[z] = (((((((long) k) * k) * k) * k) * k) * k);
             break;
             /** long */
           }
           case 4: {
-            d[i] = Math.sin(k);
+            d[z] = Math.sin(k);
             break;
             /** double */
           }
           default: {
-            d[i] = ((float) ((Math.tan(k))));
+            d[z] = ((float) ((Math.tan(k))));
             break;
             /** float */
           }

@@ -18,8 +18,7 @@ public class DoubleMatrix1DTest extends MatrixTest<DoubleMatrix1D> {
   @Override
   protected DoubleMatrix1D getInstance() {
     final Random r;
-    final double[] data;
-    int i, j, k, l, type;
+    int i, j;
 
     r = new Random();
 
@@ -70,6 +69,25 @@ public class DoubleMatrix1DTest extends MatrixTest<DoubleMatrix1D> {
       }
     }
 
+    return DoubleMatrix1DTest._create(i, j, r);
+  }
+
+  /**
+   * Create the double matrix of the given dimensions
+   *
+   * @param i
+   *          the number of rows
+   * @param j
+   *          the number of columns
+   * @param r
+   *          the random number generator
+   * @return the metrix
+   */
+  static final DoubleMatrix1D _create(final int i, final int j,
+      final Random r) {
+    final double[] data;
+    int k, l, type;
+
     k = r.nextInt();
     l = (i * j);
     type = r.nextInt(6);
@@ -113,5 +131,4 @@ public class DoubleMatrix1DTest extends MatrixTest<DoubleMatrix1D> {
 
     return new DoubleMatrix1D(data, i, j);
   }
-
 }

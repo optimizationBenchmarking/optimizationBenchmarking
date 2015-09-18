@@ -18,8 +18,7 @@ public class ShortMatrix1DTest extends MatrixTest<ShortMatrix1D> {
   @Override
   protected ShortMatrix1D getInstance() {
     final Random r;
-    final short[] data;
-    int i, j, k, l, type;
+    int i, j;
 
     r = new Random();
 
@@ -70,6 +69,25 @@ public class ShortMatrix1DTest extends MatrixTest<ShortMatrix1D> {
       }
     }
 
+    return ShortMatrix1DTest._create(i, j, r);
+  }
+
+  /**
+   * Create the short matrix of the given dimensions
+   *
+   * @param i
+   *          the number of rows
+   * @param j
+   *          the number of columns
+   * @param r
+   *          the random number generator
+   * @return the metrix
+   */
+  static final ShortMatrix1D _create(final int i, final int j,
+      final Random r) {
+    final short[] data;
+    int k, l, type;
+
     k = r.nextInt();
     l = (i * j);
     type = r.nextInt(2);
@@ -91,5 +109,4 @@ public class ShortMatrix1DTest extends MatrixTest<ShortMatrix1D> {
 
     return new ShortMatrix1D(data, i, j);
   }
-
 }
