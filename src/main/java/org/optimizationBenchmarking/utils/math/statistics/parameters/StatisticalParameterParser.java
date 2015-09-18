@@ -43,6 +43,10 @@ public final class StatisticalParameterParser extends
       case ArithmeticMean.OTHER: {
         return ArithmeticMean.INSTANCE;
       }
+      case InterQuartileRange.SHORT_CMP:
+      case InterQuartileRange.LONG: {
+        return InterQuartileRange.INSTANCE;
+      }
       case Maximum.SHORT:
       case Maximum.LONG: {
         return Maximum.INSTANCE;

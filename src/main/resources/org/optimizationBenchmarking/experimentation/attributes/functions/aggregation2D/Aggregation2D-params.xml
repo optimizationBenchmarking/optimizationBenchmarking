@@ -8,34 +8,37 @@
 		class="org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameter"
 		parser="org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameterParser"
 		default="median" allowsMore="false">
-		<cd:choice name="median" description="Plot the median over the different ECDFs." />
+		<cd:choice name="median"
+			description="Plot the median over the different data. Line the mean, the median gives an impression about what value we can expect to get in an experiment. However, it is a more robust statistic than the mean." />
 		<cd:choice name="mean"
-			description="Plot the arithmetic mean over the different ECDFs." />
-		<cd:choice name="min" description="Plot the minimum over the different ECDFs." />
-		<cd:choice name="max" description="Plot the maximum over the different ECDFs." />
+			description="Plot the arithmetic mean over the different data." />
+		<cd:choice name="min" description="Plot the minimum over the different data." />
+		<cd:choice name="max" description="Plot the maximum over the different data." />
 		<cd:choice name="0.01 quantil"
-			description="Plot the value dividing the lower 1% of the ECDFs from the rest." />
+			description="Plot the value dividing the lower 1% of the data from the rest." />
 		<cd:choice name="0.02 quantil"
-			description="Plot the value dividing the lower 2% of the ECDFs from the rest." />
+			description="Plot the value dividing the lower 2% of the data from the rest." />
 		<cd:choice name="0.05 quantil"
-			description="Plot the value dividing the lower 5% of the ECDFs from the rest." />
+			description="Plot the value dividing the lower 5% of the data from the rest." />
 		<cd:choice name="0.1 quantil"
-			description="Plot the value dividing the lower 10% of the ECDFs from the rest." />
+			description="Plot the value dividing the lower 10% of the data from the rest." />
 		<cd:choice name="0.25 quantil"
-			description="Plot the value dividing the lower 25% of the ECDFs from the rest." />
+			description="Plot the value dividing the lower 25% of the data from the rest." />
 		<cd:choice name="0.75 quantil"
-			description="Plot the value dividing the upper 25% of the ECDFs from the rest." />
+			description="Plot the value dividing the upper 25% of the data from the rest." />
 		<cd:choice name="0.9 quantil"
-			description="Plot the value dividing the upper 10% of the ECDFs from the rest." />
+			description="Plot the value dividing the upper 10% of the data from the rest." />
 		<cd:choice name="0.95 quantil"
-			description="Plot the value dividing the upper 5% of the ECDFs from the rest." />
+			description="Plot the value dividing the upper 5% of the data from the rest." />
 		<cd:choice name="0.98 quantil"
-			description="Plot the value dividing the upper 2% of the ECDFs from the rest." />
+			description="Plot the value dividing the upper 2% of the data from the rest." />
 		<cd:choice name="0.99 quantil"
-			description="Plot the value dividing the upper 1% of the ECDFs from the rest." />
+			description="Plot the value dividing the upper 1% of the data from the rest." />
+		<cd:choice name="interquartile range"
+			description="Plot the difference between the upper and lower quartile, i.e., the difference between the values which separate the top and bottom 25% of the data from the rest. This is a more robust measure of variation as the standard deviation." />
 		<cd:choice name="standard deviation"
-			description="Plot the standard deviation of the different ECDFs." />
-		<cd:choice name="variance" description="Plot the variance of the different ECDFs." />
+			description="Plot the standard deviation of the different data." />
+		<cd:choice name="variance" description="Plot the variance of the different data." />
 	</cd:instance>
 
 	<cd:instance name="secondaryAggregate"
@@ -43,34 +46,37 @@
 		class="org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameter"
 		parser="org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameterParser"
 		default="median" allowsMore="false">
-		<cd:choice name="median" description="Plot the median over the different ECDFs." />
+		<cd:choice name="median"
+			description="Plot the median over the different data. Line the mean, the median gives an impression about what value we can expect to get in an experiment. However, it is a more robust statistic than the mean." />
 		<cd:choice name="mean"
-			description="Plot the arithmetic mean over the different ECDFs." />
-		<cd:choice name="min" description="Plot the minimum over the different ECDFs." />
-		<cd:choice name="max" description="Plot the maximum over the different ECDFs." />
+			description="Plot the arithmetic mean over the different data." />
+		<cd:choice name="min" description="Plot the minimum over the different data." />
+		<cd:choice name="max" description="Plot the maximum over the different data." />
 		<cd:choice name="0.01 quantil"
-			description="Plot the value dividing the lower 1% of the ECDFs from the rest." />
+			description="Plot the value dividing the lower 1% of the data from the rest." />
 		<cd:choice name="0.02 quantil"
-			description="Plot the value dividing the lower 2% of the ECDFs from the rest." />
+			description="Plot the value dividing the lower 2% of the data from the rest." />
 		<cd:choice name="0.05 quantil"
-			description="Plot the value dividing the lower 5% of the ECDFs from the rest." />
+			description="Plot the value dividing the lower 5% of the data from the rest." />
 		<cd:choice name="0.1 quantil"
-			description="Plot the value dividing the lower 10% of the ECDFs from the rest." />
+			description="Plot the value dividing the lower 10% of the data from the rest." />
 		<cd:choice name="0.25 quantil"
-			description="Plot the value dividing the lower 25% of the ECDFs from the rest." />
+			description="Plot the value dividing the lower 25% of the data from the rest." />
 		<cd:choice name="0.75 quantil"
-			description="Plot the value dividing the upper 25% of the ECDFs from the rest." />
+			description="Plot the value dividing the upper 25% of the data from the rest." />
 		<cd:choice name="0.9 quantil"
-			description="Plot the value dividing the upper 10% of the ECDFs from the rest." />
+			description="Plot the value dividing the upper 10% of the data from the rest." />
 		<cd:choice name="0.95 quantil"
-			description="Plot the value dividing the upper 5% of the ECDFs from the rest." />
+			description="Plot the value dividing the upper 5% of the data from the rest." />
 		<cd:choice name="0.98 quantil"
-			description="Plot the value dividing the upper 2% of the ECDFs from the rest." />
+			description="Plot the value dividing the upper 2% of the data from the rest." />
 		<cd:choice name="0.99 quantil"
-			description="Plot the value dividing the upper 1% of the ECDFs from the rest." />
+			description="Plot the value dividing the upper 1% of the data from the rest." />
+		<cd:choice name="interquartile range"
+			description="Plot the difference between the upper and lower quartile, i.e., the difference between the values which separate the top and bottom 25% of the data from the rest. This is a more robust measure of variation as the standard deviation." />
 		<cd:choice name="standard deviation"
-			description="Plot the standard deviation of the different ECDFs." />
-		<cd:choice name="variance" description="Plot the variance of the different ECDFs." />
+			description="Plot the standard deviation of the different data." />
+		<cd:choice name="variance" description="Plot the variance of the different data." />
 	</cd:instance>
 
 	<cd:inherit

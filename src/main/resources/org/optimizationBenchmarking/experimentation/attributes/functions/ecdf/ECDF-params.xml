@@ -55,6 +55,8 @@
 			description="Plot the value dividing the upper 2% of the ECDFs from the rest." />
 		<cd:choice name="0.99 quantil"
 			description="Plot the value dividing the upper 1% of the ECDFs from the rest." />
+		<cd:choice name="interquartile range"
+			description="Plot the difference between the upper and lower quartile, i.e., the difference between the values which separate the top and bottom 25% of the ECDFs from the rest. This is a more robust measure of variation as the standard deviation." />
 		<cd:choice name="standard deviation"
 			description="Plot the standard deviation of the different ECDFs." />
 		<cd:choice name="variance" description="Plot the variance of the different ECDFs." />

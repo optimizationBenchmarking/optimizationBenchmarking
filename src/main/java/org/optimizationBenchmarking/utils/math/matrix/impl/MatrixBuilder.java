@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.math.matrix.impl;
 
+import org.optimizationBenchmarking.utils.math.BasicNumber;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
@@ -234,6 +235,32 @@ public final class MatrixBuilder implements IAggregate {
       this.append(Long.parseLong(str));
     } catch (final NumberFormatException nfe) {
       this.append(Double.parseDouble(str));
+    }
+  }
+
+  /**
+   * Append a basic number
+   *
+   * @param number
+   *          the number
+   */
+  public final void append(final BasicNumber number) {
+    if (number == null) {
+      throw new IllegalArgumentException(//
+          "Cannot append a null number."); //$NON-NLS-1$
+    }
+    switch (number.getState()) {
+      case BasicNumber.STATE_EMPTY: {
+        throw new IllegalArgumentException(//
+            "Cannot append an empty number."); //$NON-NLS-1$
+      }
+      case BasicNumber.STATE_INTEGER: {
+        this.append(number.longValue());
+        return;
+      }
+      default: {
+        this.append(number.doubleValue());
+      }
     }
   }
 
