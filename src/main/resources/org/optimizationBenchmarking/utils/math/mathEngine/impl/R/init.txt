@@ -33,18 +33,25 @@ rcommPrintMatrix <- function(mat) {
   options(op);
 }
 
+## This function executes a command or expression. It eats away
+## possible errors and output.
+rcommExec <- function(expression) {
+  temp <- suppressMessages(suppressWarnings(capture.output(
+    tryCatch(expression, error=function(e) { }))));
+  rm(temp);
+}
+
+
 # Load a library. Silently install it if it is not yet installed.
 # Quit if it cannot be installed.
 rcommUsePackage <- function(package) {
-  temp<-suppressMessages(suppressWarnings(capture.output(
-     check<-require(package, quietly=TRUE, character.only=TRUE))));  
+  rcommExec(check<-require(package, quietly=TRUE, character.only=TRUE));  
   if(!(check)) {
-     system(paste0("Rscript -e 'install.packages(\"",
+     rcommExec(system(paste0("Rscript -e 'install.packages(\"",
       package, "\", repos=\"http://cran.us.r-project.org\", dependencies=TRUE, clean=TRUE, quiet=TRUE)'"),
-      intern=FALSE, ignore.stdout=TRUE, ignore.stderr=TRUE);
+      intern=FALSE, ignore.stdout=TRUE, ignore.stderr=TRUE));
   
-    temp<-suppressMessages(suppressWarnings(capture.output(
-     check<-require(package, quietly=TRUE, character.only=TRUE))));
+    rcommExec(check<-require(package, quietly=TRUE, character.only=TRUE));
     if(!(check)) {
       q();
     }                        
