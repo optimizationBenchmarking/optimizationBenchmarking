@@ -9,7 +9,7 @@
     parser="org.optimizationBenchmarking.utils.parsers.StrictStringParser"
     default="instances by experimental results" allowsMore="false">
     <cd:choice name="instances by experimental results"
-      description="We try to distinguish the benchmark instances according to how the algorithms perform on them. This is done by fist computing some key statistics about the experimental results and then clustering the benchmark instances according to them." />
+      description="We try to distinguish the benchmark instances according to how the algorithms perform on them. This is done by fist computing some key statistics about the experimental results and then clustering the benchmark instances according to them. The resulting clustering only contains instances for which all experiments have data." />
     <cd:choice name="single instances"
       description="Each benchmark instance forms its own group." />
     <cd:choice name="instances by feature values"

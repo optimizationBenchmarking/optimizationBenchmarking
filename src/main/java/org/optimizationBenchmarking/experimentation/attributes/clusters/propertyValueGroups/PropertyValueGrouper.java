@@ -314,4 +314,10 @@ public final class PropertyValueGrouper extends
     }
     return all;
   }
+
+  /** {@inhertitDoc} */
+  @Override
+  public final String toString() {
+    return this.m_groupingMode.toString();
+  }
 }

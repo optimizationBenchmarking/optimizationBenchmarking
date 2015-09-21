@@ -1351,7 +1351,10 @@ public abstract class FunctionJob extends ExperimentSetJob {
       clustering = this.m_clusterer.get(selected);
       if ((logger != null) && (logger.isLoggable(Level.FINER))) {
         logger.finer("Finished computing clustering of data according to " //$NON-NLS-1$
-            + this.m_clusterer);
+            + this.m_clusterer
+            + " into " + //$NON-NLS-1$
+            ((clustering != null) ? clustering.getData().size() : 0)
+            + " clusters.");//$NON-NLS-1$
       }
       if (clustering == null) {
         throw new IllegalStateException(//

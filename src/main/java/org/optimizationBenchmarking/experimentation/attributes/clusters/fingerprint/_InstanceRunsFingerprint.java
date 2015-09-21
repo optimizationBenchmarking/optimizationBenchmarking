@@ -62,6 +62,9 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileAggr
 final class _InstanceRunsFingerprint extends
     Attribute<IInstanceRuns, IMatrix> {
 
+  /** the number of divisions */
+  private static final int DIVISIONS = 3;
+
   /** the globally shared instance */
   static final _InstanceRunsFingerprint INSTANCE = new _InstanceRunsFingerprint();
 
@@ -203,7 +206,7 @@ final class _InstanceRunsFingerprint extends
       final MatrixBuilder builder) {
     final int dimIndex;
     final boolean dimIsInteger;
-    final double start, end;
+    final double start, end, div;
     final ArrayListView<? extends IRun> runs;
     ArrayListView<? extends IDataPoint> runData;
     int slot;
@@ -246,8 +249,9 @@ final class _InstanceRunsFingerprint extends
     // remember median of end points
     end = q50.doubleValue();
 
-    for (slot = 1; slot <= 3; slot++) {
-      value = ((((end - start) * slot) / 4) + start);
+    div = (_InstanceRunsFingerprint.DIVISIONS + 1);
+    for (slot = 1; slot <= _InstanceRunsFingerprint.DIVISIONS; slot++) {
+      value = ((((end - start) * slot) / div) + start);
       _InstanceRunsFingerprint.__append(runs, dimensions, value, q25, q50,
           q75, dimIndex, builder);
     }

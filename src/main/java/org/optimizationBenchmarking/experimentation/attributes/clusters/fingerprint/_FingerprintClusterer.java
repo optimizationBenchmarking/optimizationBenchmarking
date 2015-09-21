@@ -6,7 +6,9 @@ import org.optimizationBenchmarking.experimentation.attributes.OnlySharedInstanc
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.INamedElement;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElementSet;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.StreamLineIterator;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.R.R;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.R.REngine;
@@ -22,9 +24,14 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
  * {@link org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint.Fingerprint}
  * s of the elements to be clustered.</li>
  * </ul>
+ *
+ * @param <CT>
+ *          the cluster type
+ * @param <CCT>
+ *          the clustering type
  */
-abstract class _FingerprintClusterer extends
-    Attribute<IExperimentSet, FingerprintClustering> {
+abstract class _FingerprintClusterer<CT extends _FingerprintCluster<CCT>, CCT extends _FingerprintClustering<CT>>
+    extends Attribute<IExperimentSet, CCT> {
 
   /** create the clusterer */
   _FingerprintClusterer() {
@@ -40,15 +47,31 @@ abstract class _FingerprintClusterer extends
    */
   abstract INamedElementSet _getClusterSource(final IExperimentSet data);
 
+  /**
+   * Create the clustering
+   *
+   * @param data
+   *          the data
+   * @param clustering
+   *          the clustering decisions
+   * @param source
+   *          the source set of named elements to pick from
+   * @param names
+   *          the element names
+   * @return the clustering
+   */
+  abstract CCT _create(final IExperimentSet data,
+      final IMatrix clustering, final INamedElementSet source,
+      final ArrayListView<? extends INamedElement> names);
+
   /** {@inheritDoc} */
   @Override
-  protected final FingerprintClustering compute(final IExperimentSet data) {
-    final IExperimentSet set;
+  protected final CCT compute(final IExperimentSet data) {
+    final INamedElementSet names;
     IMatrix matrix;
 
-    set = OnlySharedInstances.INSTANCE.get(data);
-
-    matrix = Fingerprint.INSTANCE.get(this._getClusterSource(set));
+    names = this._getClusterSource(OnlySharedInstances.INSTANCE.get(data));
+    matrix = Fingerprint.INSTANCE.get(names);
     try (final REngine engine = R.getInstance().use().create()) {
       engine.setMatrix("data", matrix);//$NON-NLS-1$
       matrix = null;
@@ -67,6 +90,7 @@ abstract class _FingerprintClusterer extends
           ioe);
     }
 
-    return new FingerprintClustering(set, matrix);
+    return this._create(data, matrix, this._getClusterSource(data),
+        names.getData());
   }
 }

@@ -13,9 +13,12 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * A performance fingerprint cluster is a cluster which holds experiments
  * or instances belonging to one similarity group according to their
  * performance fingerprint.
+ *
+ * @param <CCT>
+ *          the clustering type
  */
-public final class FingerprintCluster extends
-    ShadowExperimentSet<FingerprintClustering> implements ICluster {
+class _FingerprintCluster<CCT extends _FingerprintClustering<?>> extends
+    ShadowExperimentSet<CCT> implements ICluster {
 
   /** the name of the cluster */
   private final String m_name;
@@ -30,7 +33,7 @@ public final class FingerprintCluster extends
    * @param selection
    *          the data selection
    */
-  FingerprintCluster(final FingerprintClustering owner, final String name,
+  _FingerprintCluster(final CCT owner, final String name,
       final DataSelection selection) {
     super(owner, selection);
     this.m_name = name;
@@ -38,14 +41,14 @@ public final class FingerprintCluster extends
 
   /** {@inheritDoc} */
   @Override
-  public final ETextCase printShortName(final ITextOutput textOut,
+  public ETextCase printShortName(final ITextOutput textOut,
       final ETextCase textCase) {
     return textCase.appendWord(this.m_name, textOut);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final ETextCase printLongName(final ITextOutput textOut,
+  public ETextCase printLongName(final ITextOutput textOut,
       final ETextCase textCase) {
     return textCase.appendWord(this.m_name, textOut);
   }

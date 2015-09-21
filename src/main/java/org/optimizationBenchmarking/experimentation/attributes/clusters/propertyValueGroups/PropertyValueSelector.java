@@ -137,4 +137,10 @@ public final class PropertyValueSelector extends
     return new PropertyValueSelector(property.getName(),
         PropertyValueGrouper.configure(property, config));
   }
+
+  /** {@inhertitDoc} */
+  @Override
+  public final String toString() {
+    return this.m_property + " by " + this.m_grouper.toString();//$NON-NLS-1$
+  }
 }
