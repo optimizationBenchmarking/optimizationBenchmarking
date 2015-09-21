@@ -59,14 +59,14 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileAggr
  * aggregates for the three quantiles, each of which will collect the data.
  * Once I have better implementations, I will improve on that. </p>
  */
-final class _InstanceRunsPerformanceFingerprint extends
+final class _InstanceRunsFingerprint extends
     Attribute<IInstanceRuns, IMatrix> {
 
   /** the globally shared instance */
-  static final _InstanceRunsPerformanceFingerprint INSTANCE = new _InstanceRunsPerformanceFingerprint();
+  static final _InstanceRunsFingerprint INSTANCE = new _InstanceRunsFingerprint();
 
   /** create */
-  private _InstanceRunsPerformanceFingerprint() {
+  private _InstanceRunsFingerprint() {
     super(EAttributeType.TEMPORARILY_STORED);
   }
 
@@ -152,8 +152,8 @@ final class _InstanceRunsPerformanceFingerprint extends
       for (final IRun run : runs) {
         dp = run.find(dimIndex, value);
         if (dp != null) {
-          _InstanceRunsPerformanceFingerprint.__append(dp, q25, q50, q75,
-              curIndex, curIsInteger);
+          _InstanceRunsFingerprint.__append(dp, q25, q50, q75, curIndex,
+              curIsInteger);
           continue;
         }
 
@@ -163,13 +163,13 @@ final class _InstanceRunsPerformanceFingerprint extends
 
         if (Math.abs(value - dp0.getDouble(dimIndex)) <= //
         Math.abs(dpe.getDouble(dimIndex) - value)) {
-          _InstanceRunsPerformanceFingerprint.__append(dp0, q25, q50, q75,
-              curIndex, curIsInteger);
+          _InstanceRunsFingerprint.__append(dp0, q25, q50, q75, curIndex,
+              curIsInteger);
           continue;
         }
 
-        _InstanceRunsPerformanceFingerprint.__append(dpe, q25, q50, q75,
-            curIndex, curIsInteger);
+        _InstanceRunsFingerprint.__append(dpe, q25, q50, q75, curIndex,
+            curIsInteger);
       }
 
       builder.append(q25);
@@ -218,8 +218,8 @@ final class _InstanceRunsPerformanceFingerprint extends
     q50.reset();
     q75.reset();
     for (final IRun run : runs) {
-      _InstanceRunsPerformanceFingerprint.__append(run.getData().get(0),
-          q25, q50, q75, dimIndex, dimIsInteger);
+      _InstanceRunsFingerprint.__append(run.getData().get(0), q25, q50,
+          q75, dimIndex, dimIsInteger);
     }
 
     builder.append(q25);
@@ -235,9 +235,8 @@ final class _InstanceRunsPerformanceFingerprint extends
     q75.reset();
     for (final IRun run : runs) {
       runData = run.getData();
-      _InstanceRunsPerformanceFingerprint.__append(
-          runData.get(runData.size() - 1), q25, q50, q75, dimIndex,
-          dimIsInteger);
+      _InstanceRunsFingerprint.__append(runData.get(runData.size() - 1),
+          q25, q50, q75, dimIndex, dimIsInteger);
     }
 
     builder.append(q25);
@@ -249,8 +248,8 @@ final class _InstanceRunsPerformanceFingerprint extends
 
     for (slot = 1; slot <= 3; slot++) {
       value = ((((end - start) * slot) / 4) + start);
-      _InstanceRunsPerformanceFingerprint.__append(runs, dimensions,
-          value, q25, q50, q75, dimIndex, builder);
+      _InstanceRunsFingerprint.__append(runs, dimensions, value, q25, q50,
+          q75, dimIndex, builder);
     }
   }
 
@@ -269,8 +268,8 @@ final class _InstanceRunsPerformanceFingerprint extends
     q75 = new QuantileAggregate(0.75d);
     dimensions = data.getOwner().getOwner().getDimensions().getData();
     for (final IDimension dim : dimensions) {
-      _InstanceRunsPerformanceFingerprint.__dimension(dim, dimensions,
-          data, q25, q50, q75, builder);
+      _InstanceRunsFingerprint.__dimension(dim, dimensions, data, q25,
+          q50, q75, builder);
     }
 
     return builder.make();

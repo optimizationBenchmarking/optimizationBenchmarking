@@ -145,6 +145,37 @@ public final class REngine extends MathEngine {
     }
   }
 
+  /**
+   * Find the next non-empty line
+   * 
+   * @return the line
+   * @throws IOException
+   *           if i/o fails
+   */
+  @SuppressWarnings("resource")
+  private final String __nextLine() throws IOException {
+    final BufferedReader reader;
+    String line;
+    int i, size;
+
+    this.__checkState();
+    reader = this.m_process.getStdOut();
+    for (;;) {
+      line = reader.readLine();
+      if (line == null) {
+        throw new IOException(
+            "Prematurely Reached end of output stream of the REngine."); //$NON-NLS-1$
+      }
+
+      size = line.length();
+      for (i = 0; i < size; i++) {
+        if (line.charAt(i) > ' ') {
+          return line;
+        }
+      }
+    }
+  }
+
   /** {@inheritDoc} */
   @SuppressWarnings("resource")
   @Override
@@ -169,14 +200,14 @@ public final class REngine extends MathEngine {
       out.flush();
 
       mb = new MatrixBuilder(EPrimitiveType.BYTE);
-      in = this.m_process.getStdOut();
 
-      line = in.readLine();
+      line = this.__nextLine();
       index = line.indexOf(' ');
       m = Integer.parseInt(line.substring(0, index));
       mb.setM(m);
       n = Integer.parseInt(line.substring(index + 1));
       mb.setN(n);
+      in = this.m_process.getStdOut();
 
       for (i = m; (--i) >= 0;) {
         line = in.readLine();
@@ -241,7 +272,7 @@ public final class REngine extends MathEngine {
       out.write(");cat('\n');"); //$NON-NLS-1$
       out.newLine();
       out.flush();
-      return this.m_process.getStdOut().readLine();
+      return this.__nextLine();
     } catch (final Throwable ioe) {
       this.__handleError(ioe);
     }

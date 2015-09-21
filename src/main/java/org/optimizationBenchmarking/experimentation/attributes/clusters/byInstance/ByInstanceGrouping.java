@@ -20,7 +20,7 @@ public final class ByInstanceGrouping extends
     Attribute<IExperimentSet, IClustering> {
 
   /** a parameter that can be used to group information by instance */
-  public static final String PARAM_BY_INSTANCE = "byInstance"; //$NON-NLS-1$
+  public static final String CHOICE_BY_INSTANCE = "single instances"; //$NON-NLS-1$
 
   /** the globally shared instance */
   public static final ByInstanceGrouping INSTANCE = new ByInstanceGrouping();

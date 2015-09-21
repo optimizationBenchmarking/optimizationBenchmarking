@@ -74,6 +74,13 @@ public final class ConcatenatedMatrix extends AbstractMatrix {
                 "th row in the set of matrices is null.");//$NON-NLS-1$
       }
 
+      if (row.length != nCols) {
+        throw new IllegalArgumentException(//
+            "The " + i + //$NON-NLS-1$
+                "th row in the set of matrices is " + //$NON-NLS-1$
+                row.length + " columns, but the first row has "//$NON-NLS-1$
+                + nCols);
+      }
       rowHeight = row[0].m();
 
       if (i == 0) {

@@ -9,6 +9,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.processing.ConcatenatedMatrix;
 
@@ -24,13 +25,13 @@ import org.optimizationBenchmarking.utils.math.matrix.processing.ConcatenatedMat
  * <li>For an instance of
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns}
  * , it is the corresponding
- * {@link org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint._InstanceRunsPerformanceFingerprint}
+ * {@link org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint._InstanceRunsFingerprint}
  * , i.e., a row matrix containing basic, raw statistics.</li>
  * <li>For an instance of
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IInstance}
  * , it is a row matrix with all single
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns}
- * {@linkplain org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint._InstanceRunsPerformanceFingerprint
+ * {@linkplain org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint._InstanceRunsFingerprint
  * fingerprints} mentioned above (one for each experiment which contains
  * corresponding runs) concatenated to each other.</li>
  * <li>For an instance of
@@ -42,7 +43,7 @@ import org.optimizationBenchmarking.utils.math.matrix.processing.ConcatenatedMat
  * <li>For an instance of
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IExperiment}
  * , it is a row matrix with one
- * {@linkplain org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint._InstanceRunsPerformanceFingerprint
+ * {@linkplain org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint._InstanceRunsFingerprint
  * fingerprint} for each of the
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns}
  * the experiment contains.</li>
@@ -80,14 +81,14 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     int i, count;
 
     experiments = inst.getOwner().getOwner().getData();
+
     size = experiments.size();
     res = new IMatrix[size];
     count = 0;
     loop: for (i = 0; i < size; i++) {
       for (final IInstanceRuns runs : experiments.get(i).getData()) {
         if (runs.getInstance() == inst) {
-          res[count++] = _InstanceRunsPerformanceFingerprint.INSTANCE
-              .get(runs);
+          res[count++] = _InstanceRunsFingerprint.INSTANCE.get(runs);
           continue loop;
         }
       }
@@ -118,10 +119,63 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     i = runs.size();
     res = new IMatrix[i];
     for (; (--i) >= 0;) {
-      res[i] = _InstanceRunsPerformanceFingerprint.INSTANCE.get(runs
-          .get(i));
+      res[i] = _InstanceRunsFingerprint.INSTANCE.get(runs.get(i));
     }
     return res;
+  }
+
+  /**
+   * Let's remove all columns with zero variance, as they do not contribute
+   * to the overall information.
+   *
+   * @param data
+   *          the data
+   * @return the cleansed data
+   */
+  private static final IMatrix __removeZeroVarianceCols(final IMatrix data) {
+    final int m, n;
+    final int[] selected, chosen;
+    long longVal;
+    double doubleVal;
+    int i, j, selCount;
+
+    m = data.m();
+    if (m <= 1) {
+      return data;
+    }
+
+    n = data.n();
+    selected = new int[n];
+    selCount = 0;
+
+    if (data.isIntegerMatrix()) {
+      longOuter: for (j = 0; j < n; j++) {
+        longVal = data.getLong(0, j);
+        for (i = m; (--i) > 0;) {
+          if (data.getLong(i, j) != longVal) {
+            selected[selCount++] = j;
+            continue longOuter;
+          }
+        }
+      }
+    } else {
+      doubleOuter: for (j = 0; j < n; j++) {
+        doubleVal = data.getDouble(0, j);
+        for (i = m; (--i) > 0;) {
+          if (EComparison.NOT_EQUAL.compare(data.getDouble(i, j),
+              doubleVal)) {
+            selected[selCount++] = j;
+            continue doubleOuter;
+          }
+        }
+      }
+    }
+    if (selCount >= n) {
+      return data;
+    }
+    chosen = new int[selCount];
+    System.arraycopy(selected, 0, chosen, 0, selCount);
+    return data.selectColumns(chosen);
   }
 
   /** {@inheritDoc} */
@@ -133,8 +187,7 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     int i;
 
     if (data instanceof IInstanceRuns) {
-      return _InstanceRunsPerformanceFingerprint.INSTANCE
-          .get((IInstanceRuns) data);
+      return _InstanceRunsFingerprint.INSTANCE.get((IInstanceRuns) data);
     }
 
     if (data instanceof IInstance) {
@@ -145,11 +198,13 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     if (data instanceof IInstanceSet) {
       instances = ((IInstanceSet) data).getData();
       i = instances.size();
+
       matrices = new IMatrix[i][];
       for (; (--i) >= 0;) {
         matrices[i] = Fingerprint.__instanceFingerprints(instances.get(i));
       }
-      return new ConcatenatedMatrix(matrices);
+      return Fingerprint.__removeZeroVarianceCols(new ConcatenatedMatrix(
+          matrices));
     }
 
     if (data instanceof IExperiment) {
@@ -165,7 +220,8 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
         matrices[i] = Fingerprint.__experimentFingerprints(experiments
             .get(i));
       }
-      return new ConcatenatedMatrix(matrices);
+      return Fingerprint.__removeZeroVarianceCols(new ConcatenatedMatrix(
+          matrices));
     }
 
     throw new IllegalArgumentException(

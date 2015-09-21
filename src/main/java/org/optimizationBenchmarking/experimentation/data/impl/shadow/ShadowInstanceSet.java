@@ -48,6 +48,10 @@ public class ShadowInstanceSet extends //
       return true;
     }
 
+    if (!(_compare(this.getData(), shadow.getData()))) {
+      return false;
+    }
+
     ours = this.getOwner();
     others = shadow.getOwner();
     if (ours == others) {

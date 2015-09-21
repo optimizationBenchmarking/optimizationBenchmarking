@@ -9,16 +9,36 @@ options(digits=22);
 rcommPrintMatrix <- function(mat) {
   op   <- options(digits=22);
   
-  dims <- dim(mat);
-  m    <- dims[1];
-  n    <- dims[2];
-  
-  cat(m);
-  cat(' ');
-  cat(n);
-  cat('\n');
-  
-  for(i in 1:m) { 
+  if(is.matrix(mat)) {  
+    dims <- dim(mat);  
+    m    <- dims[1];
+    n    <- dims[2];
+    
+    cat(m);
+    cat(' ');
+    cat(n);
+    cat('\n');
+    
+    for(i in 1:m) { 
+      first <- TRUE;
+      for(j in 1:n) {
+        if (first) {
+          first=FALSE;
+        } else {
+          cat(' ');
+        }
+        cat(mat[i,j]);
+      }
+      cat('\n');
+    }
+  } else {
+    if(is.vector(mat)) { data <- mat; } else { data <- c(mat); }
+    n <- length(data);
+    cat(1);
+    cat(' ');
+    cat(n);
+    cat('\n');
+     
     first <- TRUE;
     for(j in 1:n) {
       if (first) {
@@ -26,10 +46,10 @@ rcommPrintMatrix <- function(mat) {
       } else {
         cat(' ');
       }
-      cat(mat[i,j]);
+      cat(data[j]);
     }
-    cat('\n');
-  }
+    cat('\n');    
+  }  
   options(op);
 }
 

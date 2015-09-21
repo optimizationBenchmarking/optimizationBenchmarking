@@ -54,4 +54,43 @@ PT extends INamedElement> extends //
     return null;
   }
 
+  /**
+   * Compare two lists of named elements
+   *
+   * @param listA
+   *          the first list
+   * @param listB
+   *          the second list
+   * @return {@code true} if they contain the same elements (or shadows
+   *         thereof), {@code false} otherwise
+   */
+  static final boolean _compare(
+      final ArrayListView<? extends INamedElement> listA,
+      final ArrayListView<? extends INamedElement> listB) {
+    final int size;
+    int i;
+    INamedElement a, b;
+
+    if (listA == listB) {
+      return true;
+    }
+    size = listA.size();
+    if (size != listB.size()) {
+      return false;
+    }
+
+    for (i = size; (--i) >= 0;) {
+      a = listA.get(i);
+      b = listB.get(i);
+      if (a == b) {
+        continue;
+      }
+      if (a.getName().equals(b.getName())) {
+        continue;
+      }
+      return false;
+    }
+
+    return true;
+  }
 }

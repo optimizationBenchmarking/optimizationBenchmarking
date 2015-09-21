@@ -17,6 +17,10 @@ public final class PropertyValueSelector extends
 
   /** The the group-by parameter: {@value} */
   private static final String PARAM_GROUP_BY = "groupBy"; //$NON-NLS-1$
+  /** The the group-by instances property parameter: {@value} */
+  public static final String CHOICE_INSTANCES_BY_FEATURE_VALUE = "instances by feature values"; //$NON-NLS-1$
+  /** The the group-by experiments property parameter: {@value} */
+  public static final String CHOICE_EXPERIMENTS_BY_PARAMETER_VALUE = "experiments by parameter values"; //$NON-NLS-1$
 
   /** the property */
   private final String m_property;
