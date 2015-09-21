@@ -1,0 +1,166 @@
+# This script will perform a clustering of instances or experiments
+# according to their performance fingerprints.
+# It proceeds in 3 steps:
+#   1. feature reduction/selection
+#   2. finding good numbers of clusters
+#   3. finding a good clustering
+#
+# input : "data": a matrix whose rows correspond to instances/experiments,
+#                 columns to features
+#
+# output: "clusters": the assignment of instances to clusters 
+##
+#
+##
+## Step 1: Reduce number of features via Principal Component Analysis
+## This step centers, scales, and rotates the data.
+## It also discards the columns which have a very low standard deviation,
+## i.e., which probably do not provide much information. Also handle
+## the case where a column has 0 standard deviation.
+rcommUsePackage("stats");
+tryCatch(
+  data <- prcomp(data, center=TRUE, scale=TRUE, tol=0.025)$x,
+  error = function(e) {
+   data <- prcomp(data, center=TRUE, tol=0.01)$x
+  })
+#
+#
+##
+## Step 2: Determine how many clusters we need.
+## Here we use five different approaches mainly based on
+## http://stackoverflow.com/questions/15376075. Thus, we get five
+## different suggestions about the preferred cluster number. We
+## compute the median of these numbers and go with it.
+##
+#
+## Having more than ten clusters makes no sense, as understanding
+## the data will become very hard.
+maxClusters <- max(1, min(12, dim(data)[1]));
+cluster.n <- integer(0);
+#
+# Determine the ideal number of clusters with the pamk function of the
+# fpc package
+rcommUsePackage("fpc");
+rcommExec(cluster.n <- c(cluster.n, as.integer(pamk(data)$nc)));  
+#
+# Determine the optimal number of clusters according to the Bayesian
+# Information Criterion for expectation-maximization, initialized by
+# hierarchical clustering for parameterized Gaussian mixture models.
+rcommUsePackage("mclust");
+rcommExec(cluster.n <- c(cluster.n, as.integer(dim(
+                            Mclust(data, G=1:maxClusters)$z)[2])));
+#
+# Determine the ideal number of clusters by using Affinity propagation
+# (AP) clustering, see http://dx.doi.org/10.1126/science.1136800.
+rcommUsePackage("apcluster");
+rcommExec(cluster.n <- c(cluster.n, as.integer(length(apcluster(
+                              negDistMat(r=2), data)@clusters))));
+#
+rcommUsePackage("cluster");
+rcommExec( {
+  findCluster <- clusGap(data, kmeans, maxClusters, B=500, verbose=FALSE);
+  cluster.n <- c(cluster.n, as.integer(maxSE(findCluster$Tab[, "gap"],
+                    findCluster$Tab[, "SE.sim"], method="Tibs2001SEmax")));
+  rm(findCluster);
+} );
+#
+rcommUsePackage("NbClust");
+oldPlot <- plot;
+plot <- function(...) { }
+oldPar <- par;
+par <- function(...) { }
+rcommExec( {
+  cluster.nbEuc <- NbClust(data, diss=NULL,
+                       distance = "euclidean", min.nc=2, max.nc=maxClusters,
+                       method = "kmeans", index="alllong")$Best.nc[1,];
+  cluster.nbEuc <- unique(as.integer(cluster.nbEuc[
+              which((cluster.nbEuc>1)&(cluster.nbEuc<maxClusters))]));
+  cluster.n <- c(cluster.n, as.integer(round(median(cluster.nbEuc))));
+} );
+plot <- oldPlot;
+rm(plot);
+par <- oldPar;
+rm(oldPar);
+#
+## Compute the cluster numbers to check: All unique suggestions, plus
+## the (median-1)..(median+1) range.
+if(length(cluster.n)>0) {
+  cluster.n   <- as.integer(cluster.n[which((cluster.n>1)&(cluster.n<maxClusters))]); 
+  cluster.med <- as.integer(round(median(cluster.n)));
+  cluster.n   <- c(cluster.n, max(2, min(maxClusters, cluster.med-1)),
+                              max(2, min(maxClusters, cluster.med)),
+                              max(2, min(maxClusters, cluster.med+1)));     
+  rm(cluster.med);
+} 
+if(exists("cluster.nbEuc")) {
+  cluster.n <- c(cluster.n, cluster.nbEuc);
+  rm(cluster.nbEuc);
+}
+if(length(cluster.n) > 0) {
+  cluster.n <- as.integer(sort(unique(cluster.n)));
+} else {
+  cluster.n <- c(2, 3, 4, 5);
+}                      
+##
+## Step 3: Perform the actual clustering. We do that for each unique
+## suggested cluster number. From the results, we keep the best clustering,
+## where we define "best" as the one with the largest silhouette.
+bestClustering            <- NULL;
+bestClustering$clustering <- NULL;
+bestClustering$silhouette <- -Inf;
+bestClustering$n          <- Inf;
+distances                 <- dist(data);
+
+rcommExec(hierarchicalClustering <- hclust(distances, method="ward"));
+for(number in cluster.n) {
+  # First we try kmeans.
+  rcommExec( {
+    currentClustering            <- NULL;
+    currentClustering$clustering <- as.vector(kmeans(data, number)$cluster);
+    currentClustering$silhouette <- cluster.stats(distances, currentClustering$clustering)$avg.silwidth;
+    if(currentClustering$silhouette > bestClustering$silhouette) {
+        bestClustering <- currentClustering;
+    }  
+    rm(currentClustering);
+  });
+  
+  # Then we try pam.
+  rcommExec( {
+    currentClustering            <- NULL;
+    currentClustering$clustering <- as.vector(pam(data, number)$cluster);
+    currentClustering$silhouette <- cluster.stats(distances, currentClustering$clustering)$avg.silwidth; 
+    if(currentClustering$silhouette > bestClustering$silhouette) {
+        bestClustering <- currentClustering;
+    }
+    rm(currentClustering);
+  });
+    
+  # Then we try model-based clustering.  
+  rcommExec( {
+    currentClustering            <- NULL;
+    currentClustering$clustering <- as.vector(Mclust(data, G=c(number),
+                                      warn=FALSE)$classification);
+    currentClustering$silhouette <- cluster.stats(distances, currentClustering$clustering)$avg.silwidth; 
+    if(currentClustering$silhouette > bestClustering$silhouette) {
+        bestClustering <- currentClustering;
+    }
+    rm(currentClustering);
+  });
+  
+  #Finally, we try hierarchical clustering.
+  rcommExec( {
+    currentClustering            <- NULL;
+    currentClustering$clustering <- as.vector(cutree(hierarchicalClustering, k=number));
+    currentClustering$silhouette <- cluster.stats(distances, currentClustering$clustering)$avg.silwidth; 
+    if(currentClustering$silhouette > bestClustering$silhouette) {
+        bestClustering <- currentClustering;
+    }
+    rm(currentClustering); 
+  });
+}
+rm(distances);
+rm(data);
+rm(cluster.n);
+rm(hierarchicalClustering);
+clusters <- bestClustering$clustering;
+rm(bestClustering);
