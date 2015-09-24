@@ -315,6 +315,18 @@ public final class MatrixBuilder implements IAggregate {
     return this.m_array._make(m, n);
   }
 
+  /**
+   * Append a series of {@code double}s
+   *
+   * @param data
+   *          the series of {@code double}s
+   */
+  public final void append(final double[] data) {
+    for (final double x : data) {
+      this.append(x);
+    }
+  }
+
   /** the internal array class */
   abstract static class _Array {
 
