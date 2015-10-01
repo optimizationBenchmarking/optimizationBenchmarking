@@ -1,11 +1,13 @@
 package org.optimizationBenchmarking.utils.math.statistics.aggregate;
 
+import org.optimizationBenchmarking.utils.math.BasicNumber;
+import org.optimizationBenchmarking.utils.math.BasicNumberWrapper;
 import org.optimizationBenchmarking.utils.math.functions.power.Sqrt;
 
 /**
  * An aggregate for computing the standard deviation.
  */
-public final class StandardDeviationAggregate extends ScalarAggregate {
+public final class StandardDeviationAggregate extends MeanBasedAggregate {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -87,5 +89,59 @@ public final class StandardDeviationAggregate extends ScalarAggregate {
         return Double.NaN;
       }
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumberWrapper getSum() {
+    return this.m_variance.getSum();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumberWrapper getMinimum() {
+    return this.m_variance.getMinimum();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumberWrapper getMaximum() {
+    return this.m_variance.getMaximum();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final long getCountValue() {
+    return this.m_variance.getCountValue();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumber getCount() {
+    return this.m_variance.getCount();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumberWrapper getArithmeticMean() {
+    return this.m_variance.getArithmeticMean();
+  }
+
+  /**
+   * Get a basic number wrapper accessing the second moment
+   *
+   * @return the second moment
+   */
+  public final BasicNumberWrapper getSecondMoment() {
+    return this.m_variance.getSecondMoment();
+  }
+
+  /**
+   * Get a basic number wrapper accessing the variance
+   *
+   * @return the variance
+   */
+  public final BasicNumberWrapper getVariance() {
+    return new BasicNumberWrapper(this.m_variance);
   }
 }

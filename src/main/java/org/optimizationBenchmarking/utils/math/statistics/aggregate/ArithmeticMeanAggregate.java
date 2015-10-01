@@ -1,13 +1,14 @@
 package org.optimizationBenchmarking.utils.math.statistics.aggregate;
 
 import org.optimizationBenchmarking.utils.math.BasicNumber;
+import org.optimizationBenchmarking.utils.math.BasicNumberWrapper;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Div;
 
 /**
  * An aggregate for the arithmetic mean.
  */
-public final class ArithmeticMeanAggregate extends _StatefulNumber {
+public final class ArithmeticMeanAggregate extends MeanBasedAggregate {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -379,5 +380,71 @@ public final class ArithmeticMeanAggregate extends _StatefulNumber {
       this._compute();
     }
     return super.doubleValue();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumberWrapper getSum() {
+    return new BasicNumberWrapper(this.m_sum);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumberWrapper getMinimum() {
+    return new BasicNumberWrapper(this.m_minimum);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumberWrapper getMaximum() {
+    return new BasicNumberWrapper(this.m_maximum);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final long getCountValue() {
+    return this.m_count;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumber getCount() {
+    return new __Count();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumberWrapper getArithmeticMean() {
+    return new BasicNumberWrapper(this);
+  }
+
+  /** the wrapper for accessing the count */
+  private final class __Count extends BasicNumber {
+
+    /** the serial version uid */
+    private static final long serialVersionUID = 1L;
+
+    /** create */
+    __Count() {
+      super();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final int getState() {
+      return BasicNumber.STATE_INTEGER;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final long longValue() {
+      return ArithmeticMeanAggregate.this.m_count;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final double doubleValue() {
+      return ArithmeticMeanAggregate.this.m_count;
+    }
   }
 }

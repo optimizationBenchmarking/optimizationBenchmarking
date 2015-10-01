@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.math.statistics.aggregate;
 
 import org.optimizationBenchmarking.utils.math.BasicNumber;
+import org.optimizationBenchmarking.utils.math.BasicNumberWrapper;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Div;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingSub;
@@ -11,7 +12,7 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingSu
  * extensions to use our stable sums and mean aggregate for maximum
  * precision.
  */
-public final class VarianceAggregate extends _StatefulNumber {
+public final class VarianceAggregate extends MeanBasedAggregate {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -412,5 +413,50 @@ public final class VarianceAggregate extends _StatefulNumber {
       this.__compute();
     }
     return this.m_double;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumberWrapper getSum() {
+    return this.m_mean.getSum();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumberWrapper getMinimum() {
+    return this.m_mean.getMinimum();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumberWrapper getMaximum() {
+    return this.m_mean.getMaximum();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final long getCountValue() {
+    return this.m_mean.getCountValue();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumber getCount() {
+    return this.m_mean.getCount();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final BasicNumberWrapper getArithmeticMean() {
+    return this.m_mean.getArithmeticMean();
+  }
+
+  /**
+   * Get a basic number wrapper accessing the second moment
+   *
+   * @return the second moment
+   */
+  public final BasicNumberWrapper getSecondMoment() {
+    return new BasicNumberWrapper(this.m_M2);
   }
 }
