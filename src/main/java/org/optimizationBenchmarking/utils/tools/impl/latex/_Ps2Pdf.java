@@ -43,7 +43,10 @@ final class _Ps2Pdf extends _LaTeXToolChainComponent {
     path = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "pspdf",//$NON-NLS-1$
             "ps2pdf",//$NON-NLS-1$
-            "pstopdf"//$NON-NLS-1$
+            "pstopdf",//$NON-NLS-1$
+            "pstopdf14",//$NON-NLS-1$
+            "pstopdf13",//$NON-NLS-1$
+            "pstopdf12"//$NON-NLS-1$
         ), CanExecutePredicate.INSTANCE),//
         IsFilePredicate.INSTANCE, visitFirst);
     if (path == null) {

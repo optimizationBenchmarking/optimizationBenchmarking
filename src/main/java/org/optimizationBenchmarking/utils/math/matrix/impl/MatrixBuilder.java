@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.math.matrix.impl;
 
 import org.optimizationBenchmarking.utils.math.BasicNumber;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
+import org.optimizationBenchmarking.utils.math.matrix.AbstractMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
@@ -269,7 +270,7 @@ public final class MatrixBuilder implements IAggregate {
    *
    * @return the matrix
    */
-  public final IMatrix make() {
+  public final AbstractMatrix make() {
     int m, n, s;
 
     m = this.m_m;
@@ -324,6 +325,50 @@ public final class MatrixBuilder implements IAggregate {
   public final void append(final double[] data) {
     for (final double x : data) {
       this.append(x);
+    }
+  }
+
+  /**
+   * Append a series of {@code long}s
+   *
+   * @param data
+   *          the series of {@code long}s
+   */
+  public final void append(final long[] data) {
+    for (final long x : data) {
+      this.append(x);
+    }
+  }
+
+  /**
+   * Append a matrix row-by-row
+   *
+   * @param matrix
+   *          the matrix to be appended
+   */
+  public final void appendRowByRow(final IMatrix matrix) {
+    final int m, n;
+    int i, j;
+
+    if (matrix == null) {
+      throw new IllegalArgumentException(
+          "Matrix to append row-wise cannot be null."); //$NON-NLS-1$
+    }
+
+    m = matrix.m();
+    n = matrix.n();
+    if (matrix.isIntegerMatrix()) {
+      for (i = 0; i < m; i++) {
+        for (j = 0; j < n; j++) {
+          this.append(matrix.getLong(i, j));
+        }
+      }
+    } else {
+      for (i = 0; i < m; i++) {
+        for (j = 0; j < n; j++) {
+          this.append(matrix.getDouble(i, j));
+        }
+      }
     }
   }
 
@@ -405,7 +450,7 @@ public final class MatrixBuilder implements IAggregate {
      *          the n
      * @return the matrix
      */
-    abstract IMatrix _make(final int m, final int n);
+    abstract AbstractMatrix _make(final int m, final int n);
 
     /**
      * set the maximum size
@@ -492,7 +537,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /** {@inheritDoc} */
     @Override
-    final IMatrix _make(final int m, final int n) {
+    final AbstractMatrix _make(final int m, final int n) {
       final int size;
       double[] data;
 
@@ -643,7 +688,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /** {@inheritDoc} */
     @Override
-    final IMatrix _make(final int m, final int n) {
+    final AbstractMatrix _make(final int m, final int n) {
       final int size;
       long[] data;
 
@@ -761,7 +806,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /** {@inheritDoc} */
     @Override
-    final IMatrix _make(final int m, final int n) {
+    final AbstractMatrix _make(final int m, final int n) {
       final int size;
       float[] data;
 
@@ -936,7 +981,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /** {@inheritDoc} */
     @Override
-    final IMatrix _make(final int m, final int n) {
+    final AbstractMatrix _make(final int m, final int n) {
       final int size;
       int[] data;
 
@@ -1121,7 +1166,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /** {@inheritDoc} */
     @Override
-    final IMatrix _make(final int m, final int n) {
+    final AbstractMatrix _make(final int m, final int n) {
       final int size;
       short[] data;
 
@@ -1335,7 +1380,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /** {@inheritDoc} */
     @Override
-    final IMatrix _make(final int m, final int n) {
+    final AbstractMatrix _make(final int m, final int n) {
       final int size;
       byte[] data;
 

@@ -40,6 +40,21 @@ public final class NumericalTypes {
   public static final int IS_DOUBLE = (NumericalTypes.IS_FLOAT << 1);
 
   /**
+   * This is a combination of {@link #IS_BYTE}, {@link #IS_SHORT},
+   * {@link #IS_INT} and {@link #IS_LONG}, i.e., a bit mask that can be
+   * used for testing for integer types.
+   */
+  public static final int ANY_INTEGER = (NumericalTypes.IS_BYTE
+      | NumericalTypes.IS_SHORT | NumericalTypes.IS_INT | NumericalTypes.IS_LONG);
+
+  /**
+   * This is a combination of {@link #IS_FLOAT} and {@link #IS_DOUBLE},
+   * i.e., a bit mask that can be used for testing for floating point
+   * numbers.
+   */
+  public static final int ANY_FLOAT = (NumericalTypes.IS_FLOAT | NumericalTypes.IS_DOUBLE);
+
+  /**
    * the smallest {@code int}eger value which fits into a {@code float}
    * without loss of precision: {@value}
    */
@@ -225,9 +240,7 @@ public final class NumericalTypes {
    *         apply to the number
    */
   public static final int getTypes(final Byte number) {
-    return (NumericalTypes.IS_BYTE | NumericalTypes.IS_SHORT
-        | NumericalTypes.IS_INT | NumericalTypes.IS_LONG
-        | NumericalTypes.IS_FLOAT | NumericalTypes.IS_DOUBLE);
+    return (NumericalTypes.ANY_INTEGER | NumericalTypes.ANY_FLOAT);
   }
 
   /**
@@ -239,9 +252,7 @@ public final class NumericalTypes {
    *         apply to the number
    */
   public static final int getTypes(final byte number) {
-    return (NumericalTypes.IS_BYTE | NumericalTypes.IS_SHORT
-        | NumericalTypes.IS_INT | NumericalTypes.IS_LONG
-        | NumericalTypes.IS_FLOAT | NumericalTypes.IS_DOUBLE);
+    return (NumericalTypes.ANY_INTEGER | NumericalTypes.ANY_FLOAT);
   }
 
   /**
@@ -296,11 +307,9 @@ public final class NumericalTypes {
   public static final int getTypes(final short number) {
     if ((number < Byte.MIN_VALUE) || (number > Byte.MAX_VALUE)) {
       return (NumericalTypes.IS_SHORT | NumericalTypes.IS_INT
-          | NumericalTypes.IS_LONG | NumericalTypes.IS_FLOAT | NumericalTypes.IS_DOUBLE);
+          | NumericalTypes.IS_LONG | NumericalTypes.ANY_FLOAT);
     }
-    return (NumericalTypes.IS_BYTE | NumericalTypes.IS_SHORT
-        | NumericalTypes.IS_INT | NumericalTypes.IS_LONG
-        | NumericalTypes.IS_FLOAT | NumericalTypes.IS_DOUBLE);
+    return (NumericalTypes.ANY_INTEGER | NumericalTypes.ANY_FLOAT);
   }
 
   /**

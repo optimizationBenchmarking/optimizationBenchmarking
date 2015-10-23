@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.math.statistics.aggregate;
 
 import org.optimizationBenchmarking.utils.math.BasicNumber;
+import org.optimizationBenchmarking.utils.math.MathUtils;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 
 /**
@@ -58,9 +59,7 @@ public final class FiniteMinimumAggregate extends _StatefulNumber {
       return;
     }
 
-    if ((value <= Double.NEGATIVE_INFINITY) || //
-        (value >= Double.POSITIVE_INFINITY) || //
-        (value != value)) {
+    if (!MathUtils.isFinite(value)) {
       return;
     }
 
