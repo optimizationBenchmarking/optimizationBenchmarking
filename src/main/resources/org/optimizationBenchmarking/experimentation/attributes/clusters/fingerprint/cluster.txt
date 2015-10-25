@@ -11,6 +11,7 @@
 # output: "clusters": the assignment of instances to clusters 
 ##
 #
+#
 ##
 ## Step 1: Reduce number of features via Principal Component Analysis
 ## This step centers, scales, and rotates the data.
@@ -19,9 +20,9 @@
 ## the case where a column has 0 standard deviation.
 rcommUsePackage("stats");
 tryCatch(
-  data <- prcomp(data, center=TRUE, scale=TRUE, tol=0.025)$x,
+  data <- prcomp(data, center=TRUE, scale=TRUE, tol=0.05)$x,
   error = function(e) {
-   data <- prcomp(data, center=TRUE, tol=0.01)$x
+   data <- prcomp(data, center=TRUE, tol=0.05)$x
   })
 #
 #
@@ -110,7 +111,7 @@ bestClustering$clustering <- NULL;
 bestClustering$silhouette <- -Inf;
 bestClustering$n          <- Inf;
 distances                 <- dist(data);
-
+#
 rcommExec(hierarchicalClustering <- hclust(distances, method="ward"));
 for(number in cluster.n) {
   # First we try kmeans.
@@ -123,8 +124,8 @@ for(number in cluster.n) {
     }  
     rm(currentClustering);
   });
-  
-  # Then we try pam.
+#  
+# Then we try pam.
   rcommExec( {
     currentClustering            <- NULL;
     currentClustering$clustering <- as.vector(pam(data, number)$cluster);
@@ -134,8 +135,8 @@ for(number in cluster.n) {
     }
     rm(currentClustering);
   });
-    
-  # Then we try model-based clustering.  
+#    
+# Then we try model-based clustering.  
   rcommExec( {
     currentClustering            <- NULL;
     currentClustering$clustering <- as.vector(Mclust(data, G=c(number),
@@ -146,8 +147,8 @@ for(number in cluster.n) {
     }
     rm(currentClustering);
   });
-  
-  #Finally, we try hierarchical clustering.
+#
+# Finally, we try hierarchical clustering.
   rcommExec( {
     currentClustering            <- NULL;
     currentClustering$clustering <- as.vector(cutree(hierarchicalClustering, k=number));

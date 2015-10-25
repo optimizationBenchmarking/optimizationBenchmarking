@@ -125,19 +125,135 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
   }
 
   /**
+   * Check if two columns are the same in a {@code long} matrix.
+   *
+   * @param matrix
+   *          the matrix
+   * @param m
+   *          the number of rows
+   * @param colA
+   *          the first column
+   * @param colB
+   *          the second column
+   * @return {@code true} if they are the same, {@code false} otherwise
+   */
+  private static final boolean __areColsSameLong(final IMatrix matrix,
+      final int m, final int colA, final int colB) {
+    int i;
+
+    for (i = m; (--i) >= 0;) {
+      if (matrix.getLong(i, colA) != matrix.getLong(i, colB)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Check if a column has zero variance in a {@code long} matrix, i.e., if
+   * all values in it are the same.
+   *
+   * @param matrix
+   *          the matrix
+   * @param m
+   *          the number of rows
+   * @param col
+   *          the column
+   * @return {@code true} if the column has zero variance
+   */
+  private static final boolean __hasColZeroVarianceLong(
+      final IMatrix matrix, final int m, final int col) {
+    final long longVal;
+    int i;
+
+    longVal = matrix.getLong(0, col);
+    for (i = m; (--i) > 0;) {
+      if (matrix.getLong(i, col) != longVal) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Check if two columns are the same in a {@code double} matrix.
+   *
+   * @param matrix
+   *          the matrix
+   * @param m
+   *          the number of rows
+   * @param colA
+   *          the first column
+   * @param colB
+   *          the second column
+   * @return {@code true} if they are the same, {@code false} otherwise
+   */
+  private static final boolean __areColsSameDouble(final IMatrix matrix,
+      final int m, final int colA, final int colB) {
+    int i;
+
+    for (i = m; (--i) >= 0;) {
+      if (EComparison.NOT_EQUAL.compare(matrix.getDouble(i, colA),
+          matrix.getDouble(i, colB))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Check if a column has zero variance in a {@code double} matrix, i.e.,
+   * if all values in it are the same (or contain infinite/NaN).
+   *
+   * @param matrix
+   *          the matrix
+   * @param m
+   *          the number of rows
+   * @param col
+   *          the column
+   * @return {@code true} if the column has zero variance
+   */
+  private static final boolean __hasColZeroVarianceDouble(
+      final IMatrix matrix, final int m, final int col) {
+    final double doubleVal;
+    double cur;
+    boolean result;
+    int i;
+
+    doubleVal = matrix.getDouble(0, col);
+    if ((doubleVal <= Double.NEGATIVE_INFINITY)
+        || (doubleVal >= Double.POSITIVE_INFINITY)
+        || (doubleVal != doubleVal)) {
+      return true;
+    }
+
+    result = true;
+    for (i = m; (--i) > 0;) {
+      cur = matrix.getDouble(i, col);
+      if ((cur <= Double.NEGATIVE_INFINITY)
+          || (cur >= Double.POSITIVE_INFINITY) || (cur != cur)) {
+        return true;
+      }
+      result = (result && EComparison.EQUAL.compare(cur, doubleVal));
+    }
+
+    return result;
+  }
+
+  /**
    * Let's remove all columns with zero variance, as they do not contribute
-   * to the overall information.
+   * to the overall information, as well as columns which contain the same
+   * values as others.
    *
    * @param data
    *          the data
    * @return the cleansed data
    */
-  private static final IMatrix __removeZeroVarianceCols(final IMatrix data) {
+  private static final IMatrix __removeUselessCols(final IMatrix data) {
     final int m, n;
     final int[] selected, chosen;
-    long longVal;
-    double doubleVal;
-    int i, j, selCount;
+    int column, done, selCount;
 
     m = data.m();
     if (m <= 1) {
@@ -149,27 +265,33 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     selCount = 0;
 
     if (data.isIntegerMatrix()) {
-      longOuter: for (j = 0; j < n; j++) {
-        longVal = data.getLong(0, j);
-        for (i = m; (--i) > 0;) {
-          if (data.getLong(i, j) != longVal) {
-            selected[selCount++] = j;
+      longOuter: for (column = 0; column < n; column++) {
+        if (Fingerprint.__hasColZeroVarianceLong(data, m, column)) {
+          continue longOuter;
+        }
+        for (done = selCount; (--done) >= 0;) {
+          if (Fingerprint.__areColsSameLong(data, m, column,
+              selected[done])) {
             continue longOuter;
           }
         }
+        selected[selCount++] = column;
       }
     } else {
-      doubleOuter: for (j = 0; j < n; j++) {
-        doubleVal = data.getDouble(0, j);
-        for (i = m; (--i) > 0;) {
-          if (EComparison.NOT_EQUAL.compare(data.getDouble(i, j),
-              doubleVal)) {
-            selected[selCount++] = j;
+      doubleOuter: for (column = 0; column < n; column++) {
+        if (Fingerprint.__hasColZeroVarianceDouble(data, m, column)) {
+          continue doubleOuter;
+        }
+        for (done = selCount; (--done) >= 0;) {
+          if (Fingerprint.__areColsSameDouble(data, m, column,
+              selected[done])) {
             continue doubleOuter;
           }
         }
+        selected[selCount++] = column;
       }
     }
+
     if (selCount >= n) {
       return data;
     }
@@ -203,7 +325,7 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
       for (; (--i) >= 0;) {
         matrices[i] = Fingerprint.__instanceFingerprints(instances.get(i));
       }
-      return Fingerprint.__removeZeroVarianceCols(new ConcatenatedMatrix(
+      return Fingerprint.__removeUselessCols(new ConcatenatedMatrix(
           matrices));
     }
 
@@ -220,7 +342,7 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
         matrices[i] = Fingerprint.__experimentFingerprints(experiments
             .get(i));
       }
-      return Fingerprint.__removeZeroVarianceCols(new ConcatenatedMatrix(
+      return Fingerprint.__removeUselessCols(new ConcatenatedMatrix(
           matrices));
     }
 

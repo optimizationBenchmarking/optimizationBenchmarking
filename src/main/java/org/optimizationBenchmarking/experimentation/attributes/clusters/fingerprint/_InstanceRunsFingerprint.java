@@ -7,7 +7,10 @@ import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.math.fitting.impl.ls.LSFitter;
+import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.MatrixBuilder;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileAggregate;
 
@@ -62,9 +65,6 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileAggr
 final class _InstanceRunsFingerprint extends
     Attribute<IInstanceRuns, IMatrix> {
 
-  /** the number of divisions */
-  private static final int DIVISIONS = 3;
-
   /** the globally shared instance */
   static final _InstanceRunsFingerprint INSTANCE = new _InstanceRunsFingerprint();
 
@@ -74,186 +74,150 @@ final class _InstanceRunsFingerprint extends
   }
 
   /**
-   * Append a data point to the aggregates
+   * Append the parameters of a curve fitted to the given data
    *
-   * @param point
-   *          the data point
-   * @param q25
-   *          the 25% quantile aggregate
-   * @param q50
-   *          the 50% quantile aggregate (median)
-   * @param q75
-   *          the 75% quantile aggregate
-   * @param dimIndex
-   *          the dimension index
-   * @param dimIsInteger
-   *          is the dimension integer?
-   */
-  private static final void __append(final IDataPoint point,
-      final QuantileAggregate q25, final QuantileAggregate q50,
-      final QuantileAggregate q75, final int dimIndex,
-      final boolean dimIsInteger) {
-    final long longVal;
-    final double doubleVal;
-
-    if (dimIsInteger) {
-      longVal = point.getLong(dimIndex);
-      q25.append(longVal);
-      q50.append(longVal);
-      q75.append(longVal);
-    } else {
-      doubleVal = point.getDouble(dimIndex);
-      q25.append(doubleVal);
-      q50.append(doubleVal);
-      q75.append(doubleVal);
-    }
-  }
-
-  /**
-   * Aggregate over data points with the specified value of the given
-   * dimension and append it to the aggregates to the aggregates.
-   *
-   * @param runs
-   *          the instance run set
    * @param dimensions
    *          the dimensions
-   * @param value
-   *          the target value
-   * @param q25
-   *          the 25% quantile aggregate
-   * @param q50
-   *          the 50% quantile aggregate (median)
-   * @param q75
-   *          the 75% quantile aggregate
-   * @param dimIndex
-   *          the index of the selector dimension
-   * @param builder
-   *          the matrix builder
-   */
-  private static final void __append(
-      final ArrayListView<? extends IRun> runs,
-      final ArrayListView<? extends IDimension> dimensions,
-      final double value, final QuantileAggregate q25,
-      final QuantileAggregate q50, final QuantileAggregate q75,
-      final int dimIndex, final MatrixBuilder builder) {
-    ArrayListView<? extends IDataPoint> raw;
-    IDataPoint dp, dp0, dpe;
-    int curIndex;
-    boolean curIsInteger;
-
-    for (final IDimension dim : dimensions) {
-      curIndex = dim.getIndex();
-      if (curIndex == dimIndex) {
-        continue;
-      }
-      curIsInteger = dim.getDataType().isInteger();
-
-      q25.reset();
-      q50.reset();
-      q75.reset();
-
-      for (final IRun run : runs) {
-        dp = run.find(dimIndex, value);
-        if (dp != null) {
-          _InstanceRunsFingerprint.__append(dp, q25, q50, q75, curIndex,
-              curIsInteger);
-          continue;
-        }
-
-        raw = run.getData();
-        dp0 = raw.get(0);
-        dpe = raw.get(raw.size() - 1);
-
-        if (Math.abs(value - dp0.getDouble(dimIndex)) <= //
-        Math.abs(dpe.getDouble(dimIndex) - value)) {
-          _InstanceRunsFingerprint.__append(dp0, q25, q50, q75, curIndex,
-              curIsInteger);
-          continue;
-        }
-
-        _InstanceRunsFingerprint.__append(dpe, q25, q50, q75, curIndex,
-            curIsInteger);
-      }
-
-      builder.append(q25);
-      builder.append(q50);
-      builder.append(q75);
-    }
-  }
-
-  /**
-   * Add the statistics of a particular dimension
-   *
-   * @param dim
-   *          the dimension
-   * @param dimensions
-   *          the set of all dimensions
    * @param data
    *          the data
-   * @param q25
-   *          the aggregate to be used for the 25% quantile
-   * @param q50
-   *          the aggregate to be used for the 50% quantile (median)
-   * @param q75
-   *          the aggregate to be used for the 75% quantile
    * @param builder
    *          the builder
    */
-  private static final void __dimension(final IDimension dim,
+  private static final void __appendCurves(final IInstanceRuns data,
       final ArrayListView<? extends IDimension> dimensions,
-      final IInstanceRuns data, final QuantileAggregate q25,
-      final QuantileAggregate q50, final QuantileAggregate q75,
       final MatrixBuilder builder) {
-    final int dimIndex;
-    final boolean dimIsInteger;
-    final double start, end, div;
-    final ArrayListView<? extends IRun> runs;
-    ArrayListView<? extends IDataPoint> runData;
-    int slot;
-    double value;
+    final int size;
+    final ParametricUnaryFunction poly, decay;
+    final double[] rawPoints;
+    final DoubleMatrix1D rawMatrix;
+    final QuantileAggregate startA, startB, endA, endB;
+    IDimension dimension;
+    ArrayListView<? extends IRun> runs;
+    ArrayListView<? extends IDataPoint> points;
+    double[] fittingResult;
+    int dimA, dimB, useDimA, useDimB, totalPoints, index;
+    boolean isTimeA, isTimeB, useIsTimeA, isIncreasingA, useIsIncreasingA, isIncreasingB;
+    ParametricUnaryFunction func;
+    double minA, minB, maxA, maxB, scaleA, scaleB, temp;
+    IDataPoint dpoint;
 
-    dimIndex = dim.getIndex();
-    dimIsInteger = dim.getDataType().isInteger();
-    runs = data.getData();
+    poly = new PolynomialModel();
+    decay = new DecayModel();
 
-    // determine the statistics about the starting point
-    q25.reset();
-    q50.reset();
-    q75.reset();
-    for (final IRun run : runs) {
-      _InstanceRunsFingerprint.__append(run.getData().get(0), q25, q50,
-          q75, dimIndex, dimIsInteger);
+    startA = new QuantileAggregate(0.5d);
+    startB = new QuantileAggregate(0.5d);
+    endA = new QuantileAggregate(0.5d);
+    endB = new QuantileAggregate(0.5d);
+
+    // We allocate a re-usable data store.
+    totalPoints = 0;
+    for (final IRun run : data.getData()) {
+      totalPoints += run.getData().size();
     }
+    rawPoints = new double[totalPoints << 1];
+    rawMatrix = new DoubleMatrix1D(rawPoints, totalPoints, 2);
 
-    builder.append(q25);
-    builder.append(q50);
-    builder.append(q75);
+    size = dimensions.size();
+    minA = Double.NaN;
+    for (dimA = 0; dimA < size; dimA++) {
+      dimension = dimensions.get(dimA);
+      isTimeA = dimension.getDimensionType().isTimeMeasure();
+      isIncreasingA = dimension.getDirection().isIncreasing();
 
-    // remember median of start
-    start = q50.doubleValue();
+      for (dimB = dimA; (++dimB) < size;) {
+        dimension = dimensions.get(dimB);
+        isTimeB = dimension.getDimensionType().isTimeMeasure();
+        isIncreasingB = dimension.getDirection().isIncreasing();
 
-    // determine the statistics about the end point
-    q25.reset();
-    q50.reset();
-    q75.reset();
-    for (final IRun run : runs) {
-      runData = run.getData();
-      _InstanceRunsFingerprint.__append(runData.get(runData.size() - 1),
-          q25, q50, q75, dimIndex, dimIsInteger);
-    }
+        // we prefer time-quality over quality-time
+        if (isTimeB && (!isTimeA)) {
+          useIsTimeA = true;
+          isTimeB = false;
+          useDimA = dimB;
+          useDimB = dimA;
+          useIsIncreasingA = isIncreasingB;
+          isIncreasingB = isIncreasingA;
+        } else {
+          useIsTimeA = isTimeA;
+          useDimA = dimA;
+          useDimB = dimB;
+          useIsIncreasingA = isIncreasingA;
+        }
 
-    builder.append(q25);
-    builder.append(q50);
-    builder.append(q75);
+        runs = data.getData();
 
-    // remember median of end points
-    end = q50.doubleValue();
+        startA.reset();
+        startB.reset();
+        endA.reset();
+        endB.reset();
 
-    div = (_InstanceRunsFingerprint.DIVISIONS + 1);
-    for (slot = 1; slot <= _InstanceRunsFingerprint.DIVISIONS; slot++) {
-      value = ((((end - start) * slot) / div) + start);
-      _InstanceRunsFingerprint.__append(runs, dimensions, value, q25, q50,
-          q75, dimIndex, builder);
+        for (final IRun run : runs) {
+          points = run.getData();
+          dpoint = points.get(0);
+          startA.append(dpoint.getDouble(useDimA));
+          startB.append(dpoint.getDouble(useDimB));
+          dpoint = points.get(points.size() - 1);
+          endA.append(dpoint.getDouble(useDimA));
+          endB.append(dpoint.getDouble(useDimB));
+        }
+
+        minA = startA.doubleValue();
+        maxA = endA.doubleValue();
+        if (!useIsIncreasingA) {
+          temp = minA;
+          minA = maxA;
+          maxA = temp;
+        }
+        scaleA = (maxA - minA);
+
+        minB = startB.doubleValue();
+        maxB = endB.doubleValue();
+        if (!useIsIncreasingA) {
+          temp = minB;
+          minB = maxB;
+          maxB = temp;
+        }
+        scaleB = (maxB - minB);
+
+        index = 0;
+        for (final IRun run : runs) {
+          for (final IDataPoint point : run.getData()) {
+
+            temp = point.getDouble(useDimA);
+            rawPoints[index++] = isIncreasingA //
+            ? (((temp - minA) / scaleA))//
+                : (((maxA - temp) / scaleA));//
+
+            temp = point.getDouble(useDimB);
+            rawPoints[index++] = isIncreasingB //
+            ? (((maxB - temp) / scaleB))//
+                : (((temp - minB) / scaleB));//
+          }
+        }
+
+        if ((useIsTimeA && (!(isTimeB)))) {
+          // We model the relationship between a time and an objective
+          // value
+          // dimension as exponential decay model.
+          func = decay;
+        } else {
+          // We model the relationship between two time dimensions or two
+          // objective value dimensions as polynomial of degree 3.
+          func = poly;
+        }
+
+        // get all the points
+        fittingResult = LSFitter.getInstance().use()
+            .setFunctionToFit(func).setPoints(rawMatrix)
+            .setMinCriticalPoints(3 + (3 * runs.size())).create().call()
+            .getFittedParameters();
+
+        builder.append(fittingResult);
+        builder.append(minA);
+        builder.append(maxA);
+        builder.append(minB);
+        builder.append(maxB);
+      }
     }
   }
 
@@ -261,22 +225,13 @@ final class _InstanceRunsFingerprint extends
   @Override
   protected final IMatrix compute(final IInstanceRuns data) {
     final MatrixBuilder builder;
-    final QuantileAggregate q25, q50, q75;
     final ArrayListView<? extends IDimension> dimensions;
 
     builder = new MatrixBuilder();
     builder.setM(1);
 
-    q25 = new QuantileAggregate(0.25d);
-    q50 = new QuantileAggregate(0.5d);
-    q75 = new QuantileAggregate(0.75d);
     dimensions = data.getOwner().getOwner().getDimensions().getData();
-    for (final IDimension dim : dimensions) {
-      _InstanceRunsFingerprint.__dimension(dim, dimensions, data, q25,
-          q50, q75, builder);
-    }
-
+    _InstanceRunsFingerprint.__appendCurves(data, dimensions, builder);
     return builder.make();
   }
-
 }
