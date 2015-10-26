@@ -296,6 +296,6 @@ public class LSFittingJob extends OptiFittingJob implements
   /** {@inheritDoc} */
   @Override
   public final double value(final double[] point) {
-    return this.evaluate(point, this.m_points);
+    return this.evaluate(point);
   }
 }

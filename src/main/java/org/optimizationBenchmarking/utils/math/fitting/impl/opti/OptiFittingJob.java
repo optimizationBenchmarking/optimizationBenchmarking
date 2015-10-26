@@ -23,12 +23,12 @@ public class OptiFittingJob extends FittingJob {
   protected final int m_numberOfPointsUsed;
 
   /** the error sul */
-  private final StableSum m_sum;
+  final StableSum m_sum;
 
   /** sort by error */
-  private final __SortByError m_sortByError;
+  final __SortByError m_sortByError;
   /** the dimension */
-  private final int m_dim;
+  final int m_dim;
 
   /**
    * create the fitting job
@@ -67,7 +67,7 @@ public class OptiFittingJob extends FittingJob {
    * @return the new optimization curve fitting individual
    */
   protected final OptiIndividual createIndividual() {
-    return new OptiIndividual(this.m_dim, this.m_numberOfPointsUsed);
+    return new OptiIndividual(this.m_dim);
   }
 
   /**
@@ -76,16 +76,13 @@ public class OptiFittingJob extends FittingJob {
    * @param params
    *          the fitting, i.e., the parameters of the function to be
    *          fitted
-   * @param use
-   *          the number of points used
    * @return the fitting quality
    */
-  protected final double evaluate(final double[] params,
-      final DataPoint[] use) {
+  protected final double evaluate(final double[] params) {
     final ParametricUnaryFunction func;
+    final DataPoint[] use;
     final int dim;
     final StableSum sum;
-    final boolean hit;
     double val;
     DataPoint point;
     int index;
@@ -105,14 +102,12 @@ public class OptiFittingJob extends FittingJob {
     func = this.m_function;
     func.canonicalizeParameters(params);
 
+    use = this.m_points;
     for (final DataPoint dp : use) {
       dp.m_error = (Math.abs(dp.output - func.value(dp.input, params)) / dp.inverseWeight);
     }
 
-    hit = (use.length >= this.m_points.length);
-    if (hit) {
-      Arrays.sort(use, this.m_sortByError);
-    }
+    Arrays.sort(use, this.m_sortByError);
 
     sum = this.m_sum;
     sum.reset();
@@ -123,9 +118,7 @@ public class OptiFittingJob extends FittingJob {
 
     val = sum.doubleValue();
     if (MathUtils.isFinite(val)) {
-      if (hit) {
-        this.register(params, val);
-      }
+      this.register(params, val);
       return val;
     }
     return Double.POSITIVE_INFINITY;
@@ -139,20 +132,6 @@ public class OptiFittingJob extends FittingJob {
    */
   protected final void evaluate(final OptiIndividual indi) {
     indi.quality = this.evaluate(indi.solution);
-    System.arraycopy(this.m_points, 0, indi.critical, 0,
-        this.m_numberOfPointsUsed);
-  }
-
-  /**
-   * Compute the quality of a given fitting
-   *
-   * @param params
-   *          the fitting, i.e., the parameters of the function to be
-   *          fitted
-   * @return the fitting quality
-   */
-  protected final double evaluate(final double[] params) {
-    return this.evaluate(params, this.m_points);
   }
 
   /** sort by error, so that the biggest errors come first */

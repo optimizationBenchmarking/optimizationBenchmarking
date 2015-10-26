@@ -9,27 +9,15 @@ public final class OptiIndividual {
   /** the fitting quality */
   public double quality;
 
-  /** the set of critical data points */
-  public final DataPoint[] critical;
-
-  /** the comparison score */
-  int m_score;
-
-  /** the hit score */
-  long m_hitScore;
-
   /**
    * Create the opti-individual
    *
    * @param dim
    *          the dimension
-   * @param pointsUsed
-   *          the points used
    */
-  OptiIndividual(final int dim, final int pointsUsed) {
+  OptiIndividual(final int dim) {
     super();
     this.solution = new double[dim];
-    this.critical = new DataPoint[pointsUsed];
   }
 
   /**
@@ -42,7 +30,5 @@ public final class OptiIndividual {
     System.arraycopy(copy.solution, 0, this.solution, 0,
         this.solution.length);
     this.quality = copy.quality;
-    System.arraycopy(copy.critical, 0, this.critical, 0,
-        this.critical.length);
   }
 }
