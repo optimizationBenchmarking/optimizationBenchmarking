@@ -5,7 +5,10 @@ import org.optimizationBenchmarking.utils.math.fitting.impl.opti.OptiFittingJobB
 import org.optimizationBenchmarking.utils.math.fitting.impl.opti.OptiFunctionFitter;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
-/** the Opti curve fitter */
+/**
+ * This curve fitter uses a combination of least-squares solvers and
+ * several local search methods to fit a function.
+ */
 public final class LSFitter extends OptiFunctionFitter {
 
   /** the error */
@@ -38,9 +41,7 @@ public final class LSFitter extends OptiFunctionFitter {
               "org.apache.commons.math3.optim.nonlinear.scalar.GoalType", //$NON-NLS-1$
               "org.apache.commons.math3.optim.nonlinear.scalar.ObjectiveFunction", //$NON-NLS-1$
               //              "org.apache.commons.math3.optim.nonlinear.scalar.noderiv.BOBYQAOptimizer", //$NON-NLS-1$
-              "org.apache.commons.math3.optim.nonlinear.scalar.noderiv.CMAESOptimizer", //$NON-NLS-1$
-              "org.apache.commons.math3.optim.nonlinear.scalar.noderiv.CMAESOptimizer.PopulationSize", //$NON-NLS-1$
-              "org.apache.commons.math3.optim.nonlinear.scalar.noderiv.CMAESOptimizer.Sigma", //$NON-NLS-1$
+              "org.apache.commons.math3.optim.nonlinear.scalar.noderiv.CMAESOptimizer", //$NON-NLS-1$              
               "org.apache.commons.math3.optim.nonlinear.scalar.noderiv.NelderMeadSimplex", //$NON-NLS-1$
               "org.apache.commons.math3.optim.nonlinear.scalar.noderiv.SimplexOptimizer", //$NON-NLS-1$
               "org.apache.commons.math3.random.JDKRandomGenerator" //$NON-NLS-1$
@@ -64,7 +65,7 @@ public final class LSFitter extends OptiFunctionFitter {
   public final void checkCanUse() {
     if (this.m_error != null) {
       throw new UnsupportedOperationException(//
-          "JFreeChart driver cannot be used.", //$NON-NLS-1$
+          "LSFitter driver cannot be used.", //$NON-NLS-1$
           this.m_error);
     }
     super.checkCanUse();
