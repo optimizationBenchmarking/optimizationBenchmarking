@@ -6,6 +6,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
@@ -14,6 +17,7 @@ import org.optimizationBenchmarking.utils.math.fitting.impl.opti.OptiFittingJobB
 import org.optimizationBenchmarking.utils.math.fitting.spec.FittingJobBuilder;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FittingResult;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FunctionFitter;
+import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.StableSum;
 import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
@@ -41,21 +45,26 @@ public class FittingExamples {
    *          the fitter
    * @param log
    *          the text output destination for the logging
+   * @param results
+   *          the list to receive the fitting results
    * @throws IOException
    *           if i/o fails
    */
   private static final void __doFitter(final Path dest,
       final ArrayListView<FittingExampleDataset> data,
-      final FunctionFitter fitter, final ITextOutput log)
-      throws IOException {
+      final FunctionFitter fitter, final ITextOutput log,
+      final ArrayList<double[]> results) throws IOException {
     final QuantileAggregate med;
     final StableSum sum;
     final Path folder;
     final String prefix;
+    QuantileAggregate[] meds;
+    FittingExampleDataset example;
     FittingJobBuilder builder;
     long start, total;
     FittingResult res;
-    int problem, index;
+    int problem, index, dim;
+    double[] resx;
 
     med = new QuantileAggregate(0.5d);
     prefix = fitter.getClass().getSimpleName();
@@ -65,11 +74,15 @@ public class FittingExamples {
     sum = new StableSum();
 
     log.append(prefix);
-    problem = 0;
     total = 0L;
-    for (final FittingExampleDataset example : data) {
+    for (problem = 0; problem < data.size(); problem++) {
       med.reset();
-      problem++;
+      example = data.get(problem);
+
+      meds = new QuantileAggregate[example.model.getParameterCount()];
+      for (index = meds.length; (--index) >= 0;) {
+        meds[index] = new QuantileAggregate(0.5d);
+      }
 
       for (index = FittingExamples.TIMES; index > 0; index--) {
         start = System.nanoTime();
@@ -83,6 +96,11 @@ public class FittingExamples {
         }
 
         res = builder.create().call();
+        resx = res.getFittedParameters();
+        for (dim = resx.length; (--dim) >= 0;) {
+          meds[dim].append(resx[dim]);
+        }
+
         total = Math.max(0L, (System.nanoTime() - start));
         sum.append(res.getQuality());
         med.append(res.getQuality());
@@ -91,6 +109,12 @@ public class FittingExamples {
                 + '_' + index + ".txt"), //$NON-NLS-1$
             res.getFittedParameters(), res.getQuality());
       }
+
+      resx = new double[meds.length];
+      for (dim = resx.length; (--dim) >= 0;) {
+        resx[dim] = meds[dim].doubleValue();
+      }
+      results.add(resx);
 
       log.append('\t');
       log.append(med.doubleValue());
@@ -113,14 +137,16 @@ public class FittingExamples {
    * @throws IOException
    *           if i/o fails
    */
+  @SuppressWarnings("unchecked")
   public static final void main(final String[] args) throws IOException {
     final ArrayListView<FittingExampleDataset> list;
+    final ArrayList<double[]>[] results;
     final Path dest;
     final ITextOutput out;
-    int idx;
+    int index;
 
     list = new FittingExampleDatasets().call();
-
+    results = new ArrayList[FittingExamples.FITTERS.length];
     dest = PathUtils.createPathInside(PathUtils.getTempDir(), "results");//$NON-NLS-1$
 
     try (final OutputStream os = PathUtils.openOutputStream(//
@@ -133,24 +159,91 @@ public class FittingExamples {
               AbstractTextOutput.wrap(bw));
 
           out.append("fitter");//$NON-NLS-1$
-          idx = 0;
           for (final FittingExampleDataset set : list) {
             out.append('\t');
-            out.append(++idx);
-            out.append('_');
-            out.append(set.model.getClass().getSimpleName());
+            out.append(set.name);
           }
           out.append("\tsum\ttime"); //$NON-NLS-1$
           out.appendLineBreak();
           out.flush();
 
           Files.createDirectories(dest);
+          index = 0;
           for (final FunctionFitter fitter : FittingExamples.FITTERS) {
-            FittingExamples.__doFitter(dest, list, fitter, out);
+            FittingExamples.__doFitter(dest, list, fitter, out,//
+                results[index++] = new ArrayList<>());
           }
+
+          FittingExamples.__printResults(list, results, out);
         }
       }
     }
   }
 
+  /**
+   * print the results
+   *
+   * @param list
+   *          the list of data sets
+   * @param results
+   *          the results
+   * @param out
+   *          the output device
+   */
+  private static final void __printResults(
+      final ArrayListView<FittingExampleDataset> list,
+      final ArrayList<double[]>[] results, final ITextOutput out) {
+    final HashMap<Class<? extends ParametricUnaryFunction>, Integer> models;
+    FittingExampleDataset example;
+    Class<? extends ParametricUnaryFunction> clazz;
+    int index;
+    boolean first;
+
+    models = new HashMap<>();
+    for (final FittingExampleDataset example2 : list) {
+      models.put(example2.model.getClass(),
+          Integer.valueOf(example2.model.getParameterCount()));
+    }
+
+    for (final Map.Entry<Class<? extends ParametricUnaryFunction>, Integer> entry : models
+        .entrySet()) {
+
+      out.appendLineBreak();
+      out.appendLineBreak();
+      out.appendLineBreak();
+
+      clazz = entry.getKey();
+      out.append("### Fittings based on Model"); //$NON-NLS-1$
+      out.append(clazz.getSimpleName());
+
+      first = true;
+      out.append("problem"); //$NON-NLS-1$
+      for (final FunctionFitter fitter : FittingExamples.FITTERS) {
+        if (first) {
+          out.append('\t');
+          first = false;
+        } else {
+          for (index = entry.getValue().intValue(); (--index) >= 0;) {
+            out.append('\t');
+          }
+        }
+        out.append(fitter.getClass().getSimpleName());
+      }
+
+      out.appendLineBreak();
+      for (index = 0; index < list.size(); index++) {
+        example = list.get(index);
+        if (clazz.equals(example.model.getClass())) {
+          out.append(example.name);
+          for (final ArrayList<double[]> fr : results) {
+            for (final double d : fr.get(index)) {
+              out.append('\t');
+              out.append(d);
+            }
+          }
+          out.appendLineBreak();
+        }
+      }
+    }
+  }
 }

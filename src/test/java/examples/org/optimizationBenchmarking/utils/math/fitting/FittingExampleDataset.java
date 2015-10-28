@@ -14,6 +14,9 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.StableSum;
 /** An example data set for the fitting of data. */
 public class FittingExampleDataset {
 
+  /** the name of the example data set */
+  public final String name;
+
   /** the data matrix */
   public final IMatrix data;
 
@@ -26,6 +29,8 @@ public class FittingExampleDataset {
   /**
    * create the fitting example
    *
+   * @param _name
+   *          the name of the example data set
    * @param _data
    *          the data matrix
    * @param _model
@@ -33,19 +38,21 @@ public class FittingExampleDataset {
    * @param _sources
    *          the number of sources this data set is composed from
    */
-  public FittingExampleDataset(final IMatrix _data,
+  public FittingExampleDataset(final String _name, final IMatrix _data,
       final ParametricUnaryFunction _model, final int _sources) {
     super();
 
     this.data = _data;
     this.model = _model;
     this.sources = _sources;
+    this.name = _name;
   }
 
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return this.model.getClass().getSimpleName() + " on " + //$NON-NLS-1$
+    return this.name + ": " + //$NON-NLS-1$
+        this.model.getClass().getSimpleName() + " on " + //$NON-NLS-1$
         this.data.m() + " points"; //$NON-NLS-1$
   }
 

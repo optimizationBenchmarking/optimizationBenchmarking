@@ -141,27 +141,33 @@ public final class FittingExampleDatasets extends TestBase implements
     }
 
     if (loaded.size() > 0) {
-      this.__postprocess(loaded, list, new boolean[] { true, true, false });
+      this.__postprocess(("maxSat_" + //$NON-NLS-1$
+          PathUtils.getFileNameWithoutExtension(resource)),//
+          loaded, list, new int[] { -1, -1, 1 });
     }
   }
 
   /**
    * Postprocess the loaded data
    *
+   * @param name
+   *          the name of the example data set
    * @param loaded
    *          the data
    * @param list
    *          the list to append to
-   * @param isTime
-   *          the description of the dimensions: {@code true} for time
-   *          dimensions, {@code false} for objective dimensions
+   * @param dimTypes
+   *          the description of the dimensions: {@code -1} for time
+   *          dimensions, {@code 1} for objective dimensions, {@code 0} for
+   *          skip
    */
-  private final void __postprocess(
+  private final void __postprocess(final String name,
       final Collection<? extends IMatrix> loaded,
-      final ArrayList<FittingExampleDataset> list, final boolean[] isTime) {
+      final ArrayList<FittingExampleDataset> list, final int[] dimTypes) {
     final QuantileAggregate aStart, aEnd, bStart, bEnd;
     int dimA, dimB, useDimA, useDimB, total, index, size, row;
     double[][] rawPoints;
+    String useName;
     double v1, v2, minA, scaleA, minB, scaleB;
 
     aStart = new QuantileAggregate(0.5d);
@@ -174,15 +180,21 @@ public final class FittingExampleDatasets extends TestBase implements
       total += current.m();
     }
 
-    for (dimA = 0; dimA < isTime.length; dimA++) {
-      for (dimB = (dimA + 1); dimB < isTime.length; dimB++) {
+    for (dimA = 0; dimA < dimTypes.length; dimA++) {
+      if (dimTypes[dimA] == 0) {
+        continue;
+      }
+      for (dimB = (dimA + 1); dimB < dimTypes.length; dimB++) {
+        if (dimTypes[dimB] == 0) {
+          continue;
+        }
 
         aStart.reset();
         bStart.reset();
         aEnd.reset();
         bEnd.reset();
 
-        if ((!(isTime[dimA])) && isTime[dimB]) {
+        if ((dimTypes[dimA] > 0) && (dimTypes[dimB] < 0)) {
           useDimA = dimB;
           useDimB = dimA;
         } else {
@@ -234,9 +246,16 @@ public final class FittingExampleDatasets extends TestBase implements
 
         Arrays.sort(rawPoints, this.m_sorter);
 
-        list.add(new FittingExampleDataset(//
+        useName = name;
+        if (dimTypes.length > 2) {
+          useName = ((((((useName + '_') + ((dimTypes[useDimA] < 0) ? 't'
+              : 'f')) + useDimA)//
+          + '_') + ((dimTypes[useDimB] < 0) ? 't' : 'f')) + useDimB);
+        }
+
+        list.add(new FittingExampleDataset(useName,//
             new DoubleMatrix2D(rawPoints),//
-            ((isTime[useDimA] == isTime[useDimB]) ? this.m_sameType
+            ((dimTypes[useDimA] == dimTypes[useDimB]) ? this.m_sameType
                 : this.m_timeObjective), loaded.size()));
       }
     }
@@ -252,7 +271,8 @@ public final class FittingExampleDatasets extends TestBase implements
    */
   private final void __appendBBOB(
       final ArrayList<FittingExampleDataset> list) throws IOException {
-    this.__append(new BBOBExample(TestBase.getNullLogger()), list, 6);
+    this.__append("bbob", //$NON-NLS-1$
+        new BBOBExample(TestBase.getNullLogger()), list, 6);
   }
 
   /**
@@ -265,29 +285,35 @@ public final class FittingExampleDatasets extends TestBase implements
    */
   private final void __appendTSPSuite(
       final ArrayList<FittingExampleDataset> list) throws IOException {
-    this.__append(new TSPSuiteExample(TestBase.getNullLogger()), list, 2);
+    this.__append("tsp", //$NON-NLS-1$
+        new TSPSuiteExample(TestBase.getNullLogger()), list, 2, 4);
   }
 
   /**
    * append the example data set
    *
+   * @param baseName
+   *          the base name
    * @param source
    *          the source data
    * @param list
    *          the destination list
    * @param maxSetups
    *          the maximum number of setups
+   * @param skip
+   *          the dimensions to skip
    * @throws IOException
    *           if i/o fails
    */
-  private final void __append(final ExperimentSetCreator source,
-      final ArrayList<FittingExampleDataset> list, final int maxSetups)
-      throws IOException {
+  private final void __append(final String baseName,
+      final ExperimentSetCreator source,
+      final ArrayList<FittingExampleDataset> list, final int maxSetups,
+      final int... skip) throws IOException {
     final IExperimentSet data;
     final Random rand;
     final HashSet<IInstanceRuns> done;
     final ArrayListView<? extends IExperiment> experiments;
-    final boolean[] isTime;
+    final int[] dimTypes;
     final ArrayListView<? extends IDimension> dims;
     IExperiment experiment;
     IInstanceRuns runs;
@@ -303,10 +329,14 @@ public final class FittingExampleDatasets extends TestBase implements
     }
 
     dims = data.getDimensions().getData();
-    isTime = new boolean[dims.size()];
+    dimTypes = new int[dims.size()];
     index = 0;
     for (final IDimension dim : dims) {
-      isTime[index++] = dim.getDimensionType().isTimeMeasure();
+      dimTypes[index++] = (dim.getDimensionType().isTimeMeasure() ? (-1)
+          : 1);
+    }
+    for (final int i : skip) {
+      dimTypes[i] = 0;
     }
 
     done = new HashSet<>();
@@ -330,7 +360,10 @@ public final class FittingExampleDatasets extends TestBase implements
       if (!(done.add(runs))) {
         continue;
       }
-      this.__postprocess(runs.getData(), list, isTime);
+      this.__postprocess(//
+          baseName + '_' + experiment.getName() + +'_'
+              + runs.getInstance().getName(),//
+          runs.getData(), list, dimTypes);
       --setups;
     }
   }
