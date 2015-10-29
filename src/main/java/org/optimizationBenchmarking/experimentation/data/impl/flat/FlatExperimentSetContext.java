@@ -364,6 +364,7 @@ public class FlatExperimentSetContext extends
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("resource")
   @Override
   public synchronized final void dimensionSetName(final String name) {
     final DimensionContext context;
@@ -380,6 +381,7 @@ public class FlatExperimentSetContext extends
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("resource")
   @Override
   public synchronized final void dimensionSetDescription(
       final String description) {
@@ -396,6 +398,7 @@ public class FlatExperimentSetContext extends
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("resource")
   @Override
   public synchronized final void dimensionAddDescription(
       final String description) {
@@ -412,6 +415,7 @@ public class FlatExperimentSetContext extends
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("resource")
   @Override
   public synchronized final void dimensionSetDirection(
       final String direction) {
@@ -429,6 +433,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void dimensionSetDirection(
       final EDimensionDirection direction) {
     final DimensionContext context;
@@ -445,6 +450,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void dimensionSetParser(
       final Class<? extends NumberParser<?>> parserClass,
       final Number lowerBound, final Number upperBound) {
@@ -465,6 +471,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void dimensionSetParser(
       final NumberParser<?> parser) {
     final DimensionContext context;
@@ -481,6 +488,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void dimensionSetParser(
       final String parserClass, final String lowerBound,
       final String upperBound) {
@@ -500,6 +508,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void dimensionSetParser(final String parserDesc) {
     final DimensionContext context;
 
@@ -515,6 +524,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void dimensionSetType(final EDimensionType type) {
     final DimensionContext context;
 
@@ -530,6 +540,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void dimensionSetType(final String type) {
     final DimensionContext context;
 
@@ -767,6 +778,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void instanceSetName(final String name) {
     final InstanceContext context;
 
@@ -783,6 +795,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void instanceSetDescription(
       final String description) {
     final InstanceContext context;
@@ -799,6 +812,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void instanceAddDescription(
       final String description) {
     final InstanceContext context;
@@ -815,6 +829,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public final synchronized void instanceSetFeatureValue(
       final String featureName, final Object featureValue) {
     final InstanceContext context;
@@ -833,6 +848,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public final synchronized void instanceSetFeatureValue(
       final String featureName, final Object featureValue,
       final String featureValueDescription) {
@@ -854,6 +870,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public final synchronized void instanceSetFeatureValue(
       final String featureName, final String featureDescription,
       final Object featureValue, final String featureValueDescription) {
@@ -877,6 +894,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void instanceSetLowerBound(
       final IDimension dim, final Number bound) {
     final InstanceContext context;
@@ -895,6 +913,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void instanceSetLowerBound(final Object dim,
       final Object bound) {
     final InstanceContext context;
@@ -913,6 +932,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void instanceSetUpperBound(
       final IDimension dim, final Number bound) {
     final InstanceContext context;
@@ -931,6 +951,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void instanceSetUpperBound(final Object dim,
       final Object bound) {
     final InstanceContext context;
@@ -1211,6 +1232,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void experimentSetName(final String name) {
     final ExperimentContext context;
 
@@ -1227,6 +1249,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void experimentSetDescription(
       final String description) {
     final ExperimentContext context;
@@ -1243,6 +1266,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void experimentAddDescription(
       final String description) {
     final ExperimentContext context;
@@ -1259,7 +1283,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
-  @SuppressWarnings("fallthrough")
+  @SuppressWarnings({ "fallthrough", "resource" })
   public final synchronized void experimentSetParameterValue(
       final String parameterName, final Object parameterValue) {
     final ExperimentContext context;
@@ -1316,7 +1340,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
-  @SuppressWarnings("fallthrough")
+  @SuppressWarnings({ "fallthrough", "resource" })
   public final synchronized void experimentSetParameterValue(
       final String parameterName, final Object parameterValue,
       final String parameterValueDescription) {
@@ -1378,7 +1402,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
-  @SuppressWarnings("fallthrough")
+  @SuppressWarnings({ "fallthrough", "resource" })
   public final synchronized void experimentSetParameterValue(
       final String parameterName, final String parameterDescription,
       final Object parameterValue, final String parameterValueDescription) {
@@ -1576,6 +1600,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void runsSetInstance(final Instance inst) {
     final InstanceRunsContext context;
 
@@ -1595,6 +1620,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void runsSetInstance(final String inst) {
     final InstanceRunsContext context;
 
@@ -1700,6 +1726,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void runAddDataPoint(final DataPoint point) {
     final RunContext context;
 
@@ -1715,6 +1742,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void runAddDataPoint(final Object point) {
     final RunContext context;
 
@@ -1730,6 +1758,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void runAddDataPoint(final Number... values) {
     final RunContext context;
 
@@ -1745,6 +1774,7 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("resource")
   public synchronized final void runAddDataPoint(final String point) {
     final RunContext context;
 

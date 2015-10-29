@@ -53,7 +53,7 @@ public class ArraySetViewTestBase<ET, T extends ArraySetView<ET>> extends
   }
 
   /** Test if the elements in the set are truly sorted */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SuppressWarnings({ "unchecked", "rawtypes", "null" })
   @Test(timeout = 3600000)
   public void testSorted() {
     Object prev;

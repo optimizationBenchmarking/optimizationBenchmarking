@@ -1653,6 +1653,7 @@ public class TSPSuiteInput extends FileInputTool<ExperimentSetContext>
    * @throws Throwable
    *           if it fails
    */
+  @SuppressWarnings({ "resource", "null" })
   private final void __reader(final IOJob job,
       final ExperimentSetContext data, final Path file,
       final BufferedReader reader) throws Throwable {

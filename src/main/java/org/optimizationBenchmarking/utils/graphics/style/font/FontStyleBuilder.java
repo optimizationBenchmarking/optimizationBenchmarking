@@ -447,7 +447,7 @@ public final class FontStyleBuilder extends
    *
    * @return the font style
    */
-  @SuppressWarnings({ "rawtypes", "unchecked", "resource" })
+  @SuppressWarnings({ "rawtypes", "unchecked", "resource", "null" })
   @Override
   protected final FontStyle compile() {
     final ArrayList<Font> lst;

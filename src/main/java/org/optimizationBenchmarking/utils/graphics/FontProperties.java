@@ -199,6 +199,7 @@ public class FontProperties extends HashObject {
    *          the font name
    * @return the font family
    */
+  @SuppressWarnings("null")
   public static final FontProperties getFontProperties(final String name) {
     String str, beginner;
     int cmpMode, j, i;

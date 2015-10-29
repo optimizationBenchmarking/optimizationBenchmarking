@@ -518,6 +518,7 @@ public final class REngine extends MathEngine {
     if (value == null) {
       this.__handleError(//
       new IllegalArgumentException("Cannot load null matrix.")); //$NON-NLS-1$
+      return;
     }
     m = value.m();
     n = value.n();

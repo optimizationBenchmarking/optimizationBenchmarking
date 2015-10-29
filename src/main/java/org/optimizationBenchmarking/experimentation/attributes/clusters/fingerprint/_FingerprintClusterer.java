@@ -65,6 +65,7 @@ abstract class _FingerprintClusterer<CT extends _FingerprintCluster<CCT>, CCT ex
       final ArrayListView<? extends INamedElement> names);
 
   /** {@inheritDoc} */
+  @SuppressWarnings("resource")
   @Override
   protected final CCT compute(final IExperimentSet data) {
     final INamedElementSet names;

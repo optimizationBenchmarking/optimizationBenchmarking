@@ -1,6 +1,5 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
 
-import org.optimizationBenchmarking.experimentation.attributes.clusters.ICluster;
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -11,7 +10,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * fingerprint.
  */
 public class InstanceFingerprintCluster extends
-    _FingerprintCluster<InstanceFingerprintClustering> implements ICluster {
+    _FingerprintCluster<InstanceFingerprintClustering> {
 
   /**
    * create the property value group

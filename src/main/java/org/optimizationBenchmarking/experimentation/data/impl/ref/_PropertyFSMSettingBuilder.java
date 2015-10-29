@@ -38,6 +38,7 @@ class _PropertyFSMSettingBuilder<PST extends _PropertySetting<?, ?>>
    * @param map
    *          the map to process
    */
+  @SuppressWarnings("null")
   private static final void __processDefaults(
       final HashMap<String, _PropertyFSMSettingRecord> map) {
     _PropertyFSMSettingRecord classProperty, nameProperty, fullProperty;

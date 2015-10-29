@@ -686,7 +686,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
   }
 
   /** process the cached text */
-  @SuppressWarnings("resource")
+  @SuppressWarnings({ "resource", "null" })
   private final void __processText() {
     final MemoryTextOutput chars;
     final ITextOutput textOut;

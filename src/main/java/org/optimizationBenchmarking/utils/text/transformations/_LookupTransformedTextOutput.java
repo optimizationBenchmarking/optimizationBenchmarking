@@ -37,8 +37,8 @@ class _LookupTransformedTextOutput extends _TransformedTextOutput {
   /** {@inheritDoc} */
   @SuppressWarnings("incomplete-switch")
   @Override
-  public AbstractTextOutput append(final CharSequence csq,
-      final int start, final int end) {
+  public AbstractTextOutput append(final CharSequence csq, final int start,
+      final int end) {
     final byte[] state;
     char[] replace;
     char currentChar;
@@ -179,8 +179,9 @@ class _LookupTransformedTextOutput extends _TransformedTextOutput {
     replace = this.__resolve(c);
     if (replace == null) {
       this._onUnknown(c, null, (-1), (-1));// throw an error
+    } else {
+      this.m_out.append(replace, 1, replace.length);
     }
-    this.m_out.append(replace, 1, replace.length);
     return this;
   }
 

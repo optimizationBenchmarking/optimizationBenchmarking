@@ -445,6 +445,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
    * @param buf
    *          the buffer
    */
+  @SuppressWarnings("null")
   private static final void __dates(final BibDate start,
       final BibDate end, final ITextOutput raw, final ITextOutput enc,
       final char[] buf) {

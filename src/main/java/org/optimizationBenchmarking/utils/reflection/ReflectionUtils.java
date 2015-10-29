@@ -825,7 +825,7 @@ public final class ReflectionUtils {
         useName = TextUtils.prepare(name);
         if (useName != null) {
           try {
-            field = container.getField(useName);
+            field = useContainer.getField(useName);
           } catch (final Throwable t) {
             field = null;
             errorA = t;
@@ -837,7 +837,7 @@ public final class ReflectionUtils {
           }
 
           try {
-            method = container.getMethod(useName);
+            method = useContainer.getMethod(useName);
           } catch (final Throwable t) {
             method = null;
             errorB = t;
@@ -870,7 +870,7 @@ public final class ReflectionUtils {
       }
 
       try {
-        field = container
+        field = useContainer
             .getField(ReflectionUtils.DEFAULT_SINGLETON_CONSTANT_NAME);
       } catch (final Throwable t) {
         field = null;
@@ -882,7 +882,7 @@ public final class ReflectionUtils {
       }
 
       try {
-        method = container
+        method = useContainer
             .getMethod(ReflectionUtils.DEFAULT_SINGLETON_GETTER_NAME);
       } catch (final Throwable t) {
         method = null;
@@ -900,7 +900,7 @@ public final class ReflectionUtils {
         if ((useName == null)
             || (useContainer.getSimpleName().equals(useName))) {
           try {
-            constructor = container.getConstructor();
+            constructor = useContainer.getConstructor();
           } catch (final Throwable t) {
             constructor = null;
             errorC = t;

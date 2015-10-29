@@ -105,12 +105,12 @@ final class _LaTeXDocumentHeader extends DocumentHeader {
 
       needsSpace = false;
       s = author.getPersonalName();
-      if ((s != null) & (!(s.isEmpty()))) {
+      if ((s != null) && (!(s.isEmpty()))) {
         encoded.append(s);
         needsSpace = true;
       }
       s = author.getFamilyName();
-      if ((s != null) & (!(s.isEmpty()))) {
+      if ((s != null) && (!(s.isEmpty()))) {
         if (needsSpace) {
           encoded.append(' ');
         }

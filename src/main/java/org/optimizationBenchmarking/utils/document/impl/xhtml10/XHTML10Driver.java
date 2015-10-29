@@ -760,6 +760,7 @@ public final class XHTML10Driver extends DocumentDriver {
   }
 
   /** the default graphic driver */
+  @SuppressWarnings("null")
   private static final class __XHTML10DefaultGraphicDriverLoader {
 
     /** the default graphic driver */

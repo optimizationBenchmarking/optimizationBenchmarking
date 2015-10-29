@@ -533,6 +533,7 @@ public class Document extends DocumentElement implements IDocument {
    * @see #doOnClose()
    * @see #postProcess(Set, ArrayListView)
    */
+  @SuppressWarnings("null")
   @Override
   protected final synchronized void onClose() {
     Logger log;

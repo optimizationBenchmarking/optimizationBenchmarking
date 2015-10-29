@@ -48,6 +48,7 @@ public final class JavaCompilerJob extends ToolJob implements
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("resource")
   @Override
   public final ClassLoader call() {
     final JavaCompilerTool tool;

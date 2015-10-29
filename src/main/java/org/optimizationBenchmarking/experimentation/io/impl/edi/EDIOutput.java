@@ -347,7 +347,7 @@ public final class EDIOutput extends XMLOutputTool<Object> implements
    * @param job
    *          the job
    */
-  @SuppressWarnings("incomplete-switch")
+  @SuppressWarnings({ "incomplete-switch", "null" })
   private static final void __writeInstanceSet(
       final IInstanceSet instances, final XMLElement dest, final IOJob job) {
     final HashSet<Object> hashSet;

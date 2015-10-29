@@ -38,7 +38,7 @@ abstract class _DefSet<T> extends ArrayListView<T> {
     if (o == this) {
       return true;
     }
-    if ((o != null) & (o.getClass() == this.getClass())) {
+    if ((o != null) && (o.getClass() == this.getClass())) {
       other = ((_DefSet) o);
       return ((other.m_allowsMore == this.m_allowsMore) && //
       (super.equals(other)));

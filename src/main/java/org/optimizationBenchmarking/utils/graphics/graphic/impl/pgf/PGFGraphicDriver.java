@@ -55,6 +55,7 @@ public final class PGFGraphicDriver extends AbstractGraphicDriver {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("resource")
   @Override
   protected final Graphic createGraphic(final GraphicBuilder builder) {
     final Dimension dim;

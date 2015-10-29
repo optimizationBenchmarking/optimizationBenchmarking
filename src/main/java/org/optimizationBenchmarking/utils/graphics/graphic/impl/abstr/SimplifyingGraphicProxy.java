@@ -904,6 +904,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
    * @param work
    *          the list of segments of the poly-line
    */
+  @SuppressWarnings("null")
   private final void __flushPolyLine(final ArrayList<__LineSegment> work) {
     final int size;
     int[] polyIntX, polyIntY;

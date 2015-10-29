@@ -92,6 +92,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
    *          do we need to clone?
    * @return the registered bibliography record
    */
+  @SuppressWarnings("resource")
   final BibRecord _add(final BibRecord element, final boolean mustClone) {
     BibRecord res;
     BibliographyBuilder owner;
