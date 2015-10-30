@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.math.fitting.spec;
 
-import java.util.Random;
+import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /**
  * A base class for representing a real function that depends on one
@@ -56,19 +56,13 @@ public abstract class ParametricUnaryFunction {
   }
 
   /**
-   * Create a random guess of the parameters
+   * Create a parameter guesser
    *
-   * @param parameters
-   *          the parameters
-   * @param random
-   *          the random guess
+   * @param data
+   *          the data matrix
+   * @return the parameter guesser
    */
-  public void createRandomGuess(final double[] parameters,
-      final Random random) {
-    int index;
-
-    for (index = this.getParameterCount(); (--index) >= 0;) {
-      parameters[index] = (random.nextGaussian() * (random.nextInt(5) + 1));
-    }
+  public IParameterGuesser createParameterGuesser(final IMatrix data) {
+    return new _DefaultParameterGuesser();
   }
 }

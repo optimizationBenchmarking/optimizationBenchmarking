@@ -6,6 +6,7 @@ import java.util.Comparator;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.math.MathUtils;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FittingJob;
+import org.optimizationBenchmarking.utils.math.fitting.spec.IParameterGuesser;
 import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.StableSum;
@@ -15,6 +16,9 @@ public class OptiFittingJob extends FittingJob {
 
   /** the data points */
   protected final DataPoint[] m_points;
+
+  /** the parameter guesser */
+  protected final IParameterGuesser m_guesser;
 
   /**
    * the the number of worst data points used during the objective value
@@ -43,12 +47,16 @@ public class OptiFittingJob extends FittingJob {
     int index;
 
     points = builder.getPoints();
+
+    this.m_guesser = this.m_function.createParameterGuesser(points);
+
     index = points.m();
 
-    this.m_numberOfPointsUsed = Math.max(0,//
-        Math.min((index - 1), Math.max(builder.getMinCriticalPoints(),//
-            Math.min(70, Math.max(10,//
-                (1 + ((int) (0.5d + (index / 13d)))))))));
+    this.m_numberOfPointsUsed = Math.max(0, //
+        Math.min((index - 1),
+            Math.max(builder.getMinCriticalPoints(), //
+                Math.min(70, Math.max(10, //
+                    (1 + ((int) (0.5d + (index / 13d)))))))));
 
     this.m_points = new DataPoint[index];
     for (; (--index) >= 0;) {
@@ -104,7 +112,8 @@ public class OptiFittingJob extends FittingJob {
 
     use = this.m_points;
     for (final DataPoint dp : use) {
-      dp.m_error = (Math.abs(dp.output - func.value(dp.input, params)) / dp.inverseWeight);
+      dp.m_error = (Math.abs(dp.output - func.value(dp.input, params))
+          / dp.inverseWeight);
     }
 
     Arrays.sort(use, this.m_sortByError);
@@ -135,8 +144,8 @@ public class OptiFittingJob extends FittingJob {
   }
 
   /** sort by error, so that the biggest errors come first */
-  private static final class __SortByError implements
-      Comparator<DataPoint> {
+  private static final class __SortByError
+      implements Comparator<DataPoint> {
     /** create */
     __SortByError() {
       super();

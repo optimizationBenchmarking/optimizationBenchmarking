@@ -12,7 +12,6 @@ import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunct
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.MatrixBuilder;
-import org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileAggregate;
 
 /**
  * <p>
@@ -60,10 +59,11 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileAggr
  * </ol>
  * Currently, the computation is very inefficient, as I use three different
  * aggregates for the three quantiles, each of which will collect the data.
- * Once I have better implementations, I will improve on that. </p>
+ * Once I have better implementations, I will improve on that.
+ * </p>
  */
-final class _InstanceRunsFingerprint extends
-    Attribute<IInstanceRuns, IMatrix> {
+final class _InstanceRunsFingerprint
+    extends Attribute<IInstanceRuns, IMatrix> {
 
   /** the globally shared instance */
   static final _InstanceRunsFingerprint INSTANCE = new _InstanceRunsFingerprint();
@@ -90,24 +90,15 @@ final class _InstanceRunsFingerprint extends
     final ParametricUnaryFunction poly, decay;
     final double[] rawPoints;
     final DoubleMatrix1D rawMatrix;
-    final QuantileAggregate startA, startB, endA, endB;
     IDimension dimension;
     ArrayListView<? extends IRun> runs;
-    ArrayListView<? extends IDataPoint> points;
     double[] fittingResult;
     int dimA, dimB, useDimA, useDimB, totalPoints, index;
-    boolean isTimeA, isTimeB, useIsTimeA, isIncreasingA, useIsIncreasingA, isIncreasingB;
+    boolean isTimeA, isTimeB, useIsTimeA;
     ParametricUnaryFunction func;
-    double minA, minB, maxA, maxB, scaleA, scaleB, temp;
-    IDataPoint dpoint;
 
     poly = new PolynomialModel();
     decay = new DecayModel();
-
-    startA = new QuantileAggregate(0.5d);
-    startB = new QuantileAggregate(0.5d);
-    endA = new QuantileAggregate(0.5d);
-    endB = new QuantileAggregate(0.5d);
 
     // We allocate a re-usable data store.
     totalPoints = 0;
@@ -118,16 +109,13 @@ final class _InstanceRunsFingerprint extends
     rawMatrix = new DoubleMatrix1D(rawPoints, totalPoints, 2);
 
     size = dimensions.size();
-    minA = Double.NaN;
     for (dimA = 0; dimA < size; dimA++) {
       dimension = dimensions.get(dimA);
       isTimeA = dimension.getDimensionType().isTimeMeasure();
-      isIncreasingA = dimension.getDirection().isIncreasing();
 
       for (dimB = dimA; (++dimB) < size;) {
         dimension = dimensions.get(dimB);
         isTimeB = dimension.getDimensionType().isTimeMeasure();
-        isIncreasingB = dimension.getDirection().isIncreasing();
 
         // we prefer time-quality over quality-time
         if (isTimeB && (!isTimeA)) {
@@ -135,63 +123,19 @@ final class _InstanceRunsFingerprint extends
           isTimeB = false;
           useDimA = dimB;
           useDimB = dimA;
-          useIsIncreasingA = isIncreasingB;
-          isIncreasingB = isIncreasingA;
         } else {
           useIsTimeA = isTimeA;
           useDimA = dimA;
           useDimB = dimB;
-          useIsIncreasingA = isIncreasingA;
         }
 
         runs = data.getData();
 
-        startA.reset();
-        startB.reset();
-        endA.reset();
-        endB.reset();
-
-        for (final IRun run : runs) {
-          points = run.getData();
-          dpoint = points.get(0);
-          startA.append(dpoint.getDouble(useDimA));
-          startB.append(dpoint.getDouble(useDimB));
-          dpoint = points.get(points.size() - 1);
-          endA.append(dpoint.getDouble(useDimA));
-          endB.append(dpoint.getDouble(useDimB));
-        }
-
-        minA = startA.doubleValue();
-        maxA = endA.doubleValue();
-        if (!useIsIncreasingA) {
-          temp = minA;
-          minA = maxA;
-          maxA = temp;
-        }
-        scaleA = (maxA - minA);
-
-        minB = startB.doubleValue();
-        maxB = endB.doubleValue();
-        if (!useIsIncreasingA) {
-          temp = minB;
-          minB = maxB;
-          maxB = temp;
-        }
-        scaleB = (maxB - minB);
-
         index = 0;
         for (final IRun run : runs) {
           for (final IDataPoint point : run.getData()) {
-
-            temp = point.getDouble(useDimA);
-            rawPoints[index++] = isIncreasingA //
-            ? (((temp - minA) / scaleA))//
-                : (((maxA - temp) / scaleA));//
-
-            temp = point.getDouble(useDimB);
-            rawPoints[index++] = isIncreasingB //
-            ? (((maxB - temp) / scaleB))//
-                : (((temp - minB) / scaleB));//
+            rawPoints[index++] = point.getDouble(useDimA);
+            rawPoints[index++] = point.getDouble(useDimB);
           }
         }
 
@@ -207,16 +151,11 @@ final class _InstanceRunsFingerprint extends
         }
 
         // get all the points
-        fittingResult = LSFitter.getInstance().use()
-            .setFunctionToFit(func).setPoints(rawMatrix)
-            .setMinCriticalPoints((3 * runs.size())).create().call()
-            .getFittedParameters();
+        fittingResult = LSFitter.getInstance().use().setFunctionToFit(func)
+            .setPoints(rawMatrix).setMinCriticalPoints((3 * runs.size()))
+            .create().call().getFittedParameters();
 
         builder.append(fittingResult);
-        builder.append(minA);
-        builder.append(maxA);
-        builder.append(minB);
-        builder.append(maxB);
       }
     }
   }

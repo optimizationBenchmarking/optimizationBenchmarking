@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
 
-import java.util.Random;
-
 import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
 
 /**
@@ -73,13 +71,5 @@ public final class DecayModel extends ParametricUnaryFunction {
     if (x > 0d) {
       parameters[1] = (-x);
     }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void createRandomGuess(final double[] parameters,
-      final Random random) {
-    parameters[0] = (-1e-2d * Math.abs(random.nextGaussian()));
-    parameters[1] = (-random.nextDouble());
   }
 }

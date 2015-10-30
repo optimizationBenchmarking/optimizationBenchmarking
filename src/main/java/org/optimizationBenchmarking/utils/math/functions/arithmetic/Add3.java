@@ -183,9 +183,11 @@ public final class Add3 extends TernaryFunction {
     }
 
     n = ((x0 <= Double.NEGATIVE_INFINITY)
-        || (x1 <= Double.NEGATIVE_INFINITY) || (x2 <= Double.NEGATIVE_INFINITY));
+        || (x1 <= Double.NEGATIVE_INFINITY)
+        || (x2 <= Double.NEGATIVE_INFINITY));
     p = ((x0 >= Double.POSITIVE_INFINITY)
-        || (x1 >= Double.POSITIVE_INFINITY) || (x2 >= Double.POSITIVE_INFINITY));
+        || (x1 >= Double.POSITIVE_INFINITY)
+        || (x2 >= Double.POSITIVE_INFINITY));
     if (n) {
       if (p) {
         return Double.NaN;

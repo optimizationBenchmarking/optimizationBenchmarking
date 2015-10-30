@@ -1,8 +1,8 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
 
-import java.util.Random;
-
+import org.optimizationBenchmarking.utils.math.fitting.spec.IParameterGuesser;
 import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
+import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.StableSum;
 
 /**
@@ -51,10 +51,7 @@ public final class PolynomialModel extends ParametricUnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final void createRandomGuess(final double[] parameters,
-      final Random random) {
-    parameters[0] = (1e-1 * random.nextGaussian());
-    parameters[1] = (random.nextGaussian() + 1d);
-    parameters[2] = (1e-1 * random.nextGaussian());
+  public IParameterGuesser createParameterGuesser(final IMatrix data) {
+    return new _PolynomialGuesser(data);
   }
 }

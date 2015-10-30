@@ -24,22 +24,21 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
-import org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileAggregate;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
-import test.junit.TestBase;
 import examples.org.optimizationBenchmarking.experimentation.dataAndIO.BBOBExample;
 import examples.org.optimizationBenchmarking.experimentation.dataAndIO.ExperimentSetCreator;
 import examples.org.optimizationBenchmarking.experimentation.dataAndIO.TSPSuiteExample;
+import test.junit.TestBase;
 
 /** Some examples for data fitting. */
-public final class FittingExampleDatasets extends TestBase implements
-    Callable<ArrayListView<FittingExampleDataset>> {
+public final class FittingExampleDatasets extends TestBase
+    implements Callable<ArrayListView<FittingExampleDataset>> {
 
   /** the resources */
-  private static final String[] RESOURCES = {//
-  "1FlipHC-uf020-01.txt",//$NON-NLS-1$
-      "mFlipHC-uf100-01.txt",//$NON-NLS-1$
+  private static final String[] RESOURCES = { //
+      "1FlipHC-uf020-01.txt", //$NON-NLS-1$
+      "mFlipHC-uf100-01.txt", //$NON-NLS-1$
       "2FlipHCrs-uf250-01.txt" //$NON-NLS-1$
   };
 
@@ -113,8 +112,8 @@ public final class FittingExampleDatasets extends TestBase implements
             if ((str = TextUtils.prepare(str)) == null) {
               size = current.size();
               if (size > 0) {
-                loaded.add(new DoubleMatrix2D(current
-                    .toArray(new double[size][])));
+                loaded.add(new DoubleMatrix2D(
+                    current.toArray(new double[size][])));
               }
               current.clear();
               continue;
@@ -141,8 +140,9 @@ public final class FittingExampleDatasets extends TestBase implements
     }
 
     if (loaded.size() > 0) {
-      this.__postprocess(("maxSat_" + //$NON-NLS-1$
-          PathUtils.getFileNameWithoutExtension(resource)),//
+      this.__postprocess(
+          ("maxSat_" + //$NON-NLS-1$
+              PathUtils.getFileNameWithoutExtension(resource)), //
           loaded, list, new int[] { -1, -1, 1 });
     }
   }
@@ -164,16 +164,9 @@ public final class FittingExampleDatasets extends TestBase implements
   private final void __postprocess(final String name,
       final Collection<? extends IMatrix> loaded,
       final ArrayList<FittingExampleDataset> list, final int[] dimTypes) {
-    final QuantileAggregate aStart, aEnd, bStart, bEnd;
     int dimA, dimB, useDimA, useDimB, total, index, size, row;
     double[][] rawPoints;
     String useName;
-    double v1, v2, minA, scaleA, minB, scaleB;
-
-    aStart = new QuantileAggregate(0.5d);
-    bStart = new QuantileAggregate(0.5d);
-    aEnd = new QuantileAggregate(0.5d);
-    bEnd = new QuantileAggregate(0.5d);
 
     total = 0;
     for (final IMatrix current : loaded) {
@@ -189,11 +182,6 @@ public final class FittingExampleDatasets extends TestBase implements
           continue;
         }
 
-        aStart.reset();
-        bStart.reset();
-        aEnd.reset();
-        bEnd.reset();
-
         if ((dimTypes[dimA] > 0) && (dimTypes[dimB] < 0)) {
           useDimA = dimB;
           useDimB = dimA;
@@ -202,44 +190,14 @@ public final class FittingExampleDatasets extends TestBase implements
           useDimB = dimB;
         }
 
-        for (final IMatrix run : loaded) {
-          aStart.append(run.getDouble(0, useDimA));
-          bStart.append(run.getDouble(0, useDimB));
-          size = (run.m() - 1);
-          aEnd.append(run.getDouble(size, useDimA));
-          bEnd.append(run.getDouble(size, useDimB));
-        }
-
-        v1 = aStart.doubleValue();
-        v2 = aEnd.doubleValue();
-        if (v1 < v2) {
-          minA = v1;
-          scaleA = (v2 - v1);
-        } else {
-          minA = v2;
-          scaleA = (v1 - v2);
-        }
-
-        v1 = bStart.doubleValue();
-        v2 = bEnd.doubleValue();
-        if (v1 < v2) {
-          minB = v1;
-          scaleB = (v2 - v1);
-        } else {
-          minB = v2;
-          scaleB = (v1 - v2);
-        }
-
         rawPoints = new double[total][2];
 
         index = 0;
         for (final IMatrix run : loaded) {
           size = run.m();
           for (row = 0; row < size; row++) {
-            rawPoints[index][0] = //
-            ((run.getDouble(row, useDimA) - minA) / scaleA);
-            rawPoints[index][1] = //
-            ((run.getDouble(row, useDimB) - minB) / scaleB);
+            rawPoints[index][0] = run.getDouble(row, useDimA);
+            rawPoints[index][1] = run.getDouble(row, useDimB);
             index++;
           }
         }
@@ -248,15 +206,16 @@ public final class FittingExampleDatasets extends TestBase implements
 
         useName = name;
         if (dimTypes.length > 2) {
-          useName = ((((((useName + '_') + ((dimTypes[useDimA] < 0) ? 't'
-              : 'f')) + useDimA)//
-          + '_') + ((dimTypes[useDimB] < 0) ? 't' : 'f')) + useDimB);
+          useName = ((((((useName + '_')
+              + ((dimTypes[useDimA] < 0) ? 't' : 'f')) + useDimA)//
+              + '_') + ((dimTypes[useDimB] < 0) ? 't' : 'f')) + useDimB);
         }
 
-        list.add(new FittingExampleDataset(useName,//
-            new DoubleMatrix2D(rawPoints),//
+        list.add(new FittingExampleDataset(useName, //
+            new DoubleMatrix2D(rawPoints), //
             ((dimTypes[useDimA] == dimTypes[useDimB]) ? this.m_sameType
-                : this.m_timeObjective), loaded.size()));
+                : this.m_timeObjective),
+            loaded.size()));
       }
     }
   }
@@ -362,7 +321,7 @@ public final class FittingExampleDatasets extends TestBase implements
       }
       this.__postprocess(//
           baseName + '_' + experiment.getName() + +'_'
-              + runs.getInstance().getName(),//
+              + runs.getInstance().getName(), //
           runs.getData(), list, dimTypes);
       --setups;
     }
@@ -396,7 +355,8 @@ public final class FittingExampleDatasets extends TestBase implements
       System.out.println(ds);
 
       randFitting = new double[ds.model.getParameterCount()];
-      ds.model.createRandomGuess(randFitting, rand);
+      ds.model.createParameterGuesser(ds.data)
+          .createRandomGuess(randFitting, rand);
 
       dest = PathUtils.createPathInside(root,
           (Integer.toString(index) + ".txt")); //$NON-NLS-1$

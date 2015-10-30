@@ -29,8 +29,8 @@ import org.optimizationBenchmarking.utils.math.fitting.impl.opti.OptiFittingJob;
 import org.optimizationBenchmarking.utils.math.fitting.impl.opti.OptiFittingJobBuilder;
 
 /** A function fitting job based on differential evolution */
-public class LSFittingJob extends OptiFittingJob implements
-    MultivariateFunction {
+public class LSFittingJob extends OptiFittingJob
+    implements MultivariateFunction {
 
   /** the random number generator */
   private final Random m_random;
@@ -59,9 +59,9 @@ public class LSFittingJob extends OptiFittingJob implements
 
     dim = this.m_function.getParameterCount();
     dest = new double[dim];
-    for (index = Math.max(100,
-        Math.min(100000, ((int) (Math.round(Math.pow(5, dim)))))); (--index) >= 0;) {
-      this.m_function.createRandomGuess(dest, this.m_random);
+    for (index = Math.max(100, Math.min(100000,
+        ((int) (Math.round(Math.pow(5, dim)))))); (--index) >= 0;) {
+      this.m_guesser.createRandomGuess(dest, this.m_random);
       this.evaluate(dest);
     }
 
@@ -98,8 +98,8 @@ public class LSFittingJob extends OptiFittingJob implements
 
       builder.checker(//
           LeastSquaresFactory.evaluationChecker(//
-              new SimpleVectorValueChecker(1e-12,
-                  Double.NEGATIVE_INFINITY, 768)));
+              new SimpleVectorValueChecker(1e-12, Double.NEGATIVE_INFINITY,
+                  768)));
 
       builder.maxEvaluations(Integer.MAX_VALUE);
       builder.maxIterations(Integer.MAX_VALUE);
@@ -110,8 +110,10 @@ public class LSFittingJob extends OptiFittingJob implements
       builder.start(this.m_result.getFittedParameters());
 
       res = new GaussNewtonOptimizer(
-          GaussNewtonOptimizer.Decomposition.SVD).optimize(//
-          builder.build()).getPoint().toArray();
+          GaussNewtonOptimizer.Decomposition.SVD)
+              .optimize(//
+                  builder.build())
+              .getPoint().toArray();
     } catch (final Throwable error) {
       return false;
     }
@@ -135,11 +137,11 @@ public class LSFittingJob extends OptiFittingJob implements
       dim = best.length;
 
       res = new BOBYQAOptimizer(dim + 3).optimize(//
-          new InitialGuess(best),//
-          new ObjectiveFunction(this),//
-          new MaxEval(5000 * dim * dim),//
-          new MaxIter(5000 * dim * dim),//
-          SimpleBounds.unbounded(best.length),//
+          new InitialGuess(best), //
+          new ObjectiveFunction(this), //
+          new MaxEval(5000 * dim * dim), //
+          new MaxIter(5000 * dim * dim), //
+          SimpleBounds.unbounded(best.length), //
           GoalType.MINIMIZE).getKey();
     } catch (final Throwable error) {
       return false;
@@ -165,12 +167,13 @@ public class LSFittingJob extends OptiFittingJob implements
 
       result = new SimplexOptimizer(1e-10d, Double.NEGATIVE_INFINITY)
           .optimize(//
-              new NelderMeadSimplex(dim),//
-              new InitialGuess(best),//
-              new ObjectiveFunction(this),//
-              new MaxEval(5000 * dim * dim),//
-              new MaxIter(5000 * dim * dim),//
-              GoalType.MINIMIZE).getKey();
+              new NelderMeadSimplex(dim), //
+              new InitialGuess(best), //
+              new ObjectiveFunction(this), //
+              new MaxEval(5000 * dim * dim), //
+              new MaxIter(5000 * dim * dim), //
+              GoalType.MINIMIZE)
+          .getKey();
     } catch (final Throwable error) {
       return false;
     }
@@ -200,21 +203,25 @@ public class LSFittingJob extends OptiFittingJob implements
 
       sigma = best.clone();
       for (index = sigma.length; (--index) >= 0;) {
-        sigma[index] = Math.max(1e-10, Math.max(//
-            (Math.abs(initial[index] - best[index])),//
-            (0.1d * Math.abs(best[index]))));
+        sigma[index] = Math.max(1e-10,
+            Math.max(//
+                (Math.abs(initial[index] - best[index])), //
+                (0.1d * Math.abs(best[index]))));
       }
 
       res = new CMAESOptimizer(maxEval, 0d, true, 20, 10,
-          new JDKRandomGenerator(), false, new SimpleValueChecker(1e-14d,
-              Double.NEGATIVE_INFINITY, maxEval)).optimize(//
-          new Sigma(sigma),// r
-          new InitialGuess(best),//
-          new ObjectiveFunction(this),//
-          SimpleBounds.unbounded(best.length),//
-          new PopulationSize(ps),//
-          new MaxEval(maxEval),//
-          GoalType.MINIMIZE).getKey();
+          new JDKRandomGenerator(), false,
+          new SimpleValueChecker(1e-14d, Double.NEGATIVE_INFINITY,
+              maxEval))
+                  .optimize(//
+                      new Sigma(sigma), // r
+                      new InitialGuess(best), //
+                      new ObjectiveFunction(this), //
+                      SimpleBounds.unbounded(best.length), //
+                      new PopulationSize(ps), //
+                      new MaxEval(maxEval), //
+                      GoalType.MINIMIZE)
+                  .getKey();
     } catch (final Throwable error) {
       return false;
     }
@@ -251,8 +258,8 @@ public class LSFittingJob extends OptiFittingJob implements
 
       builder.checker(//
           LeastSquaresFactory.evaluationChecker(//
-              new SimpleVectorValueChecker(1e-12,
-                  Double.NEGATIVE_INFINITY, 768)));
+              new SimpleVectorValueChecker(1e-12, Double.NEGATIVE_INFINITY,
+                  768)));
 
       builder.maxEvaluations(Integer.MAX_VALUE);
       builder.maxIterations(Integer.MAX_VALUE);
