@@ -70,7 +70,7 @@ public class PolynomialFitterTest {
       x0 = PolynomialFitterTest.__random(rand);
       do {
         x1 = PolynomialFitterTest.__random(rand);
-      } while (x1 == x0);
+      } while (PolynomialFitterTest.__similar(x1, x0));
 
       PolynomialFitter.findCoefficientsDegree1(//
           x0, PolynomialFitterTest.__poly1(a0, a1, x0), //
@@ -101,6 +101,40 @@ public class PolynomialFitterTest {
     return (a0 + (a1 * x) + (a2 * x * x));
   }
 
+  /**
+   * check if two values are similar
+   *
+   * @param a
+   *          the first value
+   * @param b
+   *          the second value
+   * @return {@code true} if they are similar, {@code false} otherwise
+   */
+  private static final boolean __similar(final double a, final double b) {
+    double minA, maxA, minB, maxB, t;
+    if (a == b) {
+      return true;
+    }
+
+    minA = (0.95d * a);
+    maxA = (a / 0.95d);
+    if (minA > maxA) {
+      t = maxA;
+      maxA = minA;
+      minA = t;
+    }
+
+    minB = (0.95d * b);
+    maxB = (b / 0.95d);
+    if (minB > maxB) {
+      t = maxB;
+      maxB = minB;
+      minB = t;
+    }
+
+    return ((minA <= maxB) && (maxA >= minB));
+  }
+
   /** test random polynomials of degree 2 */
   @Test(timeout = 3600000)
   public void testRandom2() {
@@ -119,10 +153,11 @@ public class PolynomialFitterTest {
       x0 = PolynomialFitterTest.__random(rand);
       do {
         x1 = PolynomialFitterTest.__random(rand);
-      } while (x1 == x0);
+      } while (PolynomialFitterTest.__similar(x1, x0));
       do {
         x2 = PolynomialFitterTest.__random(rand);
-      } while ((x2 == x0) || (x2 == x1));
+      } while (PolynomialFitterTest.__similar(x2, x0)
+          || PolynomialFitterTest.__similar(x2, x1));
 
       PolynomialFitter.findCoefficientsDegree2(//
           x0, PolynomialFitterTest.__poly2(a0, a1, a2, x0), //
@@ -131,7 +166,7 @@ public class PolynomialFitterTest {
           res);
 
       delta = (Math.max(Math.abs(a0), Math.max(Math.abs(a1), Math.abs(a2)))
-          * 1e-5d);
+          * 1e-4d);
       Assert.assertEquals(a0, res[0], delta);
       Assert.assertEquals(a1, res[1], delta);
       Assert.assertEquals(a2, res[2], delta);

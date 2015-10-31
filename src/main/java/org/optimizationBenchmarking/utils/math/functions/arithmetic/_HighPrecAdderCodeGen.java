@@ -103,6 +103,10 @@ final class _HighPrecAdderCodeGen {
     _HighPrecAdderCodeGen.__doIntegerPrimitives(arity, clazz, dest);
     _HighPrecAdderCodeGen.__doDefaults(clazz, dest);
 
+    _HighPrecAdderCodeGen.__computeAsDouble(arity, clazz, dest);
+    _HighPrecAdderCodeGen.__longComputeAsDouble(arity, clazz, dest);
+    _HighPrecAdderCodeGen.__doubleComputeAsDouble(arity, clazz, dest);
+
     dest.appendLineBreak();
     dest.append("}"); //$NON-NLS-1$
   }
@@ -170,6 +174,99 @@ final class _HighPrecAdderCodeGen {
   }
 
   /**
+   * Write the compute-as-double
+   *
+   * @param arity
+   *          the arity
+   * @param clazz
+   *          the class name
+   * @param dest
+   *          the destination
+   */
+  private static final void __computeAsDouble(final int arity,
+      final String clazz, final ITextOutput dest) {
+    final String numt;
+    String name;
+    int i;
+
+    numt = NumericalTypes.class.getSimpleName();
+
+    for (final Class<?> type : new Class<?>[] { long.class,
+        double.class }) {
+      name = type.getName();
+
+      dest.appendLineBreak();
+      dest.append("/** {@inheritDoc} */");//$NON-NLS-1$
+      dest.appendLineBreak();
+      dest.append("@Override");//$NON-NLS-1$
+      dest.appendLineBreak();
+      dest.append("public final double computeAsDouble(");//$NON-NLS-1$
+      for (i = 0; i < arity; i++) {
+        if (i > 0) {
+          dest.append(", ");//$NON-NLS-1$
+        }
+        dest.append("final ");//$NON-NLS-1$
+        dest.append(name);
+        dest.append(" x");//$NON-NLS-1$
+        dest.append(i);
+      }
+      dest.append(") {");//$NON-NLS-1$
+      dest.appendLineBreak();
+
+      if (type == double.class) {
+        dest.append("if(");//$NON-NLS-1$
+
+        for (i = 0; i < arity; i++) {
+          if (i > 0) {
+            dest.append(" && ");//$NON-NLS-1$
+          }
+          dest.append('(');
+          dest.append(numt);
+          dest.append(".isLong(x");//$NON-NLS-1$
+          dest.append(i);
+          dest.append(')');
+        }
+        dest.append(") {");//$NON-NLS-1$
+        dest.appendLineBreak();
+
+        dest.append("return ");//$NON-NLS-1$
+        dest.append(clazz);
+        dest.append(".__longComputeAsDouble(");//$NON-NLS-1$
+        for (i = 0; i < arity; i++) {
+          if (i > 0) {
+            dest.append(", ");//$NON-NLS-1$
+          }
+          dest.append("((long)");//$NON-NLS-1$
+          dest.append(" x");//$NON-NLS-1$
+          dest.append(i);
+          dest.append(')');
+        }
+        dest.append(");");//$NON-NLS-1$
+        dest.appendLineBreak();
+        dest.append('}');
+        dest.appendLineBreak();
+      }
+
+      dest.append("return ");//$NON-NLS-1$
+      dest.append(clazz);
+      dest.append(".__");//$NON-NLS-1$
+      dest.append(name);
+      dest.append("ComputeAsDouble(");//$NON-NLS-1$
+      for (i = 0; i < arity; i++) {
+        if (i > 0) {
+          dest.append(", ");//$NON-NLS-1$
+        }
+        dest.append(" x");//$NON-NLS-1$
+        dest.append(i);
+      }
+      dest.append(");");//$NON-NLS-1$
+      dest.appendLineBreak();
+      dest.append('}');
+      dest.appendLineBreak();
+    }
+  }
+
+  /**
    * Write the default functions
    *
    * @param clazz
@@ -224,6 +321,104 @@ final class _HighPrecAdderCodeGen {
     dest.appendLineBreak();
     dest.append('}');
     dest.appendLineBreak();
+  }
+
+  /**
+   * Compute as double
+   *
+   * @param arity
+   *          the arity
+   * @param clazz
+   *          the class name
+   * @param dest
+   *          the destination
+   */
+  private static final void __doubleComputeAsDouble(final int arity,
+      final String clazz, final ITextOutput dest) {
+    int i;
+
+    dest.appendLineBreak();
+    dest.append("/** Compute the value of the addition of ");//$NON-NLS-1$
+    dest.append(arity);
+    dest.append(" {@code double} numbers.");//$NON-NLS-1$
+    dest.appendLineBreak();
+    for (i = 0; i < arity; i++) {
+      dest.appendLineBreak();
+      dest.append("@param x");//$NON-NLS-1$
+      dest.append(i);
+      dest.append(" the ");//$NON-NLS-1$
+      dest.append(i + 1);
+      dest.append(" number to be added");//$NON-NLS-1$
+    }
+    dest.appendLineBreak();
+    dest.append("@return the sum of the numbers */");//$NON-NLS-1$
+
+    dest.appendLineBreak();
+    dest.append("private static final double __doubleComputeAsDouble(");//$NON-NLS-1$
+    for (i = 0; i < arity; i++) {
+      if (i > 0) {
+        dest.append(", ");//$NON-NLS-1$
+      }
+      dest.append("final double x");//$NON-NLS-1$
+      dest.append(i);
+    }
+    dest.append(") {");//$NON-NLS-1$
+    dest.appendLineBreak();
+
+    dest.appendLineBreak();
+    dest.append("return 0;");//$NON-NLS-1$
+
+    dest.appendLineBreak();
+    dest.append('}');
+  }
+
+  /**
+   * Compute as long
+   *
+   * @param arity
+   *          the arity
+   * @param clazz
+   *          the class name
+   * @param dest
+   *          the destination
+   */
+  private static final void __longComputeAsDouble(final int arity,
+      final String clazz, final ITextOutput dest) {
+    int i;
+
+    dest.appendLineBreak();
+    dest.append("/** Compute the value of the addition of ");//$NON-NLS-1$
+    dest.append(arity);
+    dest.append(" {@code double} numbers.");//$NON-NLS-1$
+    dest.appendLineBreak();
+    for (i = 0; i < arity; i++) {
+      dest.appendLineBreak();
+      dest.append("@param x");//$NON-NLS-1$
+      dest.append(i);
+      dest.append(" the ");//$NON-NLS-1$
+      dest.append(i + 1);
+      dest.append(" number to be added");//$NON-NLS-1$
+    }
+    dest.appendLineBreak();
+    dest.append("@return the sum of the numbers */");//$NON-NLS-1$
+
+    dest.appendLineBreak();
+    dest.append("private static final double __longComputeAsDouble(");//$NON-NLS-1$
+    for (i = 0; i < arity; i++) {
+      if (i > 0) {
+        dest.append(", ");//$NON-NLS-1$
+      }
+      dest.append("final long x");//$NON-NLS-1$
+      dest.append(i);
+    }
+    dest.append(") {");//$NON-NLS-1$
+    dest.appendLineBreak();
+
+    dest.appendLineBreak();
+    dest.append("return 0;");//$NON-NLS-1$
+
+    dest.appendLineBreak();
+    dest.append('}');
   }
 
   /**

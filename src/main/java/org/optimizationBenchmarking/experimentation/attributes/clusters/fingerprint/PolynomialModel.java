@@ -2,8 +2,8 @@ package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerp
 
 import org.optimizationBenchmarking.utils.math.fitting.spec.IParameterGuesser;
 import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add3;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
-import org.optimizationBenchmarking.utils.math.statistics.aggregate.StableSum;
 
 /**
  * A polynomial to be fitted in order to model the relationship of
@@ -12,26 +12,17 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.StableSum;
  */
 public final class PolynomialModel extends ParametricUnaryFunction {
 
-  /** the sum */
-  private final StableSum m_sum;
-
   /** create */
   public PolynomialModel() {
     super();
-    this.m_sum = new StableSum();
   }
 
   /** {@inheritDoc} */
   @Override
   public final double value(final double x, final double[] parameters) {
-    final StableSum sum;
-
-    sum = this.m_sum;
-    sum.reset();
-    sum.append(parameters[0]);
-    sum.append(parameters[1] * x);
-    sum.append(parameters[2] * x * x);
-    return sum.doubleValue();
+    return Add3.INSTANCE.computeAsDouble(parameters[0],
+        (parameters[1] * x), //
+        (parameters[2] * x * x));
   }
 
   /** {@inheritDoc} */
@@ -51,7 +42,8 @@ public final class PolynomialModel extends ParametricUnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public IParameterGuesser createParameterGuesser(final IMatrix data) {
+  public final IParameterGuesser createParameterGuesser(
+      final IMatrix data) {
     return new _PolynomialGuesser(data);
   }
 }

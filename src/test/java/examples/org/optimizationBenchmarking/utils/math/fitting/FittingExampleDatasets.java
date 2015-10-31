@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
-import org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint.DecayModel;
+import org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint.LogisticModel;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint.PolynomialModel;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
@@ -43,7 +43,7 @@ public final class FittingExampleDatasets extends TestBase
   };
 
   /** the function modeling the objective value based on time */
-  private final DecayModel m_timeObjective;
+  private final LogisticModel m_timeObjective;
 
   /** the function modeling dimensions of the same type */
   private final PolynomialModel m_sameType;
@@ -55,7 +55,7 @@ public final class FittingExampleDatasets extends TestBase
   public FittingExampleDatasets() {
     super();
 
-    this.m_timeObjective = new DecayModel();
+    this.m_timeObjective = new LogisticModel();
     this.m_sameType = new PolynomialModel();
     this.m_sorter = new __Sorter();
   }

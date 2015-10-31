@@ -76,6 +76,7 @@ public class LSFittingJob extends OptiFittingJob
    * @return {@code true} if the minimization process was successful,
    *         {@code false} otherwise
    */
+  @SuppressWarnings("unused")
   private final boolean __refineBestWithGaussNewton() {
     final LeastSquaresBuilder builder;
     final DataPoint[] dpoints;
@@ -128,6 +129,7 @@ public class LSFittingJob extends OptiFittingJob
    * @return {@code true} if the minimization process was successful,
    *         {@code false} otherwise
    */
+  @SuppressWarnings("unused")
   private final boolean __refineBestWithBOBYQA() {
     final double[] best, res;
     final int dim;
@@ -157,6 +159,7 @@ public class LSFittingJob extends OptiFittingJob
    * @return {@code true} if the minimization process was successful,
    *         {@code false} otherwise
    */
+  @SuppressWarnings("unused")
   private final boolean __refineBestWithNelderMead() {
     final double[] best, result;
     final int dim;
@@ -190,6 +193,7 @@ public class LSFittingJob extends OptiFittingJob
    * @return {@code true} if the minimization process was successful,
    *         {@code false} otherwise
    */
+  @SuppressWarnings("unused")
   private final boolean __refineBestWithCMAES(final double[] initial) {
     final double[] best, sigma, res;
     final int ps, maxEval;
@@ -236,6 +240,7 @@ public class LSFittingJob extends OptiFittingJob
    * @return {@code true} if the minimization process was successful,
    *         {@code false} otherwise
    */
+  @SuppressWarnings("unused")
   private final boolean __refineBestWithLevenbergMarquardt() {
     final LeastSquaresBuilder builder;
     final DataPoint[] dpoints;
