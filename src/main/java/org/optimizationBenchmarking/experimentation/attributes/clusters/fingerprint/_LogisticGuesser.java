@@ -20,21 +20,109 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
     super(data);
   }
 
+  /**
+   * compute the error of a given fitting
+   *
+   * @param x0
+   *          the first x-coordinate
+   * @param y0
+   *          the first y-coordinate
+   * @param x1
+   *          the second x-coordinate
+   * @param y1
+   *          the second y-coordinate
+   * @param x2
+   *          the third x-coordinate
+   * @param y2
+   *          the third y-coordinate
+   * @param a
+   *          the first fitting parameter
+   * @param b
+   *          the second fitting parameter
+   * @param c
+   *          the first fitting parameter
+   * @return the fitting error
+   */
+  private static final double __error(final double x0, final double y0,
+      final double x1, final double y1, final double x2, final double y2,
+      final double a, final double b, final double c) {
+    return Add3.INSTANCE.computeAsDouble(//
+        Math.abs(
+            y0 - (a / (1d + (b * Pow.INSTANCE.computeAsDouble(x0, c))))), //
+        Math.abs(
+            y1 - (a / (1d + (b * Pow.INSTANCE.computeAsDouble(x1, c))))), //
+        Math.abs(
+            y2 - (a / (1d + (b * Pow.INSTANCE.computeAsDouble(x1, c))))));
+  }
+
+  /**
+   * perform one update step of the fitting
+   *
+   * @param x0
+   *          the first x-coordinate
+   * @param y0
+   *          the first y-coordinate
+   * @param x1
+   *          the second x-coordinate
+   * @param y1
+   *          the second y-coordinate
+   * @param x2
+   *          the third x-coordinate
+   * @param y2
+   *          the third y-coordinate
+   * @param best
+   *          the best fitting so far
+   * @param bestError
+   *          the error of the best fitting so far
+   * @return the fitting error
+   */
+  private static final double __update(final double x0, final double y0,
+      final double x1, final double y1, final double x2, final double y2,
+      final double[] best, final double bestError) {
+    final double newA, newB, newC, oldC, newError, x1c, x0c, x2c;
+
+    oldC = best[2];
+    x0c = Pow.INSTANCE.computeAsDouble(x0, oldC);
+    x1c = Pow.INSTANCE.computeAsDouble(x1, oldC);
+    x2c = Pow.INSTANCE.computeAsDouble(x2, oldC);
+
+    // iteration 1
+    newB = (-((y1 - y0) / (((x1c * y1) - (x0c * y0)))));
+    if (MathUtils.isFinite(newB)) {
+
+      newA = (((x2c - x1c) * y1 * y2) / ((x2c * y2) - (x1c * y1)));
+      if (MathUtils.isFinite(newA)) {
+
+        newC = Math.abs(Math.log(((newA / y0) - 1) / newB) / Math.log(x0));
+        if (MathUtils.isFinite(newC)) {
+
+          newError = _LogisticGuesser.__error(x0, y0, x1, y1, x2, y2, newA,
+              newB, newC);
+          if (MathUtils.isFinite(newError) && (newError < bestError)) {
+            best[0] = newA;
+            best[1] = newB;
+            best[2] = newC;
+            return newError;
+          }
+        }
+      }
+    }
+
+    return bestError;
+  }
+
   /** {@inheritDoc} */
   @Override
   final boolean guessBasedOn3Points(final double x0, final double y0,
       final double x1, final double y1, final double x2, final double y2,
       final double[] dest, final Random random) {
     int steps;
-    double newA, newB, newC, oldA, oldB, oldC, newError, oldError, x1c,
-        x0c, x2c, v;
-    boolean found;
+    double oldError, bestError, v;
 
-    newError = Double.POSITIVE_INFINITY;
-    steps = 1000;
-    found = false;
+    steps = 100;
+    bestError = Double.POSITIVE_INFINITY;
 
-    main: for (;;) {
+    for (;;) {
 
       switch (random.nextInt(5)) {
         case 0: {
@@ -55,101 +143,49 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
         }
       }
 
-      newA = Math.abs(v * (1d + (0.1d * random.nextGaussian())));
-      newB = (-Math.abs(
+      if (v == 0d) {
+        v = 1e-10d;
+      }
+      dest[0] = Math.abs(v * (1d + (0.1d * random.nextGaussian())));
+      dest[1] = (-Math.abs(
           v * (1d / (15 + random.nextInt(1))) * random.nextGaussian()));
       do {
-        newC = (1d + random.nextGaussian());
-      } while (newC <= 1e-12d);
+        dest[2] = (1d + random.nextGaussian());
+      } while (dest[2] <= 1e-12d);
 
       inner: for (;;) {
-        oldA = newA;
-        oldB = newB;
-        oldC = newC;
-        oldError = newError;
+        --steps;
+        oldError = bestError;
 
-        x0c = Pow.INSTANCE.computeAsDouble(x0, newC);
-        x1c = Pow.INSTANCE.computeAsDouble(x1, newC);
-        x2c = Pow.INSTANCE.computeAsDouble(x2, newC);
+        bestError = _LogisticGuesser.__update(x0, y0, x1, y1, x2, y2, dest,
+            bestError);
+        bestError = _LogisticGuesser.__update(x0, y0, x2, y2, x1, y1, dest,
+            bestError);
+        bestError = _LogisticGuesser.__update(x1, y1, x0, y0, x2, y2, dest,
+            bestError);
+        bestError = _LogisticGuesser.__update(x1, y1, x2, y2, x0, y0, dest,
+            bestError);
+        bestError = _LogisticGuesser.__update(x2, y2, x0, y0, x1, y1, dest,
+            bestError);
+        bestError = _LogisticGuesser.__update(x2, y2, x1, y1, x0, y0, dest,
+            bestError);
 
-        // iteration 1
-        newB = (-((y1 - y0) / (((x1c * y1) - (x0c * y0)))));
-        if (!(MathUtils.isFinite(newB))) {
-          break inner;
+        if (MathUtils.isFinite(bestError)) {
+          if ((steps <= 0) || (bestError >= oldError)) {
+            return true;
+          }
+          continue inner;
         }
-
-        newA = (((x2c - x1c) * y1 * y2) / ((x2c * y2) - (x1c * y1)));
-        if (!(MathUtils.isFinite(newA))) {
-          break inner;
-        }
-
-        newC = Math.abs(Math.log(((newA / y0) - 1) / newB) / Math.log(x0));
-        if (!(MathUtils.isFinite(newC))) {
-          break inner;
-        }
-
-        // iteration 2
-        newB = (-((y2 - y0) / (((x2c * y2) - (x0c * y0)))));
-        if (!(MathUtils.isFinite(newB))) {
-          break inner;
-        }
-
-        newA = (((x0c - x1c) * y1 * y0) / ((x0c * y0) - (x1c * y1)));
-        if (!(MathUtils.isFinite(newA))) {
-          break inner;
-        }
-
-        newC = Math.abs(Math.log(((newA / y2) - 1) / newB) / Math.log(x2));
-        if (!(MathUtils.isFinite(newC))) {
-          break inner;
-        }
-
-        // iteration 3
-        newB = (-((y2 - y1) / (((x2c * y2) - (x1c * y1)))));
-        if (!(MathUtils.isFinite(newB))) {
-          break inner;
-        }
-
-        newA = (((x0c - x2c) * y2 * y0) / ((x0c * y0) - (x2c * y2)));
-        if (!(MathUtils.isFinite(newA))) {
-          break inner;
-        }
-
-        newC = Math.abs(Math.log(((newA / y1) - 1) / newB) / Math.log(x1));
-        if (!(MathUtils.isFinite(newC))) {
-          break inner;
-        }
-
-        newError = Add3.INSTANCE.computeAsDouble(//
-            Math.abs(y0 - (newA / (1d + (newB * x0c)))), //
-            Math.abs(y1 - (newA / (1d + (newB * x1c)))), //
-            Math.abs(y2 - (newA / (1d + (newB * x2c)))));
-        if (!(MathUtils.isFinite(newError))) {
-          break inner;
-        }
-
-        found = true;
-        if ((--steps) <= 0) {
-          break main;
-        }
-
-        if (newError >= oldError) {
-          break main;
-        }
+        break inner;
       }
 
-      if (found || ((--steps) <= 0)) {
-        break main;
+      if (MathUtils.isFinite(bestError)) {
+        return true;
+      }
+
+      if (steps <= 0) {
+        return false;
       }
     }
-
-    if (found) {
-      dest[0] = oldA;
-      dest[1] = oldB;
-      dest[2] = oldC;
-      return true;
-    }
-
-    return false;
   }
 }

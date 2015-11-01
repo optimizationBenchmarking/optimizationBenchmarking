@@ -183,7 +183,7 @@ abstract class _BasicInternalGuesser implements IParameterGuesser {
               }
             }
 
-            for (trials = 9; (--trials) >= 0;) {
+            for (trials = 100; (--trials) >= 0;) {
 
               bestI = bestJ = bestK = -1;
               bestIZ = bestJZ = bestKZ = Double.NaN;
