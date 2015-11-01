@@ -1,19 +1,14 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Random;
 
 import org.optimizationBenchmarking.utils.math.MathUtils;
-import org.optimizationBenchmarking.utils.math.fitting.spec.IParameterGuesser;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add3;
+import org.optimizationBenchmarking.utils.math.functions.power.Pow;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /** A parameter guesser for the logistic models */
-final class _LogisticGuesser
-    implements IParameterGuesser, Comparator<double[]> {
-
-  /** the data matrix */
-  private final IMatrix m_data;
+final class _LogisticGuesser extends _BasicInternalGuesser {
 
   /**
    * create the guesser
@@ -22,97 +17,139 @@ final class _LogisticGuesser
    *          the data
    */
   _LogisticGuesser(final IMatrix data) {
-    super();
-    this.m_data = data;
+    super(data);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void createRandomGuess(final double[] parameters,
-      final Random random) {
-    final int m;
-    final double[][] fits;
-    int trials, size;
-    double t, a, b, c, x1, y1, x2, y2;
-    int i;
+  final boolean guessBasedOn3Points(final double x0, final double y0,
+      final double x1, final double y1, final double x2, final double y2,
+      final double[] dest, final Random random) {
+    int steps;
+    double newA, newB, newC, oldA, oldB, oldC, newError, oldError, x1c,
+        x0c, x2c, v;
+    boolean found;
 
-    m = this.m_data.m();
+    newError = Double.POSITIVE_INFINITY;
+    steps = 1000;
+    found = false;
 
-    find: {
-      if (m > 2) {
+    main: for (;;) {
 
-        fits = new double[Math.max(1, Math.min((m - 2), ((int) (3d - (2d * //
-            Math.log(1d - random.nextDouble()))))))][3];
-        size = 0;
-        trials = 1000;
-        while ((size < fits.length) && ((--trials) >= 0)) {
-          a = Double.NEGATIVE_INFINITY;
-
-          for (i = 20; (--i) >= 0;) {
-            a = Math.max(a, this.m_data.getDouble(random.nextInt(m), 1));
-          }
-
-          i = random.nextInt(m);
-          x1 = this.m_data.getDouble(i, 0);
-          y1 = this.m_data.getDouble(i, 1);
-
-          i = random.nextInt(m);
-          x2 = this.m_data.getDouble(i, 0);
-          y2 = this.m_data.getDouble(i, 1);
-
-          b = (((x2 * Math.log((a - y1) / y1))
-              - (x1 * Math.log((a - y2) / y2))) / (x2 - x1));
-          if (MathUtils.isFinite(b)) {
-            c = ((Math.log((a - y1) / y1) - b) / x1);
-            if (MathUtils.isFinite(c)) {
-              fits[size][0] = a;
-              fits[size][1] = b;
-              fits[size][2] = c;
-              size++;
-            }
-          }
+      switch (random.nextInt(5)) {
+        case 0: {
+          v = y0;
+          break;
         }
-
-        if (size > 0) {
-
-          Arrays.sort(fits, 0, size, this);
-          System.arraycopy(fits[size >> 1], 0, parameters, 0, 2);
-          break find;
+        case 1: {
+          v = y1;
+          break;
+        }
+        case 2: {
+          v = y2;
+          break;
+        }
+        default: {
+          v = Math.max(y0, Math.max(y1, y2));
+          break;
         }
       }
 
-      parameters[0] = random.nextGaussian();
-      parameters[1] = random.nextGaussian();
-      parameters[2] = random.nextGaussian();
-      return;
-    }
+      newA = Math.abs(v * (1d + (0.1d * random.nextGaussian())));
+      newB = (-Math.abs(
+          v * (1d / (15 + random.nextInt(1))) * random.nextGaussian()));
+      do {
+        newC = (1d + random.nextGaussian());
+      } while (newC <= 1e-12d);
 
-    for (size = parameters.length; (--size) >= 0;) {
-      t = Math.abs(parameters[size]);
-      if (t <= 0d) {
-        parameters[size] = (0.1d * random.nextGaussian());
-      } else {
-        parameters[size] += (0.05d * t * random.nextGaussian());
+      inner: for (;;) {
+        oldA = newA;
+        oldB = newB;
+        oldC = newC;
+        oldError = newError;
+
+        x0c = Pow.INSTANCE.computeAsDouble(x0, newC);
+        x1c = Pow.INSTANCE.computeAsDouble(x1, newC);
+        x2c = Pow.INSTANCE.computeAsDouble(x2, newC);
+
+        // iteration 1
+        newB = (-((y1 - y0) / (((x1c * y1) - (x0c * y0)))));
+        if (!(MathUtils.isFinite(newB))) {
+          break inner;
+        }
+
+        newA = (((x2c - x1c) * y1 * y2) / ((x2c * y2) - (x1c * y1)));
+        if (!(MathUtils.isFinite(newA))) {
+          break inner;
+        }
+
+        newC = Math.abs(Math.log(((newA / y0) - 1) / newB) / Math.log(x0));
+        if (!(MathUtils.isFinite(newC))) {
+          break inner;
+        }
+
+        // iteration 2
+        newB = (-((y2 - y0) / (((x2c * y2) - (x0c * y0)))));
+        if (!(MathUtils.isFinite(newB))) {
+          break inner;
+        }
+
+        newA = (((x0c - x1c) * y1 * y0) / ((x0c * y0) - (x1c * y1)));
+        if (!(MathUtils.isFinite(newA))) {
+          break inner;
+        }
+
+        newC = Math.abs(Math.log(((newA / y2) - 1) / newB) / Math.log(x2));
+        if (!(MathUtils.isFinite(newC))) {
+          break inner;
+        }
+
+        // iteration 3
+        newB = (-((y2 - y1) / (((x2c * y2) - (x1c * y1)))));
+        if (!(MathUtils.isFinite(newB))) {
+          break inner;
+        }
+
+        newA = (((x0c - x2c) * y2 * y0) / ((x0c * y0) - (x2c * y2)));
+        if (!(MathUtils.isFinite(newA))) {
+          break inner;
+        }
+
+        newC = Math.abs(Math.log(((newA / y1) - 1) / newB) / Math.log(x1));
+        if (!(MathUtils.isFinite(newC))) {
+          break inner;
+        }
+
+        newError = Add3.INSTANCE.computeAsDouble(//
+            Math.abs(y0 - (newA / (1d + (newB * x0c)))), //
+            Math.abs(y1 - (newA / (1d + (newB * x1c)))), //
+            Math.abs(y2 - (newA / (1d + (newB * x2c)))));
+        if (!(MathUtils.isFinite(newError))) {
+          break inner;
+        }
+
+        found = true;
+        if ((--steps) <= 0) {
+          break main;
+        }
+
+        if (newError >= oldError) {
+          break main;
+        }
+      }
+
+      if (found || ((--steps) <= 0)) {
+        break main;
       }
     }
 
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final int compare(final double[] o1, final double[] o2) {
-    int res;
-
-    res = Double.compare(o1[2], o2[2]);
-    if (res != 0) {
-      return res;
+    if (found) {
+      dest[0] = oldA;
+      dest[1] = oldB;
+      dest[2] = oldC;
+      return true;
     }
 
-    res = Double.compare(o1[1], o2[1]);
-    if (res != 0) {
-      return res;
-    }
-
-    return Double.compare(o1[0], o2[0]);
+    return false;
   }
 }

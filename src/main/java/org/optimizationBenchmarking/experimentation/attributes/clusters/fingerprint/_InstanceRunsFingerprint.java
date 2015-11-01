@@ -87,7 +87,7 @@ final class _InstanceRunsFingerprint
       final ArrayListView<? extends IDimension> dimensions,
       final MatrixBuilder builder) {
     final int size;
-    final ParametricUnaryFunction poly, decay;
+    final ParametricUnaryFunction poly, logistic;
     final double[] rawPoints;
     final DoubleMatrix1D rawMatrix;
     IDimension dimension;
@@ -98,7 +98,7 @@ final class _InstanceRunsFingerprint
     ParametricUnaryFunction func;
 
     poly = new PolynomialModel();
-    decay = new DecayModel();
+    logistic = new LogisticModel();
 
     // We allocate a re-usable data store.
     totalPoints = 0;
@@ -141,9 +141,8 @@ final class _InstanceRunsFingerprint
 
         if ((useIsTimeA && (!(isTimeB)))) {
           // We model the relationship between a time and an objective
-          // value
-          // dimension as exponential decay model.
-          func = decay;
+          // value dimension as logistic model.
+          func = logistic;
         } else {
           // We model the relationship between two time dimensions or two
           // objective value dimensions as polynomial of degree 3.

@@ -1,9 +1,5 @@
 package org.optimizationBenchmarking.utils.math.fitting.impl.opti;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
-import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.math.MathUtils;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FittingJob;
 import org.optimizationBenchmarking.utils.math.fitting.spec.IParameterGuesser;
@@ -17,20 +13,16 @@ public class OptiFittingJob extends FittingJob {
   /** the data points */
   protected final DataPoint[] m_points;
 
-  /** the parameter guesser */
-  protected final IParameterGuesser m_guesser;
-
   /**
-   * the the number of worst data points used during the objective value
-   * computation
+   * the parameter guesser: This guesser is used during the process of
+   * finding starting points for the fitting, it may be set to {@code null}
+   * afterwards.
    */
-  protected final int m_numberOfPointsUsed;
+  protected IParameterGuesser m_guesser;
 
   /** the error sul */
   final StableSum m_sum;
 
-  /** sort by error */
-  final __SortByError m_sortByError;
   /** the dimension */
   final int m_dim;
 
@@ -52,19 +44,12 @@ public class OptiFittingJob extends FittingJob {
 
     index = points.m();
 
-    this.m_numberOfPointsUsed = Math.max(0, //
-        Math.min((index - 1),
-            Math.max(builder.getMinCriticalPoints(), //
-                Math.min(70, Math.max(10, //
-                    (1 + ((int) (0.5d + (index / 13d)))))))));
-
     this.m_points = new DataPoint[index];
     for (; (--index) >= 0;) {
       this.m_points[index] = new DataPoint(//
           points.getDouble(index, 0), points.getDouble(index, 1));
     }
 
-    this.m_sortByError = new __SortByError();
     this.m_sum = new StableSum();
     this.m_dim = this.m_function.getParameterCount();
   }
@@ -92,7 +77,6 @@ public class OptiFittingJob extends FittingJob {
     final int dim;
     final StableSum sum;
     double val;
-    DataPoint point;
     int index;
 
     dim = params.length;
@@ -116,13 +100,10 @@ public class OptiFittingJob extends FittingJob {
           / dp.inverseWeight);
     }
 
-    Arrays.sort(use, this.m_sortByError);
-
     sum = this.m_sum;
     sum.reset();
-    for (index = this.m_numberOfPointsUsed; (--index) >= 0;) {
-      point = use[index];
-      sum.append(point.m_error);
+    for (final DataPoint p : use) {
+      sum.append(p.m_error);
     }
 
     val = sum.doubleValue();
@@ -141,20 +122,5 @@ public class OptiFittingJob extends FittingJob {
    */
   protected final void evaluate(final OptiIndividual indi) {
     indi.quality = this.evaluate(indi.solution);
-  }
-
-  /** sort by error, so that the biggest errors come first */
-  private static final class __SortByError
-      implements Comparator<DataPoint> {
-    /** create */
-    __SortByError() {
-      super();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final int compare(final DataPoint o1, final DataPoint o2) {
-      return EComparison.compareDoubles(o2.m_error, o1.m_error);
-    }
   }
 }

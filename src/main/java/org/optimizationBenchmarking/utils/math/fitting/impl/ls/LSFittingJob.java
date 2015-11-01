@@ -24,6 +24,7 @@ import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.CMAESOptimizer.Si
 import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.NelderMeadSimplex;
 import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.SimplexOptimizer;
 import org.apache.commons.math3.random.JDKRandomGenerator;
+import org.optimizationBenchmarking.utils.math.MathUtils;
 import org.optimizationBenchmarking.utils.math.fitting.impl.opti.DataPoint;
 import org.optimizationBenchmarking.utils.math.fitting.impl.opti.OptiFittingJob;
 import org.optimizationBenchmarking.utils.math.fitting.impl.opti.OptiFittingJobBuilder;
@@ -59,14 +60,15 @@ public class LSFittingJob extends OptiFittingJob
 
     dim = this.m_function.getParameterCount();
     dest = new double[dim];
-    for (index = Math.max(100, Math.min(100000,
-        ((int) (Math.round(Math.pow(5, dim)))))); (--index) >= 0;) {
+    for (index = Math.max(100, Math.min(10000, ((int) (Math.round(//
+        100d * Math.pow(1.75d, dim)))))); (--index) >= 0;) {
       this.m_guesser.createRandomGuess(dest, this.m_random);
       this.evaluate(dest);
     }
 
     System.arraycopy(this.m_result.getFittedParameters(), 0, dest, 0,
         dest.length);
+    this.m_guesser = null;
     return dest;
   }
 
@@ -81,8 +83,10 @@ public class LSFittingJob extends OptiFittingJob
     final LeastSquaresBuilder builder;
     final DataPoint[] dpoints;
     final double[] x, y, weights, res;
+    final double oldBest, newResult;
     int index;
 
+    oldBest = this.m_result.getQuality();
     try {
       builder = new LeastSquaresBuilder();
 
@@ -119,8 +123,8 @@ public class LSFittingJob extends OptiFittingJob
       return false;
     }
 
-    this.evaluate(res);
-    return true;
+    newResult = this.evaluate(res);
+    return (MathUtils.isFinite(newResult) && (newResult < oldBest));
   }
 
   /**
@@ -133,6 +137,9 @@ public class LSFittingJob extends OptiFittingJob
   private final boolean __refineBestWithBOBYQA() {
     final double[] best, res;
     final int dim;
+    final double oldBest, newResult;
+
+    oldBest = this.m_result.getQuality();
 
     try {
       best = this.m_result.getFittedParameters();
@@ -149,8 +156,8 @@ public class LSFittingJob extends OptiFittingJob
       return false;
     }
 
-    this.evaluate(res);
-    return true;
+    newResult = this.evaluate(res);
+    return (MathUtils.isFinite(newResult) && (newResult < oldBest));
   }
 
   /**
@@ -163,6 +170,9 @@ public class LSFittingJob extends OptiFittingJob
   private final boolean __refineBestWithNelderMead() {
     final double[] best, result;
     final int dim;
+    final double oldBest, newResult;
+
+    oldBest = this.m_result.getQuality();
 
     try {
       best = this.m_result.getFittedParameters();
@@ -181,8 +191,8 @@ public class LSFittingJob extends OptiFittingJob
       return false;
     }
 
-    this.evaluate(result);
-    return true;
+    newResult = this.evaluate(result);
+    return (MathUtils.isFinite(newResult) && (newResult < oldBest));
   }
 
   /**
@@ -197,7 +207,10 @@ public class LSFittingJob extends OptiFittingJob
   private final boolean __refineBestWithCMAES(final double[] initial) {
     final double[] best, sigma, res;
     final int ps, maxEval;
+    final double oldBest, newResult;
     int index;
+
+    oldBest = this.m_result.getQuality();
 
     try {
       best = this.m_result.getFittedParameters();
@@ -230,8 +243,8 @@ public class LSFittingJob extends OptiFittingJob
       return false;
     }
 
-    this.evaluate(res);
-    return true;
+    newResult = this.evaluate(res);
+    return (MathUtils.isFinite(newResult) && (newResult < oldBest));
   }
 
   /**
@@ -245,7 +258,10 @@ public class LSFittingJob extends OptiFittingJob
     final LeastSquaresBuilder builder;
     final DataPoint[] dpoints;
     final double[] x, y, weights, res;
+    final double oldBest, newResult;
     int index;
+
+    oldBest = this.m_result.getQuality();
 
     try {
       builder = new LeastSquaresBuilder();
@@ -278,8 +294,8 @@ public class LSFittingJob extends OptiFittingJob
     } catch (final Throwable error) {
       return false;
     }
-    this.evaluate(res);
-    return true;
+    newResult = this.evaluate(res);
+    return (MathUtils.isFinite(newResult) && (newResult < oldBest));
   }
 
   /** {@inheritDoc} */
@@ -289,6 +305,7 @@ public class LSFittingJob extends OptiFittingJob
     double[] initial;
 
     initial = this.__createRandomSolutions();
+
     if (!(this.__refineBestWithLevenbergMarquardt())) {
       this.__refineBestWithGaussNewton();
     }

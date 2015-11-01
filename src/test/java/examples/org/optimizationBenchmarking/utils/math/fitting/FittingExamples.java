@@ -28,8 +28,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.MultiplexingTextOutput
 public class FittingExamples {
 
   /** the fitters */
-  public static final FunctionFitter[] FITTERS = {//
-  LSFitter.getInstance(), };
+  public static final FunctionFitter[] FITTERS = { //
+      LSFitter.getInstance(), };
 
   /** fit each data set this often */
   private static final int TIMES = 5;
@@ -105,8 +105,8 @@ public class FittingExamples {
         sum.append(res.getQuality());
         med.append(res.getQuality());
         example.plot(
-            PathUtils.createPathInside(folder, prefix + '_' + problem
-                + '_' + index + ".txt"), //$NON-NLS-1$
+            PathUtils.createPathInside(folder,
+                prefix + '_' + example.name + '_' + index + ".txt"), //$NON-NLS-1$
             res.getFittedParameters(), res.getQuality());
       }
 
@@ -170,7 +170,7 @@ public class FittingExamples {
           Files.createDirectories(dest);
           index = 0;
           for (final FunctionFitter fitter : FittingExamples.FITTERS) {
-            FittingExamples.__doFitter(dest, list, fitter, out,//
+            FittingExamples.__doFitter(dest, list, fitter, out, //
                 results[index++] = new ArrayList<>());
           }
 
