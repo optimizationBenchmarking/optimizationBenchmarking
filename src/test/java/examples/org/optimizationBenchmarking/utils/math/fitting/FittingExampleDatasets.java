@@ -231,7 +231,7 @@ public final class FittingExampleDatasets extends TestBase
   private final void __appendBBOB(
       final ArrayList<FittingExampleDataset> list) throws IOException {
     this.__append("bbob", //$NON-NLS-1$
-        new BBOBExample(TestBase.getNullLogger()), list, 6);
+        new BBOBExample(TestBase.getNullLogger()), list, 25);
   }
 
   /**
@@ -245,7 +245,7 @@ public final class FittingExampleDatasets extends TestBase
   private final void __appendTSPSuite(
       final ArrayList<FittingExampleDataset> list) throws IOException {
     this.__append("tsp", //$NON-NLS-1$
-        new TSPSuiteExample(TestBase.getNullLogger()), list, 2, 4);
+        new TSPSuiteExample(TestBase.getNullLogger()), list, 4, 4);
   }
 
   /**

@@ -16,50 +16,10 @@ import org.optimizationBenchmarking.utils.math.matrix.impl.MatrixBuilder;
 /**
  * <p>
  * An attribute to compute fingerprints from instance run sets. A
- * fingerprint is a row matrix which contains non-normalized, raw
- * statistics about the runs of an experiment for a given benchmark
- * instance. Such data does not need to be humanly interpreted or
- * presented, it is solely intended to provide machine learning and/or
- * clustering approaches information with which different behaviors can be
- * distinguished. For this, it should have the following features:
- * </p>
- * <ul>
- * <li>If two optimization algorithms deliver final results of noticable
- * different quality on the same instance, they should also noticeable
- * differ in at least one value of the fingerprint.</li>
- * <li>If two optimization algorithms run at noticeable different speed on
- * the same instance, they should also noticeable differ in at least one
- * value of the fingerprint.</li>
- * <li>If two optimization algorithms have different knee points on the
- * instance, that should be noticeable.</li>
- * <li>If two instances lead to different knee points under the same
- * algorithm, this should be noticeable.</li>
- * </ul>
- * <p>
- * In order to achieve this, the finger print holds the following values:
- * </p>
- * <ol>
- * <li>The lower quartile (25% quantile),</li>
- * <li>the median (50% quantile), and</li>
- * <li>the upper quartile (75% quantile)</li>
- * </ol>
- * <p>
- * over each dimension for
- * </p>
- * <ol>
- * <li>the first recorded points of the runs (let's call the corresponding
- * median {@code median.first}),</li>
- * <li>the last recorded points of the runs (let's call the corresponding
- * median {@code median.last}),</li>
- * <li>for {@code (median.last-median.first)/4+median.first},
- * {@code (median.last-median.first)/3+median.first},
- * {@code 3(median.last-median.first)/4+median.first}, find the point
- * closest to that value, then aggregate the values of that point for each
- * other dimension</li>
- * </ol>
- * Currently, the computation is very inefficient, as I use three different
- * aggregates for the three quantiles, each of which will collect the data.
- * Once I have better implementations, I will improve on that.
+ * fingerprint is a row matrix which contains data describing the
+ * performance of an algorithm setup on the given instance. In order to
+ * obtain such data, we fit model functions to the algorithm, then use the
+ * fitted parameters as data.
  * </p>
  */
 final class _InstanceRunsFingerprint

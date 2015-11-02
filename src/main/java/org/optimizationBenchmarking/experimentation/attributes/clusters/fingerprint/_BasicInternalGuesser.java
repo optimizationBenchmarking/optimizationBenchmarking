@@ -7,7 +7,16 @@ import org.optimizationBenchmarking.utils.math.fitting.spec.IParameterGuesser;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.MinimumAggregate;
 
-/** A base class for the internal parameter guessers */
+/**
+ * This is a base class for the parameter guessers of our two model
+ * functions. Both model functions have three parameters to fit. Hence, it
+ * should be possible to provide a guess for these based on three different
+ * points from the data set. We therefore are interested in picking three
+ * points which are relatively far away from each other. The
+ * {@link #guessBasedOn3Points(double, double, double, double, double, double, double[], Random)}
+ * method then tries to fit the model through these points (in a fast but
+ * extremely crude fashion).
+ */
 abstract class _BasicInternalGuesser implements IParameterGuesser {
 
   /** the data matrix */
@@ -111,18 +120,23 @@ abstract class _BasicInternalGuesser implements IParameterGuesser {
   public final void createRandomGuess(final double[] parameters,
       final Random random) {
     final int m;
-    int i, trials, curI, curJ, curK, bestI, bestJ, bestK, useDistDim;
-    double t, curIZ, curJZ, curKZ, bestIZ, bestJZ, bestKZ, curDist,
-        bestDist, max, med, min;
+    final IMatrix data;
+    int i, j, trials, curI, curJ, curK, sortDim;
+    double t, curIX, curIY, curJX, curJY, curKX, curKY, //
+        bestIX, bestIY, bestJX, bestJY, bestKX, bestKY, //
+        curIZ, curJZ, curKZ, //
+        curDist, bestDist, max, med, min;
     boolean logScale;
 
-    m = this.m_data.m();
+    data = this.m_data;
+    m = data.m();
 
     find: {
       switcher: switch (m) {
         case 1: {
-          if (this.guessBasedOn1Point(this.m_data.getDouble(0, 0), //
-              this.m_data.getDouble(0, 1), //
+          // If we only have one point, use that one for the guess.
+          if (this.guessBasedOn1Point(data.getDouble(0, 0), //
+              data.getDouble(0, 1), //
               parameters)) {
             break find;
           }
@@ -130,10 +144,11 @@ abstract class _BasicInternalGuesser implements IParameterGuesser {
         }
 
         case 2: {
-          if (this.guessBasedOn2Points(this.m_data.getDouble(0, 0), //
-              this.m_data.getDouble(0, 1), //
-              this.m_data.getDouble(1, 0), //
-              this.m_data.getDouble(1, 1), //
+          // If we only have two points, use these two for the guess.
+          if (this.guessBasedOn2Points(data.getDouble(0, 0), //
+              data.getDouble(0, 1), //
+              data.getDouble(1, 0), //
+              data.getDouble(1, 1), //
               parameters)) {
             break find;
           }
@@ -141,12 +156,13 @@ abstract class _BasicInternalGuesser implements IParameterGuesser {
         }
 
         case 3: {
-          if (this.guessBasedOn3Points(this.m_data.getDouble(0, 0), //
-              this.m_data.getDouble(0, 1), //
-              this.m_data.getDouble(1, 0), //
-              this.m_data.getDouble(1, 1), //
-              this.m_data.getDouble(2, 0), //
-              this.m_data.getDouble(2, 1), //
+          // If we only have three points, use these three for the guess.
+          if (this.guessBasedOn3Points(data.getDouble(0, 0), //
+              data.getDouble(0, 1), //
+              data.getDouble(1, 0), //
+              data.getDouble(1, 1), //
+              data.getDouble(2, 0), //
+              data.getDouble(2, 1), //
               parameters, random)) {
             break find;
           }
@@ -155,61 +171,133 @@ abstract class _BasicInternalGuesser implements IParameterGuesser {
 
         default: {
           if (m > 3) {
+            // OK, we have more than three points. We now can try to guess
+            // the parameters of our model in some intelligent way by
+            // picking 3 points.
 
+            // Actually, there are five ways in which we can pick the
+            // points:
             switch (random.nextInt(5)) {
               case 0: {
-                useDistDim = 0;
+                // Several times, randomly pick 3 points and take the
+                // triple whose three points are most distant from each
+                // other in terms of their x-coordinate.
+                sortDim = 0;
                 logScale = false;
                 break;
               }
               case 1: {
-                useDistDim = 0;
+                // Several times, randomly pick 3 points and take the
+                // triple whose three points are most distant from each
+                // other in terms of their log-scaled x-coordinate.
+                sortDim = 0;
                 logScale = true;
                 break;
               }
               case 2: {
-                useDistDim = 1;
+                // Several times, randomly pick 3 points and take the
+                // triple whose three points are most distant from each
+                // other in terms of their y-coordinate.
+                sortDim = 1;
                 logScale = false;
                 break;
               }
               case 3: {
-                useDistDim = 1;
+                // Several times, randomly pick 3 points and take the
+                // triple whose three points are most distant from each
+                // other in terms of their log-scaled y-coordinate.
+                sortDim = 1;
                 logScale = true;
                 break;
               }
               default: {
-                useDistDim = -1;
+                // Randomly pick 3 points.
+                sortDim = -1;
                 logScale = false;
               }
             }
 
-            for (trials = 100; (--trials) >= 0;) {
+            // OK, now that we have chosen the policy according to which we
+            // will pick the points, we now actually need to pick them.
+            // Since that may go wrong, i.e., we may pick points which
+            // cannot be used to interpolate a starting fitting, we may
+            // need to attempt this several times.
+            for (trials = 200; (--trials) >= 0;) {
 
-              bestI = bestJ = bestK = -1;
-              bestIZ = bestJZ = bestKZ = Double.NaN;
+              curIX = curJX = curKX = curIY = curJY = curKY = //
+              bestIX = bestJX = bestKX = bestIY = bestJY = bestKY = Double.NaN;
               bestDist = Double.NEGATIVE_INFINITY;
 
-              inner: for (i = 20; (--i) >= 0;) {
+              // If we have a "most-distant" policy, we will try to pick 27
+              // times 3 points. This should leave us with at least some
+              // triplets that have one point in the first 33% quantil, one
+              // point in the second 33% quantil, and one point in the
+              // third 33% quantil of the data along whichever axis we
+              // pick.
+              inner: for (i = 27; (--i) >= 0;) {
 
-                curI = random.nextInt(m);
-                do {
-                  curJ = random.nextInt(m);
-                } while (curI == curJ);
-                do {
-                  curK = random.nextInt(m);
-                } while ((curK == curI) || (curK == curJ));
+                // Now interpolation of starting points may only work if
+                // all three x-coordinates and all three y-coordinates is
+                // different. Hence, for each point triplet, we may need to
+                // try a few times to meet this condition. However, this
+                // condition may be very unlikely or impossible to meet, in
+                // which case a maximum step number will kick in to prevent
+                // endless loops.
+                innermost: for (j = 100; (--j) >= 0;) {
+                  curI = random.nextInt(m);
 
-                if (useDistDim < 0) {
-                  bestI = curI;
-                  bestJ = curJ;
-                  bestK = curK;
-                  break inner;
+                  do {
+                    curJ = random.nextInt(m);
+                  } while (curI == curJ);
+
+                  do {
+                    curK = random.nextInt(m);
+                  } while ((curK == curI) || (curK == curJ));
+
+                  curIX = data.getDouble(curI, 0);
+                  curIY = data.getDouble(curI, 1);
+                  curJX = data.getDouble(curJ, 0);
+                  curJY = data.getDouble(curJ, 1);
+                  curKX = data.getDouble(curK, 0);
+                  curKY = data.getDouble(curK, 1);
+                  if ((curIX != curJX) && (curIX != curKX)
+                      && (curJX != curKX) && //
+                      (curIY != curJY) && (curIY != curKY)
+                      && (curJY != curKY)) {
+                    break innermost;
+                  }
                 }
 
-                curIZ = this.m_data.getDouble(curI, useDistDim);
-                curJZ = this.m_data.getDouble(curJ, useDistDim);
-                curKZ = this.m_data.getDouble(curK, useDistDim);
+                // Now we need to check according to which dimension we
+                // want to sort the points: either x, or y, or no sorting
+                // (in which case we can just take the point triplet
+                // currently at hand and run with it).
+                switch (sortDim) {
+                  case 0: {
+                    curIZ = curIX;
+                    curJZ = curJX;
+                    curKZ = curKX;
+                    break;
+                  }
+                  case 1: {
+                    curIZ = curIY;
+                    curJZ = curJY;
+                    curKZ = curKY;
+                    break;
+                  }
+                  default: {
+                    bestIX = curIX;
+                    bestIY = curIY;
+                    bestJX = curJX;
+                    bestJY = curJY;
+                    bestKX = curKX;
+                    bestKY = curKY;
+                    break inner;
+                  }
+                }
 
+                // Unwounded sorting:Find the maximum,minimum,and
+                // medianvalue of the sorting dimension.
                 if (curIZ > curJZ) {
                   if (curIZ > curKZ) {
                     max = curIZ;
@@ -247,8 +335,9 @@ abstract class _BasicInternalGuesser implements IParameterGuesser {
                   }
                 }
 
+                // Log-scale data if necessary.
                 if (logScale) {
-                  t = ((useDistDim == 0) ? this.m_minX : this.m_minY);
+                  t = ((sortDim == 0) ? this.m_minX : this.m_minY);
                   if (t <= 0d) {
                     max = (max - t) + 1d;
                     med = (med - t) + 1d;
@@ -259,37 +348,37 @@ abstract class _BasicInternalGuesser implements IParameterGuesser {
                   min = Math.log(min);
                 }
 
+                // Compute the current distance, the sum of the distance
+                // from the first to the second and from the second to the
+                // third point.
                 max -= med;
                 med -= min;
                 curDist = ((max * max) + (med * med));
 
+                // Remember the triplet where the three points are farthest
+                // away along one axis.
                 if ((curDist > bestDist) && MathUtils.isFinite(curDist)) {
-                  bestI = curI;
-                  bestJ = curJ;
-                  bestK = curK;
-                  bestIZ = curIZ;
-                  bestJZ = curJZ;
-                  bestKZ = curKZ;
+                  bestIX = curIX;
+                  bestJX = curJX;
+                  bestKX = curKX;
+                  bestIY = curIY;
+                  bestJY = curJY;
+                  bestKY = curKY;
                   bestDist = curDist;
                 }
               }
 
+              // OK, now we got the three points, try to compute a guess.
               if (this.guessBasedOn3Points(//
-                  (useDistDim == 0) ? bestIZ
-                      : this.m_data.getDouble(bestI, 0), //
-                  (useDistDim == 1) ? bestIZ
-                      : this.m_data.getDouble(bestI, 1), //
-                  (useDistDim == 0) ? bestJZ
-                      : this.m_data.getDouble(bestJ, 0), //
-                  (useDistDim == 1) ? bestJZ
-                      : this.m_data.getDouble(bestJ, 1), //
-                  (useDistDim == 0) ? bestKZ
-                      : this.m_data.getDouble(bestK, 0), //
-                  (useDistDim == 1) ? bestKZ
-                      : this.m_data.getDouble(bestK, 1), //
+                  bestIX, bestIY, //
+                  bestJX, bestJY, //
+                  bestKX, bestKY, //
                   parameters, random)) {
-                break find;
+                break find; // guess found? quit
               }
+
+              // From the three points, we could not find a guess. So let's
+              // try again.
             }
           }
         }

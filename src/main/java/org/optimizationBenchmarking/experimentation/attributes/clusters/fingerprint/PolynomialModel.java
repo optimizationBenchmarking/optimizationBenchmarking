@@ -6,9 +6,9 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add3;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /**
- * A polynomial to be fitted in order to model the relationship of
- * similarly-typed dimensions (time-time, objective-objective):
- * {@code a+b*x+c*x*x}
+ * A polynomial of degree 2 to be fitted in order to model the relationship
+ * of similarly-typed dimensions (time-time, objective-objective):
+ * {@code a+b*x+c*x*x}.
  */
 public final class PolynomialModel extends ParametricUnaryFunction {
 

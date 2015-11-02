@@ -8,10 +8,18 @@ import org.optimizationBenchmarking.utils.math.functions.power.Pow;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /**
- * A model function which I think may be suitable to model how
- * time-objective value relationships optimization processes usually work.
+ * <p>
+ * A model function which may be suitable to model how time-objective value
+ * relationships of optimization processes behave. My student Qi Qi has
+ * discovered this model: {@code a/(1+b*x^c)}. It is somewhat similar to a
+ * logistic model and, in our tests, fits quite well. It is somewhat
+ * similar to my previous exponential decay model {@code -(exp(a*(x^b))-1)}
+ * but seems to fit better and does not require data normalization.
+ * </p>
+ * <p>
  * The derivatives have been obtained with
  * http://www.numberempire.com/derivativecalculator.php.
+ * </p>
  * <ol>
  * <li>Original function: {@code a/(1+b*x^c)}</li>
  * <li>{@code d/da}: {@code 1/(1+b*x^c)}</li>
