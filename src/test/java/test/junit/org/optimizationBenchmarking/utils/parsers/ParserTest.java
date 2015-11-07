@@ -127,6 +127,7 @@ public abstract class ParserTest<T> extends TestBase {
   }
 
   /** test whether the string parses the object inputs correctly */
+  @SuppressWarnings("unused")
   @Test(timeout = 3600000)
   public void testExpectedStringParseFailures() {
     final Parser<T> parser;
@@ -142,7 +143,7 @@ public abstract class ParserTest<T> extends TestBase {
   }
 
   /** test whether the parser parses the object inputs correctly */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "unused" })
   @Test(timeout = 3600000)
   public void testExpectedObjectParseFailures() {
     final Parser<T> parser;

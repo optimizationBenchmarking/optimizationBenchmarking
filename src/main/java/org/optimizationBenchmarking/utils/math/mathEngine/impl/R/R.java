@@ -55,6 +55,7 @@ public final class R extends MathEngineTool {
   final String[] m_params;
 
   /** create */
+  @SuppressWarnings("unused")
   R() {
     super();
 

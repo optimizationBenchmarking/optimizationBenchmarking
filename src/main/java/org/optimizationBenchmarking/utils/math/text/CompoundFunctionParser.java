@@ -451,6 +451,7 @@ public class CompoundFunctionParser<T extends MathematicalFunction>
    *          a multi-purpose stack
    * @return the tokens
    */
+  @SuppressWarnings("unused")
   private final ArrayList<Object> __tokenize(final String string,
       final ArrayList<Object> stack) {
     final int end;

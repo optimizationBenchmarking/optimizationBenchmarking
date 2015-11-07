@@ -27,6 +27,7 @@ final class _HFTWaitThread extends Thread {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final void run() {
     long t;

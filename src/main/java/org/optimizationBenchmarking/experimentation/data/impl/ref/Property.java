@@ -98,7 +98,7 @@ public abstract class Property<DT extends PropertyValue<?>> extends
 
   /** {@inheritDoc} */
   @Override
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SuppressWarnings({ "unchecked", "rawtypes", "unused" })
   public final DT findValue(final Object value) {
     final DT[] data;
     final Comparable cv;

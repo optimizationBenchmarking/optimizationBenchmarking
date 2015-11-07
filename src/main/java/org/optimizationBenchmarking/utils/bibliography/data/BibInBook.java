@@ -49,6 +49,7 @@ public class BibInBook extends BibRecord {
    * @param direct
    *          parameter creation
    */
+  @SuppressWarnings("unused")
   BibInBook(final boolean direct, final BibAuthors authors,
       final String title, final BibBookRecord book,
       final String startPage, final String endPage, final String chapter,

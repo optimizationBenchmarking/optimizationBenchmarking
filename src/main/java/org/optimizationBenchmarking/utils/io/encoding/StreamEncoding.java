@@ -628,6 +628,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    *          the string
    * @return the corresponding encoding
    */
+  @SuppressWarnings("unused")
   public static final StreamEncoding<?, ?> parseString(final String s) {
     String t;
     Charset c;
@@ -676,6 +677,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    * @return The historical name of this encoding, or possibly
    *         <code>null</code> if the stream has been closed
    */
+  @SuppressWarnings("unused")
   private static final StreamEncoding<?, ?> __getPrintStreamEncoding(
       final Object wr) {
     Field f;
@@ -716,6 +718,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    * @return The historical name of this encoding, or possibly
    *         <code>null</code> if the stream has been closed
    */
+  @SuppressWarnings("unused")
   private static final StreamEncoding<?, ?> __getWriterEncoding(
       final Object wr) {
     Field f;
@@ -775,6 +778,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    * @return The historical name of this encoding, or possibly
    *         <code>null</code> if the stream has been closed
    */
+  @SuppressWarnings("unused")
   private static final StreamEncoding<?, ?> __getReaderEncoding(
       final Object r) {
     Field f;

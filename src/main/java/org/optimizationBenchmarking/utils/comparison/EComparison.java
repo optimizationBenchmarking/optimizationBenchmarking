@@ -48,7 +48,7 @@ public enum EComparison {
     }
 
     /** {@inheritDoc} */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
     @Override
     public final boolean compare(final Object a, final Object b) {
       if (a == b) {
@@ -137,7 +137,7 @@ public enum EComparison {
     }
 
     /** {@inheritDoc} */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
     @Override
     public final boolean compare(final Object a, final Object b) {
       if (a == b) {
@@ -284,7 +284,7 @@ public enum EComparison {
     }
 
     /** {@inheritDoc} */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
     @Override
     public final boolean compare(final Object a, final Object b) {
       if (a == b) {
@@ -373,7 +373,7 @@ public enum EComparison {
     }
 
     /** {@inheritDoc} */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
     @Override
     public final boolean compare(final Object a, final Object b) {
       if (a == b) {
@@ -833,7 +833,7 @@ public enum EComparison {
    *          the second object
    * @return the comparison result
    */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
   public static final int compareObjects(final Object a, final Object b) {
     if (a == b) {
       return 0;

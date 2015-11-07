@@ -704,6 +704,7 @@ public class RandomExample extends ExperimentSetCreator {
    * @param irc
    *          the instance run context
    */
+  @SuppressWarnings("unused")
   void _createRun(final InstanceRunsContext irc, final DimensionSet dims,
       final Random r) {
     ArrayList<DataPoint> dps;

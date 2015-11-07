@@ -27,6 +27,7 @@ abstract class _WorkerThread extends Thread {
    * @param log
    *          the logger
    */
+  @SuppressWarnings("unused")
   _WorkerThread(final String name, final Logger log) {
     super(name);
     this.m_log = log;

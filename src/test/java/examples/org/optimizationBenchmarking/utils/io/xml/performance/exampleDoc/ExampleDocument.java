@@ -120,6 +120,7 @@ public class ExampleDocument {
    *          the randomizer
    * @return the namespaces
    */
+  @SuppressWarnings("unused")
   private static final ExampleNamespace __createExampleNamespace(
       final Random rand) {
     String scheme, userInfo, host, path, query, fragment, a;

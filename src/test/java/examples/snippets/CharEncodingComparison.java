@@ -123,6 +123,7 @@ public final class CharEncodingComparison {
    *          the encoding
    * @return the encoding
    */
+  @SuppressWarnings("unused")
   private static final String __encode(final int chr, final String encoding) {
     final byte[] data;
     final char[] chx;
@@ -270,6 +271,7 @@ public final class CharEncodingComparison {
    *          the character
    * @return the url-encoding
    */
+  @SuppressWarnings("unused")
   private static final String __urlEncode(final int chr) {
     try {
       return URLEncoder.encode(String.valueOf((char) chr), "UTF-8"); //$NON-NLS-1$

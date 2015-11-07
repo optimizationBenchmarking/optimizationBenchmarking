@@ -209,7 +209,7 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
 
   /** {@inheritDoc} */
   @Override
-  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
   int _compareTo(final _IDObject o) {
     final ArraySetView a, b;
     final int s1, s2, min;

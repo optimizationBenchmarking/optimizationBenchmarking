@@ -33,61 +33,148 @@ public class MathUtilsTest {
     Assert.assertFalse(MathUtils.isFinite(0d / 0d));
   }
 
-  /** test is-in-range method for finite input */
+  /** test step difference between two values */
   @Test(timeout = 3600000)
-  public void testIsInRangeFinite() {
-    Random rand;
-    double a, amin, amax;
-    int i, j, k;
+  public void testDifferenceBetweenTwoValues() {
+    final Random random;
+    double start, end;
+    int starts, iteration;
 
-    rand = new Random();
-    for (i = 100; (--i) >= 0;) {
-      a = rand.nextDouble();
+    random = new Random();
 
-      for (j = 200; (--j) >= 0;) {
-        amin = amax = a;
-        for (k = 0; k <= j; k++) {
-          Assert.assertTrue(MathUtils.isWithinSteps(a, amin, j));
-          Assert.assertTrue(MathUtils.isWithinSteps(a, amax, j));
-          amax = Math.nextUp(amax);
-          amin = Math.nextAfter(amin, Double.NEGATIVE_INFINITY);
-        }
-        Assert.assertFalse(MathUtils.isWithinSteps(a, amin, j));
-        Assert.assertFalse(MathUtils.isWithinSteps(a, amax, j));
+    for (starts = 333; (--starts) >= 0;) {
+      end = start = -(1d / Math.log(1d - random.nextDouble()));
+      for (iteration = 0; iteration < 3333; iteration++) {
+        Assert.assertEquals(iteration, MathUtils.difference(start, end));
+        Assert.assertEquals(iteration, MathUtils.difference(end, start));
+        end = Math.nextUp(end);
       }
     }
   }
 
-  /** test is-in-range method for non-finite input */
+  /**
+   * test the "step" difference of two values, one of which is negative,
+   * the other one being positive
+   */
   @Test(timeout = 3600000)
-  public void testIsInRangeNonFinite() {
-    Assert.assertFalse(MathUtils.isWithinSteps(Double.NEGATIVE_INFINITY,
-        Double.POSITIVE_INFINITY, 1000));
+  public void testDifferenceBetweenTwoValuesOfDifferentSign() {
+    double start, end;
+    int iteration;
 
-    Assert.assertTrue(MathUtils.isWithinSteps(Double.NEGATIVE_INFINITY,
-        Double.NEGATIVE_INFINITY, 0));
-    Assert.assertTrue(MathUtils.isWithinSteps(Double.NEGATIVE_INFINITY,
-        Double.NEGATIVE_INFINITY, 1));
-
-    Assert.assertFalse(MathUtils.isWithinSteps(-Double.MAX_VALUE,
-        Double.NEGATIVE_INFINITY, 0));
-    Assert.assertTrue(MathUtils.isWithinSteps(-Double.MAX_VALUE,
-        Double.NEGATIVE_INFINITY, 1));
-
-    Assert.assertFalse(MathUtils.isWithinSteps(Double.NEGATIVE_INFINITY,
-        -Double.MAX_VALUE, 0));
-    Assert.assertTrue(MathUtils.isWithinSteps(Double.NEGATIVE_INFINITY,
-        -Double.MAX_VALUE, 1));
-
-    Assert.assertFalse(MathUtils.isWithinSteps(Double.MAX_VALUE,
-        Double.POSITIVE_INFINITY, 0));
-    Assert.assertTrue(MathUtils.isWithinSteps(Double.MAX_VALUE,
-        Double.POSITIVE_INFINITY, 1));
-
-    Assert.assertFalse(MathUtils.isWithinSteps(Double.POSITIVE_INFINITY,
-        Double.MAX_VALUE, 0));
-    Assert.assertTrue(MathUtils.isWithinSteps(Double.POSITIVE_INFINITY,
-        Double.MAX_VALUE, 1));
+    end = start = 0d;
+    for (iteration = 0; iteration < 333333; iteration++) {
+      Assert.assertEquals(
+          (MathUtils.difference(start, 0d) + //
+              MathUtils.difference(0d, end)),
+          MathUtils.difference(start, end));
+      Assert.assertEquals(
+          (MathUtils.difference(start, 0d) + //
+              MathUtils.difference(0d, end)),
+          MathUtils.difference(end, start));
+      start = Math.nextAfter(start, Double.NEGATIVE_INFINITY);
+      end = Math.nextUp(end);
+    }
   }
 
+  /** test the border cases of the step difference */
+  @Test(timeout = 3600000)
+  public void testDifferenceBetweenTwoValuesBorderCases() {
+    Assert.assertEquals(0L, MathUtils.difference(0d, 0d));
+    Assert.assertEquals(0L, MathUtils.difference(0d, -0d));
+    Assert.assertEquals(0L, MathUtils.difference(-0d, 0d));
+    Assert.assertEquals(0L, MathUtils.difference(-0d, -0d));
+
+    Assert.assertEquals(1L, MathUtils.difference(0d, Double.MIN_VALUE));
+    Assert.assertEquals(1L, MathUtils.difference(Double.MIN_VALUE, 0d));
+    Assert.assertEquals(1L, MathUtils.difference(-0d, Double.MIN_VALUE));
+    Assert.assertEquals(1L, MathUtils.difference(Double.MIN_VALUE, -0d));
+
+    Assert.assertEquals(1L, MathUtils.difference(0d, -Double.MIN_VALUE));
+    Assert.assertEquals(1L, MathUtils.difference(-Double.MIN_VALUE, 0d));
+    Assert.assertEquals(1L, MathUtils.difference(-0d, -Double.MIN_VALUE));
+    Assert.assertEquals(1L, MathUtils.difference(-Double.MIN_VALUE, -0d));
+
+    Assert.assertEquals(2L,
+        MathUtils.difference(Double.MIN_VALUE, -Double.MIN_VALUE));
+    Assert.assertEquals(2L,
+        MathUtils.difference(-Double.MIN_VALUE, Double.MIN_VALUE));
+
+    Assert.assertEquals((1L << 52L),
+        MathUtils.difference(0d, Double.MIN_NORMAL));
+    Assert.assertEquals((1L << 52L),
+        MathUtils.difference(Double.MIN_NORMAL, 0d));
+    Assert.assertEquals((1L << 52L),
+        MathUtils.difference(-0d, Double.MIN_NORMAL));
+    Assert.assertEquals((1L << 52L),
+        MathUtils.difference(Double.MIN_NORMAL, -0d));
+
+    Assert.assertEquals((1L << 52L),
+        MathUtils.difference(0d, -Double.MIN_NORMAL));
+    Assert.assertEquals((1L << 52L),
+        MathUtils.difference(-Double.MIN_NORMAL, 0d));
+    Assert.assertEquals((1L << 52L),
+        MathUtils.difference(-0d, -Double.MIN_NORMAL));
+    Assert.assertEquals((1L << 52L),
+        MathUtils.difference(-Double.MIN_NORMAL, -0d));
+
+    Assert.assertEquals((2L << 52L),
+        MathUtils.difference(Double.MIN_NORMAL, -Double.MIN_NORMAL));
+    Assert.assertEquals((2L << 52L),
+        MathUtils.difference(-Double.MIN_NORMAL, Double.MIN_NORMAL));
+
+    Assert.assertEquals(0L, MathUtils.difference(Double.POSITIVE_INFINITY,
+        Double.POSITIVE_INFINITY));
+    Assert.assertEquals(0L, MathUtils.difference(Double.NEGATIVE_INFINITY,
+        Double.NEGATIVE_INFINITY));
+    Assert.assertEquals(-1L, MathUtils.difference(Double.POSITIVE_INFINITY,
+        Double.NEGATIVE_INFINITY));
+    Assert.assertEquals(-1L, MathUtils.difference(Double.NEGATIVE_INFINITY,
+        Double.POSITIVE_INFINITY));
+
+    Assert.assertEquals(-1L, MathUtils.difference(Double.NaN, Double.NaN));
+    Assert.assertEquals(-1L,
+        MathUtils.difference(Double.POSITIVE_INFINITY, Double.NaN));
+    Assert.assertEquals(-1L,
+        MathUtils.difference(Double.NEGATIVE_INFINITY, Double.NaN));
+    Assert.assertEquals(-1L,
+        MathUtils.difference(Double.NaN, Double.POSITIVE_INFINITY));
+    Assert.assertEquals(-1L,
+        MathUtils.difference(Double.NaN, Double.NEGATIVE_INFINITY));
+
+    Assert.assertEquals(-1L,
+        MathUtils.difference(0d, Double.NEGATIVE_INFINITY));
+    Assert.assertEquals(-1L,
+        MathUtils.difference(0d, Double.POSITIVE_INFINITY));
+    Assert.assertEquals(-1L, MathUtils.difference(0d, Double.NaN));
+
+    Assert.assertEquals(-1L,
+        MathUtils.difference(Double.POSITIVE_INFINITY, 0d));
+    Assert.assertEquals(-1L,
+        MathUtils.difference(Double.NEGATIVE_INFINITY, 0d));
+    Assert.assertEquals(-1L, MathUtils.difference(Double.NaN, 0d));
+
+    Assert.assertEquals(-1L,
+        MathUtils.difference(1d, Double.NEGATIVE_INFINITY));
+    Assert.assertEquals(-1L,
+        MathUtils.difference(1d, Double.POSITIVE_INFINITY));
+    Assert.assertEquals(-1L, MathUtils.difference(1d, Double.NaN));
+
+    Assert.assertEquals(-1L,
+        MathUtils.difference(Double.POSITIVE_INFINITY, 1d));
+    Assert.assertEquals(-1L,
+        MathUtils.difference(Double.NEGATIVE_INFINITY, 1d));
+    Assert.assertEquals(-1L, MathUtils.difference(Double.NaN, 1d));
+
+    Assert.assertEquals(-1L,
+        MathUtils.difference(-1d, Double.NEGATIVE_INFINITY));
+    Assert.assertEquals(-1L,
+        MathUtils.difference(-1d, Double.POSITIVE_INFINITY));
+    Assert.assertEquals(-1L, MathUtils.difference(-1d, Double.NaN));
+
+    Assert.assertEquals(-1L,
+        MathUtils.difference(Double.POSITIVE_INFINITY, -1d));
+    Assert.assertEquals(-1L,
+        MathUtils.difference(Double.NEGATIVE_INFINITY, -1d));
+    Assert.assertEquals(-1L, MathUtils.difference(Double.NaN, -1d));
+  }
 }

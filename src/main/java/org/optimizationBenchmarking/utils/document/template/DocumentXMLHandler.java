@@ -1519,6 +1519,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    * @param atts
    *          the attributes
    */
+  @SuppressWarnings("unused")
   private final void __loadFormatAttrs(final Attributes atts) {
     String s;
     DecimalFormatSymbols x;

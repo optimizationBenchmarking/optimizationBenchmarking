@@ -313,6 +313,7 @@ public class InstanceTest<T> extends TestBase {
    * @return {@code true} if the object can be cloned, {@code false}
    *         otherwise
    */
+  @SuppressWarnings("unused")
   protected boolean canClone(final Object o) {
     if (o instanceof Cloneable) {
       try {

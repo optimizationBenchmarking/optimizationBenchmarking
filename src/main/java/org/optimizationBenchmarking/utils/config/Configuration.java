@@ -686,6 +686,7 @@ public final class Configuration implements Serializable, ITextable {
    *          the command line arguments, which were passed to the
    *          {@code main} routine
    */
+  @SuppressWarnings("unused")
   public static final void setup(final String[] args) {
     final _ConfigurationLoader cb;
 

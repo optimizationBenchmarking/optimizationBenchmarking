@@ -312,7 +312,7 @@ final class _RandomDocumentExampleTermination extends Thread {
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("fallthrough")
+  @SuppressWarnings({ "fallthrough", "unused" })
   @Override
   public final void run() {
     long time;

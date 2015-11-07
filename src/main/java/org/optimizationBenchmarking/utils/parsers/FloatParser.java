@@ -41,6 +41,7 @@ public abstract class FloatParser extends NumberParser<Float> {
    *          the string
    * @return the return type
    */
+  @SuppressWarnings("unused")
   public float parseFloat(final String string) {
     final float f;
     final double d;

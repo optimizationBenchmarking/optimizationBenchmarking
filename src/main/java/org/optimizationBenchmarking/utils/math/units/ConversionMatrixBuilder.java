@@ -57,6 +57,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
    *          check the other side
    * @return {@code true} if something has changed, {@code false} otherwise
    */
+  @SuppressWarnings("unused")
   private final int __setFactor(final int from, final int to,
       final Number factor, final boolean checkOther) {
     Number use, old;
@@ -321,6 +322,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
    *          the second number
    * @return the result
    */
+  @SuppressWarnings("unused")
   private static final Number __mul(final Number a, final Number b) {
     final long l;
     Rational r, rb, ra;

@@ -25,6 +25,7 @@ abstract class _LaTeXToolBase extends _LaTeXToolChainComponent {
   private final String m_toolName;
 
   /** create */
+  @SuppressWarnings("unused")
   _LaTeXToolBase() {
     super();
 

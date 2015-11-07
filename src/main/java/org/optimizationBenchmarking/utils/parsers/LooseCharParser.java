@@ -17,6 +17,7 @@ public class LooseCharParser extends CharParser {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final char parseCharacter(final String string) {
     char retVal;

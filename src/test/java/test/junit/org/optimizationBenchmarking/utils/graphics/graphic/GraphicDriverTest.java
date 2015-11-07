@@ -40,6 +40,7 @@ public abstract class GraphicDriverTest extends ToolTest<IGraphicDriver> {
    * @throws IOException
    *           if i/o fails
    */
+  @SuppressWarnings("unused")
   @Test(timeout = 3600000)
   public void testExampleGraphic() throws IOException {
     final IGraphicBuilder builder;

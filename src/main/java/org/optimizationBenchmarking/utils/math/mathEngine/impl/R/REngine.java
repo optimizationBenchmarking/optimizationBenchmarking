@@ -304,6 +304,7 @@ public final class REngine extends MathEngine {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final long getLong(final String variable) {
     final String token;

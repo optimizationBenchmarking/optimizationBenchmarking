@@ -93,6 +93,7 @@ public class BibArticle extends BibRecordWithPublisher {
    * @param direct
    *          store values directly?
    */
+  @SuppressWarnings("unused")
   BibArticle(final boolean direct, final BibAuthors authors,
       final String title, final BibDate date, final String journal,
       final String issn, final String volume, final String number,

@@ -121,6 +121,7 @@ public final class ModuleDescriptions extends
    *          the class
    * @return the description
    */
+  @SuppressWarnings("unused")
   public final ModuleDescription forClass(final String clazz) {
     Class<? extends IEvaluationModule> cclazz;
     try {

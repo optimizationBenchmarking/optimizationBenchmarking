@@ -40,6 +40,7 @@ public class MatrixTest<MT extends IMatrix> extends InstanceTest<MT> {
   }
 
   /** test the matrix dimensions */
+  @SuppressWarnings("unused")
   @Test(timeout = 3600000)
   public void testMatrixDimensionsAndGetters() {
     MT matrix, old;

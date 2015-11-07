@@ -61,6 +61,7 @@ public class FileChangeDetector {
    * @param path
    *          the path to look at
    */
+  @SuppressWarnings("unused")
   public FileChangeDetector(final Path path) {
     super();
 
@@ -176,6 +177,7 @@ public class FileChangeDetector {
   }
 
   /** update the file checksums */
+  @SuppressWarnings("unused")
   private final void __updateCheckSums() {
     final byte[] checkSums;
     final long size;
@@ -242,6 +244,7 @@ public class FileChangeDetector {
    * @return {@code true} if a change has been detected to the file or this
    *         is the first call to this method
    */
+  @SuppressWarnings("unused")
   public synchronized final boolean hasChanged(final boolean reset) {
     final boolean changed;
     final int oldState, newState;

@@ -215,6 +215,7 @@ public abstract class ProducerConsumerBuffer<T> implements Closeable {
    *         {@code count}, or {@code -1} if the buffer is empty and
    *         {@link #close() closed}.
    */
+  @SuppressWarnings("unused")
   private final int __readFromBuffer(final T dest, final int start,
       final int count, final boolean fully, final boolean read) {
     T bufferArray;

@@ -21,6 +21,7 @@ public class LooseIntParser extends IntParser {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final int parseInt(final String string) {
     final _PreparedString prep;

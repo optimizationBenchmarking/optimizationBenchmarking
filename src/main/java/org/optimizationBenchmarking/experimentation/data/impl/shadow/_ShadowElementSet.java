@@ -67,7 +67,7 @@ PT extends IDataElement> extends //
    * @param canOwn
    *          can we own the elements?
    */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
   private final void __shadow(final Collection<? extends PT> selection,
       final boolean canOwn) {
     final IDataElement[] array;

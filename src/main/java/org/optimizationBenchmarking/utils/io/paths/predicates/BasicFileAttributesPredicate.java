@@ -29,6 +29,7 @@ public abstract class BasicFileAttributesPredicate implements
    *         {@link org.optimizationBenchmarking.utils.predicates.IPredicate#check(Object)}
    *         returns {@code true}, {@code false} otherwise
    */
+  @SuppressWarnings("unused")
   public final boolean check(final Path path) {
     final BasicFileAttributes bfa;
 

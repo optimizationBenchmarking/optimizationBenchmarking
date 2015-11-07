@@ -21,6 +21,7 @@ final class _RAtLeastVersion3Criterion implements IPredicate<Path> {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final boolean check(final Path object) {
     ExternalProcessExecutor executor;

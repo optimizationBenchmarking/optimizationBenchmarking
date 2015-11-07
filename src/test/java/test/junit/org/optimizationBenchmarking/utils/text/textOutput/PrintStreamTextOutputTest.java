@@ -30,6 +30,7 @@ public class PrintStreamTextOutputTest extends
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   protected final String getString(final ByteArrayOutputStream root) {
     try {
@@ -41,6 +42,7 @@ public class PrintStreamTextOutputTest extends
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   protected final ITextOutput wrap(final ByteArrayOutputStream root) {
     try {

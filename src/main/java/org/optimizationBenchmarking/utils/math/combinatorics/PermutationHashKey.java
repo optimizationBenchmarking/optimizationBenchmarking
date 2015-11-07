@@ -69,6 +69,7 @@ public final class PermutationHashKey implements Cloneable {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final PermutationHashKey clone() {
     PermutationHashKey old;

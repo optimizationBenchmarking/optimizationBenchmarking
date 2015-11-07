@@ -114,4 +114,24 @@ public class FittingExampleDataset {
       }
     }
   }
+
+  /**
+   * Get the error sum for a particular model parameter setting
+   * 
+   * @param parameters
+   *          the model parameters
+   * @return the error sum
+   */
+  public final double evaluate(final double[] parameters) {
+    final StableSum sum;
+    int i;
+
+    sum = new StableSum();
+    for (i = this.data.m(); (--i) >= 0;) {
+      sum.append(
+          Math.abs(this.model.value(this.data.getDouble(i, 0), parameters)
+              - this.data.getDouble(i, 1)));
+    }
+    return sum.doubleValue();
+  }
 }

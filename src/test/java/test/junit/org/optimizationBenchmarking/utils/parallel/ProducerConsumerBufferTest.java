@@ -166,6 +166,7 @@ public abstract class ProducerConsumerBufferTest<T> extends TestBase {
     }
 
     /** {@inheritDoc} */
+    @SuppressWarnings("unused")
     @Override
     public final void run() {
       final Random r;
@@ -242,6 +243,7 @@ public abstract class ProducerConsumerBufferTest<T> extends TestBase {
     }
 
     /** {@inheritDoc} */
+    @SuppressWarnings("unused")
     @Override
     public final void run() {
       final Random r;

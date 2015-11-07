@@ -70,6 +70,7 @@ public class PathParser extends Parser<Path> {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final Path parseObject(final Object o) {
     Path ret;

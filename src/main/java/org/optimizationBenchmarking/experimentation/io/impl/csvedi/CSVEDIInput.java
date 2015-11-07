@@ -271,6 +271,7 @@ public final class CSVEDIInput extends
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   protected boolean enterDirectory(final IOJob job,
       final ExperimentSetContext data, final Path path,

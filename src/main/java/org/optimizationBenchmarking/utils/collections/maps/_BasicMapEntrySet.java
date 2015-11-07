@@ -40,7 +40,7 @@ final class _BasicMapEntrySet<K, V, NT extends BasicMapEntry<K, V>>
 
   /** {@inheritDoc} */
   @Override
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SuppressWarnings({ "unchecked", "rawtypes", "unused" })
   public final boolean contains(final Object o) {
     Map.Entry a, b;
     try {
@@ -61,7 +61,7 @@ final class _BasicMapEntrySet<K, V, NT extends BasicMapEntry<K, V>>
 
   /** {@inheritDoc} */
   @Override
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "unused" })
   public final boolean remove(final Object o) {
     int s;
     try {

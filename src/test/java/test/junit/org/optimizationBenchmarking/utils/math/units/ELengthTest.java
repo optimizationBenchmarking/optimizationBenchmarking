@@ -168,6 +168,7 @@ public class ELengthTest {
    * @param strict
    *          tests
    */
+  @SuppressWarnings("unused")
   private static final void __testConvert(final ELength from,
       final ELength to, final long fromValue, final long toValue,
       final boolean strict) {

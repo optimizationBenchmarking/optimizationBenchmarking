@@ -85,6 +85,7 @@ public final class ModuleDescriptionsBuilder extends
    * @param description
    *          the module description
    */
+  @SuppressWarnings("unused")
   public final void addModule(final String name, final String clazz,
       final String description) {
     final Class<? extends IEvaluationModule> cclazz;

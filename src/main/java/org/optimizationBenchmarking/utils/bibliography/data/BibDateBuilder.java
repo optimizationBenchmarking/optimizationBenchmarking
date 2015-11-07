@@ -148,6 +148,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
    * @param month
    *          the month
    */
+  @SuppressWarnings("unused")
   public final void setMonth(final String month) {
     final String m;
     EBibMonth res;
@@ -211,6 +212,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
    * @param quarter
    *          the quarter
    */
+  @SuppressWarnings("unused")
   public final void setQuarter(final String quarter) {
     final String m;
     EBibQuarter res;

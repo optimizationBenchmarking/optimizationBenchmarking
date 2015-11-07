@@ -18,6 +18,7 @@ public class LooseBooleanParser extends BooleanParser {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final boolean parseBoolean(final String string) {
     final _PreparedString prep;

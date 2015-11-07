@@ -143,6 +143,7 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   protected void file(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,

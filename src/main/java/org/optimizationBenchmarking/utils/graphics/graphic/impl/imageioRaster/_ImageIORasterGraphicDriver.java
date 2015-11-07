@@ -42,6 +42,7 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
    *          the graphic type
    * @return an image writer service provider for a given graphic type
    */
+  @SuppressWarnings("unused")
   static final ImageWriterSpi getSPI(final EGraphicFormat type) {
     try {
       Iterator<ImageWriterSpi> spiIt;

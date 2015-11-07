@@ -103,7 +103,7 @@ public class BasicMap<K, V, NT extends BasicMapEntry<K, V>> extends
 
   /** {@inheritDoc} */
   @Override
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "unused" })
   public final boolean containsKey(final Object key) {
     try {
       return (this.getEntry(((K) key), false) != null);

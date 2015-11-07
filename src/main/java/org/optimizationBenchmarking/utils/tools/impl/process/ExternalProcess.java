@@ -147,6 +147,7 @@ public final class ExternalProcess extends _BasicProcess {
    * @throws IOException
    *           if i/o fails
    */
+  @SuppressWarnings("unused")
   private final int __close(final boolean kill) throws IOException {
     final Logger logger;
     Object error;

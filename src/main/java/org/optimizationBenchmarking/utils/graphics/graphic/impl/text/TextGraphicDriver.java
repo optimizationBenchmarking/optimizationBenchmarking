@@ -26,6 +26,7 @@ public final class TextGraphicDriver extends AbstractGraphicDriver {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final boolean canUse() {
     try {

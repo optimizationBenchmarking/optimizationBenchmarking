@@ -31,6 +31,7 @@ public class LooseDoubleParser extends DoubleParser {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final double parseDouble(final String string) {
     final _PreparedString prep;

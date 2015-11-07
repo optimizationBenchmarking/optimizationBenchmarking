@@ -28,6 +28,7 @@ public abstract class DoubleParser extends NumberParser<Double> {
    *          the string
    * @return the return type
    */
+  @SuppressWarnings("unused")
   public double parseDouble(final String string) {
     final double d;
     boolean hasLong;

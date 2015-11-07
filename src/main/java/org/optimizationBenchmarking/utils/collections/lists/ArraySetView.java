@@ -46,29 +46,25 @@ public class ArraySetView<DT> extends ArrayListView<DT> implements Set<DT> {
       return (-1);
     }
 
-    try {
-      data = ((Comparable<Object>[]) (this.m_data));
-      i = Arrays.binarySearch(data, o);
+    data = ((Comparable<Object>[]) (this.m_data));
+    i = Arrays.binarySearch(data, o);
 
-      if (i < 0) {
-        return (-1);
-      }
-
-      for (; (--i) >= 0;) {
-        if (data[i].compareTo(o) != 0) {
-          break;
-        }
-      }
-
-      return (i + 1);
-    } catch (final ClassCastException cce) {
-      return super.indexOf(o);
+    if (i < 0) {
+      return (-1);
     }
+
+    for (; (--i) >= 0;) {
+      if (data[i].compareTo(o) != 0) {
+        break;
+      }
+    }
+
+    return (i + 1);
   }
 
   /** {@inheritDoc} */
   @Override
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "unused" })
   public final int lastIndexOf(final Object o) {
     final int size;
     final Comparable<Object>[] data;

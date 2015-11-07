@@ -30,6 +30,7 @@ final class _HTWaitThread extends Thread {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final void run() {
     long t;

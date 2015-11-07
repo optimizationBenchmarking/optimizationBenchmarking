@@ -74,6 +74,7 @@ public class ShellTool extends Tool {
   }
 
   /** the holder for the path to the shell binary */
+  @SuppressWarnings("unused")
   static final class _ShellPath {
 
     /** the path to the shell */

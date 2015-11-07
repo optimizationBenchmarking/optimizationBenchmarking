@@ -111,6 +111,7 @@ public final class NetworkUtils {
    *          the internet address
    * @return the server name for the internet address
    */
+  @SuppressWarnings("unused")
   public static final String getInetAddressName(final InetAddress addr) {
 
     if (addr == null) {
@@ -138,6 +139,7 @@ public final class NetworkUtils {
    *          the port
    * @return the URL
    */
+  @SuppressWarnings("unused")
   public static final URL getServerBaseURL(final String host,
       final int port) {
     final InetAddress addr;
@@ -481,6 +483,7 @@ public final class NetworkUtils {
      *          the address
      * @return the value
      */
+    @SuppressWarnings("unused")
     private static final int __getVal(final InetAddress a) {
       int val;
       val = 0;

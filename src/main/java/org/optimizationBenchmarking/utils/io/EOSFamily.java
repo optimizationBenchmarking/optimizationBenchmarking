@@ -28,6 +28,7 @@ public enum EOSFamily {
    *
    * @return the operating system
    */
+  @SuppressWarnings("unused")
   private static final EOSFamily __detect() {
     String name;
 

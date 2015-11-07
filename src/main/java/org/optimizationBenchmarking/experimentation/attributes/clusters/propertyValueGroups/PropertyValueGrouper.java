@@ -178,6 +178,7 @@ public final class PropertyValueGrouper extends
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   protected final PropertyValueGroups compute(final IProperty data) {
     final _Groups groups;

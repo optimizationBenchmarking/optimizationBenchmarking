@@ -143,6 +143,7 @@ public abstract class CharTransformerTest extends
    * @throws IOException
    *           the io exception if io fails
    */
+  @SuppressWarnings("unused")
   @Test(timeout = 3600000)
   public void testMultiTransform() throws IOException {
     final Random r;

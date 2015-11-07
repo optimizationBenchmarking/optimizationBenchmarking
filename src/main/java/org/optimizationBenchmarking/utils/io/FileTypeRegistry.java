@@ -326,6 +326,7 @@ public final class FileTypeRegistry {
    * @return the corresponding file type, or {@code null} if none could be
    *         found belonging to the given mime type
    */
+  @SuppressWarnings("unused")
   public final IFileType getTypeForPath(final Path path) {
     final String suffix;
     String mimeType;
@@ -359,6 +360,7 @@ public final class FileTypeRegistry {
    *          the path
    * @return the corresponding mime type
    */
+  @SuppressWarnings("unused")
   public final String getMimeTypeForPath(final Path path) {
     final String suffix;
     String mimeType;

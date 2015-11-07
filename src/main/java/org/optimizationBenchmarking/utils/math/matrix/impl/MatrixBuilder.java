@@ -231,6 +231,7 @@ public final class MatrixBuilder implements IAggregate {
    * @param str
    *          the string
    */
+  @SuppressWarnings("unused")
   public final void append(final String str) {
     try {
       this.append(Long.parseLong(str));

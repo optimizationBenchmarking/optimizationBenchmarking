@@ -48,6 +48,7 @@ public final class TextEncoding extends
    * @param moreNames
    *          the names
    */
+  @SuppressWarnings("unused")
   final void _register(final String... moreNames) {
     final ArrayList<String> names;
     final String sn, snlc, jn, jnlc;
@@ -150,6 +151,7 @@ public final class TextEncoding extends
    *          the name
    * @return the resolved name
    */
+  @SuppressWarnings("unused")
   private static final String[] resolveName(final String name) {
     String cs, n;
 

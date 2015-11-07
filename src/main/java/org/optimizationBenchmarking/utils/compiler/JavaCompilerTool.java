@@ -23,6 +23,7 @@ public class JavaCompilerTool extends Tool {
   final ArraySetView<String> m_options;
 
   /** create the tool */
+  @SuppressWarnings("unused")
   JavaCompilerTool() {
     super();
 

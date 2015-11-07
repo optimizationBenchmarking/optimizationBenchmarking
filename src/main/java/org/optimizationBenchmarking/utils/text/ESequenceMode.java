@@ -199,6 +199,7 @@ public enum ESequenceMode {
    *          the iterator
    * @return the next element
    */
+  @SuppressWarnings("unused")
   static final Object _next(final Iterator<?> iterator) {
     try {
       return iterator.next();

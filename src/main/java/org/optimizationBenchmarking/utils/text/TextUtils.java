@@ -61,6 +61,7 @@ public final class TextUtils {
    *
    * @return the line separator
    */
+  @SuppressWarnings("unused")
   private static final String __getLineSeparator() {
     final byte[] bs;
     final char[] cs;

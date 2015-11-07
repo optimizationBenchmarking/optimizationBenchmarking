@@ -39,7 +39,7 @@
 		<jdk.version>1.7</jdk.version>
 		<junit.version>4.11</junit.version>
 		<commons.math.majorVersion>3</commons.math.majorVersion>
-		<commons.math.version>${commons.math.majorVersion}.3</commons.math.version>
+		<commons.math.version>${commons.math.majorVersion}.5</commons.math.version>
 	</properties>
 
 	<licenses>

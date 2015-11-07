@@ -135,6 +135,7 @@ public class Parameter<T> extends DefinitionElement {
    *          the value
    * @return the formatted value to be stored in a configuration
    */
+  @SuppressWarnings("unused")
   Object _formatForDump(final Object value) {
     final Object parsed;
     BasicIterator<DefinitionElement> iterator;

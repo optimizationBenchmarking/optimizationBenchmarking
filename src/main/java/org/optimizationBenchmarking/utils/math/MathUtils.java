@@ -15,79 +15,53 @@ public final class MathUtils {
   public static final boolean isFinite(final double d) {
     return ((d > Double.NEGATIVE_INFINITY) && //
         (d < Double.POSITIVE_INFINITY) && //
-    (d == d));
+        (d == d));
   }
 
   /**
-   * Check whether two double numbers are not more than {@code steps}
-   * smallest increases or decreases away from each other
-   *
+   * The number of unique {@code double} values between {@code a} and
+   * {@code b}.
+   * 
    * @param a
-   *          the first number
+   *          the first {@code double}
    * @param b
-   *          the second number
-   * @param steps
-   *          the number of permitted steps
-   * @return {@code true} if the numbers are within that range of each
-   *         other, {@code false} otherwise
+   *          the second {@code double}
+   * @return the steps between them, or {@code -1} if either value is
+   *         {@link Double#NaN} or both are infinities of different signs
    */
-  public static final boolean isWithinSteps(final double a,
-      final double b, final int steps) {
-    double lowerA, upperA, lowerB, upperB;
-    int upA, lowA, upB, lowB;
+  public static final long difference(final double a, final double b) {
+    final long bitsA;
+    double useA, useB, temp;
 
-    if (a != a) {
-      return (b != b);
+    if ((a != a) || (b != b)) { // take are of NaN
+      return -1L;
     }
-    if (b != b) {
-      return false;
+    useA = (a + 0d);
+    useB = (b + 0d);
+    if (useA > useB) {
+      temp = useB;
+      useB = useA;
+      useA = temp;
+    }
+    if (useA == useB) {
+      return 0L;
+    }
+    if (useA <= Double.NEGATIVE_INFINITY) {
+      return -1L;
+    }
+    if (useB >= Double.POSITIVE_INFINITY) {
+      return -1L;
     }
 
-    lowerA = upperA = a;
-    lowerB = upperB = b;
-
-    upA = lowA = steps;
-    upB = lowB = 0;
-
-    increaseA: while ((upA > 0) && (upperA > Double.NEGATIVE_INFINITY)
-        && (upperA < Double.POSITIVE_INFINITY)) {
-      upperA = Math.nextUp(upperA);
-      upA--;
-      if ((upperA >= Double.POSITIVE_INFINITY) || (upperA != upperA)) {
-        break increaseA;
+    if (useA < 0d) {
+      bitsA = Double.doubleToRawLongBits(-useA);
+      if (useB < 0d) {
+        return (bitsA - Double.doubleToRawLongBits(-useB));
       }
+      return (bitsA + Double.doubleToRawLongBits(useB));
     }
-    lowB += upA;
-
-    decreaseA: while ((lowA > 0) && (lowerA > Double.NEGATIVE_INFINITY)
-        && (lowerA < Double.POSITIVE_INFINITY)) {
-      lowerA = Math.nextAfter(lowerA, Double.NEGATIVE_INFINITY);
-      lowA--;
-      if ((lowerA <= Double.NEGATIVE_INFINITY) || (lowerA != lowerA)) {
-        break decreaseA;
-      }
-    }
-    upB += lowA;
-
-    increaseB: while ((upB > 0) && (upperB > Double.NEGATIVE_INFINITY)
-        && (upperB < Double.POSITIVE_INFINITY)) {
-      upperB = Math.nextUp(upperB);
-      upB--;
-      if ((upperB >= Double.POSITIVE_INFINITY) || (upperB != upperB)) {
-        break increaseB;
-      }
-    }
-
-    decreaseB: while ((lowB > 0) && (lowerB > Double.NEGATIVE_INFINITY)
-        && (lowerB < Double.POSITIVE_INFINITY)) {
-      lowerB = Math.nextAfter(lowerB, Double.NEGATIVE_INFINITY);
-      lowB--;
-      if ((lowerB <= Double.NEGATIVE_INFINITY) || (lowerB != lowerB)) {
-        break decreaseB;
-      }
-    }
-
-    return ((lowerA <= upperB) && (upperA >= lowerB));
+    return (Double.doubleToRawLongBits(useB)
+        - Double.doubleToRawLongBits(useA));
   }
 
   /** the forbidden constructor */

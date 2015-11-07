@@ -365,6 +365,7 @@ public class ConfigurationTest extends TestBase {
   }
 
   /** test whether setting the command line works */
+  @SuppressWarnings("unused")
   @Test(timeout = 3600000)
   public void testSetCommandLineAndGetTyped() {
     final HashMap<String, Object> values;

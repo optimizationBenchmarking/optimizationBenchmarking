@@ -27,6 +27,7 @@ public class URIParser extends Parser<URI> {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final URI parseString(final String string) {
     URI uri;

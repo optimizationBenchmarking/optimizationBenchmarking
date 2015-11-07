@@ -26,6 +26,7 @@ public final class ExampleFontPalettes {
    *
    * @return the font palettes
    */
+  @SuppressWarnings("unused")
   private static final ArrayListView<FontPalette> __make() {
     LinkedHashSet<FontPalette> all;
     FontPalette palette;

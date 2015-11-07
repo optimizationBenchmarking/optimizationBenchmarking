@@ -63,7 +63,7 @@ PST extends IPropertySetting> extends //
    *          the values
    * @return the setting
    */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "unused" })
   private final PST __createSettingFromIterable(final Iterable values) {
     final ArrayListView<? extends PT> data;
     final IPropertyValue[] array;

@@ -31,6 +31,7 @@ public final class ByInstanceGrouping extends
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   protected final IClustering compute(final IExperimentSet data) {
     final int origSize;

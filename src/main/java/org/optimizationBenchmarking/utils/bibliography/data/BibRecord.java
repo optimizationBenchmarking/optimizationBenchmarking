@@ -233,6 +233,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
    *          the url
    * @return the improved url
    */
+  @SuppressWarnings("unused")
   static final URI _makeURL(final URI u) {
     if (u == null) {
       return null;

@@ -83,6 +83,7 @@ final class _HTTask extends RecursiveAction {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final void compute() {
     final Random r;

@@ -33,6 +33,7 @@ public final class CanExecutePredicate implements IPredicate<Path>,
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final boolean check(final Path file) {
     final BasicFileAttributes bfa;

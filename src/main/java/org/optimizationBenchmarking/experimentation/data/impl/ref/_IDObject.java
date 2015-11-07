@@ -45,7 +45,7 @@ abstract class _IDObject extends DataElement implements
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
   @Override
   public final int compareTo(final _IDObject o) {
     final Class<?> c1, c2;
@@ -218,7 +218,7 @@ abstract class _IDObject extends DataElement implements
    *
    * @return the read resolve
    */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "unused" })
   protected Object readResolve() {
     final Class<?> clazz;
     Object k;

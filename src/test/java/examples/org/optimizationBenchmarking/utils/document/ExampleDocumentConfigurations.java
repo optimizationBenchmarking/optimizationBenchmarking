@@ -194,6 +194,7 @@ public final class ExampleDocumentConfigurations {
    * @param add
    *          the collection to add to
    */
+  @SuppressWarnings("unused")
   private static final void __addXHTML10(
       final Collection<DocumentConfiguration> add) {
     XHTML10ConfigurationBuilder xhtml;
@@ -234,6 +235,7 @@ public final class ExampleDocumentConfigurations {
    * @param add
    *          the collection to add to
    */
+  @SuppressWarnings("unused")
   private static final void __addLaTeX(
       final Collection<DocumentConfiguration> add) {
     LaTeXConfigurationBuilder latex;

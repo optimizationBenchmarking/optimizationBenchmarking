@@ -20,6 +20,7 @@ public class LooseLongParser extends LongParser {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final long parseLong(final String string) {
     final _PreparedString prep;

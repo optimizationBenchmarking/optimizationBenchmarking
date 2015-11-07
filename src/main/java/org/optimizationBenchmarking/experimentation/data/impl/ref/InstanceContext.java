@@ -77,6 +77,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
    * @param dim
    *          the dimension
    */
+  @SuppressWarnings("unused")
   static final void _validateBoundary(final Number bound,
       final String name, final boolean isUpper, final Dimension dim) {
     final long l1, l2;

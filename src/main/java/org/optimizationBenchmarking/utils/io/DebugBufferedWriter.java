@@ -67,6 +67,7 @@ public final class DebugBufferedWriter extends BufferedWriter {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final void write(final char[] cbuf, final int off, final int len)
       throws IOException {
@@ -124,6 +125,7 @@ public final class DebugBufferedWriter extends BufferedWriter {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final void write(final String s, final int off, final int len)
       throws IOException {
@@ -186,6 +188,7 @@ public final class DebugBufferedWriter extends BufferedWriter {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final Writer append(final CharSequence csq, final int start,
       final int end) throws IOException {

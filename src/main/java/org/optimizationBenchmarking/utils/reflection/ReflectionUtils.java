@@ -204,7 +204,7 @@ public final class ReflectionUtils {
    * @throws OutOfMemoryError
    *           the we are out of memory
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "unused" })
   public static final <T> T deepClone(final T instance)
       throws IllegalArgumentException, OutOfMemoryError {
     final Class<T> clazz;
@@ -355,6 +355,7 @@ public final class ReflectionUtils {
    * @throws ClassNotFoundException
    *           if the class has not been found
    */
+  @SuppressWarnings("unused")
   private static final Class<?> __findClassInternal(
       final String clazzName, final String[] prefixes)
       throws LinkageError, ClassCastException, ClassNotFoundException {

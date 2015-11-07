@@ -27,6 +27,7 @@ public class AnyNumberParser extends NumberParser<Number> {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final Number parseString(final String string) {
     final _PreparedString prep;

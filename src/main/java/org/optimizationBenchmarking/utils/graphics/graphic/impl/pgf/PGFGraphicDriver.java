@@ -30,6 +30,7 @@ public final class PGFGraphicDriver extends AbstractGraphicDriver {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unused")
   @Override
   public final boolean canUse() {
     try {

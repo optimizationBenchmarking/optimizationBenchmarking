@@ -241,6 +241,7 @@ public final class PathUtils {
    * @return the normalized path
    * @see #normalize(Path)
    */
+  @SuppressWarnings("unused")
   public static final Path normalize(final Path path, final Path basePath) {
     Path before, p, q;
 
@@ -296,6 +297,7 @@ public final class PathUtils {
    *          the file
    * @return the canonicalized version
    */
+  @SuppressWarnings("unused")
   static final File _canonicalize(final File f) {
     File result;
 
@@ -330,6 +332,7 @@ public final class PathUtils {
    * @throws IllegalArgumentException
    *           if the path cannot be represented as file
    */
+  @SuppressWarnings("unused")
   public static final File getPhysicalFile(final Path path)
       throws IllegalArgumentException {
     Path normPath;
@@ -1011,6 +1014,7 @@ public final class PathUtils {
    * load the current directory, i.e., the one in which the program was
    * executed
    */
+  @SuppressWarnings("unused")
   private static final class __CurrentDirLoader {
 
     /** the current directory */
@@ -1037,6 +1041,7 @@ public final class PathUtils {
   /**
    * load the java home directory
    */
+  @SuppressWarnings("unused")
   private static final class __JavaHomeDirLoader {
 
     /** the current directory */
@@ -1062,6 +1067,7 @@ public final class PathUtils {
   /**
    * load the user home directory
    */
+  @SuppressWarnings("unused")
   private static final class __UserHomeDirLoader {
 
     /** the current directory */
@@ -1108,6 +1114,7 @@ public final class PathUtils {
   }
 
   /** load the paths the paths */
+  @SuppressWarnings("unused")
   private static final class __PathLoader {
 
     /** the path */
@@ -1229,6 +1236,7 @@ public final class PathUtils {
   /**
    * load the temp directory
    */
+  @SuppressWarnings("unused")
   private static final class __TempDirLoader {
 
     /** the current directory */
@@ -1295,6 +1303,7 @@ public final class PathUtils {
     }
 
     /** {@inheritDoc} */
+    @SuppressWarnings("unused")
     @Override
     public Path parseString(final String string) {
       BasicFileAttributes bfa;
@@ -1441,6 +1450,7 @@ public final class PathUtils {
    * immune to some circular hard links and other shenanigans to some
    * degree at least.
    */
+  @SuppressWarnings("unused")
   private static final class __PathVisitor extends SimpleFileVisitor<Path> {
 
     /** some paths we should always skip when traveling through the path */
@@ -1742,6 +1752,7 @@ public final class PathUtils {
      * @return {@code true} if and only if the predicates match,
      *         {@code false} otherwise
      */
+    @SuppressWarnings("unused")
     private final FileVisitResult __check(final Path path,
         final BasicFileAttributes attrs) {
       check: {

@@ -64,6 +64,7 @@ public class FittingExamples {
     long start, total;
     FittingResult res;
     int problem, index, dim;
+    double quality;
     double[] resx;
 
     med = new QuantileAggregate(0.5d);
@@ -85,8 +86,6 @@ public class FittingExamples {
       }
 
       for (index = FittingExamples.TIMES; index > 0; index--) {
-        start = System.nanoTime();
-
         builder = fitter.use().setFunctionToFit(example.model)
             .setPoints(example.data);
 
@@ -95,15 +94,18 @@ public class FittingExamples {
               .setMinCriticalPoints(example.sources * 3);
         }
 
+        start = System.nanoTime();
         res = builder.create().call();
+        total = Math.max(0L, (System.nanoTime() - start));
+
         resx = res.getFittedParameters();
         for (dim = resx.length; (--dim) >= 0;) {
           meds[dim].append(resx[dim]);
         }
 
-        total = Math.max(0L, (System.nanoTime() - start));
-        sum.append(res.getQuality());
-        med.append(res.getQuality());
+        quality = example.evaluate(resx);
+        sum.append(quality);
+        med.append(quality);
         example.plot(
             PathUtils.createPathInside(folder,
                 prefix + '_' + example.name + '_' + index + ".txt"), //$NON-NLS-1$

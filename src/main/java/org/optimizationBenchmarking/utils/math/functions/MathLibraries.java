@@ -36,6 +36,7 @@ public final class MathLibraries {
    * @return {@code true} if {@link org.apache.commons.math3.util.FastMath}
    *         can be used, {@code false} otherwise.
    */
+  @SuppressWarnings("unused")
   private static final boolean __checkFastMath() {
     try {
       FastMath.abs(1d);

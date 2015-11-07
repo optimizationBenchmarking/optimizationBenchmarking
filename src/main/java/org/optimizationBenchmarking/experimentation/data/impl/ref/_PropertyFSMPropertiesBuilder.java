@@ -167,6 +167,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
    *          records exist
    * @return the parameter record
    */
+  @SuppressWarnings("unused")
   private final PT __mapProperty(final _PropertyFSMPropertyRecord rec,
       final int totalCount) {
     final ArrayList<EPrimitiveType> primitiveTypes;
@@ -421,7 +422,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
   @Override
   public final int compare(final PropertyValue<?> o1,
       final PropertyValue<?> o2) {

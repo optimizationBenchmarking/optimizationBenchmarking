@@ -74,6 +74,7 @@ public final class Browser extends Tool implements IConfigurableJobTool {
   }
 
   /** load the path to a browser */
+  @SuppressWarnings("unused")
   static final class _BrowserPath {
 
     /** the browser path */

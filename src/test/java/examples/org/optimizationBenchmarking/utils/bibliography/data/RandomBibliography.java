@@ -339,6 +339,7 @@ public final class RandomBibliography extends BibliographyExample {
    *          the character
    * @return the normalized character if yes, 0 if no
    */
+  @SuppressWarnings("unused")
   private static final char __canUseChar(final char ch) {
     String charString, plainString;
     char t;
@@ -1441,6 +1442,7 @@ public final class RandomBibliography extends BibliographyExample {
    * @param max
    *          the maximum number authors
    */
+  @SuppressWarnings("unused")
   private final void __randomAuthors(final BibAuthorsBuilder abs,
       final int max) {
     int i;

@@ -277,7 +277,7 @@ public final class ErrorUtils {
    * @throws T
    *           the error
    */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SuppressWarnings({ "unchecked", "rawtypes", "unused" })
   public static final <T extends Throwable> void logError(
       final Logger logger, final Level level, final String message,
       final Object errorOrAggregationHandle, final boolean forceLog,
