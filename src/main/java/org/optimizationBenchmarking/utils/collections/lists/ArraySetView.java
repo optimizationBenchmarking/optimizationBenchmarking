@@ -13,10 +13,12 @@ import org.optimizationBenchmarking.utils.predicates.IPredicate;
  * array both as a {@link java.util.List list} and as {@link java.util.Set}
  * .
  *
- * @param <DT>
+ * @param
+ *          <DT>
  *          the type
  */
-public class ArraySetView<DT> extends ArrayListView<DT> implements Set<DT> {
+public class ArraySetView<DT> extends ArrayListView<DT>
+    implements Set<DT> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -37,7 +39,7 @@ public class ArraySetView<DT> extends ArrayListView<DT> implements Set<DT> {
 
   /** {@inheritDoc} */
   @Override
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "unused" })
   public final int indexOf(final Object o) {
     final Comparable<Object>[] data;
     int i;
@@ -46,20 +48,25 @@ public class ArraySetView<DT> extends ArrayListView<DT> implements Set<DT> {
       return (-1);
     }
 
-    data = ((Comparable<Object>[]) (this.m_data));
-    i = Arrays.binarySearch(data, o);
+    try {
+      data = ((Comparable<Object>[]) (this.m_data));
+      i = Arrays.binarySearch(data, o);
 
-    if (i < 0) {
-      return (-1);
-    }
-
-    for (; (--i) >= 0;) {
-      if (data[i].compareTo(o) != 0) {
-        break;
+      if (i < 0) {
+        return (-1);
       }
-    }
 
-    return (i + 1);
+      for (; (--i) >= 0;) {
+        if (data[i].compareTo(o) != 0) {
+          break;
+        }
+      }
+
+      return (i + 1);
+    } catch (final ClassCastException cce) {
+      // in case we are looking for an incompatible object
+      return super.indexOf(o);
+    }
   }
 
   /** {@inheritDoc} */
@@ -91,6 +98,7 @@ public class ArraySetView<DT> extends ArrayListView<DT> implements Set<DT> {
 
       return (i - 1);
     } catch (final ClassCastException cce) {
+      // in case we are looking for an incompatible object
       return super.lastIndexOf(o);
     }
   }
