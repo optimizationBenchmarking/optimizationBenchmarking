@@ -10,7 +10,8 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingSu
 /**
  * An aggregate for quantile ranges.
  */
-public final class QuantileRangeAggregate extends _QuantileBasedAggregate {
+public final class InterQuantileRangeAggregate
+    extends _QuantileBasedAggregate {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -27,9 +28,12 @@ public final class QuantileRangeAggregate extends _QuantileBasedAggregate {
    *          the lower quantile
    * @param pUp
    *          the upper quantil
+   * @param store
+   *          the quantile data store
    */
-  public QuantileRangeAggregate(final double pLow, final double pUp) {
-    super();
+  InterQuantileRangeAggregate(final double pLow, final double pUp,
+      final QuantileDataStore store) {
+    super(store);
 
     if ((pLow >= 0d) && (pLow < pUp) && (pUp <= 1d)) {
       this.m_pLow = pLow;
@@ -39,6 +43,18 @@ public final class QuantileRangeAggregate extends _QuantileBasedAggregate {
           "Quantile limits value must be in 0<=low<up<=1, but are low=" //$NON-NLS-1$
               + pLow + " and up=" + pUp);//$NON-NLS-1$
     }
+  }
+
+  /**
+   * Create the quantile aggregate
+   *
+   * @param pLow
+   *          the lower quantile
+   * @param pUp
+   *          the upper quantil
+   */
+  public InterQuantileRangeAggregate(final double pLow, final double pUp) {
+    this(pLow, pUp, new QuantileDataStore());
   }
 
   /**
@@ -286,9 +302,10 @@ public final class QuantileRangeAggregate extends _QuantileBasedAggregate {
         break findLow;
       }
 
-      lowRes = Math.max(lower, Math.min(upper,//
-          Add.INSTANCE.computeAsDouble(lower,//
-              Mul.INSTANCE.computeAsDouble(v, (upper - lower)))));
+      lowRes = Math.max(lower,
+          Math.min(upper, //
+              Add.INSTANCE.computeAsDouble(lower, //
+                  Mul.INSTANCE.computeAsDouble(v, (upper - lower)))));
     }
 
     quantile = this.m_pUp;
@@ -332,9 +349,10 @@ public final class QuantileRangeAggregate extends _QuantileBasedAggregate {
         break findUp;
       }
 
-      upRes = Math.max(lower, Math.min(upper,//
-          Add.INSTANCE.computeAsDouble(lower,//
-              Mul.INSTANCE.computeAsDouble(v, (upper - lower)))));
+      upRes = Math.max(lower,
+          Math.min(upper, //
+              Add.INSTANCE.computeAsDouble(lower, //
+                  Mul.INSTANCE.computeAsDouble(v, (upper - lower)))));
     }
 
     // make the result

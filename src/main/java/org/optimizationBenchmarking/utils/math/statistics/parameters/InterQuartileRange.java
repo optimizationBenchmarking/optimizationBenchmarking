@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.math.statistics.parameters;
 
-import org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileRangeAggregate;
+import org.optimizationBenchmarking.utils.math.statistics.aggregate.InterQuantileRangeAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -29,7 +29,7 @@ public final class InterQuartileRange extends StatisticalParameter {
   /** {@inheritDoc} */
   @Override
   public final ScalarAggregate createSampleAggregate() {
-    return new QuantileRangeAggregate(0.25d, 0.75d);
+    return new InterQuantileRangeAggregate(0.25d, 0.75d);
   }
 
   /** {@inheritDoc} */

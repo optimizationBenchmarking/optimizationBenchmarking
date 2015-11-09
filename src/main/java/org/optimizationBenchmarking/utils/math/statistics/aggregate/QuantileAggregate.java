@@ -6,9 +6,7 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Mul;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingSub;
 
-/**
- * An aggregate for quantiles.
- */
+/** An aggregate for quantiles. */
 public final class QuantileAggregate extends _QuantileBasedAggregate {
 
   /** the serial version uid */
@@ -22,9 +20,11 @@ public final class QuantileAggregate extends _QuantileBasedAggregate {
    *
    * @param p
    *          the quantile
+   * @param store
+   *          the quantile data store
    */
-  public QuantileAggregate(final double p) {
-    super();
+  QuantileAggregate(final double p, final QuantileDataStore store) {
+    super(store);
 
     if ((p >= 0d) && (p <= 1d)) {
       this.m_p = p;
@@ -32,6 +32,17 @@ public final class QuantileAggregate extends _QuantileBasedAggregate {
       throw new IllegalArgumentException(//
           "Quantile p value must be in [0,1], but is " + p); //$NON-NLS-1$
     }
+
+  }
+
+  /**
+   * Create the quantile aggregate
+   *
+   * @param p
+   *          the quantile
+   */
+  public QuantileAggregate(final double p) {
+    this(p, new QuantileDataStore());
   }
 
   /**
@@ -167,8 +178,10 @@ public final class QuantileAggregate extends _QuantileBasedAggregate {
     }
 
     this._setDoubleFully(//
-    Math.max(lower, Math.min(upper,//
-        Add.INSTANCE.computeAsDouble(lower,//
-            Mul.INSTANCE.computeAsDouble(v, (upper - lower))))));
+        Math.max(lower,
+            Math.min(upper, //
+                Add.INSTANCE.computeAsDouble(lower, //
+                    Mul.INSTANCE.computeAsDouble(v, (upper - lower))))));
   }
+
 }
