@@ -15,6 +15,9 @@ abstract class _QuantileBasedAggregate extends _StatefulNumber {
   /** the quantile data store to use. */
   private final QuantileDataStore m_store;
 
+  /** the current time stamp */
+  private long m_timestamp;
+
   /**
    * Create the quantile-based aggregate
    *
@@ -56,7 +59,14 @@ abstract class _QuantileBasedAggregate extends _StatefulNumber {
   @SuppressWarnings("fallthrough")
   private final void __compute() {
 
+    this.m_timestamp = this.m_store.m_timestamp;
+
     switch (this.m_store.m_state) {
+
+      case QuantileDataStore.IS_EMPTY: {
+        this.m_state = BasicNumber.STATE_EMPTY;
+        return;
+      }
 
       case QuantileDataStore.HAS_DATA_LONG: {
         Arrays.sort(this.m_store.m_longData, 0, this.m_store.m_size);
@@ -88,7 +98,7 @@ abstract class _QuantileBasedAggregate extends _StatefulNumber {
   /** {@inheritDoc} */
   @Override
   public final int getState() {
-    if (this.m_state == BasicNumber.STATE_EMPTY) {
+    if (this.m_timestamp != this.m_store.m_timestamp) {
       this.__compute();
     }
     return this.m_state;
@@ -97,7 +107,7 @@ abstract class _QuantileBasedAggregate extends _StatefulNumber {
   /** {@inheritDoc} */
   @Override
   public final long longValue() {
-    if (this.m_state == BasicNumber.STATE_EMPTY) {
+    if (this.m_timestamp != this.m_store.m_timestamp) {
       this.__compute();
     }
     return super.longValue();
@@ -106,7 +116,7 @@ abstract class _QuantileBasedAggregate extends _StatefulNumber {
   /** {@inheritDoc} */
   @Override
   public final double doubleValue() {
-    if (this.m_state == BasicNumber.STATE_EMPTY) {
+    if (this.m_timestamp != this.m_store.m_timestamp) {
       this.__compute();
     }
     return super.doubleValue();

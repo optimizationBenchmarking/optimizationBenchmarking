@@ -3,7 +3,18 @@ package org.optimizationBenchmarking.utils.math.statistics.aggregate;
 import org.optimizationBenchmarking.utils.math.BasicNumberWrapper;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 
-/** A class for storing quantile data. */
+/**
+ * A class for storing quantile data. This backing store is used by the
+ * {@linkplain org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileAggregate
+ * quantile} and
+ * {@linkplain org.optimizationBenchmarking.utils.math.statistics.aggregate.InterQuantileRangeAggregate
+ * inter-quantile range} aggregates. In order to be more efficient if
+ * multiple quantiles are to be computed from the same stream of data, you
+ * can use the {@link #getQuantile(double)} and
+ * {@link #getInterQuantileRange(double, double)} methods to obtain
+ * {@linkplain org.optimizationBenchmarking.utils.math.BasicNumber number
+ * objects} which are updated along with this data store.
+ */
 public final class QuantileDataStore implements IAggregate {
 
   /** the data store is empty */
@@ -33,10 +44,14 @@ public final class QuantileDataStore implements IAggregate {
   /** the internal state */
   int m_state;
 
+  /** the timestamp */
+  long m_timestamp;
+
   /** Create the quantile data store */
   public QuantileDataStore() {
     super();
     this.m_state = QuantileDataStore.IS_EMPTY;
+    this.m_timestamp = 1L;
   }
 
   /**
@@ -212,6 +227,9 @@ public final class QuantileDataStore implements IAggregate {
   @SuppressWarnings("incomplete-switch")
   @Override
   public final void append(final long value) {
+
+    ++this.m_timestamp;
+
     switch (this.m_state) {
       case IS_EMPTY:
       case HAS_DATA_LONG:
@@ -233,6 +251,9 @@ public final class QuantileDataStore implements IAggregate {
   @SuppressWarnings("incomplete-switch")
   @Override
   public final void append(final double value) {
+
+    ++this.m_timestamp;
+
     if (value != value) {
       this.m_state = QuantileDataStore.IS_NAN;
       return;
@@ -261,6 +282,7 @@ public final class QuantileDataStore implements IAggregate {
 
   /** Reset the quantile data store */
   public final void reset() {
+    ++this.m_timestamp;
     this.m_size = 0;
     this.m_state = QuantileDataStore.IS_EMPTY;
   }
@@ -334,7 +356,9 @@ public final class QuantileDataStore implements IAggregate {
   }
 
   /**
-   * Get the quantile
+   * Get a number object representing a specified quantile. The value of
+   * this object will change if the contents of this store change, e.g., if
+   * new numbers are appended or the store is reset.
    *
    * @param p
    *          the quantile
@@ -346,7 +370,10 @@ public final class QuantileDataStore implements IAggregate {
   }
 
   /**
-   * Get the quantile range
+   * Get a number object representing a range between the specified
+   * quantiles. The value of this object will change if the contents of
+   * this store change, e.g., if new numbers are appended or the store is
+   * reset.
    *
    * @param pLow
    *          the lower quantile

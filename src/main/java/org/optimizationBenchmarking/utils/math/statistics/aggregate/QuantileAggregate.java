@@ -32,7 +32,6 @@ public final class QuantileAggregate extends _QuantileBasedAggregate {
       throw new IllegalArgumentException(//
           "Quantile p value must be in [0,1], but is " + p); //$NON-NLS-1$
     }
-
   }
 
   /**
