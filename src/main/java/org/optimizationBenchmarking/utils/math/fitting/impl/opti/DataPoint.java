@@ -30,7 +30,7 @@ public final class DataPoint {
     this.input = in;
     this.output = out;
 
-    if ((out != 0d) && ((w = Math.abs(out)) <= 0d)
+    if ((out != 0d) && ((w = Math.abs(out)) > 0d)
         && (MathUtils.isFinite(1d / w))) {
       this.inverseWeight = w;
     } else {

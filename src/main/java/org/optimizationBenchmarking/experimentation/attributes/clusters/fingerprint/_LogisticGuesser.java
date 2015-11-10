@@ -118,7 +118,7 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
   private static final double __error(final double x0, final double y0,
       final double x1, final double y1, final double x2, final double y2,
       final double a, final double b, final double c) {
-    return _LogisticGuesser.__add3(
+    return _LogisticGuesser.__add3(//
         _LogisticGuesser.__error(x0, y0, a, b, c), //
         _LogisticGuesser.__error(x1, y1, a, b, c), //
         _LogisticGuesser.__error(x2, y2, a, b, c));
@@ -142,6 +142,76 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
   private static final double __error(final double x, final double y,
       final double a, final double b, final double c) {
     return Math.abs(y - (a / (1d + (b * _LogisticGuesser.__pow(x, c)))));
+  }
+
+  /**
+   * the median of three numbers
+   *
+   * @param a
+   *          the first number
+   * @param b
+   *          the second number
+   * @param c
+   *          the third number
+   * @return the median
+   */
+  private static final double __med3(final double a, final double b,
+      final double c) {
+    double min, med, max;
+
+    if (a > b) {
+      if (a > c) {
+        max = a;
+        if (b > c) {
+          med = b;
+          min = c;
+        } else {
+          med = c;
+          min = b;
+        }
+      } else {
+        med = a;
+        if (b > c) {
+          max = b;
+          min = c;
+        } else {
+          max = c;
+          min = b;
+        }
+      }
+    } else {
+      if (b > c) {
+        max = b;
+        if (a > c) {
+          med = a;
+          min = c;
+        } else {
+          med = c;
+          min = a;
+        }
+      } else {
+        med = b;
+        max = c;
+        min = a;
+      }
+    }
+
+    if (MathUtils.isFinite(med)) {
+      return med;
+    }
+    if (MathUtils.isFinite(min)) {
+      if (MathUtils.isFinite(max)) {
+        med = (0.5d * (min + max));
+        if (MathUtils.isFinite(med) && (min <= med) && (med <= max)) {
+          return med;
+        }
+      }
+      return min;
+    }
+    if (MathUtils.isFinite(max)) {
+      return max;
+    }
+    return Double.NaN;
   }
 
   /**
@@ -180,7 +250,40 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
    */
   private static final double __b_xyac(final double x, final double y,
       final double a, final double c) {
-    return ((-(y - a)) / (_LogisticGuesser.__pow(x, c) * y));
+    final double b1, b2, b3, xc, xcy, e1, e2, e3;
+
+    xc = _LogisticGuesser.__pow(x, c);
+    xcy = (xc * y);
+
+    b1 = ((a - y) / xcy);
+    b2 = ((a / xcy) - (1d / xc));
+
+    if (b1 == b2) {
+      return b1;
+    }
+
+    e1 = _LogisticGuesser.__error(x, y, a, b1, c);
+    e2 = _LogisticGuesser.__error(x, y, a, b2, c);
+    if (MathUtils.isFinite(e1)) {
+      if (MathUtils.isFinite(e2)) {
+        if (e1 == e2) {
+          b3 = (0.5d * (b1 + b2));
+          if ((b3 != b2) && (b3 != b1) && ((b1 < b3) || (b2 < b3))
+              && ((b3 < b1) || (b3 < b2))) {
+            e3 = _LogisticGuesser.__error(x, y, a, b3, c);
+            if (MathUtils.isFinite(e3) && (e3 <= e1) && (e3 <= e2)) {
+              return b3;
+            }
+          }
+        }
+        return ((e1 < e2) ? b1 : b2);
+      }
+      return b1;
+    }
+    if (MathUtils.isFinite(e2)) {
+      return b2;
+    }
+    return ((e1 < e2) ? b1 : b2);
   }
 
   /**
@@ -199,26 +302,43 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
    */
   private static final double __c_xyab(final double x, final double y,
       final double a, final double b) {
-    final double c1, c2, lx, by, e1, e2;
+    final double c1, c2, c3, lx, by, e1, e2, e3;
 
     lx = _LogisticGuesser.__log(x);
     if ((b <= (-1d)) && (0d < x) && (x < 1d) && (Math.abs(a) <= 0d)
         && (Math.abs(y) <= 0d)) {
-      return Math
-          .nextUp(Math.nextUp(_LogisticGuesser.__log(-1d / b) / lx));
+      return Math.nextUp(Math.nextUp(//
+          _LogisticGuesser.__log(-1d / b) / lx));
     }
 
     by = b * y;
     c1 = _LogisticGuesser.__log((a / by) - (1 / b)) / lx;
     c2 = _LogisticGuesser.__log((a - y) / by) / lx;
 
+    if (c1 == c2) {
+      return c1;
+    }
+
     e1 = _LogisticGuesser.__error(x, y, a, b, c1);
     e2 = _LogisticGuesser.__error(x, y, a, b, c2);
     if (MathUtils.isFinite(e1)) {
       if (MathUtils.isFinite(e2)) {
+        if (e1 == e2) {
+          c3 = (0.5d * (c1 + c2));
+          if ((c3 != c2) && (c3 != c1) && ((c1 < c3) || (c2 < c3))
+              && ((c3 < c1) || (c3 < c2))) {
+            e3 = _LogisticGuesser.__error(x, y, a, b, c3);
+            if (MathUtils.isFinite(e3) && (e3 <= e1) && (e3 <= e2)) {
+              return c3;
+            }
+          }
+        }
         return ((e1 < e2) ? c1 : c2);
       }
       return c1;
+    }
+    if (MathUtils.isFinite(e2)) {
+      return c2;
     }
     return ((e1 < e2) ? c1 : c2);
   }
@@ -292,11 +412,11 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
 
     lx1 = _LogisticGuesser.__log(x1);
     lx2 = _LogisticGuesser.__log(x2);
-    return _LogisticGuesser.__exp(
-        _LogisticGuesser.__add4((lx1 * _LogisticGuesser.__log(a - y2)), //
-            -(lx2 * _LogisticGuesser.__log(a - y1)), //
-            -(lx1 * _LogisticGuesser.__log(y2)), //
-            (lx2 * _LogisticGuesser.__log(y1))) / (lx1 - lx2));
+    return _LogisticGuesser.__exp(_LogisticGuesser.__add4(//
+        (lx1 * _LogisticGuesser.__log(a - y2)), //
+        -(lx2 * _LogisticGuesser.__log(a - y1)), //
+        -(lx1 * _LogisticGuesser.__log(y2)), //
+        (lx2 * _LogisticGuesser.__log(y1))) / (lx1 - lx2));
   }
 
   /**
@@ -357,7 +477,8 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
   }
 
   /**
-   * Update a guess for {@code a}, {@code b}, and {@code c}
+   * Update a guess for {@code a}, {@code b}, and {@code c} by using median
+   * results from all formulas
    *
    * @param x0
    *          the {@code x}-coordinate of the first point
@@ -373,6 +494,181 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
    *          the {@code y}-coordinate of the third point
    * @param maxY
    *          the maximum {@code y} coorrdinate
+   * @param dest
+   *          the destination array
+   * @param bestError
+   *          the best error so far
+   * @return the new (or old) best error
+   */
+  private static final double __updateMed(final double x0, final double y0,
+      final double x1, final double y1, final double x2, final double y2,
+      final double maxY, final double[] dest, final double bestError) {
+    double newA, newB, newC, error;
+    boolean hasA, hasB, hasC, changed;
+
+    newA = newB = newC = Double.NaN;
+    hasA = hasB = hasC = false;
+
+    changed = true;
+    while (changed) {
+      changed = false;
+
+      if (!hasB) {
+        // find B based on the existing or new A and C values
+        newB = _LogisticGuesser.__med3(//
+            _LogisticGuesser.__b_x1y1x2y2a(x0, y0, x1, y1,
+                (hasA ? newA : dest[0])), //
+            _LogisticGuesser.__b_x1y1x2y2a(x1, y1, x2, y2,
+                (hasA ? newA : dest[0])), //
+            _LogisticGuesser.__b_x1y1x2y2a(x2, y2, x0, y0,
+                (hasA ? newA : dest[0])));
+
+        if (_LogisticGuesser.__checkB(newB)) {
+          changed = hasB = true;
+        } else {
+          newB = _LogisticGuesser.__med3(//
+              _LogisticGuesser.__b_xyac(x0, y0, (hasA ? newA : dest[0]),
+                  (hasC ? newC : dest[2])), //
+              _LogisticGuesser.__b_xyac(x1, y1, (hasA ? newA : dest[0]),
+                  (hasC ? newC : dest[2])), //
+              _LogisticGuesser.__b_xyac(x2, y2, (hasA ? newA : dest[0]),
+                  (hasC ? newC : dest[2])));
+
+          if (_LogisticGuesser.__checkB(newB)) {
+            changed = hasB = true;
+          } else {
+            newB = _LogisticGuesser.__med3(//
+                _LogisticGuesser.__b_x1y1x2y2c(x0, y0, x1, y1,
+                    (hasC ? newC : dest[2])), //
+                _LogisticGuesser.__b_x1y1x2y2c(x1, y1, x2, y2,
+                    (hasC ? newC : dest[2])), //
+                _LogisticGuesser.__b_x1y1x2y2c(x2, y2, x0, y0,
+                    (hasC ? newC : dest[2])));
+
+            if (_LogisticGuesser.__checkB(newB)) {
+              changed = hasB = true;
+            }
+          }
+        }
+      }
+
+      if (!hasC) {
+        // find C based on the existing or new A and B values
+        newC = _LogisticGuesser.__med3(//
+            _LogisticGuesser.__c_xyab(x0, y0, (hasA ? newA : dest[0]),
+                (hasB ? newB : dest[1])), //
+            _LogisticGuesser.__c_xyab(x1, y1, (hasA ? newA : dest[0]),
+                (hasB ? newB : dest[1])), //
+            _LogisticGuesser.__c_xyab(x2, y2, (hasA ? newA : dest[0]),
+                (hasB ? newB : dest[1])));
+
+        if (_LogisticGuesser.__checkC(newC)) {
+          changed = hasC = true;
+        }
+      }
+
+      if (!hasA) {
+        findA: {
+          // find A based on the existing or new B and C values
+          if (hasB) {
+            newA = _LogisticGuesser.__med3(//
+                _LogisticGuesser.__a_xybc(x0, y0, newB,
+                    (hasC ? newC : dest[2])), //
+                _LogisticGuesser.__a_xybc(x1, y1, newB,
+                    (hasC ? newC : dest[2])), //
+                _LogisticGuesser.__a_xybc(x2, y2, newB,
+                    (hasC ? newC : dest[2])));
+
+            if (_LogisticGuesser.__checkA(newA, maxY)) {
+              changed = hasA = true;
+              break findA;
+            }
+          }
+
+          newA = _LogisticGuesser.__med3(//
+              _LogisticGuesser.__a_x1y1x2y2c(x0, y0, x1, y1,
+                  (hasC ? newC : dest[2])), //
+              _LogisticGuesser.__a_x1y1x2y2c(x1, y1, x2, y2,
+                  (hasC ? newC : dest[2])), //
+              _LogisticGuesser.__a_x1y1x2y2c(x2, y2, x0, y0,
+                  (hasC ? newC : dest[2])));//
+
+          if (_LogisticGuesser.__checkA(newA, maxY)) {
+            changed = hasA = true;
+            break findA;
+          }
+
+          if (!hasB) {
+            newA = _LogisticGuesser.__med3(//
+                _LogisticGuesser.__a_xybc(x0, y0, dest[1],
+                    (hasC ? newC : dest[2])), //
+                _LogisticGuesser.__a_xybc(x1, y1, dest[1],
+                    (hasC ? newC : dest[2])), //
+                _LogisticGuesser.__a_xybc(x2, y2, dest[1],
+                    (hasC ? newC : dest[2])));
+
+            if (_LogisticGuesser.__checkA(newA, maxY)) {
+              changed = hasA = true;
+              break findA;
+            }
+          }
+
+          if (!changed) {
+            if (Math.abs(x0) <= 0d) {
+              newA = y0;
+              changed = hasA = true;
+              break findA;
+            }
+            if (Math.abs(x1) <= 0d) {
+              newA = y1;
+              changed = hasA = true;
+              break findA;
+            }
+            if (Math.abs(x2) <= 0d) {
+              newA = y2;
+              changed = hasA = true;
+              break findA;
+            }
+          }
+        }
+      }
+
+      if (hasA && hasB && hasC) {
+        error = _LogisticGuesser.__error(x0, y0, x1, y1, x2, y2, newA,
+            newB, newC);
+        if (MathUtils.isFinite(error) && (error < bestError)) {
+          dest[0] = newA;
+          dest[1] = newB;
+          dest[2] = newC;
+          return error;
+        }
+
+        return bestError;
+      }
+    }
+
+    return bestError;
+  }
+
+  /**
+   * Update a guess for {@code a}, {@code b}, and {@code c} by using the
+   * first two points for calculating the new values (and the last one only
+   * in the error computation)
+   *
+   * @param x0
+   *          the {@code x}-coordinate of the first point
+   * @param y0
+   *          the {@code y}-coordinate of the first point
+   * @param x1
+   *          the {@code x}-coordinate of the second point
+   * @param y1
+   *          the {@code y}-coordinate of the second point
+   * @param x2
+   *          the {@code x}-coordinate of the third point
+   * @param y2
+   *          the {@code y}-coordinate of the third point
+   * @param maxY
+   *          the maximum {@code y} coordinate
    * @param dest
    *          the destination array
    * @param bestError
@@ -414,8 +710,7 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
       }
 
       if (!hasC) {
-        // find C based on the existing A value and the new or existing C
-        // value
+        // find C based on the existing or new A and B values
         newC = _LogisticGuesser.__c_xyab(x0, y0, (hasA ? newA : dest[0]),
             (hasB ? newB : dest[1]));
         if (_LogisticGuesser.__checkC(newC)) {
@@ -425,7 +720,7 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
 
       if (!hasA) {
         findA: {
-          // Try to find A with the new B and C values
+          // find A based on the existing or new B and C values
           if (hasB) {
             newA = _LogisticGuesser.__a_xybc(x0, y0, newB,
                 (hasC ? newC : dest[2]));
@@ -447,6 +742,25 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
                 (hasC ? newC : dest[2]));
             if (_LogisticGuesser.__checkA(newA, maxY)) {
               changed = hasA = true;
+              break findA;
+            }
+          }
+
+          if (!changed) {
+            if (Math.abs(x0) <= 0d) {
+              newA = y0;
+              changed = hasA = true;
+              break findA;
+            }
+            if (Math.abs(x1) <= 0d) {
+              newA = y1;
+              changed = hasA = true;
+              break findA;
+            }
+            if (Math.abs(x2) <= 0d) {
+              newA = y2;
+              changed = hasA = true;
+              break findA;
             }
           }
         }
@@ -480,12 +794,13 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
 
     maxY = Math.max(y0, Math.max(y1, y2));
     steps = 100;
+    newError = Double.POSITIVE_INFINITY;
 
     while ((--steps) > 0) {
       this._fallback(maxY, random, dest);
-      newError = Double.POSITIVE_INFINITY;
       for (;;) {
         oldError = newError;
+
         newError = _LogisticGuesser.__update(x0, y0, x1, y1, x2, y2, maxY,
             dest, oldError);
         newError = _LogisticGuesser.__update(x0, y0, x2, y2, x1, y1, maxY,
@@ -498,6 +813,10 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
             dest, newError);
         newError = _LogisticGuesser.__update(x2, y2, x1, y1, x0, y0, maxY,
             dest, newError);
+
+        newError = _LogisticGuesser.__updateMed(x0, y0, x1, y1, x2, y2,
+            maxY, dest, newError);
+
         if ((--steps) <= 0) {
           return MathUtils.isFinite(newError);
         }
