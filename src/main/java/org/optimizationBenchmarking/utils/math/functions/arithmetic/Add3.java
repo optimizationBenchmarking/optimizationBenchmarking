@@ -4,8 +4,8 @@ import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.TernaryFunction;
 
 /**
- * The {@code "+"} function for three arguments, with the goal to compute
- * without overflow
+ * The {@code "+"} function for three arguments, implemented for maximum
+ * numerical stability.
  */
 public final class Add3 extends TernaryFunction {
 

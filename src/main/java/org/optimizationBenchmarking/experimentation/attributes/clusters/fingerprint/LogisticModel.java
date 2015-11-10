@@ -16,6 +16,7 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
  * similar to my previous exponential decay model {@code -(exp(a*(x^b))-1)}
  * but seems to fit better and does not require data normalization.
  * </p>
+ * <h2>Derivatives</h2>
  * <p>
  * The derivatives have been obtained with
  * http://www.numberempire.com/derivativecalculator.php.
@@ -26,6 +27,22 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
  * <li>{@code d/db}: {@code -(a*x^c)/         (1 + 2*b*x^c + b^2*x^(2*c))}
  * </li>
  * <li>{@code d/dc}: {@code -(a*b*x^c*log(x))/(1 + 2*b*x^c + b^2*x^(2*c))}
+ * </li>
+ * </ol>
+ * <h2>Resolution</h2>
+ * <h3>One Known Point</h3>
+ * <ol>
+ * <li>{@code a}: {@code a=(b*x^c+1)*y}</li>
+ * <li>{@code b}: {@code b=-(y-a)/(x^c*y)}</li>
+ * <li>{@code c}: {@code c=log(a/(b*y)-1/b)/log(x)},
+ * {@code c = (log((a-y)/(b*y)))/(log(x))}</li>
+ * </ol>
+ * <h3>Two Known Points</h3>
+ * <ol>
+ * <li>{@code a}: {@code a=((x2^c-x1^c)*y1*y2)/(x2^c*y2-x1^c*y1)}</li>
+ * <li>{@code b}: {@code b=-(y2-y1)/(x2^c*y2-x1^c*y1)}</li>
+ * <li>{@code b}:
+ * {@code b=exp((log(x1)*log(a-y2)-log(x2)*log(a-y1)-log(x1)*log(y2)+log(x2)*log(y1))/(log(x1)-log(x2)))}
  * </li>
  * </ol>
  */
