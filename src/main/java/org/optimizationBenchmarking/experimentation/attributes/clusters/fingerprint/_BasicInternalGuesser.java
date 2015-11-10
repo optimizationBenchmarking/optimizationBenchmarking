@@ -125,17 +125,20 @@ abstract class _BasicInternalGuesser implements IParameterGuesser {
     double t, curIX, curIY, curJX, curJY, curKX, curKY, //
         bestIX, bestIY, bestJX, bestJY, bestKX, bestKY, //
         curIZ, curJZ, curKZ, //
-        curDist, bestDist, max, med, min;
+        curDist, bestDist, max, med, min, maxY;
     boolean logScale;
 
     data = this.m_data;
     m = data.m();
 
+    maxY = 1d;
+    
     switcher: switch (m) {
       case 1: {
         // If we only have one point, use that one for the guess.
-        if (this.guessBasedOn1Point(data.getDouble(0, 0), //
-            data.getDouble(0, 1), //
+        if (this.guessBasedOn1Point(//
+            data.getDouble(0, 0), //
+            maxY = data.getDouble(0, 1), //
             parameters)) {
           return;
         }
@@ -144,27 +147,31 @@ abstract class _BasicInternalGuesser implements IParameterGuesser {
 
       case 2: {
         // If we only have two points, use these two for the guess.
-        if (this.guessBasedOn2Points(data.getDouble(0, 0), //
-            data.getDouble(0, 1), //
+        if (this.guessBasedOn2Points(//
+            data.getDouble(0, 0), //
+            curIY = data.getDouble(0, 1), //
             data.getDouble(1, 0), //
-            data.getDouble(1, 1), //
+            curJY = data.getDouble(1, 1), //
             parameters)) {
           return;
         }
+        maxY = Math.max(curIY, curJY);
         break switcher;
       }
 
       case 3: {
         // If we only have three points, use these three for the guess.
-        if (this.guessBasedOn3Points(data.getDouble(0, 0), //
-            data.getDouble(0, 1), //
+        if (this.guessBasedOn3Points(//
+            data.getDouble(0, 0), //
+            curIY = data.getDouble(0, 1), //
             data.getDouble(1, 0), //
-            data.getDouble(1, 1), //
+            curJY = data.getDouble(1, 1), //
             data.getDouble(2, 0), //
-            data.getDouble(2, 1), //
+            curKY = data.getDouble(2, 1), //
             parameters, random)) {
           return;
         }
+        maxY = Math.max(curIY, Math.max(curJY, curKY));
         break switcher;
       }
 
@@ -225,7 +232,7 @@ abstract class _BasicInternalGuesser implements IParameterGuesser {
 
             curIX = curJX = curKX = curIY = curJY = curKY = //
             bestIX = bestJX = bestKX = bestIY = bestJY = bestKY = Double.NaN;
-            bestDist = Double.NEGATIVE_INFINITY;
+            maxY = bestDist = Double.NEGATIVE_INFINITY;
 
             // If we have a "most-distant" policy, we will try to pick 27
             // times 3 points. This should leave us with at least some
@@ -255,10 +262,19 @@ abstract class _BasicInternalGuesser implements IParameterGuesser {
 
                 curIX = data.getDouble(curI, 0);
                 curIY = data.getDouble(curI, 1);
+                if (curIY > maxY) {
+                  maxY = curIY;
+                }
                 curJX = data.getDouble(curJ, 0);
                 curJY = data.getDouble(curJ, 1);
+                if (curJY > maxY) {
+                  maxY = curJY;
+                }
                 curKX = data.getDouble(curK, 0);
                 curKY = data.getDouble(curK, 1);
+                if (curKY > maxY) {
+                  maxY = curKY;
+                }
                 if ((curIX != curJX) && (curIX != curKX)
                     && (curJX != curKX) && //
                     (curIY != curJY) && (curIY != curKY)
@@ -384,6 +400,21 @@ abstract class _BasicInternalGuesser implements IParameterGuesser {
     }
 
     // no success?
+    this._fallback(maxY, random, parameters);
+  }
+
+  /**
+   * A fallback if all conventional guessing failed
+   * 
+   * @param maxY
+   *          the maximum {@code y}-coordinate encountered
+   * @param random
+   *          the random number generator
+   * @param parameters
+   *          the parameters
+   */
+  void _fallback(final double maxY, final Random random,
+      final double[] parameters) {
     parameters[0] = random.nextGaussian();
     parameters[1] = random.nextGaussian();
     parameters[2] = random.nextGaussian();

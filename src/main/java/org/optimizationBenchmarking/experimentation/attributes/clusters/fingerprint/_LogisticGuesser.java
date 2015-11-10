@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add3;
 import org.optimizationBenchmarking.utils.math.functions.power.Pow;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
-/** A parameter guesser for the logistic models */
+/** A parameter guesser for the logistic models. */
 final class _LogisticGuesser extends _BasicInternalGuesser {
 
   /**
@@ -52,7 +52,7 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
         Math.abs(
             y1 - (a / (1d + (b * Pow.INSTANCE.computeAsDouble(x1, c))))), //
         Math.abs(
-            y2 - (a / (1d + (b * Pow.INSTANCE.computeAsDouble(x1, c))))));
+            y2 - (a / (1d + (b * Pow.INSTANCE.computeAsDouble(x2, c))))));
   }
 
   /**
@@ -79,22 +79,33 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
   private static final double __update(final double x0, final double y0,
       final double x1, final double y1, final double x2, final double y2,
       final double[] best, final double bestError) {
-    final double newA, newB, newC, oldC, newError, x1c, x0c, x2c;
+    double newA, newB;
+    final double newC, oldC, newError, x1c, x0c, x2c;
 
     oldC = best[2];
     x0c = Pow.INSTANCE.computeAsDouble(x0, oldC);
     x1c = Pow.INSTANCE.computeAsDouble(x1, oldC);
     x2c = Pow.INSTANCE.computeAsDouble(x2, oldC);
 
-    // iteration 1
+  
+// todo: formula should be based on A, not on C!
     newB = (-((y1 - y0) / (((x1c * y1) - (x0c * y0)))));
     if (MathUtils.isFinite(newB)) {
+      if (Math.abs(newB) <= 1e-8d) {// very unlikely to be reasonable
+        return bestError;
+      }
 
       newA = (((x2c - x1c) * y1 * y2) / ((x2c * y2) - (x1c * y1)));
       if (MathUtils.isFinite(newA)) {
+        if (Math.abs(newA) <= 1e-8d) {// very unlikely to be reasonable
+          return bestError;
+        }
 
         newC = Math.abs(Math.log(((newA / y0) - 1) / newB) / Math.log(x0));
         if (MathUtils.isFinite(newC)) {
+          if (newC <= 1e-8d) {// very unlikely to be reasonable
+            return bestError;
+          }
 
           newError = _LogisticGuesser.__error(x0, y0, x1, y1, x2, y2, newA,
               newB, newC);
@@ -124,7 +135,7 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
 
     for (;;) {
 
-      switch (random.nextInt(5)) {
+      switch (random.nextInt(6)) {
         case 0: {
           v = y0;
           break;
@@ -143,15 +154,7 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
         }
       }
 
-      if (v == 0d) {
-        v = 1e-10d;
-      }
-      dest[0] = Math.abs(v * (1d + (0.1d * random.nextGaussian())));
-      dest[1] = (-Math.abs(
-          v * (1d / (15 + random.nextInt(1))) * random.nextGaussian()));
-      do {
-        dest[2] = (1d + random.nextGaussian());
-      } while (dest[2] <= 1e-12d);
+      this._fallback(v, random, dest);
 
       inner: for (;;) {
         --steps;
@@ -187,5 +190,23 @@ final class _LogisticGuesser extends _BasicInternalGuesser {
         return false;
       }
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final void _fallback(final double maxY, final Random random,
+      final double[] parameters) {
+    double v;
+
+    v = Math.abs(maxY);
+    if (v <= 0d) {
+      v = 1e-10d;
+    }
+    parameters[0] = Math.abs(v * (1d + (0.1d * random.nextGaussian())));
+    parameters[1] = (-Math.abs(//
+        v * (1d / (15 + random.nextInt(5))) * random.nextGaussian()));
+    do {
+      parameters[2] = (1d + random.nextGaussian());
+    } while (parameters[2] <= 1e-8d);
   }
 }
