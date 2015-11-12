@@ -235,11 +235,11 @@ them, no additional libraries need to be put into the classpath.
 
 The following libraries are needed by *the project*:
 
-* `commons-math3-3.3.jar`
+* `commons-math3-3.5.jar`
     - License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt) (see file "[meta/licenses/apache-2.0.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/apache-2.0.txt)")
-    - Version: 3.3
+    - Version: 3.5
     - Status: freely available in the internet
-    - Source: [repo.maven.apache.org](http://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.3/commons-math3-3.3.jar)
+    - Source: [repo.maven.apache.org](http://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.5/commons-math3-3.5.jar)
 
 * `freehep-export-2.1.1.jar`
     - License: [GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1](http://www.gnu.org/copyleft/lesser.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-2.1.txt)")
