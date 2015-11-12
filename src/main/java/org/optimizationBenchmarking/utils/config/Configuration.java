@@ -215,7 +215,8 @@ public final class Configuration implements Serializable, ITextable {
         synchronized (this.m_data) {
           for (Configuration cfg = this; cfg != null; cfg = cfg.m_owner) {
             synchronized (cfg.m_data) {
-              entry = ((_ConfigMapEntry) (cfg.m_data.getEntry(key, false)));
+              entry = ((_ConfigMapEntry) (cfg.m_data.getEntry(key,
+                  false)));
               if (entry != null) {
                 isLocked = entry.m_isLocked;
                 entry.m_isLocked = true;
@@ -270,7 +271,7 @@ public final class Configuration implements Serializable, ITextable {
       return retVal;
     } catch (final Throwable tt) {
       RethrowMode.AS_ILLEGAL_STATE_EXCEPTION.rethrow((((((((//
-          "Error while trying to obtain configuration key '" //$NON-NLS-1$
+      "Error while trying to obtain configuration key '" //$NON-NLS-1$
           + key) + "\' with parser '") //$NON-NLS-1$
           + parser) + "' and default '") //$NON-NLS-1$
           + _default) + '\'') + '.'), true, tt);
@@ -366,7 +367,7 @@ public final class Configuration implements Serializable, ITextable {
    */
   public final byte getByte(final String key, final byte min,
       final byte max, final byte def) {
-    return this.get(key, new BoundedLooseByteParser(min, max),//
+    return this.get(key, new BoundedLooseByteParser(min, max), //
         Byte.valueOf(def)).byteValue();
   }
 
@@ -392,7 +393,7 @@ public final class Configuration implements Serializable, ITextable {
    */
   public final short getShort(final String key, final short min,
       final short max, final short def) {
-    return this.get(key, new BoundedLooseShortParser(min, max),//
+    return this.get(key, new BoundedLooseShortParser(min, max), //
         Short.valueOf(def)).shortValue();
   }
 
@@ -417,7 +418,7 @@ public final class Configuration implements Serializable, ITextable {
    */
   public final int getInt(final String key, final int min, final int max,
       final int def) {
-    return this.get(key, new BoundedLooseIntParser(min, max),//
+    return this.get(key, new BoundedLooseIntParser(min, max), //
         Integer.valueOf(def)).intValue();
   }
 
@@ -442,7 +443,7 @@ public final class Configuration implements Serializable, ITextable {
    */
   public final long getLong(final String key, final long min,
       final long max, final long def) {
-    return this.get(key, new BoundedLooseLongParser(min, max),//
+    return this.get(key, new BoundedLooseLongParser(min, max), //
         Long.valueOf(def)).longValue();
   }
 
@@ -469,7 +470,7 @@ public final class Configuration implements Serializable, ITextable {
    */
   public final float getFloat(final String key, final float min,
       final float max, final float def) {
-    return this.get(key, new BoundedLooseFloatParser(min, max),//
+    return this.get(key, new BoundedLooseFloatParser(min, max), //
         Float.valueOf(def)).floatValue();
   }
 
@@ -496,7 +497,7 @@ public final class Configuration implements Serializable, ITextable {
    */
   public final double getDouble(final String key, final double min,
       final double max, final double def) {
-    return this.get(key, new BoundedLooseDoubleParser(min, max),//
+    return this.get(key, new BoundedLooseDoubleParser(min, max), //
         Double.valueOf(def)).doubleValue();
   }
 
@@ -511,8 +512,7 @@ public final class Configuration implements Serializable, ITextable {
    *         data
    */
   public final boolean getBoolean(final String key, final boolean def) {
-    return this
-        .get(key, LooseBooleanParser.INSTANCE, Boolean.valueOf(def))
+    return this.get(key, LooseBooleanParser.INSTANCE, Boolean.valueOf(def))
         .booleanValue();
   }
 
@@ -541,7 +541,7 @@ public final class Configuration implements Serializable, ITextable {
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public final ArrayListView<String> getStringList(final String key,
       final ArrayListView<String> def) {
-    return this.get(key,//
+    return this.get(key, //
         ListParser.STRING_LIST_PARSER, (ArraySetView) ((def != null) ? def
             : ArraySetView.EMPTY_SET_VIEW));
   }
@@ -562,13 +562,12 @@ public final class Configuration implements Serializable, ITextable {
 
     parser = this.m_pathParser;
 
-    return this
-        .get(key,
-            ((parser.getBasePath() == null)//
+    return this.get(key,
+        ((parser.getBasePath() == null)//
             ? PathListParser.INSTANCE//
-                : new PathListParser(parser)),//
-            (ArraySetView) ((def != null) ? def
-                : ArraySetView.EMPTY_SET_VIEW));
+            : new PathListParser(parser)), //
+        (ArraySetView) ((def != null) ? def
+            : ArraySetView.EMPTY_SET_VIEW));
   }
 
   /**
@@ -655,7 +654,7 @@ public final class Configuration implements Serializable, ITextable {
     Logger logger;
     Configuration config;
 
-    logger = Logger.getGlobal();
+    logger = _LoggerFilter.GLOBAL;
     config = Configuration.getRoot();
     if (config != null) {
       return config.getLogger(Configuration.PARAM_LOGGER, logger);
