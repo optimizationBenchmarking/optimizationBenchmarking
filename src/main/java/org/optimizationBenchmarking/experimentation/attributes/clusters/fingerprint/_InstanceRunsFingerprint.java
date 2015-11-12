@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataPoint;
@@ -121,7 +123,8 @@ final class _InstanceRunsFingerprint
 
   /** Compute the attribute */
   @Override
-  protected final IMatrix compute(final IInstanceRuns data) {
+  protected final IMatrix compute(final IInstanceRuns data,
+      final Logger logger) {
     final MatrixBuilder builder;
     final ArrayListView<? extends IDimension> dimensions;
 

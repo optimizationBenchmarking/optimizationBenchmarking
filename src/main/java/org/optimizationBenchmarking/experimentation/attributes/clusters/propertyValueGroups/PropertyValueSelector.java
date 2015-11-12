@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
@@ -12,8 +14,8 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 /**
  * A property based selection.
  */
-public final class PropertyValueSelector extends
-    Attribute<IExperimentSet, PropertyValueGroups> {
+public final class PropertyValueSelector
+    extends Attribute<IExperimentSet, PropertyValueGroups> {
 
   /** The the group-by parameter: {@value} */
   private static final String PARAM_GROUP_BY = "groupBy"; //$NON-NLS-1$
@@ -57,7 +59,7 @@ public final class PropertyValueSelector extends
   @Override
   protected final int calcHashCode() {
     return HashUtils.combineHashes(//
-        HashUtils.hashCode(this.m_property),//
+        HashUtils.hashCode(this.m_property), //
         HashUtils.hashCode(this.m_grouper));
   }
 
@@ -72,14 +74,15 @@ public final class PropertyValueSelector extends
     if (o instanceof PropertyValueSelector) {
       selector = ((PropertyValueSelector) o);
       return (EComparison.equals(this.m_property, selector.m_property) && //
-      EComparison.equals(this.m_grouper, selector.m_grouper));
+          EComparison.equals(this.m_grouper, selector.m_grouper));
     }
     return false;
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final PropertyValueGroups compute(final IExperimentSet data) {
+  protected final PropertyValueGroups compute(final IExperimentSet data,
+      final Logger logger) {
     IProperty property;
 
     property = data.getFeatures().find(this.m_property);
@@ -87,13 +90,13 @@ public final class PropertyValueSelector extends
       property = data.getParameters().find(this.m_property);
       if (property == null) {
         throw new IllegalStateException(((//
-            "Property '" + this.m_property) + //$NON-NLS-1$
+        "Property '" + this.m_property) + //$NON-NLS-1$
             "' not known to experiment set ") //$NON-NLS-1$
             + data);
       }
     }
 
-    return this.m_grouper.compute(property);
+    return this.m_grouper.compute(property, logger);
   }
 
   /**
@@ -129,7 +132,7 @@ public final class PropertyValueSelector extends
       property = data.getParameters().find(groupBy);
       if (property == null) {
         throw new IllegalArgumentException(((//
-            "Cannot find property '" + groupBy) //$NON-NLS-1$
+        "Cannot find property '" + groupBy) //$NON-NLS-1$
             + '\'') + '.');
       }
     }

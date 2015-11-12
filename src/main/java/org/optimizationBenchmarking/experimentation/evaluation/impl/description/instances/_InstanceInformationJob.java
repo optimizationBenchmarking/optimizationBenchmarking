@@ -82,8 +82,8 @@ final class _InstanceInformationJob extends DescriptionJob {
     size = features.size();
     this.m_groupers = groupers = new PropertyValueGrouper[size];
     for (i = size; (--i) >= 0;) {
-      groupers[i] = PropertyValueGrouper
-          .configure(features.get(i), config);
+      groupers[i] = PropertyValueGrouper.configure(features.get(i),
+          config);
     }
 
     this.m_figureSize = config.get(FigureSizeParser.PARAM_FIGURE_SIZE,
@@ -107,12 +107,14 @@ final class _InstanceInformationJob extends DescriptionJob {
    *          the path component
    * @param colors
    *          the colors
+   * @param logger
+   *          the logger
    * @return the label to be used for the main figure
    */
   private final ILabel __makeFeatureFigures(final IExperimentSet data,
       final StyleSet styles, final ISectionBody body,
       final String mainCaption, final String pathComponent,
-      final ArrayList<ColorStyle> colors) {
+      final ArrayList<ColorStyle> colors, final Logger logger) {
     final PropertyValueGroups[] groups;
     final ILabel label;
     String mainPath;
@@ -122,7 +124,7 @@ final class _InstanceInformationJob extends DescriptionJob {
     groups = new PropertyValueGroups[this.m_groupers.length];
     index = 0;
     for (final IFeature feature : data.getFeatures().getData()) {
-      groups[index] = this.m_groupers[index].get(feature);
+      groups[index] = this.m_groupers[index].get(feature, logger);
       index++;
     }
 
@@ -212,11 +214,13 @@ final class _InstanceInformationJob extends DescriptionJob {
    *          the styles
    * @param body
    *          the section body to write to
+   * @param logger
+   *          the logger
    */
   private final void __discussRelativeFeatureValueAmounts(
       final IExperimentSet data, final IExperimentSet dataForSome,
       final IExperimentSet dataForAll, final StyleSet styles,
-      final ISectionBody body) {
+      final ISectionBody body, final Logger logger) {
     final ILabel labelMain, labelForSome, labelForAll;
     final int features;
     final int allSize, forSomeSize, forAllSize;
@@ -232,42 +236,30 @@ final class _InstanceInformationJob extends DescriptionJob {
 
     colors = new ArrayList<>();
     if ((forAllSize < allSize) && (forSomeSize > 0)) {
-      labelMain = this
-          .__makeFeatureFigures(
-              data,
-              styles,
-              body,//
-              "The fractions of all available instances with specific feature values.", //$NON-NLS-1$
-              "existing", colors);//$NON-NLS-1$
+      labelMain = this.__makeFeatureFigures(data, styles, body, //
+          "The fractions of all available instances with specific feature values.", //$NON-NLS-1$
+          "existing", colors, logger);//$NON-NLS-1$
 
       if (forSomeSize < allSize) {
-        labelForSome = this
-            .__makeFeatureFigures(
-                dataForSome,
-                styles,
-                body,//
-                "The fractions of instances with specific feature values for which at least some experiments have runs.", //$NON-NLS-1$
-                "some", colors);//$NON-NLS-1$
+        labelForSome = this.__makeFeatureFigures(dataForSome, styles, body, //
+            "The fractions of instances with specific feature values for which at least some experiments have runs.", //$NON-NLS-1$
+            "some", colors, logger);//$NON-NLS-1$
       } else {
         labelForSome = null;
       }
 
       if ((forAllSize < forSomeSize) && (forAllSize > 0)) {
-        labelForAll = this
-            .__makeFeatureFigures(
-                dataForAll,
-                styles,
-                body,//
-                "The fractions of instances with specific feature values for which all experiments have runs.", //$NON-NLS-1$
-                "all", colors);//$NON-NLS-1$
+        labelForAll = this.__makeFeatureFigures(dataForAll, styles, body, //
+            "The fractions of instances with specific feature values for which all experiments have runs.", //$NON-NLS-1$
+            "all", colors, logger);//$NON-NLS-1$
       } else {
         labelForAll = null;
       }
 
     } else {
-      labelMain = this.__makeFeatureFigures(data, styles, body,//
+      labelMain = this.__makeFeatureFigures(data, styles, body, //
           "The fractions of instances with specific feature values.", //$NON-NLS-1$
-          null, colors);
+          null, colors, logger);
       labelForSome = labelForAll = null;
     }
     colors = null;
@@ -276,7 +268,7 @@ final class _InstanceInformationJob extends DescriptionJob {
     body.append("In ");//$NON-NLS-1$
     body.reference(ETextCase.IN_SENTENCE, ESequenceMode.COMMA, labelMain);
     body.append(//
-    " we illustrate the relative amount of benchmark instances per feature value over all ");//$NON-NLS-1$
+        " we illustrate the relative amount of benchmark instances per feature value over all ");//$NON-NLS-1$
     InTextNumberAppender.INSTANCE.appendTo(allSize, ETextCase.IN_SENTENCE,
         body);
     features = this.m_groupers.length;
@@ -285,12 +277,12 @@ final class _InstanceInformationJob extends DescriptionJob {
       body.append('s');
     }
     body.append(//
-    " are the bigger, the more benchmark instances have the associated feature value in comparison to the other values. The more similar the pie sizes are, the more evenly are the benchmark instances distributed over the benchmark feature values, which may be a good idea for fair experimentation.");//$NON-NLS-1$
+        " are the bigger, the more benchmark instances have the associated feature value in comparison to the other values. The more similar the pie sizes are, the more evenly are the benchmark instances distributed over the benchmark feature values, which may be a good idea for fair experimentation.");//$NON-NLS-1$
 
     if ((forAllSize < allSize) && (forSomeSize > 0)
         && ((labelForSome != null) || (labelForAll != null))) {
       body.append(//
-      " Since experimental runs have not been performed for every instance, we draw the same plot");//$NON-NLS-1$
+          " Since experimental runs have not been performed for every instance, we draw the same plot");//$NON-NLS-1$
       if (features > 1) {
         body.append('s');
       }
@@ -304,12 +296,14 @@ final class _InstanceInformationJob extends DescriptionJob {
           InTextNumberAppender.INSTANCE.appendTo(forSomeSize,
               ETextCase.IN_SENTENCE, body);
 
-          body.append((forSomeSize > 1) ? " instances" : //$NON-NLS-1$
-              " instance"); //$NON-NLS-1$
+          body.append((forSomeSize > 1)//
+              ? " instances" //$NON-NLS-1$
+              : " instance");//$NON-NLS-1$
 
           body.append(" for which ");//$NON-NLS-1$
           if (forAllSize < forSomeSize) {
-            body.append("runs have been conducted in at least some experiments");//$NON-NLS-1$
+            body.append(
+                "runs have been conducted in at least some experiments");//$NON-NLS-1$
           } else {
             body.append("all experiments contain runs.");//$NON-NLS-1$
             break drawForAll;
@@ -329,14 +323,15 @@ final class _InstanceInformationJob extends DescriptionJob {
           body.append(" for the ");//$NON-NLS-1$
           InTextNumberAppender.INSTANCE.appendTo(forAllSize,
               ETextCase.IN_SENTENCE, body);
-          body.append((forAllSize > 1) ? " instances" : //$NON-NLS-1$
-              " instance"); //$NON-NLS-1$
+          body.append((forAllSize > 1)//
+              ? " instances" //$NON-NLS-1$
+              : " instance");//$NON-NLS-1$
           body.append(", for which all experiments contain runs.");//$NON-NLS-1$
         }
       }
 
       body.append(//
-      " The difference between the charts can provide information about whether a certain instance feature is under-represented in the experiments.");//$NON-NLS-1$
+          " The difference between the charts can provide information about whether a certain instance feature is under-represented in the experiments.");//$NON-NLS-1$
     }
   }
 
@@ -359,8 +354,10 @@ final class _InstanceInformationJob extends DescriptionJob {
       final IExperimentSet dataForSome, final IExperimentSet dataForAll,
       final StyleSet styles, final ISectionBody body) {
     final ArrayListView<? extends IInstance> instances;
-    final IInstanceSet instanceSet, allDataInstanceSet, someDataInstanceSet;
-    final int featureSize, instanceSize, allDataInstanceSize, someDataInstanceSize;
+    final IInstanceSet instanceSet, allDataInstanceSet,
+        someDataInstanceSet;
+    final int featureSize, instanceSize, allDataInstanceSize,
+        someDataInstanceSize;
     ArrayList<IInstance> missing;
 
     instanceSet = data.getInstances();
@@ -400,7 +397,7 @@ final class _InstanceInformationJob extends DescriptionJob {
 
     if (someDataInstanceSize <= 0) {
       body.append(//
-      " This will be a major problem when evaluating results, many things will fail."); //$NON-NLS-1$
+          " This will be a major problem when evaluating results, many things will fail."); //$NON-NLS-1$
       return;
     }
 
@@ -439,7 +436,7 @@ final class _InstanceInformationJob extends DescriptionJob {
     if (allDataInstanceSize < someDataInstanceSize) {
       if (allDataInstanceSize <= 0) {
         body.append(//
-        " There is no single benchmark instance for which all experiments contain runs. This will be a major problem when evaluating results, many things will fail."); //$NON-NLS-1$
+            " There is no single benchmark instance for which all experiments contain runs. This will be a major problem when evaluating results, many things will fail."); //$NON-NLS-1$
         return;
       }
 
@@ -449,7 +446,8 @@ final class _InstanceInformationJob extends DescriptionJob {
         body.append(" However, "); //$NON-NLS-1$
       }
 
-      if ((someDataInstanceSize - allDataInstanceSize) > allDataInstanceSize) {
+      if ((someDataInstanceSize
+          - allDataInstanceSize) > allDataInstanceSize) {
         body.append("data is only available in "); //$NON-NLS-1$
         try (final IText emph = body.emphasize()) {
           emph.append("all"); //$NON-NLS-1$
@@ -461,7 +459,8 @@ final class _InstanceInformationJob extends DescriptionJob {
         SemanticComponentUtils.printNames(ESequenceMode.AND,
             allDataInstanceSet.getData(), true, false,
             ETextCase.IN_SENTENCE, body);
-        body.append(", while at least some experiments have no data for the rest."); //$NON-NLS-1$
+        body.append(
+            ", while at least some experiments have no data for the rest."); //$NON-NLS-1$
       } else {
         if (missing == null) {
           missing = new ArrayList<>();
@@ -471,7 +470,8 @@ final class _InstanceInformationJob extends DescriptionJob {
             missing.add(inst);
           }
         }
-        body.append("at least some experiments do not have data for instances"); //$NON-NLS-1$
+        body.append(
+            "at least some experiments do not have data for instances"); //$NON-NLS-1$
         if (missing.size() < 10) {
           body.append(' ');
           SemanticComponentUtils.printNames(ESequenceMode.AND, missing,
@@ -496,10 +496,13 @@ final class _InstanceInformationJob extends DescriptionJob {
    *          the styles
    * @param body
    *          the section body to write to
+   * @param logger
+   *          the logger
    */
   private final void __discussFeatureValues(final IExperimentSet data,
       final IExperimentSet dataForSome, final IExperimentSet dataForAll,
-      final StyleSet styles, final ISectionBody body) {
+      final StyleSet styles, final ISectionBody body,
+      final Logger logger) {
     final int count;
     ISequenceable[] current, prev;
     ArrayListView<? extends IFeature> features;
@@ -534,11 +537,12 @@ final class _InstanceInformationJob extends DescriptionJob {
           type = feature.getPrimitiveType();
           if ((type != null) && (type.isNumber())) {
             extreme = ExtremalPropertyValuesGetter.EXTREMAL_FEATURE_VALUES
-                .get(feature);
+                .get(feature, logger);
             if ((prev == null) || (!(EComparison.equals(//
-                ((_NumericalFeatureSequenceable) (prev[i])).m_extremal,//
+                ((_NumericalFeatureSequenceable) (prev[i])).m_extremal, //
                 extreme)))) {
-              seq = new _NumericalFeatureSequenceable(feature, extreme);
+              seq = new _NumericalFeatureSequenceable(feature, extreme,
+                  logger);
               print.add(seq);
             } else {
               seq = prev[i];
@@ -547,7 +551,7 @@ final class _InstanceInformationJob extends DescriptionJob {
             if ((prev == null)
                 || (((_OrdinalFeatureSequenceable) (prev[i])).m_feature
                     .getData().size() > feature.getData().size())) {
-              seq = new _OrdinalFeatureSequenceable(feature);
+              seq = new _OrdinalFeatureSequenceable(feature, logger);
               print.add(seq);
             } else {
               seq = prev[i];
@@ -568,16 +572,18 @@ final class _InstanceInformationJob extends DescriptionJob {
           body.append("The benchmark instances are characterized by ");//$NON-NLS-1$
           InTextNumberAppender.INSTANCE.appendTo(count,
               ETextCase.IN_SENTENCE, body);
-          body.append((count > 1) ? " features: " : //$NON-NLS-1$
-              " feature: ");//$NON-NLS-1$
+          body.append((count > 1)//
+              ? " features: " //$NON-NLS-1$
+              : " feature: ");//$NON-NLS-1$
         } else {
           if (es == dataForSome) {
             body.append(//
-            "If we only consider the ");//$NON-NLS-1$
-            InTextNumberAppender.INSTANCE.appendTo(es.getInstances()
-                .getData().size(), ETextCase.IN_SENTENCE, body);
+                "If we only consider the ");//$NON-NLS-1$
+            InTextNumberAppender.INSTANCE.appendTo(
+                es.getInstances().getData().size(), ETextCase.IN_SENTENCE,
+                body);
             body.append(//
-            " benchmark instances for which at least some experimental runs have been conducted, the ranges of ");//$NON-NLS-1$
+                " benchmark instances for which at least some experimental runs have been conducted, the ranges of ");//$NON-NLS-1$
 
             i = print.size();
             if (i >= count) {
@@ -590,22 +596,24 @@ final class _InstanceInformationJob extends DescriptionJob {
               InTextNumberAppender.INSTANCE.appendTo(i,
                   ETextCase.IN_SENTENCE, body);
             }
-            body.append((i > 1) ? " features change as follows: " : //$NON-NLS-1$
-                " feature changes as follows: ");//$NON-NLS-1$
+            body.append((i > 1)//
+                ? " features change as follows: " //$NON-NLS-1$
+                : " feature changes as follows: ");//$NON-NLS-1$
             further = true;
           } else {
             if (further) {
               body.append(//
-              "Furthermore, i");//$NON-NLS-1$
+                  "Furthermore, i");//$NON-NLS-1$
             } else {
               body.append('I');
             }
             body.append(//
-            "f we only look at the ");//$NON-NLS-1$
-            InTextNumberAppender.INSTANCE.appendTo(es.getInstances()
-                .getData().size(), ETextCase.IN_SENTENCE, body);
+                "f we only look at the ");//$NON-NLS-1$
+            InTextNumberAppender.INSTANCE.appendTo(
+                es.getInstances().getData().size(), ETextCase.IN_SENTENCE,
+                body);
             body.append(//
-            " benchmark instances for which runs exist in all experiments, the ranges of "); //$NON-NLS-1$
+                " benchmark instances for which runs exist in all experiments, the ranges of "); //$NON-NLS-1$
             i = print.size();
             if (i >= count) {
               if (i == 1) {
@@ -617,8 +625,9 @@ final class _InstanceInformationJob extends DescriptionJob {
               InTextNumberAppender.INSTANCE.appendTo(i,
                   ETextCase.IN_SENTENCE, body);
             }
-            body.append((i > 1) ? " features change as follows: " : //$NON-NLS-1$
-                " feature changes as follows: ");//$NON-NLS-1$
+            body.append((i > 1)//
+                ? " features change as follows: " //$NON-NLS-1$
+                : " feature changes as follows: ");//$NON-NLS-1$
           }
         }
 
@@ -649,11 +658,11 @@ final class _InstanceInformationJob extends DescriptionJob {
         }
         if (es == dataForAll) {
           body.append(//
-          "Not single instance exists for which runs have been performed in all experiments."); //$NON-NLS-1$
+              "Not single instance exists for which runs have been performed in all experiments."); //$NON-NLS-1$
           return;
         }
         body.append(//
-        "No experimental runs have been performed at all."); //$NON-NLS-1$
+            "No experimental runs have been performed at all."); //$NON-NLS-1$
         return;
       }
     }
@@ -673,16 +682,16 @@ final class _InstanceInformationJob extends DescriptionJob {
 
       styles = section.getStyles();
 
-      dataForAll = OnlySharedInstances.INSTANCE.get(data);
-      dataForSome = OnlyUsedInstances.INSTANCE.get(data);
+      dataForAll = OnlySharedInstances.INSTANCE.get(data, logger);
+      dataForSome = OnlyUsedInstances.INSTANCE.get(data, logger);
 
       try (final ISectionBody body = section.body()) {
         this.__discussInstances(data, dataForSome, dataForAll, styles,
             body);
         this.__discussFeatureValues(data, dataForSome, dataForAll, styles,
-            body);
+            body, logger);
         this.__discussRelativeFeatureValueAmounts(data, dataForSome,
-            dataForAll, styles, body);
+            dataForAll, styles, body, logger);
       }
     }
   }

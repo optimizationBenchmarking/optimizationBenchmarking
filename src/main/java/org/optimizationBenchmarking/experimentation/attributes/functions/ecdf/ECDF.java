@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.functions.ecdf;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.attributes.functions.DimensionTransformation;
 import org.optimizationBenchmarking.experimentation.attributes.functions.DimensionTransformationParser;
@@ -77,7 +78,9 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
    */
   private final boolean m_useLongGoal;
 
-  /** the comparison used to determine whether the goal criterion was met */
+  /**
+   * the comparison used to determine whether the goal criterion was met
+   */
   private final EComparison m_criterion;
 
   /** the way to aggregate the different ECDFs */
@@ -134,11 +137,12 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
 
         if (yAxisInputTransformation.isLongArithmeticAccurate()) {
           this.m_useLongGoal = true;
-          if ((NumericalTypes.getTypes(goalValue) & NumericalTypes.IS_LONG) != 0) {
+          if ((NumericalTypes.getTypes(goalValue)
+              & NumericalTypes.IS_LONG) != 0) {
             this.m_goalValueLong = goalValue.longValue();
           } else {
-            this.m_goalValueLong = ECDF.__doubleToLong(
-                goalValue.doubleValue(), criterion);
+            this.m_goalValueLong = ECDF
+                .__doubleToLong(goalValue.doubleValue(), criterion);
           }
 
           this.m_goalValueDouble = this.m_goalValueLong;
@@ -146,7 +150,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
         }
         // fall through
       }
-      //$FALL-THROUGH$
+        //$FALL-THROUGH$
       default: {
         this.m_goalValueDouble = goalValue.doubleValue();
         this.m_useLongGoal = false;
@@ -162,8 +166,8 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
   /** {@inheritDoc} */
   @Override
   protected void yAxisRenderYAxisSourceAsParameter(final IMath out) {
-    try (final IMath math = out.compare(EMathComparison
-        .fromEComparison(this.m_criterion))) {
+    try (final IMath math = out
+        .compare(EMathComparison.fromEComparison(this.m_criterion))) {
       super.yAxisRenderYAxisSourceAsParameter(math);
       try (final IText number = math.number()) {
         if (this.isGoalValueLong()
@@ -355,14 +359,14 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
   protected final int calcHashCode() {
     return HashUtils.combineHashes(//
         HashUtils.combineHashes(//
-            super.calcHashCode(),//
+            super.calcHashCode(), //
             (this.m_useLongGoal ? //
-            HashUtils.hashCode(this.m_goalValueLong)
+                HashUtils.hashCode(this.m_goalValueLong)
                 : HashUtils.hashCode(this.m_goalValueDouble))//
-            ), HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_criterion),//
-            HashUtils.hashCode(this.m_aggregate)//
-            ));
+    ), HashUtils.combineHashes(//
+        HashUtils.hashCode(this.m_criterion), //
+        HashUtils.hashCode(this.m_aggregate)//
+    ));
   }
 
   /** {@inheritDoc} */
@@ -376,12 +380,13 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     return ((this.m_useLongGoal == ecdf.m_useLongGoal)//
         && //
         (this.m_useLongGoal ? //
-        (this.m_goalValueLong == ecdf.m_goalValueLong)
+            (this.m_goalValueLong == ecdf.m_goalValueLong)
             : //
             (EComparison.EQUAL.compare(this.m_goalValueDouble,
-                ecdf.m_goalValueDouble))) && //
+                ecdf.m_goalValueDouble)))
+        && //
         this.m_criterion.equals(ecdf.m_criterion) && //
-    this.m_aggregate.equals(ecdf.m_aggregate));
+        this.m_aggregate.equals(ecdf.m_aggregate));
   }
 
   /**
@@ -531,7 +536,8 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
 
   /** {@inheritDoc} */
   @Override
-  protected final IMatrix compute(final IElementSet data) {
+  protected final IMatrix compute(final IElementSet data,
+      final Logger logger) {
 
     if (data instanceof IInstanceRuns) {
       return this.__computeInstanceRuns((IInstanceRuns) data);
@@ -576,8 +582,8 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
               + FunctionAttribute.X_AXIS_PARAM + '\'');
     }
 
-    yIn = config
-        .get(FunctionAttribute.Y_INPUT_AXIS_PARAM, dimParser, null);
+    yIn = config.get(FunctionAttribute.Y_INPUT_AXIS_PARAM, dimParser,
+        null);
     if (yIn == null) {//
       throw new IllegalArgumentException(
           "Must specify an input dimension for the y-axis via parameter '" //$NON-NLS-1$
@@ -586,10 +592,9 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
 
     dimParser = null;
 
-    yOut = config
-        .get(FunctionAttribute.Y_AXIS_OUTPUT_PARAM,
-            new NamedParameterTransformationParser(data),
-            new Transformation());
+    yOut = config.get(FunctionAttribute.Y_AXIS_OUTPUT_PARAM,
+        new NamedParameterTransformationParser(data),
+        new Transformation());
 
     aggregate = config.get(ECDF.AGGREGATE_PARAM,
         StatisticalParameterParser.getInstance(), ArithmeticMean.INSTANCE);
@@ -628,10 +633,11 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     final BibAuthor hoos;
 
     hoos = new BibAuthor(//
-        "Holger H.",//$NON-NLS-1$
+        "Holger H.", //$NON-NLS-1$
         "Hoos");//$NON-NLS-1$
 
-    try (final BibliographyBuilder bibBuilder = new BibliographyBuilder()) {
+    try (
+        final BibliographyBuilder bibBuilder = new BibliographyBuilder()) {
 
       try (final BibInProceedingsBuilder inProc = //
       bibBuilder.inProceedings()) {
@@ -646,7 +652,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
             "Evaluating Las Vegas Algorithms \u2012 Pitfalls and Remedies");//$NON-NLS-1$
         try (final BibProceedingsBuilder proc = inProc.proceedings()) {
           proc.setTitle(//
-          "Proceedings of the 14th Conference on Uncertainty in Artificial Intelligence (UAI'98)");//$NON-NLS-1$
+              "Proceedings of the 14th Conference on Uncertainty in Artificial Intelligence (UAI'98)");//$NON-NLS-1$
           try (final BibDateBuilder date = proc.startDate()) {
             date.setYear(1998);
             date.setMonth(EBibMonth.JULY);
@@ -694,7 +700,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
             "UBCSAT: An Implementation and Experimentation Environment for SLS Algorithms for SAT and MAX-SAT");//$NON-NLS-1$
         try (final BibProceedingsBuilder proc = inProc.proceedings()) {
           proc.setTitle(//
-          "Revised Selected Papers from the Seventh International Conference on Theory and Applications of Satisfiability Testing (SAT'04)");//$NON-NLS-1$
+              "Revised Selected Papers from the Seventh International Conference on Theory and Applications of Satisfiability Testing (SAT'04)");//$NON-NLS-1$
           try (final BibDateBuilder date = proc.startDate()) {
             date.setYear(2004);
             date.setMonth(EBibMonth.MAY);
@@ -753,7 +759,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
         try (final BibOrganizationBuilder pub = report.publisher()) {
           pub.setAddress("Orsay, France");//$NON-NLS-1$
           pub.setName(//
-          "Universit\u00e9 Paris Sud, Institut National de Recherche en Informatique et en Automatique (INRIA) Futurs, \u00c9quipe TAO");//$NON-NLS-1$
+              "Universit\u00e9 Paris Sud, Institut National de Recherche en Informatique et en Automatique (INRIA) Futurs, \u00c9quipe TAO");//$NON-NLS-1$
         }
         try (final BibDateBuilder date = report.date()) {
           date.setYear(2012);

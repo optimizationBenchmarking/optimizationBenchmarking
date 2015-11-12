@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.data.impl.shadow;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
@@ -134,16 +136,16 @@ class _ShadowDataElement<OT extends IDataElement, ST extends IDataElement>
   @SuppressWarnings("unchecked")
   @Override
   protected final <XDT extends IDataElement, RT> RT getAttribute(
-      final Attribute<XDT, RT> attribute) {
+      final Attribute<XDT, RT> attribute, final Logger logger) {
     final ST delegate;
 
     delegate = this._getAttributeDelegate();
 
     if (delegate != null) {
       return DataElement.delegateGetAttribute(((XDT) (delegate)),
-          attribute);
+          attribute, logger);
     }
-    return super.getAttribute(attribute);
+    return super.getAttribute(attribute, logger);
   }
 
   /** {@inheritDoc} */

@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
@@ -71,10 +73,12 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
    *
    * @param inst
    *          the instance
+   * @param logger
+   *          the logger
    * @return the fingerprints
    */
   private static final IMatrix[] __instanceFingerprints(
-      final IInstance inst) {
+      final IInstance inst, final Logger logger) {
     final ArrayListView<? extends IExperiment> experiments;
     final int size;
     IMatrix[] res, resize;
@@ -88,7 +92,8 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     loop: for (i = 0; i < size; i++) {
       for (final IInstanceRuns runs : experiments.get(i).getData()) {
         if (runs.getInstance() == inst) {
-          res[count++] = _InstanceRunsFingerprint.INSTANCE.get(runs);
+          res[count++] = _InstanceRunsFingerprint.INSTANCE.get(runs,
+              logger);
           continue loop;
         }
       }
@@ -107,10 +112,12 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
    *
    * @param experiment
    *          the experiment
+   * @param logger
+   *          the logger
    * @return the fingerprints
    */
   private static final IMatrix[] __experimentFingerprints(
-      final IExperiment experiment) {
+      final IExperiment experiment, final Logger logger) {
     final ArrayListView<? extends IInstanceRuns> runs;
     IMatrix[] res;
     int i;
@@ -119,7 +126,7 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     i = runs.size();
     res = new IMatrix[i];
     for (; (--i) >= 0;) {
-      res[i] = _InstanceRunsFingerprint.INSTANCE.get(runs.get(i));
+      res[i] = _InstanceRunsFingerprint.INSTANCE.get(runs.get(i), logger);
     }
     return res;
   }
@@ -302,19 +309,22 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
 
   /** {@inheritDoc} */
   @Override
-  protected final IMatrix compute(final IDataElement data) {
+  protected final IMatrix compute(final IDataElement data,
+      final Logger logger) {
     final IMatrix[][] matrices;
     ArrayListView<? extends IInstance> instances;
     ArrayListView<? extends IExperiment> experiments;
     int i;
 
     if (data instanceof IInstanceRuns) {
-      return _InstanceRunsFingerprint.INSTANCE.get((IInstanceRuns) data);
+      return _InstanceRunsFingerprint.INSTANCE.get(((IInstanceRuns) data),
+          logger);
     }
 
     if (data instanceof IInstance) {
-      return new ConcatenatedMatrix(new IMatrix[][] {//
-          Fingerprint.__instanceFingerprints((IInstance) data) });
+      return new ConcatenatedMatrix(new IMatrix[][] { //
+          Fingerprint.__instanceFingerprints(((IInstance) data),
+              logger) });
     }
 
     if (data instanceof IInstanceSet) {
@@ -323,15 +333,17 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
 
       matrices = new IMatrix[i][];
       for (; (--i) >= 0;) {
-        matrices[i] = Fingerprint.__instanceFingerprints(instances.get(i));
+        matrices[i] = Fingerprint.__instanceFingerprints(instances.get(i),
+            logger);
       }
-      return Fingerprint.__removeUselessCols(new ConcatenatedMatrix(
-          matrices));
+      return Fingerprint
+          .__removeUselessCols(new ConcatenatedMatrix(matrices));
     }
 
     if (data instanceof IExperiment) {
-      return new ConcatenatedMatrix(new IMatrix[][] {//
-          Fingerprint.__experimentFingerprints((IExperiment) data) });
+      return new ConcatenatedMatrix(new IMatrix[][] { //
+          Fingerprint.__experimentFingerprints(((IExperiment) data),
+              logger) });
     }
 
     if (data instanceof IExperimentSet) {
@@ -339,11 +351,11 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
       i = experiments.size();
       matrices = new IMatrix[i][];
       for (; (--i) >= 0;) {
-        matrices[i] = Fingerprint.__experimentFingerprints(experiments
-            .get(i));
+        matrices[i] = Fingerprint.__experimentFingerprints(//
+            experiments.get(i), logger);
       }
-      return Fingerprint.__removeUselessCols(new ConcatenatedMatrix(
-          matrices));
+      return Fingerprint
+          .__removeUselessCols(new ConcatenatedMatrix(matrices));
     }
 
     throw new IllegalArgumentException(

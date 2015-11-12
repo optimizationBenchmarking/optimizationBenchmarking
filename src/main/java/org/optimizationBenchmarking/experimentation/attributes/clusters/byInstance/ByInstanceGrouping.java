@@ -2,6 +2,8 @@ package org.optimizationBenchmarking.experimentation.attributes.clusters.byInsta
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.attributes.clusters.ICluster;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.IClustering;
@@ -16,8 +18,8 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 /**
  * An attribute for splitting and grouping experiments by single instances.
  */
-public final class ByInstanceGrouping extends
-    Attribute<IExperimentSet, IClustering> {
+public final class ByInstanceGrouping
+    extends Attribute<IExperimentSet, IClustering> {
 
   /** a parameter that can be used to group information by instance */
   public static final String CHOICE_BY_INSTANCE = "single instances"; //$NON-NLS-1$
@@ -33,7 +35,8 @@ public final class ByInstanceGrouping extends
   /** {@inheritDoc} */
   @SuppressWarnings("unused")
   @Override
-  protected final IClustering compute(final IExperimentSet data) {
+  protected final IClustering compute(final IExperimentSet data,
+      final Logger logger) {
     final int origSize;
     final ICluster[] clusters;
     final _InstanceGroups groups;
@@ -43,6 +46,13 @@ public final class ByInstanceGrouping extends
     int i;
 
     origSize = data.getInstances().getData().size();
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      logger.log(Level.FINE, //
+          "Now grouping instance run sets by instance, which should result in " //$NON-NLS-1$
+              + origSize + " groups, that is, one per instance.");//$NON-NLS-1$
+    }
+
     instances = new HashSet<>(origSize);
 
     findInstances: for (final IExperiment experiment : data.getData()) {

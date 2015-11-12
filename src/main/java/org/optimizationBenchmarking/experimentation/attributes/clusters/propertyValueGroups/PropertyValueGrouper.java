@@ -1,11 +1,14 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups;
 
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterValue;
 import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
@@ -28,8 +31,8 @@ import org.optimizationBenchmarking.utils.math.NumericalTypes;
  * {@link org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.EGroupingMode#POWERS}
  * of reasonable numbers for numerical properties.
  */
-public final class PropertyValueGrouper extends
-    Attribute<IProperty, PropertyValueGroups> {
+public final class PropertyValueGrouper
+    extends Attribute<IProperty, PropertyValueGroups> {
 
   /** The suffix of the grouping parameter: {@value} */
   public static final String PARAM_GROUPING_SUFFIX = "Grouping"; //$NON-NLS-1$
@@ -149,10 +152,10 @@ public final class PropertyValueGrouper extends
   protected final int calcHashCode() {
     return HashUtils.combineHashes(//
         HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_groupingMode),//
-            HashUtils.hashCode(this.m_groupingParameter)),//
+            HashUtils.hashCode(this.m_groupingMode), //
+            HashUtils.hashCode(this.m_groupingParameter)), //
         HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_minGroups),//
+            HashUtils.hashCode(this.m_minGroups), //
             HashUtils.hashCode(this.m_maxGroups)));
   }
 
@@ -180,7 +183,8 @@ public final class PropertyValueGrouper extends
   /** {@inheritDoc} */
   @SuppressWarnings("unused")
   @Override
-  protected final PropertyValueGroups compute(final IProperty data) {
+  protected final PropertyValueGroups compute(final IProperty data,
+      final Logger logger) {
     final _Groups groups;
     final IExperimentSet set;
     Object[] objData;
@@ -190,6 +194,15 @@ public final class PropertyValueGrouper extends
     Object value;
     DataSelection unspecified;
     IParameterValue pv;
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      logger.log(Level.FINE, //
+          "Now grouping data by the values of " + //$NON-NLS-1$
+              ((data instanceof IFeature)//
+                  ? "instance feature " //$NON-NLS-1$
+                  : "experiment parameter ")//$NON-NLS-1$
+              + data.getName() + '.');
+    }
 
     // extract all values
     objData = PropertyValueGrouper.__getValues(data);
@@ -299,8 +312,8 @@ public final class PropertyValueGrouper extends
           "Configuration cannot be null."); //$NON-NLS-1$
     }
 
-    all = config.get(PropertyValueGrouper.PARAM_DEFAULT_GROUPING,//
-        _PropertyValueGrouperParser.DEFAULT_GROUPER_PARSER,//
+    all = config.get(PropertyValueGrouper.PARAM_DEFAULT_GROUPING, //
+        _PropertyValueGrouperParser.DEFAULT_GROUPER_PARSER, //
         PropertyValueGrouper.DEFAULT_GROUPER);
     if (property != null) {
       name = property.getName();
@@ -308,9 +321,10 @@ public final class PropertyValueGrouper extends
         throw new IllegalStateException(//
             "Property name cannot be null.");//$NON-NLS-1$
       }
-      return config.get((property.getName()//
-          + PropertyValueGrouper.PARAM_GROUPING_SUFFIX),//
-          _PropertyValueGrouperParser.DEFAULT_GROUPER_PARSER,//
+      return config.get(
+          (property.getName()//
+              + PropertyValueGrouper.PARAM_GROUPING_SUFFIX), //
+          _PropertyValueGrouperParser.DEFAULT_GROUPER_PARSER, //
           all);
     }
     return all;

@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
@@ -52,7 +53,8 @@ public final class PropertyValueElements<PT extends IPropertyValue, ET extends I
 
   /** {@inheritDoc} */
   @Override
-  protected final ArrayListView<ET> compute(final PT data) {
+  protected final ArrayListView<ET> compute(final PT data,
+      final Logger logger) {
     final IProperty owner;
     final ArrayListView elements;
     final ArrayList adder;

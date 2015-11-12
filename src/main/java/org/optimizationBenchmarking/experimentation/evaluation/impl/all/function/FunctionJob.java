@@ -192,9 +192,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
         this.getDefaultMakeLegendFigure(data, this.m_figureSize));
 
     this.m_showAxisTitles = config.getBoolean(
-        FunctionJob.PARAM_PRINT_AXIS_TITLES, this
-            .getDefaultShowAxisTitles(data, this.m_figureSize,
-                this.m_makeLegendFigure));
+        FunctionJob.PARAM_PRINT_AXIS_TITLES, this.getDefaultShowAxisTitles(
+            data, this.m_figureSize, this.m_makeLegendFigure));
 
     this.m_clusterer = ClustererLoader.configureClustering(data, config);
 
@@ -209,8 +208,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
     if (config.getBoolean(FunctionJob.PARAM_RANKING, false)) {
       this.m_ranking = RankingStrategy.create(config);
-      this.m_rankingContinue = config.getBoolean(
-          FunctionJob.PARAM_RANKING_CONTINUE, true);
+      this.m_rankingContinue = config
+          .getBoolean(FunctionJob.PARAM_RANKING_CONTINUE, true);
     } else {
       this.m_ranking = null;
       this.m_rankingContinue = false;
@@ -849,8 +848,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
         if (color != null) {
           line.setColor(color);
         } else {
-          line.setColor(styles.getColor(experimentFunction.getExperiment()
-              .getName(), true));
+          line.setColor(styles.getColor(
+              experimentFunction.getExperiment().getName(), true));
         }
 
         stroke = this.getExperimentStroke(experimentFunction, styles);
@@ -1027,7 +1026,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
    * @return the actual label of the created figure
    */
   protected ILabel renderPlots(final FunctionData data,
-      final ISectionBody body, final StyleSet styles, final Logger logger) {
+      final ISectionBody body, final StyleSet styles,
+      final Logger logger) {
     final ILabel ret;
     final String mainPath;
     final IClustering clustering;
@@ -1097,8 +1097,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
         ret = figure.getLabel();
       }
     } else {
-      try (final IFigureSeries figureSeries = body.figureSeries(
-          data.getLabel(), this.m_figureSize, mainPath)) {
+      try (final IFigureSeries figureSeries = body
+          .figureSeries(data.getLabel(), this.m_figureSize, mainPath)) {
 
         try (final IComplexText caption = figureSeries.caption()) {
           this.renderFigureSeriesCaption(data, caption);
@@ -1110,8 +1110,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
           path = (mainPath + "_legend"); //$NON-NLS-1$
 
           this.__logFigure(logger, (++index), size);
-          try (final IFigure figure = figureSeries.figure(
-              data.getLegendLabel(), path)) {
+          try (final IFigure figure = figureSeries
+              .figure(data.getLegendLabel(), path)) {
 
             try (final IComplexText caption = figure.caption()) {
               this.renderLegendCaption(data, caption);
@@ -1134,16 +1134,17 @@ public abstract class FunctionJob extends ExperimentSetJob {
           }
 
           this.__logFigure(logger, (++index), size);
-          try (final IFigure figure = figureSeries.figure(
-              experimentSetFunctions2.getLabel(), path)) {
+          try (final IFigure figure = figureSeries
+              .figure(experimentSetFunctions2.getLabel(), path)) {
 
             try (final IComplexText caption = figure.caption()) {
-              this.renderSubFigureCaption(experimentSetFunctions2, caption);
+              this.renderSubFigureCaption(experimentSetFunctions2,
+                  caption);
             }
 
             try (final ILineChart2D lines = figure.lineChart2D()) {
               lines.setLegendMode(this.m_makeLegendFigure//
-              ? ELegendMode.HIDE_COMPLETE_LEGEND//
+                  ? ELegendMode.HIDE_COMPLETE_LEGEND//
                   : ELegendMode.SHOW_COMPLETE_LEGEND);
               this.__drawChart(lines, experimentSetFunctions2,
                   (!(this.m_makeLegendFigure)),
@@ -1229,23 +1230,23 @@ public abstract class FunctionJob extends ExperimentSetJob {
       body.append("Instead of plotting the ");//$NON-NLS-1$
       this.m_function.printShortName(body, ETextCase.IN_SENTENCE);
       body.append(//
-      " directly, we rank the experiments according to their ");//$NON-NLS-1$
+          " directly, we rank the experiments according to their ");//$NON-NLS-1$
       this.m_function.printShortName(body, ETextCase.IN_SENTENCE);
       body.append(//
-      " value at each time step (bigger values lead to bigger ranks). This may make it easier to see which experiment has larger or smaller ");//$NON-NLS-1$
+          " value at each time step (bigger values lead to bigger ranks). This may make it easier to see which experiment has larger or smaller ");//$NON-NLS-1$
       this.m_function.printShortName(body, ETextCase.IN_SENTENCE);
       body.append(" values and when. "); //$NON-NLS-1$
       this.m_ranking.printDescription(body, ETextCase.AT_SENTENCE_START);
       body.append(//
-      " If the function of an experiment has ended (towards growing ");//$NON-NLS-1$
+          " If the function of an experiment has ended (towards growing ");//$NON-NLS-1$
       this.m_function.getXAxisTransformation().printShortName(body,
           ETextCase.IN_SENTENCE);
       if (this.m_rankingContinue) {
         body.append(//
-        ") its last value with be used for ranking afterwards.");//$NON-NLS-1$
+            ") its last value with be used for ranking afterwards.");//$NON-NLS-1$
       } else {
         body.append(//
-        ") it will now longer appear in the ranking.");//$NON-NLS-1$
+            ") it will now longer appear in the ranking.");//$NON-NLS-1$
       }
     }
   }
@@ -1304,7 +1305,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
         try (final ISectionBody body = section.body()) {
           this.beforePlots(functionData, body, logger);
-          this.renderPlots(functionData, body, section.getStyles(), logger);
+          this.renderPlots(functionData, body, section.getStyles(),
+              logger);
           this.afterPlots(functionData, body, logger);
         }
       }
@@ -1338,7 +1340,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
     ExperimentSetFunctions experimentSetFunctions;
     ILabel figure, legend;
 
-    selected = OnlySharedInstances.INSTANCE.get(set);
+    selected = OnlySharedInstances.INSTANCE.get(set, logger);
 
     experimentSetTemp = new ArrayList<>();
 
@@ -1348,11 +1350,10 @@ public abstract class FunctionJob extends ExperimentSetJob {
         logger.finer("Now computing clustering of data according to " //$NON-NLS-1$
             + this.m_clusterer);
       }
-      clustering = this.m_clusterer.get(selected);
+      clustering = this.m_clusterer.get(selected, logger);
       if ((logger != null) && (logger.isLoggable(Level.FINER))) {
         logger.finer("Finished computing clustering of data according to " //$NON-NLS-1$
-            + this.m_clusterer
-            + " into " + //$NON-NLS-1$
+            + this.m_clusterer + " into " + //$NON-NLS-1$
             ((clustering != null) ? clustering.getData().size() : 0)
             + " clusters.");//$NON-NLS-1$
       }
@@ -1364,14 +1365,14 @@ public abstract class FunctionJob extends ExperimentSetJob {
       clustersTemp = new ArrayList<>();
       for (final ICluster cluster : clustering.getData()) {
         experimentSetFunctions = this.__makeFunctions(cluster, cluster,
-            experimentSetTemp);
+            experimentSetTemp, logger);
         if (experimentSetFunctions != null) {
           clustersTemp.add(experimentSetFunctions);
         }
       }
     } else {
       experimentSetFunctions = this.__makeFunctions(selected, null,
-          experimentSetTemp);
+          experimentSetTemp, logger);
       if (experimentSetFunctions == null) {
         return null;
       }
@@ -1462,9 +1463,10 @@ public abstract class FunctionJob extends ExperimentSetJob {
     }
 
     for (index = size; (--index) >= 0;) {
-      inOut.set(index, new ExperimentFunction(//
-          inOut.get(index).getExperiment(),//
-          builders[index].make()));
+      inOut.set(index,
+          new ExperimentFunction(//
+              inOut.get(index).getExperiment(), //
+              builders[index].make()));
       builders[index] = null;
     }
   }
@@ -1478,11 +1480,13 @@ public abstract class FunctionJob extends ExperimentSetJob {
    *          the cluster
    * @param temp
    *          a temporary list to store the results
+   * @param logger
+   *          the logger
    * @return the functions, or {@code null} if none were defined
    */
   private final ExperimentSetFunctions __makeFunctions(
       final IExperimentSet set, final ICluster cluster,
-      final ArrayList<ExperimentFunction> temp) {
+      final ArrayList<ExperimentFunction> temp, final Logger logger) {
     final FiniteMinimumAggregate minX, minY;
     final FiniteMaximumAggregate maxX, maxY;
     final IAggregate minMaxX, minMaxY;
@@ -1498,7 +1502,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
     minMaxY = CompoundAggregate.combine(minY, maxY);
 
     for (final IExperiment experiment : set.getData()) {
-      function = this.m_function.get(experiment);
+      function = this.m_function.get(experiment, logger);
       if (function == null) {
         continue;
       }

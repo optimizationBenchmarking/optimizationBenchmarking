@@ -243,7 +243,8 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
             "Configuring evaluation process and module hierarchy from XML.");//$NON-NLS-1$
       }
 
-      try (final EvaluationModulesBuilder builder = new EvaluationModulesBuilder()) {
+      try (
+          final EvaluationModulesBuilder builder = new EvaluationModulesBuilder()) {
 
         if (config != null) {
           builder.setRootConfiguration(config);
@@ -315,11 +316,9 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
       data = this._takeInput().getExperimentSet();
     } catch (final Exception ex) {
       data = null;
-      ErrorUtils
-          .logError(
-              logger,
-              "Unrecoverable error during the process of obtaining the input data.", //$NON-NLS-1$
-              ex, false, RethrowMode.AS_RUNTIME_EXCEPTION);
+      ErrorUtils.logError(logger,
+          "Unrecoverable error during the process of obtaining the input data.", //$NON-NLS-1$
+          ex, false, RethrowMode.AS_RUNTIME_EXCEPTION);
       return null;// will never be reached
     }
 
@@ -591,11 +590,9 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
       doc = output.getDocument();
     } catch (final Exception error) {
       doc = null;
-      ErrorUtils
-          .logError(
-              logger,
-              "Unrecoverable error during the process of allocating the output document.", //$NON-NLS-1$
-              error, false, RethrowMode.AS_RUNTIME_EXCEPTION);
+      ErrorUtils.logError(logger,
+          "Unrecoverable error during the process of allocating the output document.", //$NON-NLS-1$
+          error, false, RethrowMode.AS_RUNTIME_EXCEPTION);
     }
 
     if (doc == null) {
@@ -683,8 +680,8 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
           }
         } else {
           summary.append(", namely ");//$NON-NLS-1$
-          experiments.get(0)
-              .printShortName(summary, ETextCase.IN_SENTENCE);
+          experiments.get(0).printShortName(summary,
+              ETextCase.IN_SENTENCE);
           break algoNames;
         }
 
@@ -724,8 +721,8 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     }
 
     summary.append(" on "); //$NON-NLS-1$
-    instanceSize = OnlyUsedInstances.INSTANCE.get(set).getInstances()
-        .getData().size();
+    instanceSize = OnlyUsedInstances.INSTANCE.get(set, logger)
+        .getInstances().getData().size();
     InTextNumberAppender.INSTANCE.appendTo(instanceSize,
         ETextCase.IN_SENTENCE, summary);
     summary.append(" benchmark instance"); //$NON-NLS-1$
@@ -774,8 +771,8 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
       size = data.size();
       if (size == 1) {
         single: {
-          param = set.getParameters().find(
-              Parameter.PARAMETER_ALGORITHM_NAME);
+          param = set.getParameters()
+              .find(Parameter.PARAMETER_ALGORITHM_NAME);
           if (param != null) {
             name = data.get(0).getParameterSetting().get(param);
             if ((name != null) && (name instanceof String)) {

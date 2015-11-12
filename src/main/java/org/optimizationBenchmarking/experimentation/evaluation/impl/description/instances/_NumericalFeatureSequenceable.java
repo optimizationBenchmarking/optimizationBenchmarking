@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.impl.description
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.attributes.PropertyValueElements;
 import org.optimizationBenchmarking.experimentation.attributes.statistics.propertyExtremals.ExtremalPropertyValues;
@@ -30,6 +31,9 @@ final class _NumericalFeatureSequenceable implements ISequenceable {
    */
   final ExtremalPropertyValues<IFeatureValue> m_extremal;
 
+  /** the logger to use */
+  private final Logger m_logger;
+
   /**
    * create the numerical feature sequenceable
    *
@@ -38,12 +42,16 @@ final class _NumericalFeatureSequenceable implements ISequenceable {
    * @param extremal
    *          the extremal values of that feature, or {@code null} if not
    *          applicable
+   * @param logger
+   *          the logger
    */
   _NumericalFeatureSequenceable(final IFeature feature,
-      final ExtremalPropertyValues<IFeatureValue> extremal) {
+      final ExtremalPropertyValues<IFeatureValue> extremal,
+      final Logger logger) {
     super();
     this.m_feature = feature;
     this.m_extremal = extremal;
+    this.m_logger = logger;
   }
 
   /** {@inheritDoc} */
@@ -88,19 +96,21 @@ final class _NumericalFeatureSequenceable implements ISequenceable {
         use.append(' ');
         next = next.appendWords("values, ranging from", use); //$NON-NLS-1$
         use.append(' ');
-        next = SimpleNumberAppender.INSTANCE.appendTo(
-            this.m_extremal.getMinimumValue(), next, use);
+        next = SimpleNumberAppender.INSTANCE
+            .appendTo(this.m_extremal.getMinimumValue(), next, use);
         next = _NumericalFeatureSequenceable._appendInstances(
             PropertyValueElements.FEATURE_VALUE_INSTANCES.get(//
-                this.m_extremal.getMinimum()), use, next, 0);
+                this.m_extremal.getMinimum(), this.m_logger),
+            use, next, 0);
         use.append(' ');
         next = next.appendWord("to", use); //$NON-NLS-1$
         use.append(' ');
-        next = SimpleNumberAppender.INSTANCE.appendTo(
-            this.m_extremal.getMaximumValue(), next, use);
+        next = SimpleNumberAppender.INSTANCE
+            .appendTo(this.m_extremal.getMaximumValue(), next, use);
         next = _NumericalFeatureSequenceable._appendInstances(
             PropertyValueElements.FEATURE_VALUE_INSTANCES.get(//
-                this.m_extremal.getMaximum()), use, next, 0);
+                this.m_extremal.getMaximum(), this.m_logger),
+            use, next, 0);
       }
 
     } finally {
@@ -131,7 +141,8 @@ final class _NumericalFeatureSequenceable implements ISequenceable {
    */
   static final ETextCase _appendInstances(
       final ArrayListView<? extends IInstance> instances,
-      final ITextOutput textOut, final ETextCase textCase, final int depth) {
+      final ITextOutput textOut, final ETextCase textCase,
+      final int depth) {
     if (instances.size() >= 3) {
       return textCase;
     }
@@ -139,13 +150,13 @@ final class _NumericalFeatureSequenceable implements ISequenceable {
     if (textOut instanceof IPlainText) {
       try (final IPlainText inside = ((IPlainText) textOut).inBraces()) {
         ESequenceMode.AND.appendNestedSequence(textCase, //
-            SemanticComponentSequenceable.wrap(instances, true, false),//
+            SemanticComponentSequenceable.wrap(instances, true, false), //
             true, depth, inside);
       }
     } else {
       textOut.append('[');
       ESequenceMode.AND.appendNestedSequence(textCase, //
-          SemanticComponentSequenceable.wrap(instances, true, false),//
+          SemanticComponentSequenceable.wrap(instances, true, false), //
           true, depth, textOut);
       textOut.append(']');
     }

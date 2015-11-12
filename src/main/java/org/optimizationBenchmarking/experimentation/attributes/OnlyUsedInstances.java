@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.ShadowExperimentSet;
@@ -27,8 +28,8 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * and {@code C}. If all experiments have data for all instances, this
  * attribute returns the original experiment set.
  */
-public final class OnlyUsedInstances extends
-    Attribute<IExperimentSet, IExperimentSet> {
+public final class OnlyUsedInstances
+    extends Attribute<IExperimentSet, IExperimentSet> {
 
   /**
    * The globally shared instance of the {@link OnlyUsedInstances}
@@ -43,7 +44,8 @@ public final class OnlyUsedInstances extends
 
   /** {@inheritDoc} */
   @Override
-  protected final IExperimentSet compute(final IExperimentSet data) {
+  protected final IExperimentSet compute(final IExperimentSet data,
+      final Logger logger) {
     final ArrayListView<? extends IInstance> origInstances;
     final ArrayList<IInstance> instances;
     final int origSize;

@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.impl.description
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeatureValue;
@@ -20,16 +21,22 @@ final class _OrdinalFeatureSequenceable implements ISequenceable {
 
   /** the feature */
   final IFeature m_feature;
+  /** the logger */
+  private final Logger m_logger;
 
   /**
    * create the numerical feature sequenceable
    *
    * @param feature
    *          the feature
+   * @param logger
+   *          the logger
    */
-  _OrdinalFeatureSequenceable(final IFeature feature) {
+  _OrdinalFeatureSequenceable(final IFeature feature,
+      final Logger logger) {
     super();
     this.m_feature = feature;
+    this.m_logger = logger;
   }
 
   /** {@inheritDoc} */
@@ -78,7 +85,8 @@ final class _OrdinalFeatureSequenceable implements ISequenceable {
 
         seq = new ArrayList<>(size);
         for (i = 0; i < size; i++) {
-          seq.add(new _SingleFeatureValueSequenceable(values.get(i)));
+          seq.add(new _SingleFeatureValueSequenceable(values.get(i),
+              this.m_logger));
         }
 
         ESequenceMode.AND.appendSequence(next, seq, true, use);

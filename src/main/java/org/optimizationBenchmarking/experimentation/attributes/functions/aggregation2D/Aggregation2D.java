@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.functions.aggregation2D;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.attributes.functions.DimensionTransformation;
 import org.optimizationBenchmarking.experimentation.attributes.functions.DimensionTransformationParser;
@@ -226,7 +227,7 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
 
           for (; (--i) >= 0;) {
             matrices[i] = new ColumnTransformedMatrix(//
-                runs.get(i).selectColumns(this.m_xIndex, this.m_yIndex),//
+                runs.get(i).selectColumns(this.m_xIndex, this.m_yIndex), //
                 xFunction, yInputFunction);
           }
 
@@ -287,22 +288,23 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
 
     agg = ((Aggregation2D) other);
     return (this.m_param.equals(agg.m_param) && //
-    this.m_second.equals(agg.m_second));
+        this.m_second.equals(agg.m_second));
   }
 
   /** {@inheritDoc} */
   @Override
   protected final int calcHashCode() {
     return HashUtils.combineHashes(//
-        super.calcHashCode(),//
+        super.calcHashCode(), //
         HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_param),//
+            HashUtils.hashCode(this.m_param), //
             HashUtils.hashCode(this.m_second)));//
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final IMatrix compute(final IElementSet data) {
+  protected final IMatrix compute(final IElementSet data,
+      final Logger logger) {
     if (data instanceof IInstanceRuns) {
       return this.__computeInstanceRuns((IInstanceRuns) data);
     }
@@ -312,23 +314,22 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
     if (data instanceof IExperimentSet) {
       return this.__computeExperimentSet((IExperimentSet) data);
     }
-    throw new IllegalArgumentException(
-        "Cannot computed 2d-aggregate over " //$NON-NLS-1$
-            + data);
+    throw new IllegalArgumentException("Cannot computed 2d-aggregate over " //$NON-NLS-1$
+        + data);
   }
 
   /** {@inheritDoc} */
   @Override
   protected final String getShortName() {
     return ((this.m_second.getShortName() + ' ') + //
-    this.m_param.getShortName());
+        this.m_param.getShortName());
   }
 
   /** {@inheritDoc} */
   @Override
   protected final String getLongName() {
     return (this.m_second.getLongName() + " of " + //$NON-NLS-1$
-    (this.m_param.getLongName() + 's'));
+        (this.m_param.getLongName() + 's'));
   }
 
   /**
@@ -356,8 +357,8 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
               + FunctionAttribute.X_AXIS_PARAM + '\'');
     }
 
-    yIn = config
-        .get(FunctionAttribute.Y_INPUT_AXIS_PARAM, dimParser, null);
+    yIn = config.get(FunctionAttribute.Y_INPUT_AXIS_PARAM, dimParser,
+        null);
     if (yIn == null) {//
       throw new IllegalArgumentException(
           "Must specify an input dimension for the y-axis via parameter '" //$NON-NLS-1$
@@ -366,10 +367,9 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
 
     dimParser = null;
 
-    yOut = config
-        .get(FunctionAttribute.Y_AXIS_OUTPUT_PARAM,
-            new NamedParameterTransformationParser(data),
-            new Transformation());
+    yOut = config.get(FunctionAttribute.Y_AXIS_OUTPUT_PARAM,
+        new NamedParameterTransformationParser(data),
+        new Transformation());
 
     first = config.get(Aggregation2D.PRIMARY_AGGREGATE_PARAM,
         StatisticalParameterParser.getInstance(), null);

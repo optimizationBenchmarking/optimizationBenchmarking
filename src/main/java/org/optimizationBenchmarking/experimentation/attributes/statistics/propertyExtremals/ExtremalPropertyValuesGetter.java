@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.statistics.propertyExtremals;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
@@ -22,10 +24,14 @@ import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 public final class ExtremalPropertyValuesGetter<PT extends IProperty, PVT extends IPropertyValue>
     extends Attribute<PT, ExtremalPropertyValues<PVT>> {
 
-  /** This value getter provides us with the extremal values of a feature */
+  /**
+   * This value getter provides us with the extremal values of a feature
+   */
   public static final ExtremalPropertyValuesGetter<IFeature, IFeatureValue> EXTREMAL_FEATURE_VALUES;
 
-  /** This value getter provides us with the extremal values of a parameter */
+  /**
+   * This value getter provides us with the extremal values of a parameter
+   */
   public static final ExtremalPropertyValuesGetter<IParameter, IParameterValue> EXTREMAL_PARAMETER_VALUES;
 
   static {
@@ -41,7 +47,8 @@ public final class ExtremalPropertyValuesGetter<PT extends IProperty, PVT extend
 
   /** {@inheritDoc} */
   @Override
-  protected final ExtremalPropertyValues<PVT> compute(final PT data) {
+  protected final ExtremalPropertyValues<PVT> compute(final PT data,
+      final Logger logger) {
     final EPrimitiveType type;
     long minLong, maxLong, curLong;
     double minDouble, maxDouble, curDouble;

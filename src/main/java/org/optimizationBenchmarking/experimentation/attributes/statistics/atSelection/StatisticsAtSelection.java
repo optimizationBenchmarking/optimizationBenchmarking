@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.statistics.atSelection;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
@@ -44,7 +46,8 @@ import org.optimizationBenchmarking.utils.math.statistics.parameters.Statistical
  * </li>
  * </ul>
  */
-public class StatisticsAtSelection extends Attribute<IDataElement, Number> {
+public class StatisticsAtSelection
+    extends Attribute<IDataElement, Number> {
 
   /** the instance-runs based statistics */
   private final InstanceRunsStatisticsAtSelection m_runs;
@@ -89,14 +92,15 @@ public class StatisticsAtSelection extends Attribute<IDataElement, Number> {
 
   /** {@inheritDoc} */
   @Override
-  protected final Number compute(final IDataElement data) {
+  protected final Number compute(final IDataElement data,
+      final Logger logger) {
     final ScalarAggregate agg;
     final IInstance instance;
     final IFeatureValue featureValue;
     final IParameterValue parameterValue;
 
     if (data instanceof IInstanceRuns) {
-      return this.m_runs.get((IInstanceRuns) data);
+      return this.m_runs.get(((IInstanceRuns) data), logger);
     }
 
     finder: {
@@ -107,7 +111,7 @@ public class StatisticsAtSelection extends Attribute<IDataElement, Number> {
             .getOwner().getData()) {
           for (final IInstanceRuns runs : experiment.getData()) {
             if (EComparison.equals(runs.getInstance(), instance)) {
-              agg.append(this.get(runs));
+              agg.append(this.get(runs, logger));
               continue exps;
             }
           }
@@ -118,10 +122,10 @@ public class StatisticsAtSelection extends Attribute<IDataElement, Number> {
       if (data instanceof IFeatureValue) {
         agg = this.m_aggregate.createSampleAggregate();
         featureValue = ((IFeatureValue) data);
-        for (final IInstance finstance : featureValue.getOwner()
-            .getOwner().getOwner().getInstances().getData()) {
+        for (final IInstance finstance : featureValue.getOwner().getOwner()
+            .getOwner().getInstances().getData()) {
           if (finstance.getFeatureSetting().contains(featureValue)) {
-            agg.append(this.compute(finstance));
+            agg.append(this.compute(finstance, logger));
           }
         }
         return agg.toNumber();
@@ -133,7 +137,7 @@ public class StatisticsAtSelection extends Attribute<IDataElement, Number> {
         for (final IExperiment exp : parameterValue.getOwner().getOwner()
             .getOwner().getData()) {
           if (exp.getParameterSetting().contains(parameterValue)) {
-            agg.append(this.compute(exp));
+            agg.append(this.compute(exp, logger));
           }
         }
         return agg.toNumber();
@@ -143,7 +147,7 @@ public class StatisticsAtSelection extends Attribute<IDataElement, Number> {
         agg = this.m_aggregate.createSampleAggregate();
         for (final Object element : ((IElementSet) data).getData()) {
           if (element instanceof IDataElement) {
-            agg.append(this.compute((IDataElement) element));
+            agg.append(this.compute(((IDataElement) element), logger));
           } else {
             break finder;
           }
@@ -162,7 +166,7 @@ public class StatisticsAtSelection extends Attribute<IDataElement, Number> {
   @Override
   protected final int calcHashCode() {
     return HashUtils.combineHashes(//
-        HashUtils.hashCode(this.m_aggregate),//
+        HashUtils.hashCode(this.m_aggregate), //
         HashUtils.hashCode(this.m_runs));
   }
 
@@ -176,7 +180,7 @@ public class StatisticsAtSelection extends Attribute<IDataElement, Number> {
     if (o instanceof StatisticsAtSelection) {
       r = ((StatisticsAtSelection) o);
       return (EComparison.equals(r.m_aggregate, this.m_aggregate) && //
-      EComparison.equals(r.m_runs, this.m_runs));
+          EComparison.equals(r.m_runs, this.m_runs));
     }
     return false;
   }

@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.statistics.atSelection;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataPoint;
@@ -16,8 +18,8 @@ import org.optimizationBenchmarking.utils.math.statistics.parameters.Statistical
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns}
  * set.
  */
-public class InstanceRunsStatisticsAtSelection extends
-    Attribute<IInstanceRuns, Number> {
+public class InstanceRunsStatisticsAtSelection
+    extends Attribute<IInstanceRuns, Number> {
 
   /** the selection criterion */
   private final SelectionCriterion m_selection;
@@ -70,7 +72,8 @@ public class InstanceRunsStatisticsAtSelection extends
 
   /** {@inheritDoc} */
   @Override
-  protected final Number compute(final IInstanceRuns data) {
+  protected final Number compute(final IInstanceRuns data,
+      final Logger logger) {
     final ScalarAggregate paramAggregate;
     IDataPoint point;
 
@@ -91,9 +94,10 @@ public class InstanceRunsStatisticsAtSelection extends
   /** {@inheritDoc} */
   @Override
   protected final int calcHashCode() {
-    return HashUtils.combineHashes(HashUtils.combineHashes(//
-        HashUtils.hashCode(this.m_dimensionIndex),//
-        HashUtils.hashCode(this.m_parameter)),//
+    return HashUtils.combineHashes(
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.m_dimensionIndex), //
+            HashUtils.hashCode(this.m_parameter)), //
         HashUtils.hashCode(this.m_selection));
   }
 
@@ -108,7 +112,7 @@ public class InstanceRunsStatisticsAtSelection extends
       r = ((InstanceRunsStatisticsAtSelection) o);
       return ((r.m_dimensionIndex == this.m_dimensionIndex) && //
           EComparison.equals(r.m_parameter, this.m_parameter) && //
-      EComparison.equals(r.m_selection, this.m_selection));
+          EComparison.equals(r.m_selection, this.m_selection));
     }
     return false;
   }

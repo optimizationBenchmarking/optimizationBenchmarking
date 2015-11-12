@@ -11,8 +11,8 @@ import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.config.Configuration;
 
 /** A class for creating experiment sets */
-public abstract class ExperimentSetCreator implements IEvaluationInput,
-    Runnable {
+public abstract class ExperimentSetCreator
+    implements IEvaluationInput, Runnable {
 
   /** the logger */
   private final Logger m_logger;
@@ -95,8 +95,9 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
         System.out.print(feature.getName());
         System.out.print("': ");//$NON-NLS-1$
         System.out.println(//
-            PropertyValueGrouper.configure(feature,
-                Configuration.getRoot()).get(feature));
+            PropertyValueGrouper.configure(feature, //
+                Configuration.getRoot()).get(feature, //
+                    Configuration.getGlobalLogger()));
       }
 
       for (final IParameter parameter : es.getParameters().getData()) {
@@ -104,8 +105,9 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
         System.out.print(parameter.getName());
         System.out.print("': ");//$NON-NLS-1$
         System.out.println(//
-            PropertyValueGrouper.configure(parameter,
-                Configuration.getRoot()).get(parameter));
+            PropertyValueGrouper.configure(parameter, //
+                Configuration.getRoot()).get(parameter, //
+                    Configuration.getGlobalLogger()));
       }
 
     } catch (final Throwable error) {

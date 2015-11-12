@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.utils.hash.HashObject;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
@@ -23,8 +25,8 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * @param <RT>
  *          the result type of the attribute
  */
-public abstract class Attribute<ST extends IDataElement, RT> extends
-    HashObject {
+public abstract class Attribute<ST extends IDataElement, RT>
+    extends HashObject {
 
   /** the attribute type */
   final EAttributeType m_type;
@@ -49,9 +51,12 @@ public abstract class Attribute<ST extends IDataElement, RT> extends
    *
    * @param data
    *          the data to compute the value from
+   * @param logger
+   *          the logger to use, or {@code null} if no logging information
+   *          should be created
    * @return the value
    */
-  protected abstract RT compute(final ST data);
+  protected abstract RT compute(final ST data, final Logger logger);
 
   /** {@inheritDoc} */
   @Override
@@ -64,19 +69,22 @@ public abstract class Attribute<ST extends IDataElement, RT> extends
    *
    * @param data
    *          the data element
+   * @param logger
+   *          the logger to use, or {@code null} if no logging information
+   *          should be created
    * @return the result type
    */
-  public final RT get(final ST data) {
+  public final RT get(final ST data, final Logger logger) {
     if (data instanceof DataElement) {
-      return ((DataElement) data).getAttribute(this);
+      return ((DataElement) data).getAttribute(this, logger);
     }
     throw new IllegalArgumentException(
         "All elements of the experiment API which can have attributes must be instances of " //$NON-NLS-1$
             + TextUtils.className(DataElement.class) + //
             " but you supplied "//$NON-NLS-1$
-            + ((data == null) ? "null" : //$NON-NLS-1$
-                " an instance of " //$NON-NLS-1$
-                    + TextUtils.className(data.getClass())) + '.');//
+            + ((data == null) ? "null" //$NON-NLS-1$
+                : " an instance of "//$NON-NLS-1$
+                    + TextUtils.className(data.getClass()))
+            + '.');//
   }
-
 }

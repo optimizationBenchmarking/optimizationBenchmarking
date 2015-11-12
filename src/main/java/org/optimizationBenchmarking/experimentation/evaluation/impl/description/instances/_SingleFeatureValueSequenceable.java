@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.evaluation.impl.description.instances;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.attributes.PropertyValueElements;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeatureValue;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
@@ -14,15 +16,22 @@ final class _SingleFeatureValueSequenceable implements ISequenceable {
   /** the feature value */
   final IFeatureValue m_featureValue;
 
+  /** the logger */
+  private final Logger m_logger;
+
   /**
    * create the numerical feature sequenceable
    *
    * @param featureValue
    *          the feature value
+   * @param logger
+   *          the logger
    */
-  _SingleFeatureValueSequenceable(final IFeatureValue featureValue) {
+  _SingleFeatureValueSequenceable(final IFeatureValue featureValue,
+      final Logger logger) {
     super();
     this.m_featureValue = featureValue;
+    this.m_logger = logger;
   }
 
   /** {@inheritDoc} */
@@ -41,6 +50,7 @@ final class _SingleFeatureValueSequenceable implements ISequenceable {
 
     _NumericalFeatureSequenceable._appendInstances(
         PropertyValueElements.FEATURE_VALUE_INSTANCES
-            .get(this.m_featureValue), textOut, textCase.nextCase(), 1);
+            .get(this.m_featureValue, this.m_logger),
+        textOut, textCase.nextCase(), 1);
   }
 }

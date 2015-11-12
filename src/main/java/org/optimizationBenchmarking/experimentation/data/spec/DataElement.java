@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 /**
  * A data element: the base-class for all elements of the experimental API.
@@ -21,6 +22,9 @@ public abstract class DataElement implements IDataElement {
    *
    * @param attribute
    *          the attribute
+   * @param logger
+   *          the logger to use, or {@code null} if no logging information
+   *          should be created
    * @return the attribute
    * @param <XDT>
    *          the data set type
@@ -29,7 +33,7 @@ public abstract class DataElement implements IDataElement {
    */
   @SuppressWarnings("unchecked")
   protected <XDT extends IDataElement, RT> RT getAttribute(
-      final Attribute<XDT, RT> attribute) {
+      final Attribute<XDT, RT> attribute, final Logger logger) {
     final EAttributeType type;
     RT computed, ret;
     Object old;
@@ -64,7 +68,7 @@ public abstract class DataElement implements IDataElement {
 
     // OK, the attribute either never is stored and needs to be computed
     // every time or has been purged from the cache before.
-    computed = attribute.compute((XDT) this);
+    computed = attribute.compute(((XDT) this), logger);
     if (computed == null) {
       throw new IllegalStateException(//
           "Computed attribute value must not be null."); //$NON-NLS-1$
@@ -104,6 +108,9 @@ public abstract class DataElement implements IDataElement {
    *          the object to delegate to
    * @param attribute
    *          the attribute
+   * @param logger
+   *          the logger to use, or {@code null} if no logging information
+   *          should be created
    * @return the attribute
    * @param <XDT>
    *          the data set type
@@ -111,7 +118,8 @@ public abstract class DataElement implements IDataElement {
    *          the property type
    */
   protected static final <XDT extends IDataElement, RT> RT delegateGetAttribute(
-      final XDT to, final Attribute<XDT, RT> attribute) {
-    return ((DataElement) to).getAttribute(attribute);
+      final XDT to, final Attribute<XDT, RT> attribute,
+      final Logger logger) {
+    return ((DataElement) to).getAttribute(attribute, logger);
   }
 }

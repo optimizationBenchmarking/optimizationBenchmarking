@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.attributes.OnlySharedInstances;
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
@@ -60,19 +61,21 @@ abstract class _FingerprintClusterer<CT extends _FingerprintCluster<CCT>, CCT ex
    *          the element names
    * @return the clustering
    */
-  abstract CCT _create(final IExperimentSet data,
-      final IMatrix clustering, final INamedElementSet source,
+  abstract CCT _create(final IExperimentSet data, final IMatrix clustering,
+      final INamedElementSet source,
       final ArrayListView<? extends INamedElement> names);
 
   /** {@inheritDoc} */
   @SuppressWarnings("resource")
   @Override
-  protected final CCT compute(final IExperimentSet data) {
+  protected final CCT compute(final IExperimentSet data,
+      final Logger logger) {
     final INamedElementSet names;
     IMatrix matrix;
 
-    names = this._getClusterSource(OnlySharedInstances.INSTANCE.get(data));
-    matrix = Fingerprint.INSTANCE.get(names);
+    names = this._getClusterSource(OnlySharedInstances.INSTANCE.get(//
+        data, logger));
+    matrix = Fingerprint.INSTANCE.get(names, logger);
     try (final REngine engine = R.getInstance().use().create()) {
       engine.setMatrix("data", matrix);//$NON-NLS-1$
       matrix = null;
@@ -81,13 +84,13 @@ abstract class _FingerprintClusterer<CT extends _FingerprintCluster<CCT>, CCT ex
             "cluster.txt"));//$NON-NLS-1$
       } catch (final Throwable error) {
         throw new IllegalStateException(//
-            "Error while communicating REngine. Maybe the data is just too odd, or some required packages are missing and cannot be installed.",//$NON-NLS-1$
+            "Error while communicating REngine. Maybe the data is just too odd, or some required packages are missing and cannot be installed.", //$NON-NLS-1$
             error);
       }
       matrix = engine.getMatrix("clusters"); //$NON-NLS-1$
     } catch (final IOException ioe) {
       throw new IllegalStateException(//
-          "Error while starting REngine. Maybe R is not installed properly?",//$NON-NLS-1$
+          "Error while starting REngine. Maybe R is not installed properly?", //$NON-NLS-1$
           ioe);
     }
 
