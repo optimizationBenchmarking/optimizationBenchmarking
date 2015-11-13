@@ -23,6 +23,7 @@
 		<cfg:configuration>
 			<cfg:parameter name="xAxis" value="ld FEs" />
 			<cfg:parameter name="yAxis" value="F" />
+			<cfg:parameter name="grouping" value="instances by feature values" />
 			<cfg:parameter name="groupBy" value="n" />
 		</cfg:configuration>
 	</e:module>
@@ -32,6 +33,7 @@
 			<cfg:parameter name="xAxis" value="ld NT" />
 			<cfg:parameter name="yAxis" value="F" />
 			<cfg:parameter name="goal" value="0.1" />
+			<cfg:parameter name="grouping" value="instances by feature values" />
 			<cfg:parameter name="groupBy" value="type" />
 		</cfg:configuration>
 	</e:module>
@@ -41,7 +43,8 @@
 			<cfg:parameter name="xAxis" value="ln DEs" />
 			<cfg:parameter name="yAxis" value="F" />
 			<cfg:parameter name="goal" value="0.025" />
-			<cfg:parameter name="byInstance" value="true" />
+			<cfg:parameter name="grouping" value="instances by feature values" />
+			<cfg:parameter name="groupBy" value="type" />
 		</cfg:configuration>
 	</e:module>
 
@@ -50,6 +53,7 @@
 			<cfg:parameter name="xAxis" value="lg(FEs/n)" />
 			<cfg:parameter name="yAxis" value="F" />
 			<cfg:parameter name="aggregate" value="median" />
+			<cfg:parameter name="grouping" value="instances by feature values" />
 			<cfg:parameter name="groupBy" value="n" />
 		</cfg:configuration>
 	</e:module>

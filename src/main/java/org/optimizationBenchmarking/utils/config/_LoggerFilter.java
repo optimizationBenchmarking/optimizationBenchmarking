@@ -44,10 +44,15 @@ final class _LoggerFilter implements Filter {
   /** {@inheritDoc} */
   @Override
   public final boolean isLoggable(final LogRecord record) {
+    final String sourceName;
     if (record != null) {
-      if ((record.getLevel().intValue() <= Level.FINER.intValue()) && //
-          "sun.awt.X11.XToolkit".equals(record.getSourceClassName())) { //$NON-NLS-1$
-        return false;
+      if (record.getLevel().intValue() <= Level.FINER.intValue()) {
+        sourceName = record.getSourceClassName();
+        if (sourceName != null) {
+          if (sourceName.startsWith("sun.awt.X11.")) { //$NON-NLS-1$
+            return false;
+          }
+        }
       }
       return ((this.m_old == null) || (this.m_old.isLoggable(record)));
     }

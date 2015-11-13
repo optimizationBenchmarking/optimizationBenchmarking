@@ -3,6 +3,8 @@ package org.optimizationBenchmarking.experimentation.attributes.functions;
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
@@ -24,11 +26,12 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 /**
  * An attribute which computes a function over a given data set.
  *
- * @param <DT>
+ * @param
+ *          <DT>
  *          the data type
  */
-public abstract class FunctionAttribute<DT extends IElementSet> extends
-    Attribute<DT, IMatrix> implements ISemanticComponent {
+public abstract class FunctionAttribute<DT extends IElementSet>
+    extends Attribute<DT, IMatrix> implements ISemanticComponent {
 
   /**
    * The default parameter for the {@code x}-axis (see
@@ -112,20 +115,20 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
 
     if (xAxisTransformation == null) {
       throw new IllegalArgumentException(//
-          "The transformation to be applied to the x-axis cannot be null when creating an instance of " + //$NON-NLS-1$
-              this.getClass().getSimpleName());
+          "The transformation to be applied to the x-axis cannot be null when creating an instance of " //$NON-NLS-1$
+              + this.getClass().getSimpleName());
     }
 
     if (yAxisInputTransformation == null) {
       throw new IllegalArgumentException(//
-          "The transformation to be applied to the data of the y-axis before being fed to the actual computation cannot be null when creating an instance of " + //$NON-NLS-1$
-              this.getClass().getSimpleName());
+          "The transformation to be applied to the data of the y-axis before being fed to the actual computation cannot be null when creating an instance of " //$NON-NLS-1$
+              + this.getClass().getSimpleName());
     }
 
     if (yAxisOutputTransformation == null) {
       throw new IllegalArgumentException(//
-          "The transformation of the result of the function applied to the data on the y-axis cannot be null when creating an instance of " + //$NON-NLS-1$
-              this.getClass().getSimpleName());
+          "The transformation of the result of the function applied to the data on the y-axis cannot be null when creating an instance of " //$NON-NLS-1$
+              + this.getClass().getSimpleName());
     }
 
     this.m_xAxisTransformation = xAxisTransformation;
@@ -243,10 +246,10 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
   protected int calcHashCode() {
     return HashUtils.combineHashes(//
         HashUtils.combineHashes(//
-            HashUtils.hashCode(this.getClass()),//
-            HashUtils.hashCode(this.m_xAxisTransformation)),//
+            HashUtils.hashCode(this.getClass()), //
+            HashUtils.hashCode(this.m_xAxisTransformation)), //
         HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_yAxisInputTransformation),//
+            HashUtils.hashCode(this.m_yAxisInputTransformation), //
             HashUtils.hashCode(this.m_yAxisOutputTransformation)));
   }
 
@@ -274,12 +277,15 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
     if (EComparison.equals(o.getClass(), this.getClass())) {
       other = ((FunctionAttribute<DT>) o);
       return ((this.m_xAxisTransformation.equals(//
-          other.m_xAxisTransformation)) && //
+          other.m_xAxisTransformation))
+          && //
           (this.m_yAxisInputTransformation.equals(//
-              other.m_yAxisInputTransformation)) && //
+              other.m_yAxisInputTransformation))
+          && //
           (this.m_yAxisOutputTransformation.equals(//
-              other.m_yAxisOutputTransformation)) && //
-      this.isEqual(other));
+              other.m_yAxisOutputTransformation))
+          && //
+          this.isEqual(other));
     }
     return false;
   }
@@ -410,8 +416,8 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
     if (this.m_yAxisInputTransformation.isIdentityTransformation()) {
       use = use.appendWords("of", textOut);//$NON-NLS-1$
       textOut.append(' ');
-      use = this.m_yAxisInputTransformation.m_dimension.printShortName(
-          textOut, use);
+      use = this.m_yAxisInputTransformation.m_dimension
+          .printShortName(textOut, use);
     } else {
       use = use.appendWords("computed based on", textOut);//$NON-NLS-1$
       textOut.append(' ');
@@ -557,6 +563,59 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
         DefaultParameterRenderer.INSTANCE);
   }
 
+  /**
+   * Get the name of this function when computed over an instance run set,
+   * to be used in logging.
+   *
+   * @param data
+   *          the instance runs data
+   * @return the name of this function
+   */
+  protected String getNameForLogging(final IInstanceRuns data) {
+    final MemoryTextOutput mto;
+
+    mto = new MemoryTextOutput();
+    this.yAxisMathRender(mto, null);
+    mto.append(" for the runs of experiment ");//$NON-NLS-1$
+    mto.append(data.getOwner().getName());
+    mto.append(" on instance "); //$NON-NLS-1$
+    mto.append(data.getInstance().getName());
+    return mto.toString();
+  }
+
+  /**
+   * Get the name of this function when computed over an experiment, to be
+   * used in logging.
+   *
+   * @param data
+   *          the experiment data
+   * @return the name of this function
+   */
+  protected String getNameForLogging(final IExperiment data) {
+    final MemoryTextOutput mto;
+
+    mto = new MemoryTextOutput();
+    this.yAxisMathRender(mto, null);
+    mto.append(" for experiment ");//$NON-NLS-1$
+    mto.append(data.getName());
+    return mto.toString();
+  }
+
+  /**
+   * Get the name of this function when computing over a while experiment
+   * set, to be used in logging.
+   *
+   * @return the name of this function
+   */
+  protected String getNameForLogging() {
+    final MemoryTextOutput mto;
+
+    mto = new MemoryTextOutput();
+    this.yAxisMathRender(mto, null);
+    mto.append(" for the whole experiment set");//$NON-NLS-1$
+    return mto.toString();
+  }
+
   /** The internal class representing the y-axis of a function */
   private final class __FunctionYAxis implements ISemanticMathComponent {
 
@@ -627,8 +686,9 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
     @Override
     public final boolean equals(final Object o) {
       return ((o == this) || //
-      ((o instanceof FunctionAttribute.__FunctionYAxis) && //
-      (FunctionAttribute.this.equals(((__FunctionYAxis) o).__getOwner()))));
+          ((o instanceof FunctionAttribute.__FunctionYAxis) && //
+              (FunctionAttribute.this
+                  .equals(((__FunctionYAxis) o).__getOwner()))));
     }
 
     /** {@inheritDoc} */
@@ -639,8 +699,8 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
   }
 
   /** The renderer for the {@code y}-axis function */
-  private final class __YAxisFunctionRenderer extends
-      AbstractParameterRenderer {
+  private final class __YAxisFunctionRenderer
+      extends AbstractParameterRenderer {
 
     /** create */
     __YAxisFunctionRenderer() {
@@ -668,8 +728,8 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
     public final void renderParameter(final int index, final IMath out) {
 
       if (index == 0) {
-        try (final IMath function = out.nAryFunction(
-            FunctionAttribute.this.getShortName(), 2, 2)) {
+        try (final IMath function = out
+            .nAryFunction(FunctionAttribute.this.getShortName(), 2, 2)) {
           FunctionAttribute.this.yAxisRenderXAxisAsParameter(function);
           FunctionAttribute.this
               .yAxisRenderYAxisSourceAsParameter(function);
@@ -699,9 +759,9 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
     @Override
     public final boolean equals(final Object o) {
       return ((o == this) || //
-      ((o instanceof FunctionAttribute.__YAxisFunctionRenderer) && //
-      (FunctionAttribute.this.equals(((__YAxisFunctionRenderer) o)
-          .__getOwner()))));
+          ((o instanceof FunctionAttribute.__YAxisFunctionRenderer) && //
+              (FunctionAttribute.this
+                  .equals(((__YAxisFunctionRenderer) o).__getOwner()))));
     }
   }
 
@@ -709,8 +769,8 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    * The renderer for the {@code y}-axis function for making the path
    * component
    */
-  private final class __YAxisPathComponentRenderer extends
-      AbstractParameterRenderer {
+  private final class __YAxisPathComponentRenderer
+      extends AbstractParameterRenderer {
 
     /** create */
     __YAxisPathComponentRenderer() {
@@ -739,8 +799,8 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
     public final void renderParameter(final int index, final IMath out) {
 
       if (index == 0) {
-        try (final IMath function = out.nAryFunction(
-            FunctionAttribute.this.getShortName(), 2, 2)) {
+        try (final IMath function = out
+            .nAryFunction(FunctionAttribute.this.getShortName(), 2, 2)) {
           FunctionAttribute.this.m_xAxisTransformation.mathRender(out,
               DefaultParameterRenderer.INSTANCE);
           FunctionAttribute.this
@@ -771,9 +831,9 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
     @Override
     public final boolean equals(final Object o) {
       return ((o == this) || //
-      ((o instanceof FunctionAttribute.__YAxisPathComponentRenderer) && //
-      (FunctionAttribute.this.equals(((__YAxisPathComponentRenderer) o)
-          .__getOwner()))));
+          ((o instanceof FunctionAttribute.__YAxisPathComponentRenderer) && //
+              (FunctionAttribute.this.equals(
+                  ((__YAxisPathComponentRenderer) o).__getOwner()))));
     }
   }
 

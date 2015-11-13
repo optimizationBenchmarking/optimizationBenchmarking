@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
@@ -44,15 +45,17 @@ final class _InstanceRunsFingerprint
    *          the data
    * @param builder
    *          the builder
+   * @param logger
+   *          the logger
    */
   private static final void __appendCurves(final IInstanceRuns data,
       final ArrayListView<? extends IDimension> dimensions,
-      final MatrixBuilder builder) {
+      final MatrixBuilder builder, final Logger logger) {
     final int size;
     final ParametricUnaryFunction poly, logistic;
     final double[] rawPoints;
     final DoubleMatrix1D rawMatrix;
-    IDimension dimension;
+    IDimension dimensionA, dimensionB, tempDim;
     ArrayListView<? extends IRun> runs;
     double[] fittingResult;
     int dimA, dimB, useDimA, useDimB, totalPoints, index;
@@ -72,12 +75,12 @@ final class _InstanceRunsFingerprint
 
     size = dimensions.size();
     for (dimA = 0; dimA < size; dimA++) {
-      dimension = dimensions.get(dimA);
-      isTimeA = dimension.getDimensionType().isTimeMeasure();
+      dimensionA = dimensions.get(dimA);
+      isTimeA = dimensionA.getDimensionType().isTimeMeasure();
 
       for (dimB = dimA; (++dimB) < size;) {
-        dimension = dimensions.get(dimB);
-        isTimeB = dimension.getDimensionType().isTimeMeasure();
+        dimensionB = dimensions.get(dimB);
+        isTimeB = dimensionB.getDimensionType().isTimeMeasure();
 
         // we prefer time-quality over quality-time
         if (isTimeB && (!isTimeA)) {
@@ -85,6 +88,9 @@ final class _InstanceRunsFingerprint
           isTimeB = false;
           useDimA = dimB;
           useDimB = dimA;
+          tempDim = dimensionA;
+          dimensionA = dimensionB;
+          dimensionB = tempDim;
         } else {
           useIsTimeA = isTimeA;
           useDimA = dimA;
@@ -111,14 +117,36 @@ final class _InstanceRunsFingerprint
           func = poly;
         }
 
+        if ((logger != null) && (logger.isLoggable(Level.FINEST))) {
+          logger.finest("Fitting model '" + //$NON-NLS-1$
+              func.getClass().getSimpleName() + "' to dimensions '" + //$NON-NLS-1$
+              dimensionA.getName() + "' (input) and '" + //$NON-NLS-1$
+              dimensionB.getName() + "' (output)" + //$NON-NLS-1$
+              _InstanceRunsFingerprint.__instanceRunsName(data));
+        }
+
         // get all the points
         fittingResult = LSFitter.getInstance().use().setFunctionToFit(func)
             .setPoints(rawMatrix).setMinCriticalPoints((3 * runs.size()))
-            .create().call().getFittedParameters();
+            .setLogger(logger).create().call().getFittedParameters();
 
         builder.append(fittingResult);
       }
     }
+  }
+
+  /**
+   * get the name of an instance runs set
+   *
+   * @param data
+   *          the data
+   * @return the name
+   */
+  private static final String __instanceRunsName(
+      final IInstanceRuns data) {
+    return ((((" for runs of experiment '" + //$NON-NLS-1$
+        data.getOwner().getName()) + "' on instance '") + //$NON-NLS-1$
+        data.getInstance().getName()) + '\'' + '.');
   }
 
   /** Compute the attribute */
@@ -126,13 +154,29 @@ final class _InstanceRunsFingerprint
   protected final IMatrix compute(final IInstanceRuns data,
       final Logger logger) {
     final MatrixBuilder builder;
+    final IMatrix result;
     final ArrayListView<? extends IDimension> dimensions;
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      logger.finer("Beginning to compute fingerprint" + //$NON-NLS-1$
+          _InstanceRunsFingerprint.__instanceRunsName(data));
+    }
 
     builder = new MatrixBuilder();
     builder.setM(1);
 
     dimensions = data.getOwner().getOwner().getDimensions().getData();
-    _InstanceRunsFingerprint.__appendCurves(data, dimensions, builder);
-    return builder.make();
+    _InstanceRunsFingerprint.__appendCurves(data, dimensions, builder,
+        logger);
+    result = builder.make();
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      logger.finer((((("Computed an " + //$NON-NLS-1$
+          result.m()) + '*') + result.n()) + //
+          " matrix as fingerprint") + //$NON-NLS-1$
+          _InstanceRunsFingerprint.__instanceRunsName(data));
+    }
+
+    return result;
   }
 }

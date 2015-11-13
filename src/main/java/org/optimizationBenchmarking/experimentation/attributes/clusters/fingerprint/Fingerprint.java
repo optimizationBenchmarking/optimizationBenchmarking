@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
@@ -28,7 +29,7 @@ import org.optimizationBenchmarking.utils.math.matrix.processing.ConcatenatedMat
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns}
  * , it is the corresponding
  * {@link org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint._InstanceRunsFingerprint}
- * , i.e., a row matrix containing basic, raw statistics.</li>
+ * , i.e., a row matrix containing the parameters of a fitted model.</li>
  * <li>For an instance of
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IInstance}
  * , it is a row matrix with all single
@@ -312,6 +313,9 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
   protected final IMatrix compute(final IDataElement data,
       final Logger logger) {
     final IMatrix[][] matrices;
+    final IMatrix result;
+    final IInstance instance;
+    final IExperiment experiment;
     ArrayListView<? extends IInstance> instances;
     ArrayListView<? extends IExperiment> experiments;
     int i;
@@ -322,9 +326,16 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     }
 
     if (data instanceof IInstance) {
-      return new ConcatenatedMatrix(new IMatrix[][] { //
-          Fingerprint.__instanceFingerprints(((IInstance) data),
-              logger) });
+      instance = ((IInstance) data);
+      result = new ConcatenatedMatrix(new IMatrix[][] { //
+          Fingerprint.__instanceFingerprints(instance, logger) });
+      if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+        logger.finer(((((("The fingerprint for benchmark instance '" + //$NON-NLS-1$
+            instance.getName())
+            + "' is the column-wise concatenation of all fingerprint matrices of the corresponding instance runs, resulting in an ")//$NON-NLS-1$
+            + result.m()) + '*') + result.n()) + " matrix.");//$NON-NLS-1$
+      }
+      return result;
     }
 
     if (data instanceof IInstanceSet) {
@@ -336,14 +347,32 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
         matrices[i] = Fingerprint.__instanceFingerprints(instances.get(i),
             logger);
       }
-      return Fingerprint
-          .__removeUselessCols(new ConcatenatedMatrix(matrices));
+      result = Fingerprint.__removeUselessCols(//
+          new ConcatenatedMatrix(matrices));
+
+      if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+        logger.finer(((((//
+        "The fingerprint of the set of all benchmark instances is the row-wise concatenation of the fingerprint matrices of the single instances, pruned from columns that include only the same single value in each row, resulting in an ")//$NON-NLS-1$
+            + result.m()) + '*') + result.n()) + " matrix.");//$NON-NLS-1$
+      }
+
+      return result;
     }
 
     if (data instanceof IExperiment) {
-      return new ConcatenatedMatrix(new IMatrix[][] { //
-          Fingerprint.__experimentFingerprints(((IExperiment) data),
-              logger) });
+      experiment = ((IExperiment) data);
+      result = new ConcatenatedMatrix(new IMatrix[][] { //
+          Fingerprint.__experimentFingerprints(experiment, logger) });
+
+      if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+        logger.finer(((((//
+        "The fingerprint of the experiment '" + //$NON-NLS-1$
+            experiment.getName() + //
+            "' is the column-wise concatenation of all fingerprint matrices of the single instance runs belonging to that experiment, resulting in an ")//$NON-NLS-1$
+            + result.m()) + '*') + result.n()) + " matrix.");//$NON-NLS-1$
+      }
+
+      return result;
     }
 
     if (data instanceof IExperimentSet) {
@@ -354,8 +383,16 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
         matrices[i] = Fingerprint.__experimentFingerprints(//
             experiments.get(i), logger);
       }
-      return Fingerprint
-          .__removeUselessCols(new ConcatenatedMatrix(matrices));
+      result = Fingerprint.__removeUselessCols(//
+          new ConcatenatedMatrix(matrices));
+
+      if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+        logger.finer(((((//
+        "The fingerprint of the set of all experiments is the row-wise concatenation of the fingerprint matrices of the single experiments, pruned from columns that include only the same single value in each row, resulting in an ")//$NON-NLS-1$
+            + result.m()) + '*') + result.n()) + " matrix.");//$NON-NLS-1$
+      }
+
+      return result;
     }
 
     throw new IllegalArgumentException(

@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.functions.aggregation2D;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.attributes.functions.DimensionTransformation;
@@ -207,12 +208,24 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
    *
    * @param data
    *          the data
+   * @param logger
+   *          the logger
    * @return the aggregated data
    */
-  private final IMatrix __computeInstanceRuns(final IInstanceRuns data) {
+  private final IMatrix __computeInstanceRuns(final IInstanceRuns data,
+      final Logger logger) {
     final IMatrix[] matrices;
     final ArrayListView<? extends IRun> runs;
+    final IMatrix result;
+    String name;
     int i;
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      name = this.getNameForLogging(data);
+      logger.finer("Beginning to compute the " + name + '.'); //$NON-NLS-1$
+    } else {
+      name = null;
+    }
 
     try (final TransformationFunction xFunction = this
         .getXAxisTransformation().use(data)) {
@@ -231,7 +244,19 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
                 xFunction, yInputFunction);
           }
 
-          return this.m_param.aggregate2D(matrices, 0, 1, yOutputFunction);
+          result = this.m_param.aggregate2D(matrices, 0, 1,
+              yOutputFunction);
+
+          if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+            if (name == null) {
+              name = this.getNameForLogging(data);
+            }
+            logger.finer("Finished computing the " + name + //$NON-NLS-1$
+                ", resulting in a " + result.m() + '*'//$NON-NLS-1$
+                + result.n() + " matrix.");//$NON-NLS-1$
+          }
+
+          return result;
         }
       }
     }
@@ -242,22 +267,47 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
    *
    * @param data
    *          the data
+   * @param logger
+   *          the logger
    * @return the aggregated data
    */
-  private final IMatrix __computeExperiment(final IExperiment data) {
+  private final IMatrix __computeExperiment(final IExperiment data,
+      final Logger logger) {
     final IMatrix[] matrices;
     final ArrayListView<? extends IInstanceRuns> runs;
+    final IMatrix result;
+    String name;
     int i;
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      name = this.getNameForLogging(data);
+      logger.finer("Beginning to compute the " + name + '.'); //$NON-NLS-1$
+    } else {
+      name = null;
+    }
 
     runs = data.getData();
     i = runs.size();
     matrices = new IMatrix[i];
 
     for (; (--i) >= 0;) {
-      matrices[i] = this.__computeInstanceRuns(runs.get(i));
+      matrices[i] = this.__computeInstanceRuns(runs.get(i), logger);
     }
 
-    return this.m_second.aggregate2D(matrices, 0, 1, Identity.INSTANCE);
+    result = this.m_second.aggregate2D(matrices, 0, 1, Identity.INSTANCE);
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      if (name == null) {
+        name = this.getNameForLogging(data);
+      }
+      logger.finer("Finished computing the " + name + //$NON-NLS-1$
+          " by computing the " + this.m_second.getShortName() + //$NON-NLS-1$
+          " of this function over its " + runs.size() + //$NON-NLS-1$
+          " instance runs, resulting in a " + result.m() + //$NON-NLS-1$
+          '*' + result.n() + " matrix.");//$NON-NLS-1$
+    }
+
+    return result;
   }
 
   /**
@@ -265,19 +315,42 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
    *
    * @param data
    *          the data
+   * @param logger
+   *          the logger
    * @return the aggregated data
    */
-  private final IMatrix __computeExperimentSet(final IExperimentSet data) {
+  private final IMatrix __computeExperimentSet(final IExperimentSet data,
+      final Logger logger) {
     final ArrayList<IMatrix> matrices;
+    final IMatrix result;
+    String name;
+
+    name = null;
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      name = this.getNameForLogging();
+      logger.finer("Beginning to compute the " + name + '.'); //$NON-NLS-1$
+    }
 
     matrices = new ArrayList<>();
     for (final IExperiment exp : data.getData()) {
       for (final IInstanceRuns irs : exp.getData()) {
-        matrices.add(this.__computeInstanceRuns(irs));
+        matrices.add(this.__computeInstanceRuns(irs, logger));
       }
     }
 
-    return this.m_second.aggregate2D(matrices, 0, 1, Identity.INSTANCE);
+    result = this.m_second.aggregate2D(matrices, 0, 1, Identity.INSTANCE);
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      if (name == null) {
+        name = this.getNameForLogging();
+      }
+      logger.finer("Finished computing the " + name + //$NON-NLS-1$
+          " by computing the " + this.m_second.getShortName() + //$NON-NLS-1$
+          " of this function over all of its  instance runs, resulting in a " //$NON-NLS-1$
+          + result.m() + '*' + result.n() + " matrix.");//$NON-NLS-1$
+    }
+
+    return result;
   }
 
   /** {@inheritDoc} */
@@ -306,13 +379,13 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
   protected final IMatrix compute(final IElementSet data,
       final Logger logger) {
     if (data instanceof IInstanceRuns) {
-      return this.__computeInstanceRuns((IInstanceRuns) data);
+      return this.__computeInstanceRuns(((IInstanceRuns) data), logger);
     }
     if (data instanceof IExperiment) {
-      return this.__computeExperiment((IExperiment) data);
+      return this.__computeExperiment(((IExperiment) data), logger);
     }
     if (data instanceof IExperimentSet) {
-      return this.__computeExperimentSet((IExperimentSet) data);
+      return this.__computeExperimentSet(((IExperimentSet) data), logger);
     }
     throw new IllegalArgumentException("Cannot computed 2d-aggregate over " //$NON-NLS-1$
         + data);

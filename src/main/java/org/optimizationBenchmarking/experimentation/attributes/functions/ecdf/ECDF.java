@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.functions.ecdf;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.attributes.functions.DimensionTransformation;
@@ -444,13 +445,25 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
    *
    * @param data
    *          the data the instance runs
+   * @param logger
+   *          the logger
    * @return the raw matrix
    */
-  private final IMatrix __computeInstanceRuns(final IInstanceRuns data) {
+  private final IMatrix __computeInstanceRuns(final IInstanceRuns data,
+      final Logger logger) {
     final _List list;
     final DimensionTransformation xIn, yIn;
     final Transformation yOut;
     final IDimension timeDim, goalDim;
+    final IMatrix result;
+    String name;
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      name = this.getNameForLogging(data);
+      logger.finer("Now beginning to compute the " + name + '.'); //$NON-NLS-1$
+    } else {
+      name = null;
+    }
 
     xIn = this.getXAxisTransformation();
     try (final TransformationFunction xInFunc = xIn.use(data)) {
@@ -485,7 +498,18 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
             list._addRun(run);
           }
 
-          return list._toMatrix(xInFunc, yOutFunc);
+          result = list._toMatrix(xInFunc, yOutFunc);
+
+          if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+            if (name == null) {
+              name = this.getNameForLogging(data);
+            }
+            logger.finer("Finished computing the " + name + //$NON-NLS-1$
+                ", resulting in a " + result.m() + '*' + result.n() + //$NON-NLS-1$
+                " matrix.");//$NON-NLS-1$
+          }
+
+          return result;
         }
       }
     }
@@ -496,22 +520,49 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
    *
    * @param data
    *          the data
+   * @param logger
+   *          the logger
    * @return the aggregated data
    */
-  private final IMatrix __computeExperiment(final IExperiment data) {
+  private final IMatrix __computeExperiment(final IExperiment data,
+      final Logger logger) {
     final IMatrix[] matrices;
     final ArrayListView<? extends IInstanceRuns> runs;
+    final IMatrix result;
+    String name;
     int i;
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      name = this.getNameForLogging(data);
+      logger.finer("Now beginning to compute " + name + '.'); //$NON-NLS-1$
+    } else {
+      name = null;
+    }
 
     runs = data.getData();
     i = runs.size();
     matrices = new IMatrix[i];
 
     for (; (--i) >= 0;) {
-      matrices[i] = this.__computeInstanceRuns(runs.get(i));
+      matrices[i] = this.__computeInstanceRuns(runs.get(i), logger);
     }
 
-    return this.m_aggregate.aggregate2D(matrices, 0, 1, Identity.INSTANCE);
+    result = this.m_aggregate.aggregate2D(matrices, 0, 1,
+        Identity.INSTANCE);
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      if (name == null) {
+        name = this.getNameForLogging(data);
+      }
+      logger.finer("Finished computing the " + name + //$NON-NLS-1$
+          " by computing the " + this.m_aggregate.getShortName() + //$NON-NLS-1$
+          " ECDF over each of the " + //$NON-NLS-1$
+          runs.size() + " instance runs, resulting in a "//$NON-NLS-1$
+          + result.m() + '*' + result.n() + //
+          " matrix.");//$NON-NLS-1$
+    }
+
+    return result;
   }
 
   /**
@@ -519,19 +570,45 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
    *
    * @param data
    *          the data
+   * @param logger
+   *          the logger
    * @return the aggregated data
    */
-  private final IMatrix __computeExperimentSet(final IExperimentSet data) {
+  private final IMatrix __computeExperimentSet(final IExperimentSet data,
+      final Logger logger) {
     final ArrayList<IMatrix> matrices;
+    final IMatrix result;
+    String name;
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      name = this.getNameForLogging();
+      logger.finer("Now beginning to compute " + name + '.'); //$NON-NLS-1$
+    } else {
+      name = null;
+    }
 
     matrices = new ArrayList<>();
     for (final IExperiment exp : data.getData()) {
       for (final IInstanceRuns irs : exp.getData()) {
-        matrices.add(this.__computeInstanceRuns(irs));
+        matrices.add(this.__computeInstanceRuns(irs, logger));
       }
     }
 
-    return this.m_aggregate.aggregate2D(matrices, 0, 1, Identity.INSTANCE);
+    result = this.m_aggregate.aggregate2D(matrices, 0, 1,
+        Identity.INSTANCE);
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      if (name == null) {
+        name = this.getNameForLogging();
+      }
+      logger.finer("Finished computing the " + name + //$NON-NLS-1$
+          " by computing the " + this.m_aggregate.getShortName() + //$NON-NLS-1$
+          " ECDF over all instance runs, resulting in a "//$NON-NLS-1$
+          + result.m() + '*' + result.n() + //
+          " matrix.");//$NON-NLS-1$
+    }
+
+    return result;
   }
 
   /** {@inheritDoc} */
@@ -540,13 +617,13 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
       final Logger logger) {
 
     if (data instanceof IInstanceRuns) {
-      return this.__computeInstanceRuns((IInstanceRuns) data);
+      return this.__computeInstanceRuns(((IInstanceRuns) data), logger);
     }
     if (data instanceof IExperiment) {
-      return this.__computeExperiment((IExperiment) data);
+      return this.__computeExperiment(((IExperiment) data), logger);
     }
     if (data instanceof IExperimentSet) {
-      return this.__computeExperimentSet((IExperimentSet) data);
+      return this.__computeExperimentSet(((IExperimentSet) data), logger);
     }
 
     throw new IllegalArgumentException("Cannot compute ECDF over "//$NON-NLS-1$

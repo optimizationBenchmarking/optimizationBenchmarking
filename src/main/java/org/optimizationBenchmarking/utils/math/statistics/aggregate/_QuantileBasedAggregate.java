@@ -135,4 +135,11 @@ abstract class _QuantileBasedAggregate extends _StatefulNumber {
     this.m_state = BasicNumber.STATE_EMPTY;
     this.m_store.append(value);
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void reset() {
+    super.reset();
+    this.m_store.reset();
+  }
 }

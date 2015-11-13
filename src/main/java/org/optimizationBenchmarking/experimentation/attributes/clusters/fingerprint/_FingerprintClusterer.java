@@ -1,12 +1,14 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.attributes.OnlySharedInstances;
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElement;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElementSet;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
@@ -71,12 +73,34 @@ abstract class _FingerprintClusterer<CT extends _FingerprintCluster<CCT>, CCT ex
   protected final CCT compute(final IExperimentSet data,
       final Logger logger) {
     final INamedElementSet names;
+    final CCT result;
+    String what;
     IMatrix matrix;
 
     names = this._getClusterSource(OnlySharedInstances.INSTANCE.get(//
         data, logger));
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      what = ((" the set of " + names.getData().size()) + //$NON-NLS-1$
+          ((names instanceof IInstanceSet)//
+              ? " instances" //$NON-NLS-1$
+              : ((names instanceof IExperimentSet)//
+                  ? " experiments" //$NON-NLS-1$
+                  : "?i am confused?")));//$NON-NLS-1$
+      logger.finer("Beginning to cluster" + what + //$NON-NLS-1$
+          " based on algorithm performance fingerprints.");//$NON-NLS-1$
+    } else {
+      what = null;
+    }
+
     matrix = Fingerprint.INSTANCE.get(names, logger);
-    try (final REngine engine = R.getInstance().use().create()) {
+    if ((logger != null) && (logger.isLoggable(Level.FINEST))) {
+      logger.finest("Now launching R to cluster the obtained "//$NON-NLS-1$
+          + matrix.m() + '*' + matrix.n() + " fingerprint matrix.");//$NON-NLS-1$
+    }
+
+    try (final REngine engine = R.getInstance().use().setLogger(logger)
+        .create()) {
       engine.setMatrix("data", matrix);//$NON-NLS-1$
       matrix = null;
       try {
@@ -94,7 +118,23 @@ abstract class _FingerprintClusterer<CT extends _FingerprintCluster<CCT>, CCT ex
           ioe);
     }
 
-    return this._create(data, matrix, this._getClusterSource(data),
+    result = this._create(data, matrix, this._getClusterSource(data),
         names.getData());
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      if (what == null) {
+        what = ((" the set of " + names.getData().size()) + //$NON-NLS-1$
+            ((names instanceof IInstanceSet)//
+                ? " instances" //$NON-NLS-1$
+                : ((names instanceof IExperimentSet)//
+                    ? " experiments" //$NON-NLS-1$
+                    : "?i am confused?")));//$NON-NLS-1$
+      }
+      logger.finer("Finished clustering" + what + //$NON-NLS-1$
+          " based on algorithm performance fingerprints, obtained "//$NON-NLS-1$
+          + result.getData().size() + " clusters.");//$NON-NLS-1$
+    }
+
+    return result;
   }
 }

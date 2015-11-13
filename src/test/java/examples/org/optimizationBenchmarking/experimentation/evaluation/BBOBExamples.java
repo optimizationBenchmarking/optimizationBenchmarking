@@ -49,5 +49,4 @@ public final class BBOBExamples extends EvaluationExample {
     example._logSetup();
     example.process(dir, BBOBExample.class);
   }
-
 }
