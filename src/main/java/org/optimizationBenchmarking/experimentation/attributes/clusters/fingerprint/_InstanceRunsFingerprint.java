@@ -11,7 +11,6 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.math.fitting.impl.ls.LSFitter;
-import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.MatrixBuilder;
@@ -52,18 +51,16 @@ final class _InstanceRunsFingerprint
       final ArrayListView<? extends IDimension> dimensions,
       final MatrixBuilder builder, final Logger logger) {
     final int size;
-    final ParametricUnaryFunction poly, logistic;
+    final LogisticModel model;
     final double[] rawPoints;
     final DoubleMatrix1D rawMatrix;
     IDimension dimensionA, dimensionB, tempDim;
     ArrayListView<? extends IRun> runs;
     double[] fittingResult;
     int dimA, dimB, useDimA, useDimB, totalPoints, index;
-    boolean isTimeA, isTimeB, useIsTimeA;
-    ParametricUnaryFunction func;
+    boolean isTimeA, isTimeB;
 
-    poly = new PolynomialModel();
-    logistic = new LogisticModel();
+    model = new LogisticModel();
 
     // We allocate a re-usable data store.
     totalPoints = 0;
@@ -82,9 +79,15 @@ final class _InstanceRunsFingerprint
         dimensionB = dimensions.get(dimB);
         isTimeB = dimensionB.getDimensionType().isTimeMeasure();
 
+        // We ignore all time-time and objective-objective relationships.
+        // Since we catch all time-objective relationships, they are
+        // implicitly contained.
+        if (isTimeB == isTimeA) {
+          continue;
+        }
+
         // we prefer time-quality over quality-time
         if (isTimeB && (!isTimeA)) {
-          useIsTimeA = true;
           isTimeB = false;
           useDimA = dimB;
           useDimB = dimA;
@@ -92,7 +95,6 @@ final class _InstanceRunsFingerprint
           dimensionA = dimensionB;
           dimensionB = tempDim;
         } else {
-          useIsTimeA = isTimeA;
           useDimA = dimA;
           useDimB = dimB;
         }
@@ -107,28 +109,19 @@ final class _InstanceRunsFingerprint
           }
         }
 
-        if ((useIsTimeA && (!(isTimeB)))) {
-          // We model the relationship between a time and an objective
-          // value dimension as logistic model.
-          func = logistic;
-        } else {
-          // We model the relationship between two time dimensions or two
-          // objective value dimensions as polynomial of degree 3.
-          func = poly;
-        }
-
         if ((logger != null) && (logger.isLoggable(Level.FINEST))) {
           logger.finest("Fitting model '" + //$NON-NLS-1$
-              func.getClass().getSimpleName() + "' to dimensions '" + //$NON-NLS-1$
+              model.getClass().getSimpleName() + "' to dimensions '" + //$NON-NLS-1$
               dimensionA.getName() + "' (input) and '" + //$NON-NLS-1$
               dimensionB.getName() + "' (output)" + //$NON-NLS-1$
               _InstanceRunsFingerprint.__instanceRunsName(data));
         }
 
         // get all the points
-        fittingResult = LSFitter.getInstance().use().setFunctionToFit(func)
-            .setPoints(rawMatrix).setMinCriticalPoints((3 * runs.size()))
-            .setLogger(logger).create().call().getFittedParameters();
+        fittingResult = LSFitter.getInstance().use()
+            .setFunctionToFit(model).setPoints(rawMatrix)
+            .setMinCriticalPoints((3 * runs.size())).setLogger(logger)
+            .create().call().getFittedParameters();
 
         builder.append(fittingResult);
       }

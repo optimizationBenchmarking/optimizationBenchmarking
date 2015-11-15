@@ -39,7 +39,17 @@ public final class FittingExampleDatasets extends TestBase
   private static final String[] RESOURCES = { //
       "1FlipHC-uf020-01.txt", //$NON-NLS-1$
       "mFlipHC-uf100-01.txt", //$NON-NLS-1$
-      "2FlipHCrs-uf250-01.txt" //$NON-NLS-1$
+      "2FlipHCrs-uf250-01.txt", //$NON-NLS-1$
+      "2FlipHC-uf250-01.txt", //$NON-NLS-1$
+      "2FlipHC-uf250-02.txt", //$NON-NLS-1$
+      "2FlipHC-uf250-03.txt", //$NON-NLS-1$
+      "2FlipHC-uf250-04.txt", //$NON-NLS-1$
+      "2FlipHC-uf250-05.txt", //$NON-NLS-1$
+      "2FlipHC-uf250-06.txt", //$NON-NLS-1$
+      "2FlipHC-uf250-07.txt", //$NON-NLS-1$
+      "2FlipHC-uf250-08.txt", //$NON-NLS-1$
+      "2FlipHC-uf250-09.txt", //$NON-NLS-1$
+      "2FlipHC-uf250-10.txt", //$NON-NLS-1$
   };
 
   /** the function modeling the objective value based on time */
@@ -186,6 +196,9 @@ public final class FittingExampleDatasets extends TestBase
           useDimA = dimB;
           useDimB = dimA;
         } else {
+          if (dimTypes[dimA] == dimTypes[dimB]) {
+            continue;
+          }
           useDimA = dimA;
           useDimB = dimB;
         }
