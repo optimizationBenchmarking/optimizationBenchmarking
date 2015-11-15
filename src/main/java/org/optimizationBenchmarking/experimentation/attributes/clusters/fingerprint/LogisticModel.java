@@ -1,11 +1,16 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
 
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.math.MathUtils;
 import org.optimizationBenchmarking.utils.math.fitting.spec.IParameterGuesser;
 import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add3;
 import org.optimizationBenchmarking.utils.math.functions.power.Pow;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * <p>
@@ -143,5 +148,42 @@ public final class LogisticModel extends ParametricUnaryFunction {
   @Override
   public final void canonicalizeParameters(final double[] parameters) {
     parameters[2] = Math.abs(parameters[2]);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer, final IMathRenderable x) {
+    renderer.renderParameter(0, out);
+    out.append('/');
+    out.append('1');
+    out.append('+');
+    renderer.renderParameter(1, out);
+    out.append('*');
+    x.mathRender(out, renderer);
+    out.append('^');
+    renderer.renderParameter(2, out);
+    out.append(')');
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer, final IMathRenderable x) {
+    try (final IMath div = out.div()) {
+      renderer.renderParameter(0, div);
+      try (final IMath add = div.add()) {
+        try (final IText num = add.number()) {
+          num.append('1');
+        }
+        try (final IMath mul = add.mul()) {
+          renderer.renderParameter(1, mul);
+          try (final IMath pow = mul.pow()) {
+            x.mathRender(pow, renderer);
+            renderer.renderParameter(2, pow);
+          }
+        }
+      }
+    }
   }
 }
