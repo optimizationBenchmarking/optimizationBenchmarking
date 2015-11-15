@@ -106,8 +106,8 @@ public class LSFittingJob extends OptiFittingJob
               new SimpleVectorValueChecker(1e-12, Double.NEGATIVE_INFINITY,
                   768)));
 
-      builder.maxEvaluations(Integer.MAX_VALUE);
-      builder.maxIterations(Integer.MAX_VALUE);
+      builder.maxEvaluations(20000);
+      builder.maxIterations(20000);
 
       builder.weight(new DiagonalMatrix(weights, false));
       builder.model(new _MultivariateFunction(x, this.m_function));
@@ -282,8 +282,8 @@ public class LSFittingJob extends OptiFittingJob
               new SimpleVectorValueChecker(1e-12, Double.NEGATIVE_INFINITY,
                   768)));
 
-      builder.maxEvaluations(Integer.MAX_VALUE);
-      builder.maxIterations(Integer.MAX_VALUE);
+      builder.maxEvaluations(20000);
+      builder.maxIterations(20000);
 
       builder.weight(new DiagonalMatrix(weights, false));
       builder.model(new _MultivariateFunction(x, this.m_function));
