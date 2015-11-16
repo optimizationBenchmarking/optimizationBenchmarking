@@ -48,7 +48,7 @@ final class _ExceptionFuture<T> implements Future<T> {
   @Override
   public final T get() throws ExecutionException {
     throw new ExecutionException(//
-        "An error was encountered while executing this task.", //$NON-NLS-1$
+        "An error was encountered while executing a task.", //$NON-NLS-1$
         this.m_error);
   }
 

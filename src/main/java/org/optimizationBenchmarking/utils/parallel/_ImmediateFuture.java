@@ -4,7 +4,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /**
- * A future which represents immediate execution.
+ * A future which represents an immediate, successful execution.
  *
  * @param <T>
  *          the result type
@@ -13,7 +13,8 @@ final class _ImmediateFuture<T> implements Future<T> {
 
   /** a shared future with {@code null} result */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  static final _ImmediateFuture NULL_FUTURE = new _ImmediateFuture(null);
+  private static final _ImmediateFuture NULL_FUTURE = new _ImmediateFuture(
+      null);
 
   /** the result */
   private final T m_result;
