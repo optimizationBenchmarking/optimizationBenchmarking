@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.parallel;
 
+import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
@@ -79,6 +80,42 @@ public abstract class JobExecutor {
    */
   @SuppressWarnings("unchecked")
   public abstract <T> Future<T>[] execute(final Callable<T>... jobs);
+
+  /**
+   * Execute a set of {@link java.lang.Runnable}s and append the
+   * corresponding {@link java.util.concurrent.Future}s to a
+   * {@java.util.Collection collection}.
+   *
+   * @param dest
+   *          the collection to receive the
+   *          {@link java.util.concurrent.Future}s
+   * @param jobs
+   *          the jobs to run
+   * @param result
+   *          the result to be returned by the
+   *          {@link java.util.concurrent.Future}s representing the jobs
+   * @param <T>
+   *          the data type of the result
+   */
+  public abstract <T> void execute(Collection<Future<? super T>> dest,
+      final T result, final Runnable... jobs);
+
+  /**
+   * Execute a {@link java.util.concurrent.Callable}s and append the
+   * corresponding {@link java.util.concurrent.Future}s to a
+   * {@java.util.Collection collection}
+   *
+   * @param dest
+   *          the collection to receive the
+   *          {@link java.util.concurrent.Future}s
+   * @param jobs
+   *          the jobs to run
+   * @param <T>
+   *          the data type of the result
+   */
+  @SuppressWarnings("unchecked")
+  public abstract <T> void execute(Collection<Future<? super T>> dest,
+      final Callable<T>... jobs);
 
   /**
    * <p>
@@ -331,6 +368,76 @@ public abstract class JobExecutor {
       }
     }
     return results;
+  }
+
+  /**
+   * Execute a set of {@link java.lang.Runnable}s and append the
+   * corresponding {@link java.util.concurrent.Future}s to a
+   * {@java.util.Collection collection}.
+   *
+   * @param dest
+   *          the collection to receive the
+   *          {@link java.util.concurrent.Future}s
+   * @param jobs
+   *          the jobs to run
+   * @param result
+   *          the result to be returned by the
+   *          {@link java.util.concurrent.Future}s representing the jobs
+   * @param <T>
+   *          the data type of the result
+   */
+  static final <T> void _executeImmediately(
+      final Collection<Future<? super T>> dest, final T result,
+      final Runnable... jobs) {
+    final int length;
+    Future<T> success;
+    int i;
+
+    length = jobs.length;
+
+    success = null;
+    for (i = 0; i < length; ++i) {
+      try {
+        jobs[i].run();
+        if (success == null) {
+          success = _ImmediateFuture._create(result);
+        }
+        dest.add(success);
+      } catch (final Throwable error) {
+        dest.add(new _ExceptionFuture<>(error));
+      }
+    }
+  }
+
+  /**
+   * Execute a {@link java.util.concurrent.Callable}s and append the
+   * corresponding {@link java.util.concurrent.Future}s to a
+   * {@java.util.Collection collection}.
+   *
+   * @param dest
+   *          the collection to receive the
+   *          {@link java.util.concurrent.Future}s
+   * @param jobs
+   *          the jobs to run
+   * @param <T>
+   *          the data type of the result
+   */
+  @SuppressWarnings("unchecked")
+  static final <T> void _executeImmediately(
+      final Collection<Future<? super T>> dest,
+      final Callable<T>... jobs) {
+    final int length;
+    int i;
+
+    length = jobs.length;
+
+    for (i = 0; i < length; ++i) {
+      try {
+        dest.add(_ImmediateFuture._create(jobs[i].call()));
+      } catch (final Throwable error) {
+        dest.add(new _ExceptionFuture<>(error));
+      }
+    }
   }
 
   /**

@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.parallel;
 
+import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
@@ -144,6 +145,78 @@ final class _ExecuteInParallelAndWait extends JobExecutor {
 
         // not in a fork-join pool: execute as is
         return JobExecutor._executeImmediately(jobs);
+      }
+    }
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings("unchecked")
+  @Override
+  public final <T> void execute(final Collection<Future<? super T>> dest,
+      final T result, final Runnable... jobs) {
+    final ForkJoinTask<T>[] tasks;
+    final ForkJoinPool pool;
+    int i;
+
+    i = jobs.length;
+    switch (i) {
+      case 0: {// no tasks, we can quit directly
+        return;
+      }
+      case 1: {// one task: execute directly
+        dest.add(JobExecutor._executeImmediately(result, jobs[0]));
+        return;
+      }
+      default: {// multiple tasks:let's see what to do
+        if ((pool = JobExecutor._getForkJoinPool()) != null) {
+
+          tasks = new ForkJoinTask[i];
+          for (; (--i) >= 0;) {
+            dest.add(tasks[i] = ForkJoinTask.adapt(jobs[i], result));
+          }
+
+          _ExecuteInParallelAndWait._executeTasks(tasks, pool);
+          return;
+        }
+
+        // not in a fork-join pool: execute as is
+        JobExecutor._executeImmediately(dest, result, jobs);
+      }
+    }
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings("unchecked")
+  @Override
+  public final <T> void execute(final Collection<Future<? super T>> dest,
+      final Callable<T>... jobs) {
+    final ForkJoinTask<T>[] tasks;
+    final ForkJoinPool pool;
+    int i;
+
+    i = jobs.length;
+    switch (i) {
+      case 0: {// no tasks, we can quit directly
+        return;
+      }
+      case 1: {// one task: execute directly
+        dest.add(JobExecutor._executeImmediately(jobs[0]));
+        return;
+      }
+      default: {// multiple tasks:let's see what to do
+        if ((pool = JobExecutor._getForkJoinPool()) != null) {
+
+          tasks = new ForkJoinTask[i];
+          for (; (--i) >= 0;) {
+            dest.add(tasks[i] = ForkJoinTask.adapt(jobs[i]));
+          }
+
+          _ExecuteInParallelAndWait._executeTasks(tasks, pool);
+          return;
+        }
+
+        // not in a fork-join pool: execute as is
+        JobExecutor._executeImmediately(dest, jobs);
       }
     }
   }

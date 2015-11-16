@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.parallel;
 
+import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
@@ -46,5 +47,20 @@ final class _ExecuteSequentiallyAndWait extends JobExecutor {
   @Override
   public final <T> Future<T>[] execute(final Callable<T>... jobs) {
     return JobExecutor._executeImmediately(jobs);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final <T> void execute(final Collection<Future<? super T>> dest,
+      final T result, final Runnable... jobs) {
+    JobExecutor._executeImmediately(dest, result, jobs);
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings("unchecked")
+  @Override
+  public final <T> void execute(final Collection<Future<? super T>> dest,
+      final Callable<T>... jobs) {
+    JobExecutor._executeImmediately(dest, jobs);
   }
 }

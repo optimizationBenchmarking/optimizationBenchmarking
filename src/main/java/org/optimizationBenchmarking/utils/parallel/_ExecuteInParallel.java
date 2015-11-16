@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.parallel;
 
+import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
@@ -82,5 +83,48 @@ final class _ExecuteInParallel extends JobExecutor {
 
     // not in a fork-join pool: execute as is
     return JobExecutor._executeImmediately(jobs);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final <T> void execute(final Collection<Future<? super T>> dest,
+      final T result, final Runnable... jobs) {
+    final ForkJoinPool pool;
+    int i;
+
+    i = jobs.length;
+    if (i > 0) {
+
+      if ((pool = JobExecutor._getForkJoinPool()) != null) {
+        for (; (--i) >= 0;) {
+          dest.add(pool.submit(jobs[i], result));
+        }
+      }
+
+      // not in a fork-join pool: execute as is
+      JobExecutor._executeImmediately(dest, result, jobs);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings("unchecked")
+  @Override
+  public final <T> void execute(final Collection<Future<? super T>> dest,
+      final Callable<T>... jobs) {
+    final ForkJoinPool pool;
+    int i;
+
+    i = jobs.length;
+    if (i > 0) {
+
+      if ((pool = JobExecutor._getForkJoinPool()) != null) {
+        for (; (--i) >= 0;) {
+          dest.add(pool.submit(jobs[i]));
+        }
+      }
+
+      // not in a fork-join pool: execute as is
+      JobExecutor._executeImmediately(dest, jobs);
+    }
   }
 }
