@@ -1,6 +1,5 @@
 package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator;
 
-import java.util.concurrent.ForkJoinTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -8,7 +7,6 @@ import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationJ
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
@@ -95,8 +93,8 @@ class _PseudoJob implements IEvaluationJob {
       if ((this.m_logger != null)
           && (this.m_logger.isLoggable(Level.FINEST))) {
         this.m_logger.finest(//
-            "Beginning to invoke the summary rountines of the sub-tasks of task " + //$NON-NLS-1$
-                this._getName());
+            "Beginning to invoke the summary rountines of the sub-tasks of task " //$NON-NLS-1$
+                + this._getName());
       }
 
       for (final IEvaluationJob module : this.m_children) {
@@ -106,8 +104,8 @@ class _PseudoJob implements IEvaluationJob {
       if ((this.m_logger != null)
           && (this.m_logger.isLoggable(Level.FINEST))) {
         this.m_logger.finest(//
-            "Finished invoking the summary rountines of the sub-tasks of task " + //$NON-NLS-1$
-                this._getName());
+            "Finished invoking the summary rountines of the sub-tasks of task " //$NON-NLS-1$
+                + this._getName());
       }
     }
   }
@@ -131,12 +129,6 @@ class _PseudoJob implements IEvaluationJob {
    */
   final void _runSubJobs(final ISectionContainer dest) {
     final IEvaluationJob[] children;
-    final int childCount;
-    _MainRoutineTask[] tasks;
-    Throwable newError;
-    Object error;
-    String name;
-    int i;
 
     if ((this.m_logger != null)
         && (this.m_logger.isLoggable(Level.FINEST))) {
@@ -149,68 +141,19 @@ class _PseudoJob implements IEvaluationJob {
       return;
     }
 
-    if ((childCount = children.length) <= 0) {
+    if (children.length <= 0) {
       return;
     }
 
-    error = null;
-    if (ForkJoinTask.inForkJoinPool()) {
-      tasks = new _MainRoutineTask[childCount];
-      i = 0;
-
-      for (final IEvaluationJob module : children) {
-        tasks[i++] = new _MainRoutineTask(module, dest);
-      }
-
-      // invoke all the tasks
+    for (final IEvaluationJob job : children) {
       try {
-        ForkJoinTask.invokeAll(tasks);
-      } catch (final Throwable caught) {// we did an oopsi
-        error = ErrorUtils.aggregateError(error, caught);
-      }
-
-      // See if anything went wrong
-      for (final _MainRoutineTask task : tasks) {
-        newError = task.getException();
-        if (newError != null) {
-          error = ErrorUtils.aggregateError(error, newError);
-        } else {
-          if (!(task.isCompletedNormally())) {
-            name = task.toString();
-            if (!(task.isDone())) {
-              error = ErrorUtils.aggregateError(error,
-                  new IllegalStateException("Task '" + name + //$NON-NLS-1$
-                      "' has not yet completed, but did not generate an error (odd!)." //$NON-NLS-1$
-                  ));
-            } else {
-              error = ErrorUtils.aggregateError(error,
-                  new IllegalStateException("Task '" + name + //$NON-NLS-1$
-                      "' has not completed normally, but did not generate an error (odd!)." //$NON-NLS-1$
-                  ));
-            }
-          }
-        }
-      }
-
-      tasks = null;
-
-      if (error != null) {
-        RethrowMode.AS_ILLEGAL_STATE_EXCEPTION.rethrow((((//
-            "Error while executing a sub-job of evaluation jog '" //$NON-NLS-1$
-            + this._getName()) + '\'') + '.'), false, error);
+        job.main(dest);
+      } catch (final Throwable caught) {
+        RethrowMode.AS_ILLEGAL_STATE_EXCEPTION.rethrow((//
+            "Error in evaluation job "//$NON-NLS-1$
+                + String.valueOf(job)),
+            false, caught);
         return;
-      }
-
-    } else {
-      for (final IEvaluationJob job : children) {
-        try {
-          job.main(dest);
-        } catch (final Throwable caught) {
-          RethrowMode.AS_ILLEGAL_STATE_EXCEPTION.rethrow((//
-              "Error in evaluation job "//$NON-NLS-1$
-              + String.valueOf(job)), false, caught);
-          return;
-        }
       }
     }
 
