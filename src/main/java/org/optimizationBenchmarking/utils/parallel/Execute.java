@@ -277,6 +277,63 @@ public abstract class Execute {
   }
 
   /**
+   * Wait for a set of {@code tasks} to complete and store their results
+   * into the {@code destination} array starting at index {@code start}.
+   * {@code null} futures are ignored. If any of the tasks fails with an
+   * exception, the remaining tasks will be ignored.
+   *
+   * @param tasks
+   *          the tasks to wait for
+   * @param destination
+   *          the destination array to receive the results
+   * @param start
+   *          the start index in the destination array
+   * @param ignoreNullResults
+   *          should {@code null} results returned by the
+   *          {@linkplain java.util.concurrent.Future#get() futures} be
+   *          ignored, i.e., not stored in {@code destination}?
+   * @return the index of the next element in {@code destination} right
+   *         after the last copied result item
+   * @param <X>
+   *          the data type of the destination array's elements
+   * @param <Y>
+   *          the result type of the future tasks
+   */
+  public static final <X, Y extends X> int join(
+      final Iterable<Future<Y>> tasks, final X[] destination,
+      final int start, final boolean ignoreNullResults) {
+    Throwable cause;
+    Y result;
+    int index;
+
+    index = start;
+    for (final Future<Y> future : tasks) {
+      if (future != null) {
+        try {
+          result = future.get();
+        } catch (final ExecutionException executionError) {
+          cause = executionError.getCause();
+          if (cause instanceof RuntimeException) {
+            throw ((RuntimeException) cause);
+          }
+          throw new RuntimeException("The execution of a task failed.", //$NON-NLS-1$
+              executionError);
+        } catch (final InterruptedException interrupted) {
+          throw new RuntimeException(
+              "A task was interrupted before completing.", //$NON-NLS-1$
+              interrupted);
+        }
+        if ((result == null) && ignoreNullResults) {
+          continue;
+        }
+        destination[index++] = result;
+      }
+    }
+
+    return index;
+  }
+
+  /**
    * Execute a {@link java.lang.Runnable} immediately and wait for it to
    * terminate.
    *

@@ -1,6 +1,8 @@
 package org.optimizationBenchmarking.experimentation.attributes.functions.aggregation2D;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,11 +25,13 @@ import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Identity;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.math.matrix.impl.MatrixBuilder;
 import org.optimizationBenchmarking.utils.math.matrix.processing.ColumnTransformedMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.parameters.Median;
 import org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameter;
 import org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameterParser;
 import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
+import org.optimizationBenchmarking.utils.parallel.Execute;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -212,11 +216,13 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
    *          the logger
    * @return the aggregated data
    */
-  private final IMatrix __computeInstanceRuns(final IInstanceRuns data,
+  final IMatrix _computeInstanceRuns(final IInstanceRuns data,
       final Logger logger) {
     final IMatrix[] matrices;
     final ArrayListView<? extends IRun> runs;
     final IMatrix result;
+    final DimensionTransformation xIn, yIn;
+    final Transformation yOut;
     String name;
     int i;
 
@@ -227,39 +233,45 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
       name = null;
     }
 
-    try (final TransformationFunction xFunction = this
-        .getXAxisTransformation().use(data)) {
-      try (final TransformationFunction yInputFunction = this
-          .getYAxisInputTransformation().use(data)) {
-        try (final TransformationFunction yOutputFunction = this
-            .getYAxisOutputTransformation().use(data)) {
+    xIn = this.getXAxisTransformation();
+    synchronized (xIn) {
+      try (final TransformationFunction xFunction = xIn.use(data)) {
+        yIn = this.getYAxisInputTransformation();
+        synchronized (yIn) {
+          try (final TransformationFunction yInputFunction = yIn
+              .use(data)) {
 
-          runs = data.getData();
-          i = runs.size();
-          matrices = new IMatrix[i];
+            runs = data.getData();
+            i = runs.size();
+            matrices = new IMatrix[i];
 
-          for (; (--i) >= 0;) {
-            matrices[i] = new ColumnTransformedMatrix(//
-                runs.get(i).selectColumns(this.m_xIndex, this.m_yIndex), //
-                xFunction, yInputFunction);
-          }
-
-          result = this.m_param.aggregate2D(matrices, 0, 1,
-              yOutputFunction);
-
-          if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-            if (name == null) {
-              name = this.getNameForLogging(data);
+            for (; (--i) >= 0;) {
+              matrices[i] = MatrixBuilder.copy(new ColumnTransformedMatrix(//
+                  runs.get(i).selectColumns(this.m_xIndex, this.m_yIndex), //
+                  xFunction, yInputFunction), false);
             }
-            logger.finer("Finished computing the " + name + //$NON-NLS-1$
-                ", resulting in a " + result.m() + '*'//$NON-NLS-1$
-                + result.n() + " matrix.");//$NON-NLS-1$
           }
-
-          return result;
         }
       }
     }
+
+    yOut = this.getYAxisOutputTransformation();
+    synchronized (yOut) {
+      try (final TransformationFunction yOutputFunction = yOut.use(data)) {
+        result = this.m_param.aggregate2D(matrices, 0, 1, yOutputFunction);
+      }
+    }
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      if (name == null) {
+        name = this.getNameForLogging(data);
+      }
+      logger.finer("Finished computing the " + name + //$NON-NLS-1$
+          ", resulting in a " + result.m() + '*'//$NON-NLS-1$
+          + result.n() + " matrix.");//$NON-NLS-1$
+    }
+
+    return result;
   }
 
   /**
@@ -271,11 +283,14 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
    *          the logger
    * @return the aggregated data
    */
+  @SuppressWarnings("unchecked")
   private final IMatrix __computeExperiment(final IExperiment data,
       final Logger logger) {
     final IMatrix[] matrices;
     final ArrayListView<? extends IInstanceRuns> runs;
     final IMatrix result;
+    final Execute executor;
+    final Future<IMatrix>[] tasks;
     String name;
     int i;
 
@@ -288,11 +303,16 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
 
     runs = data.getData();
     i = runs.size();
-    matrices = new IMatrix[i];
+    tasks = new Future[i];
+    executor = Execute.parallel();
 
     for (; (--i) >= 0;) {
-      matrices[i] = this.__computeInstanceRuns(runs.get(i), logger);
+      tasks[i] = executor.execute(//
+          new __ComputeInstanceRuns(runs.get(i), logger));
     }
+
+    matrices = new IMatrix[tasks.length];
+    Execute.join(tasks, matrices, 0, true);
 
     result = this.m_second.aggregate2D(matrices, 0, 1, Identity.INSTANCE);
 
@@ -321,8 +341,10 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
    */
   private final IMatrix __computeExperimentSet(final IExperimentSet data,
       final Logger logger) {
-    final ArrayList<IMatrix> matrices;
+    final IMatrix[] matrices;
+    final ArrayList<Future<IMatrix>> tasks;
     final IMatrix result;
+    final Execute execute;
     String name;
 
     name = null;
@@ -331,13 +353,16 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
       logger.finer("Beginning to compute the " + name + '.'); //$NON-NLS-1$
     }
 
-    matrices = new ArrayList<>();
+    tasks = new ArrayList<>();
+    execute = Execute.parallel();
     for (final IExperiment exp : data.getData()) {
       for (final IInstanceRuns irs : exp.getData()) {
-        matrices.add(this.__computeInstanceRuns(irs, logger));
+        tasks.add(execute.execute(new __ComputeInstanceRuns(irs, logger)));
       }
     }
 
+    matrices = new IMatrix[tasks.size()];
+    Execute.join(tasks, matrices, 0, true);
     result = this.m_second.aggregate2D(matrices, 0, 1, Identity.INSTANCE);
 
     if ((logger != null) && (logger.isLoggable(Level.FINER))) {
@@ -379,7 +404,7 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
   protected final IMatrix compute(final IElementSet data,
       final Logger logger) {
     if (data instanceof IInstanceRuns) {
-      return this.__computeInstanceRuns(((IInstanceRuns) data), logger);
+      return this._computeInstanceRuns(((IInstanceRuns) data), logger);
     }
     if (data instanceof IExperiment) {
       return this.__computeExperiment(((IExperiment) data), logger);
@@ -456,5 +481,34 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
         StatisticalParameterParser.getInstance(), Median.INSTANCE);
 
     return new Aggregation2D(x, yIn, yOut, first, second);
+  }
+
+  /** compute the matrix for a given set of instance runs */
+  private final class __ComputeInstanceRuns implements Callable<IMatrix> {
+    /** the instance runs */
+    private final IInstanceRuns m_runs;
+    /** the logger */
+    private final Logger m_logger;
+
+    /**
+     * compute
+     *
+     * @param runs
+     *          the runs
+     * @param logger
+     *          the logger
+     */
+    __ComputeInstanceRuns(final IInstanceRuns runs, final Logger logger) {
+      super();
+      this.m_runs = runs;
+      this.m_logger = logger;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMatrix call() {
+      return Aggregation2D.this._computeInstanceRuns(this.m_runs,
+          this.m_logger);
+    }
   }
 }

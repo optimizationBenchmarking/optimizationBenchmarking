@@ -282,15 +282,14 @@ public final class MatrixBuilder implements IAggregate {
       if (n > 0) {
         if (s != this.m_maxSize) {
           throw new IllegalStateException(((((((//
-              s + " elements in matrix, but ") + //$NON-NLS-1$
-              m) + 'x') + n) + '=') + this.m_maxSize)
-              + " required.");//$NON-NLS-1$
+          s + " elements in matrix, but ") + //$NON-NLS-1$
+              m) + 'x') + n) + '=') + this.m_maxSize) + " required.");//$NON-NLS-1$
         }
       } else {
         n = (s / m);
         if ((n * m) != s) {
           throw new IllegalStateException((((//
-              s + " elements in matrix and m=") + m) //$NON-NLS-1$
+          s + " elements in matrix and m=") + m) //$NON-NLS-1$
               + " which would result in n=") + //$NON-NLS-1$
               ((s / ((double) m))));
         }
@@ -300,7 +299,7 @@ public final class MatrixBuilder implements IAggregate {
         m = (s / n);
         if ((n * m) != s) {
           throw new IllegalStateException((((//
-              s + " elements in matrix and n=") + m) //$NON-NLS-1$
+          s + " elements in matrix and n=") + m) //$NON-NLS-1$
               + " which would result in m=") + //$NON-NLS-1$
               ((s / ((double) n))));
         }
@@ -371,6 +370,39 @@ public final class MatrixBuilder implements IAggregate {
         }
       }
     }
+  }
+
+  /**
+   * Copy a matrix.
+   *
+   * @param matrix
+   *          the matrix to copy
+   * @param tryInteger
+   *          should we try using an integer-based storage, even if we need
+   *          to ignore
+   *          {@link org.optimizationBenchmarking.utils.math.matrix.IMatrix#isIntegerMatrix()}
+   *          ? (Even in this case, if the values are not integer, we will
+   *          switch to floating point numbers, but this may waste
+   *          runtime.)
+   * @return the copied matrix
+   */
+  public static final AbstractMatrix copy(final IMatrix matrix,
+      final boolean tryInteger) {
+    final int m, n;
+    final MatrixBuilder builder;
+
+    m = matrix.m();
+    n = matrix.n();
+
+    builder = new MatrixBuilder(
+        ((tryInteger || matrix.isIntegerMatrix())//
+            ? EPrimitiveType.INT //
+            : EPrimitiveType.FLOAT), //
+        m * n);
+    builder.setM(m);
+    builder.setN(n);
+    builder.appendRowByRow(matrix);
+    return builder.make();
   }
 
   /** the internal array class */
@@ -633,7 +665,7 @@ public final class MatrixBuilder implements IAggregate {
         for (i = size; (--i) >= 0;) {
           l = longData[i];
           if ((NumericalTypes.getBestFloatingPointRepresentation(l) & //
-          NumericalTypes.IS_FLOAT) == 0) {
+              NumericalTypes.IS_FLOAT) == 0) {
             break tryFloats;
           }
           floatData[i] = l;
@@ -752,7 +784,7 @@ public final class MatrixBuilder implements IAggregate {
     @Override
     final _Array _append(final long v, final int size) {
       if ((NumericalTypes.getTypes(v) & //
-      NumericalTypes.IS_FLOAT) == 0) {
+          NumericalTypes.IS_FLOAT) == 0) {
         return this._append(((double) v), size);
       }
       return this._append(((float) v), size);
@@ -791,7 +823,7 @@ public final class MatrixBuilder implements IAggregate {
       }
 
       if ((NumericalTypes.getTypes(v) & //
-      NumericalTypes.IS_FLOAT) != 0) {
+          NumericalTypes.IS_FLOAT) != 0) {
         return this._append(((float) v), size);
       }
 
@@ -922,7 +954,7 @@ public final class MatrixBuilder implements IAggregate {
         for (i = size; (--i) >= 0;) {
           val = intData[i];
           if ((NumericalTypes.getBestFloatingPointRepresentation(val) //
-          & NumericalTypes.IS_FLOAT) == 0) {
+              & NumericalTypes.IS_FLOAT) == 0) {
             break tryFloats;
           }
           floatData[i] = val;

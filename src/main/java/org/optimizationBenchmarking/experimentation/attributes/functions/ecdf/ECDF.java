@@ -1,6 +1,8 @@
 package org.optimizationBenchmarking.experimentation.attributes.functions.ecdf;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,6 +47,7 @@ import org.optimizationBenchmarking.utils.math.statistics.parameters.ArithmeticM
 import org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameter;
 import org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameterParser;
 import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
+import org.optimizationBenchmarking.utils.parallel.Execute;
 import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -449,7 +452,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
    *          the logger
    * @return the raw matrix
    */
-  private final IMatrix __computeInstanceRuns(final IInstanceRuns data,
+  final IMatrix _computeInstanceRuns(final IInstanceRuns data,
       final Logger logger) {
     final _List list;
     final DimensionTransformation xIn, yIn;
@@ -466,52 +469,58 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     }
 
     xIn = this.getXAxisTransformation();
-    try (final TransformationFunction xInFunc = xIn.use(data)) {
-      yIn = this.getYAxisInputTransformation();
+    yIn = this.getYAxisInputTransformation();
+    synchronized (yIn) {
       try (final TransformationFunction yInFunc = yIn.use(data)) {
-        yOut = this.getYAxisOutputTransformation();
-        try (final TransformationFunction yOutFunc = yOut.use(data)) {
 
-          timeDim = xIn.getDimension();
-          goalDim = yIn.getDimension();
+        timeDim = xIn.getDimension();
+        goalDim = yIn.getDimension();
 
-          if (goalDim.getDataType().isInteger()
-              && yInFunc.isLongArithmeticAccurate()) {
-            if (timeDim.getDataType().isInteger()) {
-              list = new _LongTimeLongGoal(timeDim, goalDim,
-                  this.m_criterion, yInFunc, this.m_goalValueLong);
-            } else {
-              list = new _DoubleTimeLongGoal(timeDim, goalDim,
-                  this.m_criterion, yInFunc, this.m_goalValueLong);
-            }
+        if (goalDim.getDataType().isInteger()
+            && yInFunc.isLongArithmeticAccurate()) {
+          if (timeDim.getDataType().isInteger()) {
+            list = new _LongTimeLongGoal(timeDim, goalDim,
+                this.m_criterion, yInFunc, this.m_goalValueLong);
           } else {
-            if (timeDim.getDataType().isInteger()) {
-              list = new _LongTimeDoubleGoal(timeDim, goalDim,
-                  this.m_criterion, yInFunc, this.m_goalValueDouble);
-            } else {
-              list = new _DoubleTimeDoubleGoal(timeDim, goalDim,
-                  this.m_criterion, yInFunc, this.m_goalValueDouble);
-            }
+            list = new _DoubleTimeLongGoal(timeDim, goalDim,
+                this.m_criterion, yInFunc, this.m_goalValueLong);
           }
-
-          for (final IRun run : data.getData()) {
-            list._addRun(run);
+        } else {
+          if (timeDim.getDataType().isInteger()) {
+            list = new _LongTimeDoubleGoal(timeDim, goalDim,
+                this.m_criterion, yInFunc, this.m_goalValueDouble);
+          } else {
+            list = new _DoubleTimeDoubleGoal(timeDim, goalDim,
+                this.m_criterion, yInFunc, this.m_goalValueDouble);
           }
+        }
 
-          result = list._toMatrix(xInFunc, yOutFunc);
-
-          if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-            if (name == null) {
-              name = this.getNameForLogging(data);
-            }
-            logger.finer("Finished computing the " + name + //$NON-NLS-1$
-                ", resulting in a " + result.m() + '*' + result.n() + //$NON-NLS-1$
-                " matrix.");//$NON-NLS-1$
-          }
-
-          return result;
+        for (final IRun run : data.getData()) {
+          list._addRun(run);
         }
       }
+
+      synchronized (xIn) {
+        try (final TransformationFunction xInFunc = xIn.use(data)) {
+          yOut = this.getYAxisOutputTransformation();
+          synchronized (yOut) {
+            try (final TransformationFunction yOutFunc = yOut.use(data)) {
+              result = list._toMatrix(xInFunc, yOutFunc);
+            }
+          }
+        }
+      }
+
+      if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+        if (name == null) {
+          name = this.getNameForLogging(data);
+        }
+        logger.finer("Finished computing the " + name + //$NON-NLS-1$
+            ", resulting in a " + result.m() + '*' + result.n() + //$NON-NLS-1$
+            " matrix.");//$NON-NLS-1$
+      }
+
+      return result;
     }
   }
 
@@ -524,11 +533,14 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
    *          the logger
    * @return the aggregated data
    */
+  @SuppressWarnings("unchecked")
   private final IMatrix __computeExperiment(final IExperiment data,
       final Logger logger) {
     final IMatrix[] matrices;
     final ArrayListView<? extends IInstanceRuns> runs;
     final IMatrix result;
+    final Execute executor;
+    final Future<IMatrix>[] tasks;
     String name;
     int i;
 
@@ -541,11 +553,16 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
 
     runs = data.getData();
     i = runs.size();
-    matrices = new IMatrix[i];
+    tasks = new Future[i];
+    executor = Execute.parallel();
 
     for (; (--i) >= 0;) {
-      matrices[i] = this.__computeInstanceRuns(runs.get(i), logger);
+      tasks[i] = executor.execute(//
+          new __ComputeInstanceRuns(runs.get(i), logger));
     }
+
+    matrices = new IMatrix[tasks.length];
+    Execute.join(tasks, matrices, 0, true);
 
     result = this.m_aggregate.aggregate2D(matrices, 0, 1,
         Identity.INSTANCE);
@@ -576,8 +593,10 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
    */
   private final IMatrix __computeExperimentSet(final IExperimentSet data,
       final Logger logger) {
-    final ArrayList<IMatrix> matrices;
+    final IMatrix[] matrices;
+    final ArrayList<Future<IMatrix>> tasks;
     final IMatrix result;
+    final Execute execute;
     String name;
 
     if ((logger != null) && (logger.isLoggable(Level.FINER))) {
@@ -587,12 +606,16 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
       name = null;
     }
 
-    matrices = new ArrayList<>();
+    tasks = new ArrayList<>();
+    execute = Execute.parallel();
     for (final IExperiment exp : data.getData()) {
       for (final IInstanceRuns irs : exp.getData()) {
-        matrices.add(this.__computeInstanceRuns(irs, logger));
+        tasks.add(execute.execute(new __ComputeInstanceRuns(irs, logger)));
       }
     }
+
+    matrices = new IMatrix[tasks.size()];
+    Execute.join(tasks, matrices, 0, true);
 
     result = this.m_aggregate.aggregate2D(matrices, 0, 1,
         Identity.INSTANCE);
@@ -617,7 +640,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
       final Logger logger) {
 
     if (data instanceof IInstanceRuns) {
-      return this.__computeInstanceRuns(((IInstanceRuns) data), logger);
+      return this._computeInstanceRuns(((IInstanceRuns) data), logger);
     }
     if (data instanceof IExperiment) {
       return this.__computeExperiment(((IExperiment) data), logger);
@@ -848,6 +871,34 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
       }
 
       return bibBuilder.getResult();
+    }
+  }
+
+  /** compute the matrix for a given set of instance runs */
+  private final class __ComputeInstanceRuns implements Callable<IMatrix> {
+    /** the instance runs */
+    private final IInstanceRuns m_runs;
+    /** the logger */
+    private final Logger m_logger;
+
+    /**
+     * compute
+     *
+     * @param runs
+     *          the runs
+     * @param logger
+     *          the logger
+     */
+    __ComputeInstanceRuns(final IInstanceRuns runs, final Logger logger) {
+      super();
+      this.m_runs = runs;
+      this.m_logger = logger;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMatrix call() {
+      return ECDF.this._computeInstanceRuns(this.m_runs, this.m_logger);
     }
   }
 }

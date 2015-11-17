@@ -1,6 +1,9 @@
 package org.optimizationBenchmarking.experimentation.evaluation.impl.all.function;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,6 +49,7 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.ranking.RankingStrategy;
 import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
+import org.optimizationBenchmarking.utils.parallel.Execute;
 import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -726,7 +730,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
    * @param styles
    *          the style set
    */
-  private final void __drawChart(final ILineChart2D chart,
+  final void _drawChart(final ILineChart2D chart,
       final ExperimentSetFunctions data, final boolean showLineTitles,
       final boolean showAxisTitles, final StyleSet styles) {
     String title;
@@ -1025,6 +1029,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
    *          the logger
    * @return the actual label of the created figure
    */
+  @SuppressWarnings("resource")
   protected ILabel renderPlots(final FunctionData data,
       final ISectionBody body, final StyleSet styles,
       final Logger logger) {
@@ -1032,8 +1037,11 @@ public abstract class FunctionJob extends ExperimentSetJob {
     final String mainPath;
     final IClustering clustering;
     final ArrayListView<ExperimentSetFunctions> allFunctions;
+    final __DrawChart[] tasks;
     ExperimentSetFunctions experimentSetFunctions;
     ICluster cluster;
+    IFigure curFigure;
+    ILineChart2D curChart;
     String path;
     int size, index;
 
@@ -1090,7 +1098,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
         try (final ILineChart2D lines = figure.lineChart2D()) {
           lines.setLegendMode(ELegendMode.SHOW_COMPLETE_LEGEND);
-          this.__drawChart(lines, experimentSetFunctions, true,
+          this._drawChart(lines, experimentSetFunctions, true,
               this.m_showAxisTitles, styles);
         }
 
@@ -1104,24 +1112,23 @@ public abstract class FunctionJob extends ExperimentSetJob {
           this.renderFigureSeriesCaption(data, caption);
         }
 
+        tasks = new __DrawChart[size];
         index = 0;
 
         if (this.m_makeLegendFigure) {
           path = (mainPath + "_legend"); //$NON-NLS-1$
 
           this.__logFigure(logger, (++index), size);
-          try (final IFigure figure = figureSeries
-              .figure(data.getLegendLabel(), path)) {
 
-            try (final IComplexText caption = figure.caption()) {
-              this.renderLegendCaption(data, caption);
-            }
-            try (final ILineChart2D lines = figure.lineChart2D()) {
-              lines.setLegendMode(ELegendMode.CHART_IS_LEGEND);
-              this.__drawChart(lines, allFunctions.get(0), true, true,
-                  styles);
-            }
+          curFigure = figureSeries.figure(data.getLegendLabel(), path);
+
+          try (final IComplexText caption = curFigure.caption()) {
+            this.renderLegendCaption(data, caption);
           }
+          curChart = curFigure.lineChart2D();
+          curChart.setLegendMode(ELegendMode.CHART_IS_LEGEND);
+          tasks[index - 1] = new __DrawChart(curFigure, curChart,
+              allFunctions.get(0), true, true, styles);
         }
 
         for (final ExperimentSetFunctions experimentSetFunctions2 : data
@@ -1134,25 +1141,23 @@ public abstract class FunctionJob extends ExperimentSetJob {
           }
 
           this.__logFigure(logger, (++index), size);
-          try (final IFigure figure = figureSeries
-              .figure(experimentSetFunctions2.getLabel(), path)) {
+          curFigure = figureSeries
+              .figure(experimentSetFunctions2.getLabel(), path);
 
-            try (final IComplexText caption = figure.caption()) {
-              this.renderSubFigureCaption(experimentSetFunctions2,
-                  caption);
-            }
-
-            try (final ILineChart2D lines = figure.lineChart2D()) {
-              lines.setLegendMode(this.m_makeLegendFigure//
-                  ? ELegendMode.HIDE_COMPLETE_LEGEND//
-                  : ELegendMode.SHOW_COMPLETE_LEGEND);
-              this.__drawChart(lines, experimentSetFunctions2,
-                  (!(this.m_makeLegendFigure)),
-                  (!(this.m_makeLegendFigure)), styles);
-            }
+          try (final IComplexText caption = curFigure.caption()) {
+            this.renderSubFigureCaption(experimentSetFunctions2, caption);
           }
 
+          curChart = curFigure.lineChart2D();
+          curChart.setLegendMode(this.m_makeLegendFigure//
+              ? ELegendMode.HIDE_COMPLETE_LEGEND//
+              : ELegendMode.SHOW_COMPLETE_LEGEND);
+          tasks[index - 1] = new __DrawChart(curFigure, curChart,
+              experimentSetFunctions2, (!(this.m_makeLegendFigure)),
+              (!(this.m_makeLegendFigure)), styles);
         }
+
+        Execute.parallelAndWait().execute(null, tasks);
 
         ret = figureSeries.getLabel();
       }
@@ -1329,64 +1334,68 @@ public abstract class FunctionJob extends ExperimentSetJob {
    *          the label builder
    * @return the data
    */
+  @SuppressWarnings("unchecked")
   private final FunctionData __makeData(final IExperimentSet set,
       final Logger logger, final ILabelBuilder labelBuilder) {
+    final Future<ExperimentSetFunctions>[] tasks;
+    final ArrayListView<? extends ICluster> data;
     final IExperimentSet selected;
-    final IClustering clustering;
-    final int size;
-    final ExperimentSetFunctions[] functions;
-    ArrayList<ExperimentFunction> experimentSetTemp;
-    ArrayList<ExperimentSetFunctions> clustersTemp;
+    final Execute execute;
+    IClustering clustering;
+    ExperimentSetFunctions[] functions, temp;
     ExperimentSetFunctions experimentSetFunctions;
     ILabel figure, legend;
+    int size, i;
 
     selected = OnlySharedInstances.INSTANCE.get(set, logger);
 
-    experimentSetTemp = new ArrayList<>();
+    computeFunctions: {
+      if (this.m_clusterer != null) {
 
-    if (this.m_clusterer != null) {
-
-      if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-        logger.finer("Now computing clustering of data according to " //$NON-NLS-1$
-            + this.m_clusterer);
-      }
-      clustering = this.m_clusterer.get(selected, logger);
-      if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-        logger.finer("Finished computing clustering of data " //$NON-NLS-1$
-            + this.m_clusterer + " into " + //$NON-NLS-1$
-            ((clustering != null) ? clustering.getData().size() : 0)
-            + " clusters.");//$NON-NLS-1$
-      }
-      if (clustering == null) {
-        throw new IllegalStateException(//
-            "Clustering cannot be null.");//$NON-NLS-1$
-      }
-
-      clustersTemp = new ArrayList<>();
-      for (final ICluster cluster : clustering.getData()) {
-        experimentSetFunctions = this.__makeFunctions(cluster, cluster,
-            experimentSetTemp, logger);
-        if (experimentSetFunctions != null) {
-          clustersTemp.add(experimentSetFunctions);
+        if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+          logger.finer("Now computing clustering of data according to " //$NON-NLS-1$
+              + this.m_clusterer);
         }
+        clustering = this.m_clusterer.get(selected, logger);
+        if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+          logger.finer("Finished computing clustering of data " //$NON-NLS-1$
+              + this.m_clusterer + " into " + //$NON-NLS-1$
+              ((clustering != null) ? clustering.getData().size() : 0)
+              + " clusters.");//$NON-NLS-1$
+        }
+        if (clustering == null) {
+          throw new IllegalStateException(//
+              "Clustering cannot be null.");//$NON-NLS-1$
+        }
+
+        data = clustering.getData();
+        size = data.size();
+        if (size > 1) {
+          tasks = new Future[size];
+          execute = Execute.parallel();
+          for (i = size; (--i) >= 0;) {
+            tasks[i] = execute
+                .execute(new __MakeFunctions(data.get(i), logger));
+          }
+          functions = new ExperimentSetFunctions[size];
+          size = Execute.join(tasks, functions, 0, true);
+          if (size < functions.length) {
+            temp = new ExperimentSetFunctions[size];
+            System.arraycopy(functions, 0, temp, 0, size);
+            functions = temp;
+          }
+          break computeFunctions;
+        }
+
+        // clustering with size 1 == original data, fallthrough
       }
-    } else {
-      experimentSetFunctions = this.__makeFunctions(selected, null,
-          experimentSetTemp, logger);
+      clustering = null;
+      experimentSetFunctions = this._makeFunctions(selected, null, logger);
       if (experimentSetFunctions == null) {
         return null;
       }
-      clustering = null;
-      clustersTemp = new ArrayList<>();
-      clustersTemp.add(experimentSetFunctions);
+      functions = new ExperimentSetFunctions[] { experimentSetFunctions };
     }
-
-    size = clustersTemp.size();
-    if (size <= 0) {
-      return null;
-    }
-
-    functions = clustersTemp.toArray(new ExperimentSetFunctions[size]);
 
     figure = labelBuilder.createLabel(ELabelType.FIGURE);
     makeSubLabels: {
@@ -1400,7 +1409,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
         }
       } else {
         legend = null;
-        if (size == 1) {
+        if (functions.length == 1) {
           functions[0]._setLabel(figure);
           break makeSubLabels;
         }
@@ -1478,21 +1487,33 @@ public abstract class FunctionJob extends ExperimentSetJob {
    *          the experiment set
    * @param cluster
    *          the cluster
-   * @param temp
-   *          a temporary list to store the results
    * @param logger
    *          the logger
    * @return the functions, or {@code null} if none were defined
    */
-  private final ExperimentSetFunctions __makeFunctions(
-      final IExperimentSet set, final ICluster cluster,
-      final ArrayList<ExperimentFunction> temp, final Logger logger) {
+  @SuppressWarnings("unchecked")
+  final ExperimentSetFunctions _makeFunctions(final IExperimentSet set,
+      final ICluster cluster, final Logger logger) {
+    final Future<IMatrix>[] tasks;
+    final Execute execute;
+    final ArrayListView<? extends IExperiment> data;
     final FiniteMinimumAggregate minX, minY;
     final FiniteMaximumAggregate maxX, maxY;
     final IAggregate minMaxX, minMaxY;
-    final int size;
+    final ArrayList<ExperimentFunction> temp;
+    int index, size;
     IMatrix function;
     ExperimentSetFunctions retVal;
+
+    execute = Execute.parallel();
+    data = set.getData();
+    size = data.size();
+    tasks = new Future[size];
+
+    for (index = 0; index < size; index++) {
+      tasks[index] = execute.execute(//
+          this.m_function.getter(data.get(index), logger));
+    }
 
     minX = new FiniteMinimumAggregate();
     minY = new FiniteMinimumAggregate();
@@ -1500,9 +1521,19 @@ public abstract class FunctionJob extends ExperimentSetJob {
     maxY = new FiniteMaximumAggregate();
     minMaxX = CompoundAggregate.combine(minX, maxX);
     minMaxY = CompoundAggregate.combine(minY, maxY);
+    temp = new ArrayList<>(size);
 
-    for (final IExperiment experiment : set.getData()) {
-      function = this.m_function.get(experiment, logger);
+    for (index = 0; index < size; index++) {
+      try {
+        function = tasks[index].get();
+      } catch (ExecutionException | InterruptedException error) {
+        throw new IllegalStateException((//
+            "Computation of function " //$NON-NLS-1$
+                + this.m_function + " failed for experiment " + //$NON-NLS-1$
+                data.get(index).getName()),
+            error);
+      }
+      tasks[index] = null;
       if (function == null) {
         continue;
       }
@@ -1514,7 +1545,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
       }
       function.aggregateColumn(0, minMaxX);
       function.aggregateColumn(1, minMaxY);
-      temp.add(new ExperimentFunction(experiment, function));
+      temp.add(new ExperimentFunction(data.get(index), function));
     }
 
     retVal = null;
@@ -1528,8 +1559,95 @@ public abstract class FunctionJob extends ExperimentSetJob {
             temp.toArray(new ExperimentFunction[size]));
       }
     }
-    temp.clear();
     return retVal;
   }
 
+  /** An internal task for making a set of functions */
+  private final class __MakeFunctions
+      implements Callable<ExperimentSetFunctions> {
+
+    /** the experiment set data */
+    private final ICluster m_data;
+
+    /** the logger */
+    private final Logger m_logger;
+
+    /**
+     * Create the function computer
+     *
+     * @param data
+     *          the data
+     * @param logger
+     *          the logger
+     */
+    __MakeFunctions(final ICluster data, final Logger logger) {
+      super();
+      this.m_data = data;
+      this.m_logger = logger;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final ExperimentSetFunctions call() {
+      return FunctionJob.this._makeFunctions(this.m_data, this.m_data,
+          this.m_logger);
+    }
+  }
+
+  /** draw a chart */
+  private final class __DrawChart implements Runnable {
+
+    /** the figure */
+    private final IFigure m_figure;
+    /** the chart */
+    private final ILineChart2D m_chart;
+    /** the data */
+    private final ExperimentSetFunctions m_data;
+    /** the line titles */
+    private final boolean m_showLineTitles;
+    /** the axis */
+    private final boolean m_showAxisTitles_;
+    /** the styles */
+    private final StyleSet m_styles;
+
+    /**
+     * draw the line chart
+     *
+     * @param figure
+     *          the figure
+     * @param chart
+     *          the chart
+     * @param data
+     *          the data to paint
+     * @param showAxisTitles
+     *          should we show the axis titles?
+     * @param showLineTitles
+     *          should line titles be shown?
+     * @param styles
+     *          the style set
+     */
+    __DrawChart(final IFigure figure, final ILineChart2D chart,
+        final ExperimentSetFunctions data, final boolean showLineTitles,
+        final boolean showAxisTitles, final StyleSet styles) {
+      super();
+      this.m_figure = figure;
+      this.m_chart = chart;
+      this.m_data = data;
+      this.m_showLineTitles = showLineTitles;
+      this.m_showAxisTitles_ = showAxisTitles;
+      this.m_styles = styles;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final void run() {
+      try (final IFigure figure = this.m_figure) {
+        try (final ILineChart2D chart = this.m_chart) {
+          FunctionJob.this._drawChart(chart, this.m_data,
+              this.m_showLineTitles, this.m_showAxisTitles_,
+              this.m_styles);
+        }
+      }
+    }
+  }
 }
