@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +17,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.processing.ConcatenatedMatrix;
+import org.optimizationBenchmarking.utils.parallel.Execute;
 
 /**
  * <p>
@@ -78,34 +81,35 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
    *          the logger
    * @return the fingerprints
    */
-  private static final IMatrix[] __instanceFingerprints(
-      final IInstance inst, final Logger logger) {
+  @SuppressWarnings("unchecked")
+  static final IMatrix[] _instanceFingerprints(final IInstance inst,
+      final Logger logger) {
     final ArrayListView<? extends IExperiment> experiments;
     final int size;
-    IMatrix[] res, resize;
+    final Future<IMatrix>[] tasks;
+    final Execute execute;
+    IMatrix[] res;
     int i, count;
 
     experiments = inst.getOwner().getOwner().getData();
 
     size = experiments.size();
-    res = new IMatrix[size];
+    tasks = new Future[size];
+    execute = Execute.parallel();
     count = 0;
     loop: for (i = 0; i < size; i++) {
       for (final IInstanceRuns runs : experiments.get(i).getData()) {
         if (runs.getInstance() == inst) {
-          res[count++] = _InstanceRunsFingerprint.INSTANCE.get(runs,
-              logger);
+          tasks[count++] = execute.execute(
+              _InstanceRunsFingerprint.INSTANCE.getter(runs, logger));
           continue loop;
         }
       }
     }
 
-    if (res.length == count) {
-      return res;
-    }
-    resize = new IMatrix[count];
-    System.arraycopy(res, 0, resize, 0, count);
-    return resize;
+    res = new IMatrix[count];
+    Execute.join(tasks, res, 0, true);
+    return res;
   }
 
   /**
@@ -117,18 +121,26 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
    *          the logger
    * @return the fingerprints
    */
-  private static final IMatrix[] __experimentFingerprints(
+  @SuppressWarnings("unchecked")
+  static final IMatrix[] _experimentFingerprints(
       final IExperiment experiment, final Logger logger) {
     final ArrayListView<? extends IInstanceRuns> runs;
+    final Future<IMatrix>[] tasks;
+    final Execute executor;
     IMatrix[] res;
     int i;
 
     runs = experiment.getData();
     i = runs.size();
-    res = new IMatrix[i];
+    tasks = new Future[i];
+    executor = Execute.parallel();
     for (; (--i) >= 0;) {
-      res[i] = _InstanceRunsFingerprint.INSTANCE.get(runs.get(i), logger);
+      tasks[i] = executor.execute(
+          _InstanceRunsFingerprint.INSTANCE.getter(runs.get(i), logger));
     }
+
+    res = new IMatrix[tasks.length];
+    Execute.join(tasks, res, 0, true);
     return res;
   }
 
@@ -309,6 +321,7 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unchecked")
   @Override
   protected final IMatrix compute(final IDataElement data,
       final Logger logger) {
@@ -316,6 +329,8 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     final IMatrix result;
     final IInstance instance;
     final IExperiment experiment;
+    final Execute executor;
+    final Future<IMatrix[]>[] tasks;
     ArrayListView<? extends IInstance> instances;
     ArrayListView<? extends IExperiment> experiments;
     int i;
@@ -328,7 +343,7 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     if (data instanceof IInstance) {
       instance = ((IInstance) data);
       result = new ConcatenatedMatrix(new IMatrix[][] { //
-          Fingerprint.__instanceFingerprints(instance, logger) });
+          Fingerprint._instanceFingerprints(instance, logger) });
       if ((logger != null) && (logger.isLoggable(Level.FINER))) {
         logger.finer(((((("The fingerprint for benchmark instance '" + //$NON-NLS-1$
             instance.getName())
@@ -341,12 +356,15 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     if (data instanceof IInstanceSet) {
       instances = ((IInstanceSet) data).getData();
       i = instances.size();
-
-      matrices = new IMatrix[i][];
+      tasks = new Future[i];
+      executor = Execute.parallel();
       for (; (--i) >= 0;) {
-        matrices[i] = Fingerprint.__instanceFingerprints(instances.get(i),
-            logger);
+        tasks[i] = executor.execute(//
+            new __InstanceFingerprints(instances.get(i), logger));
       }
+
+      matrices = new IMatrix[tasks.length][];
+      Execute.join(tasks, matrices, 0, true);
       result = Fingerprint.__removeUselessCols(//
           new ConcatenatedMatrix(matrices));
 
@@ -362,7 +380,7 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     if (data instanceof IExperiment) {
       experiment = ((IExperiment) data);
       result = new ConcatenatedMatrix(new IMatrix[][] { //
-          Fingerprint.__experimentFingerprints(experiment, logger) });
+          Fingerprint._experimentFingerprints(experiment, logger) });
 
       if ((logger != null) && (logger.isLoggable(Level.FINER))) {
         logger.finer(((((//
@@ -378,11 +396,15 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     if (data instanceof IExperimentSet) {
       experiments = ((IExperimentSet) data).getData();
       i = experiments.size();
-      matrices = new IMatrix[i][];
+      tasks = new Future[i];
+      executor = Execute.parallel();
       for (; (--i) >= 0;) {
-        matrices[i] = Fingerprint.__experimentFingerprints(//
-            experiments.get(i), logger);
+        tasks[i] = executor.execute(new __ExperimentFingerprints(//
+            experiments.get(i), logger));
       }
+      matrices = new IMatrix[tasks.length][];
+      Execute.join(tasks, matrices, 0, true);
+
       result = Fingerprint.__removeUselessCols(//
           new ConcatenatedMatrix(matrices));
 
@@ -398,5 +420,64 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     throw new IllegalArgumentException(
         "Sorry, cannot compute fingerprint of " //$NON-NLS-1$
             + data);
+  }
+
+  /** the instance fingerprints getter */
+  private static final class __InstanceFingerprints
+      implements Callable<IMatrix[]> {
+    /** the instance */
+    private final IInstance m_inst;
+    /** the logger */
+    private final Logger m_logger;
+
+    /**
+     * create the instance fingerprint getter
+     *
+     * @param inst
+     *          the instance
+     * @param logger
+     *          the logger
+     */
+    __InstanceFingerprints(final IInstance inst, final Logger logger) {
+      super();
+      this.m_inst = inst;
+      this.m_logger = logger;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMatrix[] call() {
+      return Fingerprint._instanceFingerprints(this.m_inst, this.m_logger);
+    }
+  }
+
+  /** the experiment fingerprints getter */
+  private static final class __ExperimentFingerprints
+      implements Callable<IMatrix[]> {
+    /** the experiment */
+    private final IExperiment m_inst;
+    /** the logger */
+    private final Logger m_logger;
+
+    /**
+     * create the experiment fingerprint getter
+     *
+     * @param inst
+     *          the experiment
+     * @param logger
+     *          the logger
+     */
+    __ExperimentFingerprints(final IExperiment inst, final Logger logger) {
+      super();
+      this.m_inst = inst;
+      this.m_logger = logger;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMatrix[] call() {
+      return Fingerprint._experimentFingerprints(this.m_inst,
+          this.m_logger);
+    }
   }
 }

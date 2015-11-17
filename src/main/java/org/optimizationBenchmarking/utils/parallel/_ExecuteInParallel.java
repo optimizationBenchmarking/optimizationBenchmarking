@@ -12,7 +12,7 @@ import java.util.concurrent.Future;
  * {@link java.util.concurrent.ForkJoinPool}, the submitted tasks will
  * actually be submitted to said pool.
  */
-final class _ExecuteInParallel extends JobExecutor {
+final class _ExecuteInParallel extends Execute {
 
   /** the globally shared instance */
   static final _ExecuteInParallel INSTANCE = new _ExecuteInParallel();
@@ -25,13 +25,13 @@ final class _ExecuteInParallel extends JobExecutor {
   /** {@inheritDoc} */
   @Override
   public final <T> Future<T> execute(final T result, final Runnable job) {
-    return JobExecutor._executeInParallel(result, job);
+    return Execute._executeInParallel(result, job);
   }
 
   /** {@inheritDoc} */
   @Override
   public final <T> Future<T> execute(final Callable<T> job) {
-    return JobExecutor._executeInParallel(job);
+    return Execute._executeInParallel(job);
   }
 
   /** {@inheritDoc} */
@@ -48,7 +48,7 @@ final class _ExecuteInParallel extends JobExecutor {
       return new Future[0];
     }
 
-    if ((pool = JobExecutor._getForkJoinPool()) != null) {
+    if ((pool = Execute._getForkJoinPool()) != null) {
       tasks = new ForkJoinTask[i];
       for (; (--i) >= 0;) {
         tasks[i] = pool.submit(jobs[i], result);
@@ -57,7 +57,7 @@ final class _ExecuteInParallel extends JobExecutor {
     }
 
     // not in a fork-join pool: execute as is
-    return JobExecutor._executeImmediately(result, jobs);
+    return Execute._executeImmediately(result, jobs);
   }
 
   /** {@inheritDoc} */
@@ -73,7 +73,7 @@ final class _ExecuteInParallel extends JobExecutor {
       return new Future[0];
     }
 
-    if ((pool = JobExecutor._getForkJoinPool()) != null) {
+    if ((pool = Execute._getForkJoinPool()) != null) {
       tasks = new ForkJoinTask[i];
       for (; (--i) >= 0;) {
         tasks[i] = pool.submit(jobs[i]);
@@ -82,7 +82,7 @@ final class _ExecuteInParallel extends JobExecutor {
     }
 
     // not in a fork-join pool: execute as is
-    return JobExecutor._executeImmediately(jobs);
+    return Execute._executeImmediately(jobs);
   }
 
   /** {@inheritDoc} */
@@ -95,14 +95,14 @@ final class _ExecuteInParallel extends JobExecutor {
     i = jobs.length;
     if (i > 0) {
 
-      if ((pool = JobExecutor._getForkJoinPool()) != null) {
+      if ((pool = Execute._getForkJoinPool()) != null) {
         for (; (--i) >= 0;) {
           dest.add(pool.submit(jobs[i], result));
         }
       }
 
       // not in a fork-join pool: execute as is
-      JobExecutor._executeImmediately(dest, result, jobs);
+      Execute._executeImmediately(dest, result, jobs);
     }
   }
 
@@ -117,14 +117,14 @@ final class _ExecuteInParallel extends JobExecutor {
     i = jobs.length;
     if (i > 0) {
 
-      if ((pool = JobExecutor._getForkJoinPool()) != null) {
+      if ((pool = Execute._getForkJoinPool()) != null) {
         for (; (--i) >= 0;) {
           dest.add(pool.submit(jobs[i]));
         }
       }
 
       // not in a fork-join pool: execute as is
-      JobExecutor._executeImmediately(dest, jobs);
+      Execute._executeImmediately(dest, jobs);
     }
   }
 }

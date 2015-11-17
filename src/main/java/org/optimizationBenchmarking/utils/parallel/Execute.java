@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.parallel;
 
 import java.util.Collection;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.Future;
@@ -17,10 +18,10 @@ import java.util.concurrent.Future;
  * parallelism. (Currently, only {@link java.util.concurrent.ForkJoinPool}s
  * can be detected.)
  */
-public abstract class JobExecutor {
+public abstract class Execute {
 
   /** create */
-  JobExecutor() {
+  Execute() {
     super();
   }
 
@@ -142,7 +143,7 @@ public abstract class JobExecutor {
    * @return the job executor which executes jobs in the sequence but
    *         potentially in parallel to the current thread.
    */
-  public static final JobExecutor sequential() {
+  public static final Execute sequential() {
     return _ExecuteSequentially.INSTANCE;
   }
 
@@ -155,7 +156,7 @@ public abstract class JobExecutor {
    * @return the job executor which executes jobs in the sequence and waits
    *         until all of them are done
    */
-  public static final JobExecutor sequentialAndWait() {
+  public static final Execute sequentialAndWait() {
     return _ExecuteSequentiallyAndWait.INSTANCE;
   }
 
@@ -181,7 +182,7 @@ public abstract class JobExecutor {
    * @return the job executor which executes jobs in the maximally parallel
    *         fashion.
    */
-  public static final JobExecutor parallel() {
+  public static final Execute parallel() {
     return _ExecuteInParallel.INSTANCE;
   }
 
@@ -208,8 +209,71 @@ public abstract class JobExecutor {
    * @return the job executor which executes jobs in parallel but waits
    *         until they are done.
    */
-  public static final JobExecutor parallelAndWait() {
+  public static final Execute parallelAndWait() {
     return _ExecuteInParallelAndWait.INSTANCE;
+  }
+
+  /**
+   * Wait for a set of {@code tasks} to complete and store their results
+   * into the {@code destination} array starting at index {@code start}.
+   * {@code null} futures are ignored. The tasks array is pruned in the
+   * process, i.e., filled with {@code null}. If any of the tasks fails
+   * with an exception, the remaining tasks will be ignored (and also not
+   * be set to {@code null}).
+   *
+   * @param tasks
+   *          the tasks to wait for
+   * @param destination
+   *          the destination array to receive the results
+   * @param start
+   *          the start index in the destination array
+   * @param ignoreNullResults
+   *          should {@code null} results returned by the
+   *          {@linkplain java.util.concurrent.Future#get() futures} be
+   *          ignored, i.e., not stored in {@code destination}?
+   * @return the index of the next element in {@code destination} right
+   *         after the last copied result item
+   * @param <X>
+   *          the data type of the destination array's elements
+   * @param <Y>
+   *          the result type of the future tasks
+   */
+  public static final <X, Y extends X> int join(final Future<Y>[] tasks,
+      final X[] destination, final int start,
+      final boolean ignoreNullResults) {
+    Throwable cause;
+    Future<Y> future;
+    Y result;
+    int index, futureIndex;
+
+    index = start;
+    futureIndex = 0;
+    for (futureIndex = 0; futureIndex < tasks.length; futureIndex++) {
+      future = tasks[futureIndex];
+      if (future != null) {
+        tasks[futureIndex] = null;
+        try {
+          result = future.get();
+        } catch (final ExecutionException executionError) {
+          cause = executionError.getCause();
+          if (cause instanceof RuntimeException) {
+            throw ((RuntimeException) cause);
+          }
+          throw new RuntimeException("The execution of a task failed.", //$NON-NLS-1$
+              executionError);
+        } catch (final InterruptedException interrupted) {
+          throw new RuntimeException(
+              "A task was interrupted before completing.", //$NON-NLS-1$
+              interrupted);
+        }
+        if ((result == null) && ignoreNullResults) {
+          continue;
+        }
+        destination[index++] = result;
+      }
+    }
+
+    return index;
   }
 
   /**
@@ -273,11 +337,11 @@ public abstract class JobExecutor {
       final Runnable job) {
     final ForkJoinPool pool;
 
-    if ((pool = JobExecutor._getForkJoinPool()) != null) {
+    if ((pool = Execute._getForkJoinPool()) != null) {
       return pool.submit(job, result);
     }
 
-    return JobExecutor._executeImmediately(result, job);
+    return Execute._executeImmediately(result, job);
   }
 
   /**
@@ -294,11 +358,11 @@ public abstract class JobExecutor {
   static final <T> Future<T> _executeInParallel(final Callable<T> job) {
     final ForkJoinPool pool;
 
-    if ((pool = JobExecutor._getForkJoinPool()) != null) {
+    if ((pool = Execute._getForkJoinPool()) != null) {
       return pool.submit(job);
     }
 
-    return JobExecutor._executeImmediately(job);
+    return Execute._executeImmediately(job);
   }
 
   /**

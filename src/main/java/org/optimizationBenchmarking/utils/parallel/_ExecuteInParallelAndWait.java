@@ -16,7 +16,7 @@ import java.util.concurrent.RecursiveAction;
  * executed in a sequential fashion. The {@code execute} methods will
  * always wait until all tasks have completed (or failed).
  */
-final class _ExecuteInParallelAndWait extends JobExecutor {
+final class _ExecuteInParallelAndWait extends Execute {
 
   /** the globally shared instance */
   static final _ExecuteInParallelAndWait INSTANCE = new _ExecuteInParallelAndWait();
@@ -29,13 +29,13 @@ final class _ExecuteInParallelAndWait extends JobExecutor {
   /** {@inheritDoc} */
   @Override
   public final <T> Future<T> execute(final T result, final Runnable job) {
-    return JobExecutor._executeImmediately(result, job);
+    return Execute._executeImmediately(result, job);
   }
 
   /** {@inheritDoc} */
   @Override
   public final <T> Future<T> execute(final Callable<T> job) {
-    return JobExecutor._executeImmediately(job);
+    return Execute._executeImmediately(job);
   }
 
   /** {@inheritDoc} */
@@ -55,10 +55,10 @@ final class _ExecuteInParallelAndWait extends JobExecutor {
       }
       case 1: {// one task: execute directly
         return new Future[] { //
-            JobExecutor._executeImmediately(result, jobs[0]) };
+            Execute._executeImmediately(result, jobs[0]) };
       }
       default: {// multiple tasks:let's see what to do
-        if ((pool = JobExecutor._getForkJoinPool()) != null) {
+        if ((pool = Execute._getForkJoinPool()) != null) {
 
           tasks = new ForkJoinTask[i];
           for (; (--i) >= 0;) {
@@ -70,7 +70,7 @@ final class _ExecuteInParallelAndWait extends JobExecutor {
         }
 
         // not in a fork-join pool: execute as is
-        return JobExecutor._executeImmediately(result, jobs);
+        return Execute._executeImmediately(result, jobs);
       }
     }
   }
@@ -129,10 +129,10 @@ final class _ExecuteInParallelAndWait extends JobExecutor {
       }
       case 1: {// one task: execute directly
         return new Future[] { //
-            JobExecutor._executeImmediately(jobs[0]) };
+            Execute._executeImmediately(jobs[0]) };
       }
       default: {// multiple tasks:let's see what to do
-        if ((pool = JobExecutor._getForkJoinPool()) != null) {
+        if ((pool = Execute._getForkJoinPool()) != null) {
 
           tasks = new ForkJoinTask[i];
           for (; (--i) >= 0;) {
@@ -144,7 +144,7 @@ final class _ExecuteInParallelAndWait extends JobExecutor {
         }
 
         // not in a fork-join pool: execute as is
-        return JobExecutor._executeImmediately(jobs);
+        return Execute._executeImmediately(jobs);
       }
     }
   }
@@ -164,11 +164,11 @@ final class _ExecuteInParallelAndWait extends JobExecutor {
         return;
       }
       case 1: {// one task: execute directly
-        dest.add(JobExecutor._executeImmediately(result, jobs[0]));
+        dest.add(Execute._executeImmediately(result, jobs[0]));
         return;
       }
       default: {// multiple tasks:let's see what to do
-        if ((pool = JobExecutor._getForkJoinPool()) != null) {
+        if ((pool = Execute._getForkJoinPool()) != null) {
 
           tasks = new ForkJoinTask[i];
           for (; (--i) >= 0;) {
@@ -180,7 +180,7 @@ final class _ExecuteInParallelAndWait extends JobExecutor {
         }
 
         // not in a fork-join pool: execute as is
-        JobExecutor._executeImmediately(dest, result, jobs);
+        Execute._executeImmediately(dest, result, jobs);
       }
     }
   }
@@ -200,11 +200,11 @@ final class _ExecuteInParallelAndWait extends JobExecutor {
         return;
       }
       case 1: {// one task: execute directly
-        dest.add(JobExecutor._executeImmediately(jobs[0]));
+        dest.add(Execute._executeImmediately(jobs[0]));
         return;
       }
       default: {// multiple tasks:let's see what to do
-        if ((pool = JobExecutor._getForkJoinPool()) != null) {
+        if ((pool = Execute._getForkJoinPool()) != null) {
 
           tasks = new ForkJoinTask[i];
           for (; (--i) >= 0;) {
@@ -216,7 +216,7 @@ final class _ExecuteInParallelAndWait extends JobExecutor {
         }
 
         // not in a fork-join pool: execute as is
-        JobExecutor._executeImmediately(dest, jobs);
+        Execute._executeImmediately(dest, jobs);
       }
     }
   }

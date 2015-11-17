@@ -13,7 +13,7 @@ import java.util.concurrent.Future;
  * behaves no different from executing all tasks in the current thread, one
  * by one.
  */
-final class _ExecuteSequentiallyAndWait extends JobExecutor {
+final class _ExecuteSequentiallyAndWait extends Execute {
 
   /** the globally shared instance */
   static final _ExecuteSequentiallyAndWait INSTANCE = new _ExecuteSequentiallyAndWait();
@@ -26,34 +26,34 @@ final class _ExecuteSequentiallyAndWait extends JobExecutor {
   /** {@inheritDoc} */
   @Override
   public final <T> Future<T> execute(final T result, final Runnable job) {
-    return JobExecutor._executeImmediately(result, job);
+    return Execute._executeImmediately(result, job);
   }
 
   /** {@inheritDoc} */
   @Override
   public final <T> Future<T> execute(final Callable<T> job) {
-    return JobExecutor._executeImmediately(job);
+    return Execute._executeImmediately(job);
   }
 
   /** {@inheritDoc} */
   @Override
   public final <T> Future<T>[] execute(final T result,
       final Runnable... jobs) {
-    return JobExecutor._executeImmediately(result, jobs);
+    return Execute._executeImmediately(result, jobs);
   }
 
   /** {@inheritDoc} */
   @SuppressWarnings("unchecked")
   @Override
   public final <T> Future<T>[] execute(final Callable<T>... jobs) {
-    return JobExecutor._executeImmediately(jobs);
+    return Execute._executeImmediately(jobs);
   }
 
   /** {@inheritDoc} */
   @Override
   public final <T> void execute(final Collection<Future<? super T>> dest,
       final T result, final Runnable... jobs) {
-    JobExecutor._executeImmediately(dest, result, jobs);
+    Execute._executeImmediately(dest, result, jobs);
   }
 
   /** {@inheritDoc} */
@@ -61,6 +61,6 @@ final class _ExecuteSequentiallyAndWait extends JobExecutor {
   @Override
   public final <T> void execute(final Collection<Future<? super T>> dest,
       final Callable<T>... jobs) {
-    JobExecutor._executeImmediately(dest, jobs);
+    Execute._executeImmediately(dest, jobs);
   }
 }
