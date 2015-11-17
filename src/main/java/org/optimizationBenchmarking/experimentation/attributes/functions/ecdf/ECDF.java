@@ -539,7 +539,6 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     final IMatrix[] matrices;
     final ArrayListView<? extends IInstanceRuns> runs;
     final IMatrix result;
-    final Execute executor;
     final Future<IMatrix>[] tasks;
     String name;
     int i;
@@ -554,10 +553,9 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     runs = data.getData();
     i = runs.size();
     tasks = new Future[i];
-    executor = Execute.parallel();
 
     for (; (--i) >= 0;) {
-      tasks[i] = executor.execute(//
+      tasks[i] = Execute.parallel(//
           new __ComputeInstanceRuns(runs.get(i), logger));
     }
 
@@ -596,7 +594,6 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     final IMatrix[] matrices;
     final ArrayList<Future<IMatrix>> tasks;
     final IMatrix result;
-    final Execute execute;
     String name;
 
     if ((logger != null) && (logger.isLoggable(Level.FINER))) {
@@ -607,10 +604,10 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     }
 
     tasks = new ArrayList<>();
-    execute = Execute.parallel();
     for (final IExperiment exp : data.getData()) {
       for (final IInstanceRuns irs : exp.getData()) {
-        tasks.add(execute.execute(new __ComputeInstanceRuns(irs, logger)));
+        tasks.add(Execute.parallel(//
+            new __ComputeInstanceRuns(irs, logger)));
       }
     }
 

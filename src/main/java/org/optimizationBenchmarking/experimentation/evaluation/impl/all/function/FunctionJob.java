@@ -1157,7 +1157,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
               (!(this.m_makeLegendFigure)), styles);
         }
 
-        Execute.parallelAndWait().execute(null, tasks);
+        Execute.parallelAndWait(null, tasks);
 
         ret = figureSeries.getLabel();
       }
@@ -1340,7 +1340,6 @@ public abstract class FunctionJob extends ExperimentSetJob {
     final Future<ExperimentSetFunctions>[] tasks;
     final ArrayListView<? extends ICluster> data;
     final IExperimentSet selected;
-    final Execute execute;
     IClustering clustering;
     ExperimentSetFunctions[] functions, temp;
     ExperimentSetFunctions experimentSetFunctions;
@@ -1372,10 +1371,9 @@ public abstract class FunctionJob extends ExperimentSetJob {
         size = data.size();
         if (size > 1) {
           tasks = new Future[size];
-          execute = Execute.parallel();
           for (i = size; (--i) >= 0;) {
-            tasks[i] = execute
-                .execute(new __MakeFunctions(data.get(i), logger));
+            tasks[i] = Execute.parallel(//
+                new __MakeFunctions(data.get(i), logger));
           }
           functions = new ExperimentSetFunctions[size];
           size = Execute.join(tasks, functions, 0, true);
@@ -1495,7 +1493,6 @@ public abstract class FunctionJob extends ExperimentSetJob {
   final ExperimentSetFunctions _makeFunctions(final IExperimentSet set,
       final ICluster cluster, final Logger logger) {
     final Future<IMatrix>[] tasks;
-    final Execute execute;
     final ArrayListView<? extends IExperiment> data;
     final FiniteMinimumAggregate minX, minY;
     final FiniteMaximumAggregate maxX, maxY;
@@ -1505,13 +1502,12 @@ public abstract class FunctionJob extends ExperimentSetJob {
     IMatrix function;
     ExperimentSetFunctions retVal;
 
-    execute = Execute.parallel();
     data = set.getData();
     size = data.size();
     tasks = new Future[size];
 
     for (index = 0; index < size; index++) {
-      tasks[index] = execute.execute(//
+      tasks[index] = Execute.parallel(//
           this.m_function.getter(data.get(index), logger));
     }
 

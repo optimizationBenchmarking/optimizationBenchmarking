@@ -87,7 +87,6 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     final ArrayListView<? extends IExperiment> experiments;
     final int size;
     final Future<IMatrix>[] tasks;
-    final Execute execute;
     IMatrix[] res;
     int i, count;
 
@@ -95,12 +94,11 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
 
     size = experiments.size();
     tasks = new Future[size];
-    execute = Execute.parallel();
     count = 0;
     loop: for (i = 0; i < size; i++) {
       for (final IInstanceRuns runs : experiments.get(i).getData()) {
         if (runs.getInstance() == inst) {
-          tasks[count++] = execute.execute(
+          tasks[count++] = Execute.parallel(
               _InstanceRunsFingerprint.INSTANCE.getter(runs, logger));
           continue loop;
         }
@@ -126,16 +124,14 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
       final IExperiment experiment, final Logger logger) {
     final ArrayListView<? extends IInstanceRuns> runs;
     final Future<IMatrix>[] tasks;
-    final Execute executor;
     IMatrix[] res;
     int i;
 
     runs = experiment.getData();
     i = runs.size();
     tasks = new Future[i];
-    executor = Execute.parallel();
     for (; (--i) >= 0;) {
-      tasks[i] = executor.execute(
+      tasks[i] = Execute.parallel(
           _InstanceRunsFingerprint.INSTANCE.getter(runs.get(i), logger));
     }
 
@@ -329,7 +325,6 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
     final IMatrix result;
     final IInstance instance;
     final IExperiment experiment;
-    final Execute executor;
     final Future<IMatrix[]>[] tasks;
     ArrayListView<? extends IInstance> instances;
     ArrayListView<? extends IExperiment> experiments;
@@ -357,9 +352,8 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
       instances = ((IInstanceSet) data).getData();
       i = instances.size();
       tasks = new Future[i];
-      executor = Execute.parallel();
       for (; (--i) >= 0;) {
-        tasks[i] = executor.execute(//
+        tasks[i] = Execute.parallel(//
             new __InstanceFingerprints(instances.get(i), logger));
       }
 
@@ -397,9 +391,8 @@ public final class Fingerprint extends Attribute<IDataElement, IMatrix> {
       experiments = ((IExperimentSet) data).getData();
       i = experiments.size();
       tasks = new Future[i];
-      executor = Execute.parallel();
       for (; (--i) >= 0;) {
-        tasks[i] = executor.execute(new __ExperimentFingerprints(//
+        tasks[i] = Execute.parallel(new __ExperimentFingerprints(//
             experiments.get(i), logger));
       }
       matrices = new IMatrix[tasks.length][];

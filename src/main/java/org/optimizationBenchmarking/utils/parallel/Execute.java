@@ -6,6 +6,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.Future;
+import java.util.concurrent.RecursiveAction;
+
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 /**
  * A job executor is a bridge from "normal" Java to code running in an
@@ -18,199 +21,11 @@ import java.util.concurrent.Future;
  * parallelism. (Currently, only {@link java.util.concurrent.ForkJoinPool}s
  * can be detected.)
  */
-public abstract class Execute {
+public final class Execute {
 
-  /** create */
-  Execute() {
-    super();
-  }
-
-  /**
-   * Execute a {@link java.lang.Runnable}.
-   *
-   * @param job
-   *          the job to run
-   * @param result
-   *          the result to be returned by the
-   *          {@link java.util.concurrent.Future} representing the job
-   * @return {@link java.util.concurrent.Future} representing the job in
-   *         execution
-   * @param <T>
-   *          the data type of the result
-   */
-  public abstract <T> Future<T> execute(final T result,
-      final Runnable job);
-
-  /**
-   * Execute a {@link java.util.concurrent.Callable}.
-   *
-   * @param job
-   *          the job to run
-   * @return {@link java.util.concurrent.Future} representing the job in
-   *         execution
-   * @param <T>
-   *          the data type of the result
-   */
-  public abstract <T> Future<T> execute(final Callable<T> job);
-
-  /**
-   * Execute a set of {@link java.lang.Runnable}s.
-   *
-   * @param jobs
-   *          the jobs to run
-   * @param result
-   *          the result to be returned by the
-   *          {@link java.util.concurrent.Future}s representing the jobs
-   * @return {@link java.util.concurrent.Future} representing the jobs in
-   *         execution
-   * @param <T>
-   *          the data type of the result
-   */
-  public abstract <T> Future<T>[] execute(final T result,
-      final Runnable... jobs);
-
-  /**
-   * Execute a {@link java.util.concurrent.Callable}s.
-   *
-   * @param jobs
-   *          the jobs to run
-   * @return {@link java.util.concurrent.Future} representing the job in
-   *         execution
-   * @param <T>
-   *          the data type of the result
-   */
-  @SuppressWarnings("unchecked")
-  public abstract <T> Future<T>[] execute(final Callable<T>... jobs);
-
-  /**
-   * Execute a set of {@link java.lang.Runnable}s and append the
-   * corresponding {@link java.util.concurrent.Future}s to a
-   * {@java.util.Collection collection}.
-   *
-   * @param dest
-   *          the collection to receive the
-   *          {@link java.util.concurrent.Future}s
-   * @param jobs
-   *          the jobs to run
-   * @param result
-   *          the result to be returned by the
-   *          {@link java.util.concurrent.Future}s representing the jobs
-   * @param <T>
-   *          the data type of the result
-   */
-  public abstract <T> void execute(Collection<Future<? super T>> dest,
-      final T result, final Runnable... jobs);
-
-  /**
-   * Execute a {@link java.util.concurrent.Callable}s and append the
-   * corresponding {@link java.util.concurrent.Future}s to a
-   * {@java.util.Collection collection}
-   *
-   * @param dest
-   *          the collection to receive the
-   *          {@link java.util.concurrent.Future}s
-   * @param jobs
-   *          the jobs to run
-   * @param <T>
-   *          the data type of the result
-   */
-  @SuppressWarnings("unchecked")
-  public abstract <T> void execute(Collection<Future<? super T>> dest,
-      final Callable<T>... jobs);
-
-  /**
-   * <p>
-   * Obtain the job executor which executes jobs in a sequential fashion,
-   * but potentially in parallel to the current thread. In other words, if
-   * multiple jobs are submitted to {@link #execute(Callable...)} or
-   * {@link #execute(Object, Runnable...)}, these jobs will be executed in
-   * the order in which they were submitted. The job at index {@code i+1}
-   * will not begin before the job at index {@code i} has finished.
-   * However, the jobs may run in parallel to the current thread and the
-   * {@code execute} methods all may return before the jobs have completed.
-   * If jobs are submitted via multiple, different calls to the
-   * {@code execute} methods, no guarantee is provided about their
-   * execution order.
-   * </p>
-   * <p>
-   * It should be noted that no guarantee is provided that the jobs are
-   * actually executed in parallel: This may happen only if we currently
-   * are in an {@link java.util.concurrent.ForkJoinPool} or have access to
-   * such a pool. Otherwise, the jobs may or may not just be executed in
-   * sequence.
-   * </p>
-   *
-   * @return the job executor which executes jobs in the sequence but
-   *         potentially in parallel to the current thread.
-   */
-  public static final Execute sequential() {
-    return _ExecuteSequentially.INSTANCE;
-  }
-
-  /**
-   * Obtain the job executor which executes jobs in a sequential fashion
-   * and waits until they have finished. In other words, this executor may
-   * as well run them all one-by-one in the current thread (and it actually
-   * does exactly this).
-   *
-   * @return the job executor which executes jobs in the sequence and waits
-   *         until all of them are done
-   */
-  public static final Execute sequentialAndWait() {
-    return _ExecuteSequentiallyAndWait.INSTANCE;
-  }
-
-  /**
-   * <p>
-   * Obtain the job executor which executes jobs in a parallel fashion. In
-   * other words, if multiple jobs are submitted to
-   * {@link #execute(Callable...)} or {@link #execute(Object, Runnable...)}
-   * , these jobs may be executed in any order. The job at index
-   * {@code i+1} may begin and even finish before the job at index
-   * {@code i} has been executed or finished. The jobs may run in parallel
-   * to the current thread and the {@code execute} methods all may return
-   * before the jobs have completed.
-   * </p>
-   * <p>
-   * It should be noted that no guarantee is provided that the jobs are
-   * actually executed in parallel: This may happen only if we currently
-   * are in an {@link java.util.concurrent.ForkJoinPool} or have access to
-   * such a pool. Otherwise, the jobs may or may not just be executed in
-   * sequence.
-   * </p>
-   *
-   * @return the job executor which executes jobs in the maximally parallel
-   *         fashion.
-   */
-  public static final Execute parallel() {
-    return _ExecuteInParallel.INSTANCE;
-  }
-
-  /**
-   * <p>
-   * Obtain the job executor which executes jobs in a parallel fashion and
-   * waits until they are completed. In other words, if multiple jobs are
-   * submitted to {@link #execute(Callable...)} or
-   * {@link #execute(Object, Runnable...)} , these jobs may be executed in
-   * any order in parallel. The job at index {@code i+1} may begin and even
-   * finish before the job at index {@code i} has been executed or
-   * finished. The jobs may run in parallel to the current thread but the
-   * {@code execute} methods will not return until all jobs supplied to
-   * them have finished, i.e., have been completed (or failed).
-   * </p>
-   * <p>
-   * It should be noted that no guarantee is provided that the jobs are
-   * actually executed in parallel: This may happen only if we currently
-   * are in an {@link java.util.concurrent.ForkJoinPool} or have access to
-   * such a pool. Otherwise, the jobs may or may not just be executed in
-   * sequence.
-   * </p>
-   *
-   * @return the job executor which executes jobs in parallel but waits
-   *         until they are done.
-   */
-  public static final Execute parallelAndWait() {
-    return _ExecuteInParallelAndWait.INSTANCE;
+  /** the forbidden constructor */
+  private Execute() {
+    ErrorUtils.doNotCall();
   }
 
   /**
@@ -347,7 +162,7 @@ public abstract class Execute {
    * @param <T>
    *          the data type of the result
    */
-  static final <T> Future<T> _executeImmediately(final T result,
+  private static final <T> Future<T> __executeImmediately(final T result,
       final Runnable job) {
     try {
       job.run();
@@ -368,7 +183,8 @@ public abstract class Execute {
    * @param <T>
    *          the data type of the result
    */
-  static final <T> Future<T> _executeImmediately(final Callable<T> job) {
+  private static final <T> Future<T> __executeImmediately(
+      final Callable<T> job) {
     try {
       return _ImmediateFuture._create(job.call());
     } catch (final Throwable error) {
@@ -377,8 +193,12 @@ public abstract class Execute {
   }
 
   /**
-   * Execute a {@link java.lang.Runnable} in parallel without waiting for
-   * its termination.
+   * Try to execute a {@link java.lang.Runnable} in parallel without
+   * waiting for its termination. This method does not guarantee that the
+   * task will actually be executed in parallel. If parallel execution is
+   * not possible, because, e.g., no
+   * {@link java.util.concurrent.ForkJoinPool} could be detected, the task
+   * is directly executed.
    *
    * @param job
    *          the job to run
@@ -390,20 +210,24 @@ public abstract class Execute {
    * @param <T>
    *          the data type of the result
    */
-  static final <T> Future<T> _executeInParallel(final T result,
+  public static final <T> Future<T> parallel(final T result,
       final Runnable job) {
     final ForkJoinPool pool;
 
-    if ((pool = Execute._getForkJoinPool()) != null) {
+    if ((pool = Execute.__getForkJoinPool()) != null) {
       return pool.submit(job, result);
     }
 
-    return Execute._executeImmediately(result, job);
+    return Execute.__executeImmediately(result, job);
   }
 
   /**
-   * Execute a {@link java.util.concurrent.Callable} in parallel without
-   * waiting for its termination.
+   * Try to execute a {@link java.util.concurrent.Callable} in parallel
+   * without waiting for its termination. This method does not guarantee
+   * that the task will actually be executed in parallel. If parallel
+   * execution is not possible, because, e.g., no
+   * {@link java.util.concurrent.ForkJoinPool} could be detected, the task
+   * is directly executed.
    *
    * @param job
    *          the job to run
@@ -412,14 +236,172 @@ public abstract class Execute {
    * @param <T>
    *          the data type of the result
    */
-  static final <T> Future<T> _executeInParallel(final Callable<T> job) {
+  public static final <T> Future<T> parallel(final Callable<T> job) {
     final ForkJoinPool pool;
 
-    if ((pool = Execute._getForkJoinPool()) != null) {
+    if ((pool = Execute.__getForkJoinPool()) != null) {
       return pool.submit(job);
     }
 
-    return Execute._executeImmediately(job);
+    return Execute.__executeImmediately(job);
+  }
+
+  /**
+   * Execute a set of {@link java.lang.Runnable}s in parallel. No guarantee
+   * about the execution order is given. This method does not guarantee
+   * that the task will actually be executed in parallel. If parallel
+   * execution is not possible, because, e.g., no
+   * {@link java.util.concurrent.ForkJoinPool} could be detected, the task
+   * is directly executed.
+   *
+   * @param jobs
+   *          the jobs to run
+   * @param result
+   *          the result to be returned by the
+   *          {@link java.util.concurrent.Future}s representing the jobs
+   * @return {@link java.util.concurrent.Future} representing the jobs in
+   *         execution
+   * @param <T>
+   *          the data type of the result
+   */
+  @SuppressWarnings("unchecked")
+  public static final <T> Future<T>[] parallel(final T result,
+      final Runnable... jobs) {
+    final ForkJoinTask<T>[] tasks;
+    final ForkJoinPool pool;
+    int i;
+
+    i = jobs.length;
+    if (i <= 0) {// no tasks, we can quit directly
+      return new Future[0];
+    }
+
+    if ((pool = Execute.__getForkJoinPool()) != null) {
+      tasks = new ForkJoinTask[i];
+      for (; (--i) >= 0;) {
+        tasks[i] = pool.submit(jobs[i], result);
+      }
+      return tasks;
+    }
+
+    // not in a fork-join pool: execute as is
+    return Execute.__executeImmediately(result, jobs);
+  }
+
+  /**
+   * Execute a {@link java.util.concurrent.Callable}s in parallel. No
+   * guarantee about the execution order is given. This method does not
+   * guarantee that the task will actually be executed in parallel. If
+   * parallel execution is not possible, because, e.g., no
+   * {@link java.util.concurrent.ForkJoinPool} could be detected, the task
+   * is directly executed.
+   *
+   * @param jobs
+   *          the jobs to run
+   * @return {@link java.util.concurrent.Future} representing the job in
+   *         execution
+   * @param <T>
+   *          the data type of the result
+   */
+  @SuppressWarnings("unchecked")
+  public static final <T> Future<T>[] parallel(final Callable<T>... jobs) {
+    final ForkJoinTask<T>[] tasks;
+    final ForkJoinPool pool;
+    int i;
+
+    i = jobs.length;
+    if (i <= 0) {// no tasks, we can quit directly
+      return new Future[0];
+    }
+
+    if ((pool = Execute.__getForkJoinPool()) != null) {
+      tasks = new ForkJoinTask[i];
+      for (; (--i) >= 0;) {
+        tasks[i] = pool.submit(jobs[i]);
+      }
+      return tasks;
+    }
+
+    // not in a fork-join pool: execute as is
+    return Execute.__executeImmediately(jobs);
+  }
+
+  /**
+   * Execute a set of {@link java.lang.Runnable}s in parallel and append
+   * the corresponding {@link java.util.concurrent.Future}s to a
+   * {@java.util.Collection collection}. No guarantee about the execution
+   * order is given. This method does not guarantee that the task will
+   * actually be executed in parallel. If parallel execution is not
+   * possible, because, e.g., no {@link java.util.concurrent.ForkJoinPool}
+   * could be detected, the task is directly executed.
+   *
+   * @param dest
+   *          the collection to receive the
+   *          {@link java.util.concurrent.Future}s
+   * @param jobs
+   *          the jobs to run
+   * @param result
+   *          the result to be returned by the
+   *          {@link java.util.concurrent.Future}s representing the jobs
+   * @param <T>
+   *          the data type of the result
+   */
+  public static final <T> void parallel(
+      final Collection<Future<? super T>> dest, final T result,
+      final Runnable... jobs) {
+    final ForkJoinPool pool;
+    int i;
+
+    i = jobs.length;
+    if (i > 0) {
+
+      if ((pool = Execute.__getForkJoinPool()) != null) {
+        for (; (--i) >= 0;) {
+          dest.add(pool.submit(jobs[i], result));
+        }
+      }
+
+      // not in a fork-join pool: execute as is
+      Execute.__executeImmediately(dest, result, jobs);
+    }
+  }
+
+  /**
+   * Execute a {@link java.util.concurrent.Callable}s in parallel and
+   * append the corresponding {@link java.util.concurrent.Future}s to a
+   * {@java.util.Collection collection}. No guarantee about the execution
+   * order is given. This method does not guarantee that the task will
+   * actually be executed in parallel. If parallel execution is not
+   * possible, because, e.g., no {@link java.util.concurrent.ForkJoinPool}
+   * could be detected, the task is directly executed.
+   *
+   * @param dest
+   *          the collection to receive the
+   *          {@link java.util.concurrent.Future}s
+   * @param jobs
+   *          the jobs to run
+   * @param <T>
+   *          the data type of the result
+   */
+  @SuppressWarnings("unchecked")
+  public static final <T> void parallel(
+      final Collection<Future<? super T>> dest,
+      final Callable<T>... jobs) {
+    final ForkJoinPool pool;
+    int i;
+
+    i = jobs.length;
+    if (i > 0) {
+
+      if ((pool = Execute.__getForkJoinPool()) != null) {
+        for (; (--i) >= 0;) {
+          dest.add(pool.submit(jobs[i]));
+        }
+      }
+
+      // not in a fork-join pool: execute as is
+      Execute.__executeImmediately(dest, jobs);
+    }
   }
 
   /**
@@ -436,7 +418,7 @@ public abstract class Execute {
    *          the data type of the result
    */
   @SuppressWarnings("unchecked")
-  static final <T> Future<T>[] _executeImmediately(final T result,
+  private static final <T> Future<T>[] __executeImmediately(final T result,
       final Runnable... jobs) {
     final Future<T>[] results;
     final int length;
@@ -472,7 +454,7 @@ public abstract class Execute {
    *          the data type of the result
    */
   @SuppressWarnings("unchecked")
-  static final <T> Future<T>[] _executeImmediately(
+  private static final <T> Future<T>[] __executeImmediately(
       final Callable<T>... jobs) {
     final Future<T>[] results;
     final int length;
@@ -507,7 +489,7 @@ public abstract class Execute {
    * @param <T>
    *          the data type of the result
    */
-  static final <T> void _executeImmediately(
+  private static final <T> void __executeImmediately(
       final Collection<Future<? super T>> dest, final T result,
       final Runnable... jobs) {
     final int length;
@@ -544,7 +526,7 @@ public abstract class Execute {
    *          the data type of the result
    */
   @SuppressWarnings("unchecked")
-  static final <T> void _executeImmediately(
+  private static final <T> void __executeImmediately(
       final Collection<Future<? super T>> dest,
       final Callable<T>... jobs) {
     final int length;
@@ -562,6 +544,256 @@ public abstract class Execute {
   }
 
   /**
+   * Execute a set of {@link java.lang.Runnable}s in parallel and wait
+   * until all of them have terminated. No guarantee about the execution
+   * order is given. This method does not guarantee that the task will
+   * actually be executed in parallel. If parallel execution is not
+   * possible, because, e.g., no {@link java.util.concurrent.ForkJoinPool}
+   * could be detected, the task is directly executed.
+   *
+   * @param jobs
+   *          the jobs to run
+   * @param result
+   *          the result to be returned by the
+   *          {@link java.util.concurrent.Future}s representing the jobs
+   * @return {@link java.util.concurrent.Future} representing the jobs in
+   *         execution
+   * @param <T>
+   *          the data type of the result
+   */
+  @SuppressWarnings("unchecked")
+  public static final <T> Future<T>[] parallelAndWait(final T result,
+      final Runnable... jobs) {
+    final ForkJoinTask<T>[] tasks;
+    final ForkJoinPool pool;
+    int i;
+
+    i = jobs.length;
+    switch (i) {
+
+      case 0: {// no tasks, we can quit directly
+        return new Future[0];
+      }
+      case 1: {// one task: execute directly
+        return new Future[] { //
+            Execute.__executeImmediately(result, jobs[0]) };
+      }
+      default: {// multiple tasks:let's see what to do
+        if ((pool = Execute.__getForkJoinPool()) != null) {
+
+          tasks = new ForkJoinTask[i];
+          for (; (--i) >= 0;) {
+            tasks[i] = ForkJoinTask.adapt(jobs[i], result);
+          }
+
+          Execute.__executeTasks(tasks, pool);
+          return tasks;
+        }
+
+        // not in a fork-join pool: execute as is
+        return Execute.__executeImmediately(result, jobs);
+      }
+    }
+  }
+
+  /**
+   * Execute the tasks if we are inside a
+   * {@link java.util.concurrent.ForkJoinPool}.
+   *
+   * @param tasks
+   *          the tasks
+   */
+  static final void _executeTasksInPool(final ForkJoinTask<?>[] tasks) {
+    if (tasks.length == 2) {
+      ForkJoinTask.invokeAll(tasks[0], tasks[1]);
+    } else {
+      ForkJoinTask.invokeAll(tasks);
+    }
+  }
+
+  /**
+   * Execute the tasks if we are or are not inside a
+   * {@link java.util.concurrent.ForkJoinPool}.
+   *
+   * @param tasks
+   *          the tasks
+   * @param pool
+   *          the fork join pool
+   */
+  @SuppressWarnings("unused")
+  private static final void __executeTasks(final ForkJoinTask<?>[] tasks,
+      final ForkJoinPool pool) {
+    if (ForkJoinTask.inForkJoinPool()) {
+      Execute._executeTasksInPool(tasks);
+    } else {
+      try {
+        pool.submit(new _ParallelTask(tasks)).get();
+      } catch (ExecutionException | InterruptedException ignore) {
+        // we ignore this one
+      }
+    }
+  }
+
+  /**
+   * Execute a {@link java.util.concurrent.Callable}s in parallel and wait
+   * until all of them have terminated. No guarantee about the execution
+   * order is given. This method does not guarantee that the task will
+   * actually be executed in parallel. If parallel execution is not
+   * possible, because, e.g., no {@link java.util.concurrent.ForkJoinPool}
+   * could be detected, the task is directly executed.
+   *
+   * @param jobs
+   *          the jobs to run
+   * @return {@link java.util.concurrent.Future} representing the job in
+   *         execution
+   * @param <T>
+   *          the data type of the result
+   */
+  @SuppressWarnings("unchecked")
+  public static final <T> Future<T>[] parallelAndWait(
+      final Callable<T>... jobs) {
+    final ForkJoinTask<T>[] tasks;
+    final ForkJoinPool pool;
+    int i;
+
+    i = jobs.length;
+    switch (i) {
+
+      case 0: {// no tasks, we can quit directly
+        return new Future[0];
+      }
+      case 1: {// one task: execute directly
+        return new Future[] { //
+            Execute.__executeImmediately(jobs[0]) };
+      }
+      default: {// multiple tasks:let's see what to do
+        if ((pool = Execute.__getForkJoinPool()) != null) {
+
+          tasks = new ForkJoinTask[i];
+          for (; (--i) >= 0;) {
+            tasks[i] = ForkJoinTask.adapt(jobs[i]);
+          }
+
+          Execute.__executeTasks(tasks, pool);
+          return tasks;
+        }
+
+        // not in a fork-join pool: execute as is
+        return Execute.__executeImmediately(jobs);
+      }
+    }
+  }
+
+  /**
+   * Execute a set of {@link java.lang.Runnable}s in parallel and wait
+   * until all of them have terminated. Append the corresponding
+   * {@link java.util.concurrent.Future}s to a
+   * {@java.util.Collection collection}. No guarantee about the execution
+   * order is given. This method does not guarantee that the task will
+   * actually be executed in parallel. If parallel execution is not
+   * possible, because, e.g., no {@link java.util.concurrent.ForkJoinPool}
+   * could be detected, the task is directly executed.
+   *
+   * @param dest
+   *          the collection to receive the
+   *          {@link java.util.concurrent.Future}s
+   * @param jobs
+   *          the jobs to run
+   * @param result
+   *          the result to be returned by the
+   *          {@link java.util.concurrent.Future}s representing the jobs
+   * @param <T>
+   *          the data type of the result
+   */
+  @SuppressWarnings("unchecked")
+  public static final <T> void parallelAndWait(
+      final Collection<Future<? super T>> dest, final T result,
+      final Runnable... jobs) {
+    final ForkJoinTask<T>[] tasks;
+    final ForkJoinPool pool;
+    int i;
+
+    i = jobs.length;
+    switch (i) {
+      case 0: {// no tasks, we can quit directly
+        return;
+      }
+      case 1: {// one task: execute directly
+        dest.add(Execute.__executeImmediately(result, jobs[0]));
+        return;
+      }
+      default: {// multiple tasks:let's see what to do
+        if ((pool = Execute.__getForkJoinPool()) != null) {
+
+          tasks = new ForkJoinTask[i];
+          for (; (--i) >= 0;) {
+            dest.add(tasks[i] = ForkJoinTask.adapt(jobs[i], result));
+          }
+
+          Execute.__executeTasks(tasks, pool);
+          return;
+        }
+
+        // not in a fork-join pool: execute as is
+        Execute.__executeImmediately(dest, result, jobs);
+      }
+    }
+  }
+
+  /**
+   * Execute a {@link java.util.concurrent.Callable}s in parallel and wait
+   * until all of them have terminated. Append the corresponding
+   * {@link java.util.concurrent.Future}s to a
+   * {@java.util.Collection collection}. No guarantee about the execution
+   * order is given. This method does not guarantee that the task will
+   * actually be executed in parallel. If parallel execution is not
+   * possible, because, e.g., no {@link java.util.concurrent.ForkJoinPool}
+   * could be detected, the task is directly executed.
+   *
+   * @param dest
+   *          the collection to receive the
+   *          {@link java.util.concurrent.Future}s
+   * @param jobs
+   *          the jobs to run
+   * @param <T>
+   *          the data type of the result
+   */
+  @SuppressWarnings("unchecked")
+  public static final <T> void parallelAndWait(
+      final Collection<Future<? super T>> dest,
+      final Callable<T>... jobs) {
+    final ForkJoinTask<T>[] tasks;
+    final ForkJoinPool pool;
+    int i;
+
+    i = jobs.length;
+    switch (i) {
+      case 0: {// no tasks, we can quit directly
+        return;
+      }
+      case 1: {// one task: execute directly
+        dest.add(Execute.__executeImmediately(jobs[0]));
+        return;
+      }
+      default: {// multiple tasks:let's see what to do
+        if ((pool = Execute.__getForkJoinPool()) != null) {
+
+          tasks = new ForkJoinTask[i];
+          for (; (--i) >= 0;) {
+            dest.add(tasks[i] = ForkJoinTask.adapt(jobs[i]));
+          }
+
+          Execute.__executeTasks(tasks, pool);
+          return;
+        }
+
+        // not in a fork-join pool: execute as is
+        Execute.__executeImmediately(dest, jobs);
+      }
+    }
+  }
+
+  /**
    * Obtain the globally shared, common
    * {@link java.util.concurrent.ForkJoinPool}. Starting in Java 1.8, such
    * a pool exists. If we are under Java 1.8 and such a pool exists, this
@@ -572,7 +804,7 @@ public abstract class Execute {
    *         {@link java.util.concurrent.ForkJoinPool}, or {@code null} if
    *         no such pool exists
    */
-  static final ForkJoinPool _getForkJoinPool() {
+  private static final ForkJoinPool __getForkJoinPool() {
     final ForkJoinPool pool;
 
     pool = ForkJoinTask.getPool();
@@ -580,6 +812,33 @@ public abstract class Execute {
       return pool;
     }
     return __CommonForkJoinPool.COMMON_FORK_JOIN_POOL;
+  }
+
+  /** a task for executing some other tasks in parallel */
+  private static final class _ParallelTask extends RecursiveAction {
+
+    /** the serial version uid */
+    private static final long serialVersionUID = 1L;
+
+    /** the tasks */
+    private final ForkJoinTask<?>[] m_tasks;
+
+    /**
+     * create the parallel task
+     *
+     * @param tasks
+     *          the tasks to execute
+     */
+    _ParallelTask(final ForkJoinTask<?>[] tasks) {
+      super();
+      this.m_tasks = tasks;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected final void compute() {
+      Execute._executeTasksInPool(this.m_tasks);
+    }
   }
 
   /**
