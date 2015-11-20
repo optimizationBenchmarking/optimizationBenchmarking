@@ -21,7 +21,7 @@ import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.fitting.models.LogisticModelWithOffset;
-import org.optimizationBenchmarking.utils.math.fitting.models.PolynomialModel;
+import org.optimizationBenchmarking.utils.math.fitting.models.QuadraticModel;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -56,7 +56,7 @@ public final class FittingExampleDatasets extends TestBase
   private final LogisticModelWithOffset m_timeObjective;
 
   /** the function modeling dimensions of the same type */
-  private final PolynomialModel m_sameType;
+  private final QuadraticModel m_sameType;
 
   /** the internal sorter */
   private final __Sorter m_sorter;
@@ -66,7 +66,7 @@ public final class FittingExampleDatasets extends TestBase
     super();
 
     this.m_timeObjective = new LogisticModelWithOffset();
-    this.m_sameType = new PolynomialModel();
+    this.m_sameType = new QuadraticModel();
     this.m_sorter = new __Sorter();
   }
 

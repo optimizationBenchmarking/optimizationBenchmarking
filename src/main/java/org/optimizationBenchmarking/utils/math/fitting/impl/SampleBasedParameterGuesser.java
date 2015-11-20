@@ -8,8 +8,35 @@ import org.optimizationBenchmarking.utils.math.functions.trigonometric.Hypot;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /**
+ * <p>
  * This is a base class for parameter guessers working on a subset of the
- * data.
+ * data. They should be used multiple times, say a few hundred times, to
+ * obtain good-enough guesses. Guesses are computed based on a very small
+ * number of points, say 2, 3, or 4, usually as same as many points as the
+ * corresponding model has variables. These points are randomly chosen, but
+ * with a bias of being distant from each other according to a randomly
+ * chosen distance measure.
+ * </p>
+ * <p>
+ * The general idea is as follows: Imagine you want to fit the
+ * {@linkplain org.optimizationBenchmarking.utils.math.fitting.models.QuadraticModel
+ * quadratic curve}, {@code a+b*x+c*x^2} through many points. One way to
+ * compute starting values for the parameters {@code a}, {@code b}, and
+ * {@code c} would be to take three points from the data set, maybe one on
+ * the left side (small {@code x} value), one in the middle (medium
+ * {@code x} value), and one on the right side (comparatively large
+ * {@code x} value). We can
+ * {@linkplain org.optimizationBenchmarking.utils.math.PolynomialFitter#findCoefficientsDegree2(double, double, double, double, double, double, double[])
+ * compute} the exact values of {@code a}, {@code b}, and {@code c} of a
+ * quadratic function going through the three points. Of course, since we
+ * only took three points from the data set, our guess may be bad and
+ * strongly depends on the points chosen. However, if we use this guesser a
+ * couple of times and keep the one guess with the smallest error over the
+ * whole data set, we may get a reasonable starting point for fitting. For
+ * fitting polynomials, such a complex procedure may not be necessary. For
+ * more complicated functions, it may be a good idea.
+ * </p>
+ * </p>
  */
 public abstract class SampleBasedParameterGuesser
     implements IParameterGuesser {
@@ -220,9 +247,14 @@ public abstract class SampleBasedParameterGuesser
    *          the matrix to draw from
    * @param random
    *          the random number generator
+   * @param useX
+   *          should we use the {@code x}-coordinate for sorting?
+   * @param useY
+   *          should we use the {@code y}-coordinate for sorting?
    */
   private static final void __drawCandidate(final double[] currentChoice,
-      final int[] indexes, final IMatrix data, final Random random) {
+      final int[] indexes, final IMatrix data, final Random random,
+      final boolean useX, final boolean useY) {
     final int m, n;
     double x, y;
     int i, j, index, uniqueXYAttempt;
@@ -277,10 +309,13 @@ public abstract class SampleBasedParameterGuesser
       currentChoice[j + 1] = y;
     }
 
-    // Now sort the points.
-    for (i = n; (--i) > 0;) {
-      for (j = i; (--j) >= 0;) {
-        SampleBasedParameterGuesser.__compareAndSwap(currentChoice, j, i);
+    if (useX || useY) {
+      // Now sort the points.
+      for (i = n; (--i) > 0;) {
+        for (j = i; (--j) >= 0;) {
+          SampleBasedParameterGuesser.__compareAndSwap(currentChoice, j, i,
+              useX, useY);
+        }
       }
     }
   }
@@ -296,11 +331,15 @@ public abstract class SampleBasedParameterGuesser
    *          the first,smaller index
    * @param j
    *          the second,larger index
+   * @param useX
+   *          should we use the {@code x}-coordinate for sorting?
+   * @param useY
+   *          should we use the {@code y}-coordinate for sorting?
    */
   private static final void __compareAndSwap(final double[] data,
-      final int i, final int j) {
+      final int i, final int j, final boolean useX, final boolean useY) {
     double x1, x2, y1, y2;
-    final int ii, jj, res;
+    final int ii, jj, resX;
 
     ii = (i << 1);
     jj = (j << 1);
@@ -308,22 +347,74 @@ public abstract class SampleBasedParameterGuesser
     x1 = data[ii];
     x2 = data[jj];
 
-    res = EComparison.compareDoubles(x1, x2);
-    if (res < 0) {
-      return;
+    if (useX) {
+      resX = EComparison.compareDoubles(x1, x2);
+      if (resX < 0) {
+        return;
+      }
+    } else {
+      resX = 0;
     }
 
     y1 = data[ii + 1];
     y2 = data[jj + 1];
 
-    if ((res == 0) && (EComparison.compareDoubles(y1, y2) < 0)) {
-      return;
+    if (useY) {
+      if ((resX == 0) && (EComparison.compareDoubles(y1, y2) < 0)) {
+        return;
+      }
     }
 
     data[ii] = x2;
     data[ii + 1] = y2;
     data[jj] = x1;
     data[jj + 1] = y1;
+  }
+
+  /**
+   * Format an {@code x}-coordinate for the distance computation
+   *
+   * @param curX
+   *          the coordinate
+   * @param logScaleX
+   *          the log scale indicator
+   * @return the formatted result
+   */
+  private final double __formatX(final double curX,
+      final boolean logScaleX) {
+    final double d;
+    if (logScaleX) {
+      if (this.m_minX <= 0d) {
+        d = Math.log((curX - this.m_minX) + 1d);
+      } else {
+        d = (Math.log(curX) - this.m_logMinX);
+      }
+      return (d / this.m_logScaleX);
+    }
+    return ((curX - this.m_minX) / this.m_rangeX);
+  }
+
+  /**
+   * Format an {@code y}-coordinate for the distance computation
+   *
+   * @param curY
+   *          the coordinate
+   * @param logScaleY
+   *          the log scale indicator
+   * @return the formatted result
+   */
+  private final double __formatY(final double curY,
+      final boolean logScaleY) {
+    final double d;
+    if (logScaleY) {
+      if (this.m_minY <= 0d) {
+        d = Math.log((curY - this.m_minY) + 1d);
+      } else {
+        d = (Math.log(curY) - this.m_logMinY);
+      }
+      return (d / this.m_logScaleY);
+    }
+    return ((curY - this.m_minY) / this.m_rangeY);
   }
 
   /**
@@ -355,37 +446,8 @@ public abstract class SampleBasedParameterGuesser
     double quality, curX, curY, prevX, prevY;
     int i;
 
-    if (useX) {
-      curX = candidate[0];
-      if (logScaleX) {
-        if (this.m_minX <= 0d) {
-          curX = Math.log((curX - this.m_minX) + 1d);
-        } else {
-          curX = (Math.log(curX) - this.m_logMinX);
-        }
-        curX /= this.m_logScaleX;
-      } else {
-        curX = ((curX - this.m_minX) / this.m_rangeX);
-      }
-    } else {
-      curX = 0d;
-    }
-
-    if (useY) {
-      curY = candidate[1];
-      if (logScaleX) {
-        if (this.m_minY <= 0d) {
-          curY = Math.log((curY - this.m_minY) + 1d);
-        } else {
-          curY = (Math.log(curY) - this.m_logMinY);
-        }
-        curY /= this.m_logScaleY;
-      } else {
-        curY = ((curY - this.m_minY) / this.m_rangeY);
-      }
-    } else {
-      curY = 0d;
-    }
+    curX = (useX ? curX = this.__formatX(candidate[0], logScaleX) : 0d);
+    curY = (useY ? curY = this.__formatY(candidate[1], logScaleY) : 0d);
 
     i = 2;
     quality = Double.POSITIVE_INFINITY;
@@ -393,38 +455,9 @@ public abstract class SampleBasedParameterGuesser
       prevX = curX;
       prevY = curY;
 
-      if (useX) {
-        curX = candidate[i];
-        if (logScaleX) {
-          if (this.m_minX <= 0d) {
-            curX = Math.log((curX - this.m_minX) + 1d);
-          } else {
-            curX = (Math.log(curX) - this.m_logMinX);
-          }
-          curX /= this.m_logScaleX;
-        } else {
-          curX = ((curX - this.m_minX) / this.m_rangeX);
-        }
-      } else {
-        curX = 0d;
-      }
+      curX = (useX ? curX = this.__formatX(candidate[i], logScaleX) : 0d);
       ++i;
-
-      if (useY) {
-        curY = candidate[i];
-        if (logScaleX) {
-          if (this.m_minY <= 0d) {
-            curY = Math.log((curY - this.m_minY) + 1d);
-          } else {
-            curY = (Math.log(curY) - this.m_logMinY);
-          }
-          curY /= this.m_logScaleY;
-        } else {
-          curY = ((curY - this.m_minY) / this.m_rangeY);
-        }
-      } else {
-        curY = 0d;
-      }
+      curY = (useY ? curY = this.__formatY(candidate[i], logScaleY) : 0d);
       ++i;
 
       quality = Math.min(quality, //
@@ -514,18 +547,19 @@ public abstract class SampleBasedParameterGuesser
         for (pointSetChoice = 30; (--pointSetChoice) >= 0;) {
           // Draw a set of points.
           SampleBasedParameterGuesser.__drawCandidate(bestChoice, indexes,
-              data, random);
+              data, random, useX, useY);
           if (useX || useY) {// we do care about the distance
             bestQuality = this.__quality(bestChoice, useX, useY, logScaleX,
                 logScaleY);
             for (pointChoice = 20; (--pointChoice) >= 0;) {
               SampleBasedParameterGuesser.__drawCandidate(currentChoice,
-                  indexes, data, random);
+                  indexes, data, random, useX, useY);
               currentQuality = this.__quality(currentChoice, useX, useY,
                   logScaleX, logScaleY);
               if (currentQuality > bestQuality) {
                 System.arraycopy(currentChoice, 0, bestChoice, 0,
                     bestChoice.length);
+                bestQuality = currentQuality;
               }
             }
           }

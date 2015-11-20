@@ -18,10 +18,10 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * of similarly-typed dimensions (time-time, objective-objective):
  * {@code a+b*x+c*x*x}.
  */
-public final class PolynomialModel extends ParametricUnaryFunction {
+public final class QuadraticModel extends ParametricUnaryFunction {
 
   /** create */
-  public PolynomialModel() {
+  public QuadraticModel() {
     super();
   }
 
