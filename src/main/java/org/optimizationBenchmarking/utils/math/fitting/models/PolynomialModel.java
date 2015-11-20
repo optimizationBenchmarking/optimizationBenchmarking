@@ -1,6 +1,10 @@
-package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
+package org.optimizationBenchmarking.utils.math.fitting.models;
+
+import java.util.Random;
 
 import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.math.PolynomialFitter;
+import org.optimizationBenchmarking.utils.math.fitting.impl.SampleBasedParameterGuesser;
 import org.optimizationBenchmarking.utils.math.fitting.spec.IParameterGuesser;
 import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add3;
@@ -48,7 +52,7 @@ public final class PolynomialModel extends ParametricUnaryFunction {
   @Override
   public final IParameterGuesser createParameterGuesser(
       final IMatrix data) {
-    return new _PolynomialGuesser(data);
+    return new __PolynomialGuesser(data);
   }
 
   /** {@inheritDoc} */
@@ -85,6 +89,49 @@ public final class PolynomialModel extends ParametricUnaryFunction {
             renderer.renderParameter(2, out);
             x.mathRender(mul, renderer);
           }
+        }
+      }
+    }
+  }
+
+  /** A parameter guesser for quadratic polynomials */
+  private static final class __PolynomialGuesser
+      extends SampleBasedParameterGuesser {
+
+    /**
+     * create the guesser
+     *
+     * @param data
+     *          the data
+     */
+    __PolynomialGuesser(final IMatrix data) {
+      super(data, 3);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected final boolean guess(final double[] points,
+        final double[] dest, final Random random) {
+      return PolynomialFitter.findCoefficientsDegree2(points[0], points[1],
+          points[2], points[3], points[4], points[5], dest);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected final boolean fallback(final double[] points,
+        final double[] dest, final Random random) {
+      switch (points.length) {
+        case 4: {
+          return PolynomialFitter.findCoefficientsDegree1(points[0],
+              points[1], points[2], points[3], dest);
+        }
+        case 2: {
+          return PolynomialFitter.findCoefficientsDegree0(points[0],
+              points[1], dest);
+        }
+        default: {
+          this.fallback(dest, random);
+          return true;
         }
       }
     }

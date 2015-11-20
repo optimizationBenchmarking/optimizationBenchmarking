@@ -13,8 +13,6 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
-import org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint.LogisticModel;
-import org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint.PolynomialModel;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
@@ -22,6 +20,8 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
+import org.optimizationBenchmarking.utils.math.fitting.models.LogisticModelWithOffset;
+import org.optimizationBenchmarking.utils.math.fitting.models.PolynomialModel;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -53,7 +53,7 @@ public final class FittingExampleDatasets extends TestBase
   };
 
   /** the function modeling the objective value based on time */
-  private final LogisticModel m_timeObjective;
+  private final LogisticModelWithOffset m_timeObjective;
 
   /** the function modeling dimensions of the same type */
   private final PolynomialModel m_sameType;
@@ -65,7 +65,7 @@ public final class FittingExampleDatasets extends TestBase
   public FittingExampleDatasets() {
     super();
 
-    this.m_timeObjective = new LogisticModel();
+    this.m_timeObjective = new LogisticModelWithOffset();
     this.m_sameType = new PolynomialModel();
     this.m_sorter = new __Sorter();
   }
@@ -196,9 +196,6 @@ public final class FittingExampleDatasets extends TestBase
           useDimA = dimB;
           useDimB = dimA;
         } else {
-          if (dimTypes[dimA] == dimTypes[dimB]) {
-            continue;
-          }
           useDimA = dimA;
           useDimB = dimB;
         }

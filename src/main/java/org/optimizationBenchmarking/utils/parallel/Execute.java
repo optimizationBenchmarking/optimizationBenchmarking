@@ -7,6 +7,7 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.Future;
 import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.TimeUnit;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
@@ -166,9 +167,9 @@ public final class Execute {
       final Runnable job) {
     try {
       job.run();
-      return _ImmediateFuture._create(result);
+      return Execute.__createImmediateFuture(result);
     } catch (final Throwable error) {
-      return new _ExceptionFuture<>(error);
+      return new __ExceptionFuture<>(error);
     }
   }
 
@@ -186,9 +187,9 @@ public final class Execute {
   private static final <T> Future<T> __executeImmediately(
       final Callable<T> job) {
     try {
-      return _ImmediateFuture._create(job.call());
+      return Execute.__createImmediateFuture(job.call());
     } catch (final Throwable error) {
-      return new _ExceptionFuture<>(error);
+      return new __ExceptionFuture<>(error);
     }
   }
 
@@ -433,11 +434,11 @@ public final class Execute {
       try {
         jobs[i].run();
         if (success == null) {
-          success = _ImmediateFuture._create(result);
+          success = Execute.__createImmediateFuture(result);
         }
         results[i] = success;
       } catch (final Throwable error) {
-        results[i] = new _ExceptionFuture<>(error);
+        results[i] = new __ExceptionFuture<>(error);
       }
     }
     return results;
@@ -465,9 +466,9 @@ public final class Execute {
 
     for (i = 0; i < length; ++i) {
       try {
-        results[i] = _ImmediateFuture._create(jobs[i].call());
+        results[i] = Execute.__createImmediateFuture(jobs[i].call());
       } catch (final Throwable error) {
-        results[i] = new _ExceptionFuture<>(error);
+        results[i] = new __ExceptionFuture<>(error);
       }
     }
     return results;
@@ -503,11 +504,11 @@ public final class Execute {
       try {
         jobs[i].run();
         if (success == null) {
-          success = _ImmediateFuture._create(result);
+          success = Execute.__createImmediateFuture(result);
         }
         dest.add(success);
       } catch (final Throwable error) {
-        dest.add(new _ExceptionFuture<>(error));
+        dest.add(new __ExceptionFuture<>(error));
       }
     }
   }
@@ -536,9 +537,9 @@ public final class Execute {
 
     for (i = 0; i < length; ++i) {
       try {
-        dest.add(_ImmediateFuture._create(jobs[i].call()));
+        dest.add(Execute.__createImmediateFuture(jobs[i].call()));
       } catch (final Throwable error) {
-        dest.add(new _ExceptionFuture<>(error));
+        dest.add(new __ExceptionFuture<>(error));
       }
     }
   }
@@ -814,6 +815,21 @@ public final class Execute {
     return __CommonForkJoinPool.COMMON_FORK_JOIN_POOL;
   }
 
+  /**
+   * A {@link java.util.concurrent.Future future} representing an
+   * already-finished computation.
+   *
+   * @param <T>
+   *          the data type
+   * @param result
+   *          the result
+   * @return the future
+   */
+  static final <T> Future<T> __createImmediateFuture(final T result) {
+    return ((result == null) ? __ImmediateFuture.NULL_FUTURE
+        : new __ImmediateFuture<>(result));
+  }
+
   /** a task for executing some other tasks in parallel */
   private static final class _ParallelTask extends RecursiveAction {
 
@@ -850,8 +866,8 @@ public final class Execute {
     /**
      * the common shared {@link java.util.concurrent.ForkJoinPool} instance
      */
-    static final ForkJoinPool COMMON_FORK_JOIN_POOL = __CommonForkJoinPool
-        .__getCommonPool();
+    static final ForkJoinPool COMMON_FORK_JOIN_POOL = //
+    __CommonForkJoinPool.__getCommonPool();
 
     /**
      * this method tries to load the global, common
@@ -870,6 +886,120 @@ public final class Execute {
         return null;
       }
     }
-
   }
+
+  /**
+   * A future which represents an error in execution.
+   *
+   * @param <T>
+   *          the result type
+   */
+  private static final class __ExceptionFuture<T> implements Future<T> {
+
+    /** the encountered error */
+    private final Throwable m_error;
+
+    /**
+     * create the future
+     *
+     * @param error
+     *          the encountered error
+     */
+    __ExceptionFuture(final Throwable error) {
+      super();
+      this.m_error = error;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final boolean cancel(final boolean mayInterruptIfRunning) {
+      return false;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final boolean isCancelled() {
+      return false;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final boolean isDone() {
+      return true;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final T get() throws ExecutionException {
+      throw new ExecutionException(//
+          "An error was encountered while executing a task.", //$NON-NLS-1$
+          this.m_error);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final T get(final long timeout, final TimeUnit unit)
+        throws ExecutionException {
+      return this.get();
+    }
+  }
+
+  /**
+   * A future which represents an immediate, successful execution.
+   *
+   * @param <T>
+   *          the result type
+   */
+  private static final class __ImmediateFuture<T> implements Future<T> {
+
+    /** a shared future with {@code null} result */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    static final __ImmediateFuture NULL_FUTURE = new __ImmediateFuture(
+        null);
+
+    /** the result */
+    private final T m_result;
+
+    /**
+     * create the future
+     *
+     * @param result
+     *          the result
+     */
+    __ImmediateFuture(final T result) {
+      super();
+      this.m_result = result;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final boolean cancel(final boolean mayInterruptIfRunning) {
+      return false;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final boolean isCancelled() {
+      return false;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final boolean isDone() {
+      return true;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final T get() {
+      return this.m_result;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final T get(final long timeout, final TimeUnit unit) {
+      return this.m_result;
+    }
+  }
+
 }
