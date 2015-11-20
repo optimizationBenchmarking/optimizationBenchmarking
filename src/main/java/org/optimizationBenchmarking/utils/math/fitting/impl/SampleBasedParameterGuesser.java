@@ -36,7 +36,6 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
  * fitting polynomials, such a complex procedure may not be necessary. For
  * more complicated functions, it may be a good idea.
  * </p>
- * </p>
  */
 public abstract class SampleBasedParameterGuesser
     implements IParameterGuesser {
