@@ -27,7 +27,7 @@ import org.apache.commons.math3.random.JDKRandomGenerator;
 import org.optimizationBenchmarking.utils.math.MathUtils;
 import org.optimizationBenchmarking.utils.math.fitting.impl.opti.DataPoint;
 import org.optimizationBenchmarking.utils.math.fitting.impl.opti.OptiFittingJob;
-import org.optimizationBenchmarking.utils.math.fitting.impl.opti.OptiFittingJobBuilder;
+import org.optimizationBenchmarking.utils.math.fitting.spec.FittingJobBuilder;
 
 /** A function fitting job based on differential evolution */
 public class LSFittingJob extends OptiFittingJob
@@ -42,7 +42,7 @@ public class LSFittingJob extends OptiFittingJob
    * @param builder
    *          the builder
    */
-  protected LSFittingJob(final OptiFittingJobBuilder builder) {
+  protected LSFittingJob(final FittingJobBuilder builder) {
     super(builder);
     this.m_random = new Random();
   }

@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.math.fitting.impl.opti;
 
 import org.optimizationBenchmarking.utils.math.MathUtils;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FittingJob;
+import org.optimizationBenchmarking.utils.math.fitting.spec.FittingJobBuilder;
 import org.optimizationBenchmarking.utils.math.fitting.spec.IParameterGuesser;
 import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
@@ -32,7 +33,7 @@ public class OptiFittingJob extends FittingJob {
    * @param builder
    *          the job builder
    */
-  protected OptiFittingJob(final OptiFittingJobBuilder builder) {
+  protected OptiFittingJob(final FittingJobBuilder builder) {
     super(builder);
 
     final IMatrix points;

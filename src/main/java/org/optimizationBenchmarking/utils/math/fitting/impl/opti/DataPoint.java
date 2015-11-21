@@ -25,16 +25,24 @@ public final class DataPoint {
   DataPoint(final double in, final double out) {
     super();
 
-    double w;
-
     this.input = in;
     this.output = out;
+    this.inverseWeight = DataPoint.computeInverseWeight(out);
+  }
 
+  /**
+   * Compute the inverse weight of a data point based on its output value.
+   *
+   * @param out
+   *          the output value
+   * @return the inverse weight
+   */
+  public static final double computeInverseWeight(final double out) {
+    final double w;
     if ((out != 0d) && ((w = Math.abs(out)) > 0d)
         && (MathUtils.isFinite(1d / w))) {
-      this.inverseWeight = w;
-    } else {
-      this.inverseWeight = 1d;
+      return w;
     }
+    return 1d;
   }
 }

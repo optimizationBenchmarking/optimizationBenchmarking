@@ -3,24 +3,22 @@ package org.optimizationBenchmarking.utils.parallel;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.Future;
-import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.TimeUnit;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 /**
- * A job executor is a bridge from "normal" Java to code running in an
+ * This class is a bridge from "normal" Java to code running in an
  * {@link java.util.concurrent.ExecutorService}. It allows you to execute
  * jobs (i.e., either {@link java.lang.Runnable}s or
  * {@link java.util.concurrent.Callable}s) in the current thread or
  * executor service according to some specific policy. The executor service
- * is automatically detected and used if the current thread is inside an
- * executor service. In other words, this allows for transparent use of
- * parallelism. (Currently, only {@link java.util.concurrent.ForkJoinPool}s
- * can be detected.)
+ * may be automatically detected and used if the current thread is inside
+ * an executor service. In other words, this allows for transparent use of
+ * parallelism. Currently, only {@link java.util.concurrent.ForkJoinPool}s
+ * can be detected.
  */
 public final class Execute {
 
@@ -213,12 +211,9 @@ public final class Execute {
    */
   public static final <T> Future<T> parallel(final T result,
       final Runnable job) {
-    final ForkJoinPool pool;
-
-    if ((pool = Execute.__getForkJoinPool()) != null) {
-      return pool.submit(job, result);
+    if (ForkJoinTask.inForkJoinPool()) {
+      return ForkJoinTask.adapt(job, result).fork();
     }
-
     return Execute.__executeImmediately(result, job);
   }
 
@@ -238,12 +233,9 @@ public final class Execute {
    *          the data type of the result
    */
   public static final <T> Future<T> parallel(final Callable<T> job) {
-    final ForkJoinPool pool;
-
-    if ((pool = Execute.__getForkJoinPool()) != null) {
-      return pool.submit(job);
+    if (ForkJoinTask.inForkJoinPool()) {
+      return ForkJoinTask.adapt(job).fork();
     }
-
     return Execute.__executeImmediately(job);
   }
 
@@ -269,7 +261,6 @@ public final class Execute {
   public static final <T> Future<T>[] parallel(final T result,
       final Runnable... jobs) {
     final ForkJoinTask<T>[] tasks;
-    final ForkJoinPool pool;
     int i;
 
     i = jobs.length;
@@ -277,10 +268,10 @@ public final class Execute {
       return new Future[0];
     }
 
-    if ((pool = Execute.__getForkJoinPool()) != null) {
+    if (ForkJoinTask.inForkJoinPool()) {
       tasks = new ForkJoinTask[i];
       for (; (--i) >= 0;) {
-        tasks[i] = pool.submit(jobs[i], result);
+        tasks[i] = ForkJoinTask.adapt(jobs[i], result).fork();
       }
       return tasks;
     }
@@ -307,7 +298,6 @@ public final class Execute {
   @SuppressWarnings("unchecked")
   public static final <T> Future<T>[] parallel(final Callable<T>... jobs) {
     final ForkJoinTask<T>[] tasks;
-    final ForkJoinPool pool;
     int i;
 
     i = jobs.length;
@@ -315,10 +305,10 @@ public final class Execute {
       return new Future[0];
     }
 
-    if ((pool = Execute.__getForkJoinPool()) != null) {
+    if (ForkJoinTask.inForkJoinPool()) {
       tasks = new ForkJoinTask[i];
       for (; (--i) >= 0;) {
-        tasks[i] = pool.submit(jobs[i]);
+        tasks[i] = ForkJoinTask.adapt(jobs[i]).fork();
       }
       return tasks;
     }
@@ -350,15 +340,14 @@ public final class Execute {
   public static final <T> void parallel(
       final Collection<Future<? super T>> dest, final T result,
       final Runnable... jobs) {
-    final ForkJoinPool pool;
     int i;
 
     i = jobs.length;
     if (i > 0) {
 
-      if ((pool = Execute.__getForkJoinPool()) != null) {
+      if (ForkJoinTask.inForkJoinPool()) {
         for (; (--i) >= 0;) {
-          dest.add(pool.submit(jobs[i], result));
+          dest.add(ForkJoinTask.adapt(jobs[i], result).fork());
         }
       }
 
@@ -388,15 +377,14 @@ public final class Execute {
   public static final <T> void parallel(
       final Collection<Future<? super T>> dest,
       final Callable<T>... jobs) {
-    final ForkJoinPool pool;
     int i;
 
     i = jobs.length;
     if (i > 0) {
 
-      if ((pool = Execute.__getForkJoinPool()) != null) {
+      if (ForkJoinTask.inForkJoinPool()) {
         for (; (--i) >= 0;) {
-          dest.add(pool.submit(jobs[i]));
+          dest.add(ForkJoinTask.adapt(jobs[i]).fork());
         }
       }
 
@@ -566,7 +554,6 @@ public final class Execute {
   public static final <T> Future<T>[] parallelAndWait(final T result,
       final Runnable... jobs) {
     final ForkJoinTask<T>[] tasks;
-    final ForkJoinPool pool;
     int i;
 
     i = jobs.length;
@@ -580,14 +567,13 @@ public final class Execute {
             Execute.__executeImmediately(result, jobs[0]) };
       }
       default: {// multiple tasks:let's see what to do
-        if ((pool = Execute.__getForkJoinPool()) != null) {
+        if (ForkJoinTask.inForkJoinPool()) {
 
           tasks = new ForkJoinTask[i];
           for (; (--i) >= 0;) {
             tasks[i] = ForkJoinTask.adapt(jobs[i], result);
           }
-
-          Execute.__executeTasks(tasks, pool);
+          ForkJoinTask.invokeAll(tasks);
           return tasks;
         }
 
@@ -613,29 +599,6 @@ public final class Execute {
   }
 
   /**
-   * Execute the tasks if we are or are not inside a
-   * {@link java.util.concurrent.ForkJoinPool}.
-   *
-   * @param tasks
-   *          the tasks
-   * @param pool
-   *          the fork join pool
-   */
-  @SuppressWarnings("unused")
-  private static final void __executeTasks(final ForkJoinTask<?>[] tasks,
-      final ForkJoinPool pool) {
-    if (ForkJoinTask.inForkJoinPool()) {
-      Execute._executeTasksInPool(tasks);
-    } else {
-      try {
-        pool.submit(new _ParallelTask(tasks)).get();
-      } catch (ExecutionException | InterruptedException ignore) {
-        // we ignore this one
-      }
-    }
-  }
-
-  /**
    * Execute a {@link java.util.concurrent.Callable}s in parallel and wait
    * until all of them have terminated. No guarantee about the execution
    * order is given. This method does not guarantee that the task will
@@ -654,7 +617,6 @@ public final class Execute {
   public static final <T> Future<T>[] parallelAndWait(
       final Callable<T>... jobs) {
     final ForkJoinTask<T>[] tasks;
-    final ForkJoinPool pool;
     int i;
 
     i = jobs.length;
@@ -668,14 +630,14 @@ public final class Execute {
             Execute.__executeImmediately(jobs[0]) };
       }
       default: {// multiple tasks:let's see what to do
-        if ((pool = Execute.__getForkJoinPool()) != null) {
+        if (ForkJoinTask.inForkJoinPool()) {
 
           tasks = new ForkJoinTask[i];
           for (; (--i) >= 0;) {
             tasks[i] = ForkJoinTask.adapt(jobs[i]);
           }
 
-          Execute.__executeTasks(tasks, pool);
+          ForkJoinTask.invokeAll(tasks);
           return tasks;
         }
 
@@ -711,7 +673,6 @@ public final class Execute {
       final Collection<Future<? super T>> dest, final T result,
       final Runnable... jobs) {
     final ForkJoinTask<T>[] tasks;
-    final ForkJoinPool pool;
     int i;
 
     i = jobs.length;
@@ -724,14 +685,14 @@ public final class Execute {
         return;
       }
       default: {// multiple tasks:let's see what to do
-        if ((pool = Execute.__getForkJoinPool()) != null) {
+        if (ForkJoinTask.inForkJoinPool()) {
 
           tasks = new ForkJoinTask[i];
           for (; (--i) >= 0;) {
             dest.add(tasks[i] = ForkJoinTask.adapt(jobs[i], result));
           }
 
-          Execute.__executeTasks(tasks, pool);
+          ForkJoinTask.invokeAll(tasks);
           return;
         }
 
@@ -764,7 +725,6 @@ public final class Execute {
       final Collection<Future<? super T>> dest,
       final Callable<T>... jobs) {
     final ForkJoinTask<T>[] tasks;
-    final ForkJoinPool pool;
     int i;
 
     i = jobs.length;
@@ -777,14 +737,14 @@ public final class Execute {
         return;
       }
       default: {// multiple tasks:let's see what to do
-        if ((pool = Execute.__getForkJoinPool()) != null) {
+        if (ForkJoinTask.inForkJoinPool()) {
 
           tasks = new ForkJoinTask[i];
           for (; (--i) >= 0;) {
             dest.add(tasks[i] = ForkJoinTask.adapt(jobs[i]));
           }
 
-          Execute.__executeTasks(tasks, pool);
+          ForkJoinTask.invokeAll(tasks);
           return;
         }
 
@@ -792,27 +752,6 @@ public final class Execute {
         Execute.__executeImmediately(dest, jobs);
       }
     }
-  }
-
-  /**
-   * Obtain the globally shared, common
-   * {@link java.util.concurrent.ForkJoinPool}. Starting in Java 1.8, such
-   * a pool exists. If we are under Java 1.8 and such a pool exists, this
-   * method will return it. If we are under Java 1.7 and/or no such pool
-   * exists, this method returns {@code null}.
-   *
-   * @return the globally shared, common
-   *         {@link java.util.concurrent.ForkJoinPool}, or {@code null} if
-   *         no such pool exists
-   */
-  private static final ForkJoinPool __getForkJoinPool() {
-    final ForkJoinPool pool;
-
-    pool = ForkJoinTask.getPool();
-    if (pool != null) {
-      return pool;
-    }
-    return __CommonForkJoinPool.COMMON_FORK_JOIN_POOL;
   }
 
   /**
@@ -828,64 +767,6 @@ public final class Execute {
   static final <T> Future<T> __createImmediateFuture(final T result) {
     return ((result == null) ? __ImmediateFuture.NULL_FUTURE
         : new __ImmediateFuture<>(result));
-  }
-
-  /** a task for executing some other tasks in parallel */
-  private static final class _ParallelTask extends RecursiveAction {
-
-    /** the serial version uid */
-    private static final long serialVersionUID = 1L;
-
-    /** the tasks */
-    private final ForkJoinTask<?>[] m_tasks;
-
-    /**
-     * create the parallel task
-     *
-     * @param tasks
-     *          the tasks to execute
-     */
-    _ParallelTask(final ForkJoinTask<?>[] tasks) {
-      super();
-      this.m_tasks = tasks;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected final void compute() {
-      Execute._executeTasksInPool(this.m_tasks);
-    }
-  }
-
-  /**
-   * The internal class for obtaining the globally shared
-   * {@link java.util.concurrent.ForkJoinPool} instance
-   */
-  private static final class __CommonForkJoinPool {
-
-    /**
-     * the common shared {@link java.util.concurrent.ForkJoinPool} instance
-     */
-    static final ForkJoinPool COMMON_FORK_JOIN_POOL = //
-    __CommonForkJoinPool.__getCommonPool();
-
-    /**
-     * this method tries to load the global, common
-     * {@link java.util.concurrent.ForkJoinPool}
-     *
-     * @return the global, common {@link java.util.concurrent.ForkJoinPool}
-     *         , or {@code null} if we are not under {@code Java 1.8} and
-     *         thus cannot detect it.
-     */
-    @SuppressWarnings("unused")
-    private static ForkJoinPool __getCommonPool() {
-      try {
-        return ((ForkJoinPool) (ForkJoinPool.class.getMethod(//
-            "commonPool").invoke(null))); //$NON-NLS-1$
-      } catch (final Throwable error) {
-        return null;
-      }
-    }
   }
 
   /**

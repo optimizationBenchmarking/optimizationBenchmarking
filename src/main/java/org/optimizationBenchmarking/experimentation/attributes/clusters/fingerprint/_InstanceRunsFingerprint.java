@@ -120,8 +120,7 @@ final class _InstanceRunsFingerprint
 
         // get all the points
         fittingResult = LSFitter.getInstance().use()
-            .setFunctionToFit(model).setPoints(rawMatrix)
-            .setMinCriticalPoints((3 * runs.size())).setLogger(logger)
+            .setFunctionToFit(model).setPoints(rawMatrix).setLogger(logger)
             .create().call().getFittedParameters();
 
         builder.append(fittingResult);

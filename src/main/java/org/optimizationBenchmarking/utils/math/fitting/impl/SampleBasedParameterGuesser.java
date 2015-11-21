@@ -550,7 +550,7 @@ public abstract class SampleBasedParameterGuesser
           if (useX || useY) {// we do care about the distance
             bestQuality = this.__quality(bestChoice, useX, useY, logScaleX,
                 logScaleY);
-            for (pointChoice = 20; (--pointChoice) >= 0;) {
+            for (pointChoice = 30; (--pointChoice) >= 0;) {
               SampleBasedParameterGuesser.__drawCandidate(currentChoice,
                   indexes, data, random, useX, useY);
               currentQuality = this.__quality(currentChoice, useX, useY,
