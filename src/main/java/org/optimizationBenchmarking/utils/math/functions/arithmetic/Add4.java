@@ -54,23 +54,185 @@ public final class Add4 extends QuaternaryFunction {
   @Override
   public final double computeAsDouble(final double x0, final double x1,
       final double x2, final double x3) {
-    return Add.INSTANCE
-        .computeAsDouble(Add3.INSTANCE.computeAsDouble(x0, x1, x2), x3);
+    double a1, a2, a3, a4, b1, b2, b3, b4, t, r1, r2;
+    boolean s1, s2, s3, s4;
+
+    a1 = x0;
+    b1 = Math.abs(a1);
+    a2 = x1;
+    b2 = Math.abs(a2);
+    a3 = x2;
+    b3 = Math.abs(a3);
+    a4 = x3;
+    b4 = Math.abs(a4);
+
+    // sort in increasing order by absolute value
+    if (b3 < b1) {
+      t = a1;
+      a1 = a3;
+      a3 = t;
+      t = b1;
+      b1 = b3;
+      b3 = t;
+    }
+
+    if (b4 < b2) {
+      t = a2;
+      a2 = a4;
+      a4 = t;
+      t = b2;
+      b2 = b4;
+      b4 = t;
+    }
+
+    if (b2 < b1) {
+      t = a1;
+      a1 = a2;
+      a2 = t;
+      t = b1;
+      b1 = b2;
+      b2 = t;
+    }
+
+    if (b4 < b3) {
+      t = a3;
+      a3 = a4;
+      a4 = t;
+      t = b3;
+      b3 = b4;
+      b4 = t;
+    }
+
+    if (b3 < b2) {
+      t = a3;
+      a3 = a2;
+      a2 = t;
+      t = b3;
+      b3 = b2;
+      b2 = t;
+    }
+
+    // try to achieve alternating signs to avoid overflow
+    s1 = (a1 < 0d);
+    s2 = (a2 < 0d);
+    s3 = (a3 < 0d);
+    s4 = (a4 < 0d);
+    r1 = Add3.INSTANCE.computeAsDouble(a1, a2, a3);
+    if ((s1 && s2 && (!s3)) || //
+        ((!s1) && (!s2) && s3) || //
+        (s2 && (!s3) && (!s4)) || //
+        ((!s2) && s3 && s4)) {
+
+      r2 = Add3.INSTANCE.computeAsDouble(a1, a3, a2);
+      if (Math.abs(((r1 - a3) - a2) - a1) >= //
+      Math.abs(((r2 - a2) - a3) - a1)) {
+        t = a2;
+        a2 = a3;
+        a3 = t;
+        r1 = r2;
+      }
+    }
+
+    return Add.INSTANCE.computeAsDouble(r1, a4);
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final long x0, final long x1,
       final long x2, final long x3) {
-    return Add.INSTANCE
-        .computeAsDouble(Add3.INSTANCE.computeAsDouble(x0, x1, x2), x3);
+    long a1, a2, a3, a4, b1, b2, b3, b4, t;
+    boolean s1, s2, s3, s4;
+
+    a1 = x0;
+    a2 = x1;
+    a3 = x2;
+    a4 = x3;
+    if ((a1 > Long.MIN_VALUE) && (a2 > Long.MIN_VALUE)
+        && (a3 > Long.MIN_VALUE) && (a4 > Long.MIN_VALUE)) {
+      b1 = Math.abs(a1);
+      b2 = Math.abs(a2);
+      b3 = Math.abs(a3);
+      b4 = Math.abs(a4);
+
+      // sort in increasing order by absolute value
+      if (b3 < b1) {
+        t = a1;
+        a1 = a3;
+        a3 = t;
+        t = b1;
+        b1 = b3;
+        b3 = t;
+      }
+
+      if (b4 < b2) {
+        t = a2;
+        a2 = a4;
+        a4 = t;
+        t = b2;
+        b2 = b4;
+        b4 = t;
+      }
+
+      if (b2 < b1) {
+        t = a1;
+        a1 = a2;
+        a2 = t;
+        t = b1;
+        b1 = b2;
+        b2 = t;
+      }
+
+      if (b4 < b3) {
+        t = a3;
+        a3 = a4;
+        a4 = t;
+        t = b3;
+        b3 = b4;
+        b4 = t;
+      }
+
+      if (b3 < b2) {
+        t = a3;
+        a3 = a2;
+        a2 = t;
+        t = b3;
+        b3 = b2;
+        b2 = t;
+      }
+
+      // try to achieve alternating signs to avoid overflow
+      s1 = (a1 < 0L);
+      s2 = (a2 < 0L);
+      s3 = (a3 < 0L);
+      s4 = (a4 < 0L);
+      if ((s1 && (!s2) && (!s3)) || //
+          ((!s1) && s2 && s3)) {
+        t = a1;
+        a1 = a2;
+        a2 = t;
+        s2 = s1;// !!
+      }
+
+      if ((s1 && s2 && (!s3)) || //
+          ((!s1) && (!s2) && s3) || //
+          (s2 && (!s3) && (!s4)) || //
+          ((!s2) && s3 && s4)) {
+        t = a2;
+        a2 = a3;
+        a3 = t;
+      }
+    }
+
+    return Add.INSTANCE.computeAsDouble(//
+        Add3.INSTANCE.computeAsDouble(a1, a2, a3), a4);
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final int x0, final int x1,
       final int x2, final int x3) {
-    return (((long) x0) + ((long) x1) + x2 + x3);
+    return this.computeAsDouble(((long) x0), ((long) x1), ((long) x2),
+        ((long) x3));
   }
 
   /** {@inheritDoc} */

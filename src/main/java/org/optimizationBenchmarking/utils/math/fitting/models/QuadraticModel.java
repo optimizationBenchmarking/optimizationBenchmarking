@@ -121,13 +121,13 @@ public final class QuadraticModel extends ParametricUnaryFunction {
     protected final boolean fallback(final double[] points,
         final double[] dest, final Random random) {
       switch (points.length) {
-        case 4: {
-          return PolynomialFitter.findCoefficientsDegree1(points[0],
-              points[1], points[2], points[3], dest);
-        }
         case 2: {
           return PolynomialFitter.findCoefficientsDegree0(points[0],
               points[1], dest);
+        }
+        case 4: {
+          return PolynomialFitter.findCoefficientsDegree1(points[0],
+              points[1], points[2], points[3], dest);
         }
         default: {
           this.fallback(dest, random);

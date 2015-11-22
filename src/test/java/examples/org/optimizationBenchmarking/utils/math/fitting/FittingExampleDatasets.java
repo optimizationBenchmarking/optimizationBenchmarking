@@ -20,7 +20,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
-import org.optimizationBenchmarking.utils.math.fitting.models.LogisticModelWithOffset;
+import org.optimizationBenchmarking.utils.math.fitting.models.LogisticModelOverLogX;
 import org.optimizationBenchmarking.utils.math.fitting.models.QuadraticModel;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
@@ -53,7 +53,7 @@ public final class FittingExampleDatasets extends TestBase
   };
 
   /** the function modeling the objective value based on time */
-  private final LogisticModelWithOffset m_timeObjective;
+  private final LogisticModelOverLogX m_timeObjective;
 
   /** the function modeling dimensions of the same type */
   private final QuadraticModel m_sameType;
@@ -65,7 +65,7 @@ public final class FittingExampleDatasets extends TestBase
   public FittingExampleDatasets() {
     super();
 
-    this.m_timeObjective = new LogisticModelWithOffset();
+    this.m_timeObjective = new LogisticModelOverLogX();
     this.m_sameType = new QuadraticModel();
     this.m_sorter = new __Sorter();
   }
@@ -174,6 +174,7 @@ public final class FittingExampleDatasets extends TestBase
   private final void __postprocess(final String name,
       final Collection<? extends IMatrix> loaded,
       final ArrayList<FittingExampleDataset> list, final int[] dimTypes) {
+    FittingExampleDataset ds;
     int dimA, dimB, useDimA, useDimB, total, index, size, row;
     double[][] rawPoints;
     String useName;
@@ -221,11 +222,14 @@ public final class FittingExampleDatasets extends TestBase
               + '_') + ((dimTypes[useDimB] < 0) ? 't' : 'f')) + useDimB);
         }
 
-        list.add(new FittingExampleDataset(useName, //
+        ds = new FittingExampleDataset(useName, //
             new DoubleMatrix2D(rawPoints), //
             ((dimTypes[useDimA] == dimTypes[useDimB]) ? this.m_sameType
                 : this.m_timeObjective),
-            loaded.size()));
+            loaded.size());
+        synchronized (list) {
+          list.add(ds);
+        }
       }
     }
   }

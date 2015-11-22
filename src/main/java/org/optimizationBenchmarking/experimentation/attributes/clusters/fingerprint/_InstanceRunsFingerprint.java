@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.math.fitting.impl.ls.LSFitter;
-import org.optimizationBenchmarking.utils.math.fitting.models.LogisticModel;
+import org.optimizationBenchmarking.utils.math.fitting.models.LogisticModelOverLogX;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.MatrixBuilder;
@@ -52,7 +52,7 @@ final class _InstanceRunsFingerprint
       final ArrayListView<? extends IDimension> dimensions,
       final MatrixBuilder builder, final Logger logger) {
     final int size;
-    final LogisticModel model;
+    final LogisticModelOverLogX model;
     final double[] rawPoints;
     final DoubleMatrix1D rawMatrix;
     IDimension dimensionA, dimensionB, tempDim;
@@ -61,7 +61,7 @@ final class _InstanceRunsFingerprint
     int dimA, dimB, useDimA, useDimB, totalPoints, index;
     boolean isTimeA, isTimeB;
 
-    model = new LogisticModel();
+    model = new LogisticModelOverLogX();
 
     // We allocate a re-usable data store.
     totalPoints = 0;

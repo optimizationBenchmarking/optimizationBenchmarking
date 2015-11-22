@@ -21,16 +21,25 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 /**
  * <p>
  * A model function which may be suitable to model how time-objective value
- * relationships of optimization processes behave. My student Qi Qi has
- * discovered this model: {@code a/(1+b*x^c)}. It is somewhat similar to a
- * logistic model and, in our tests, fits quite well. It is somewhat
- * similar to my previous exponential decay model {@code -(exp(a*(x^b))-1)}
- * but seems to fit better and does not require data normalization.
+ * relationships of optimization processes behave. Qi Qi has discovered
+ * this model: {@code a/(1+b*x^c)}.
+ * </p>
+ * <p>
+ * It is somewhat similar to a logistic model and over a log-scaled
+ * {@code x}-axis: Originally, we fitted {@code a/(1+exp(b+c*log(x)))},
+ * which corresponds to {@code a/(1+exp(b)*(x^c))}, which, in turn, can be
+ * simplified to {@code a/(1+b*x^c)} in the fitting procedure, since
+ * {@code exp(b)} is constant with respect to {@code x} and then we can try
+ * to find its value directly as well.
+ * </p>
+ * <p>
+ * This model is also somewhat similar to my previous exponential decay
+ * model {@code -(exp(a*(x^b))-1)} but seems to fit better and does not
+ * require data normalization.
  * </p>
  * <h2>Derivatives</h2>
  * <p>
- * The derivatives have been obtained with
- * http://www.numberempire.com/derivativecalculator.php.
+ * The derivatives have been obtained with http://www.numberempire.com/.
  * </p>
  * <ol>
  * <li>Original function: {@code a/(1+b*x^c)}</li>
@@ -40,7 +49,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * <li>{@code d/dc}: {@code -(a*b*x^c*log(x))/(1 + 2*b*x^c + b^2*x^(2*c))}
  * </li>
  * </ol>
- * <h2>Resolution</h2>
+ * <h2>Resolution</h2> The resolutions have been obtained with
+ * http://www.numberempire.com/ and http://wolframalpha.com/.
  * <h3>One Known Point</h3>
  * <ol>
  * <li>{@code a}: {@code a=(b*x^c+1)*y}</li>
@@ -57,10 +67,10 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * </li>
  * </ol>
  */
-public final class LogisticModel extends ParametricUnaryFunction {
+public final class LogisticModelOverLogX extends ParametricUnaryFunction {
 
   /** create */
-  public LogisticModel() {
+  public LogisticModelOverLogX() {
     super();
   }
 
@@ -69,7 +79,8 @@ public final class LogisticModel extends ParametricUnaryFunction {
   public final double value(final double x, final double[] parameters) {
     double res;
 
-    res = (1d + (parameters[1] + LogisticModel._pow(x, parameters[2])));
+    res = (1d
+        + (parameters[1] + LogisticModelOverLogX._pow(x, parameters[2])));
     if ((Math.abs(res) > 0d) && MathUtils.isFinite(res) && //
         MathUtils.isFinite(res = (parameters[0] / res))) {
       return res;
@@ -95,7 +106,7 @@ public final class LogisticModel extends ParametricUnaryFunction {
       final double b, final double c) {
     double res;
 
-    res = (1d + (b + LogisticModel._pow(x, c)));
+    res = (1d + (b + LogisticModelOverLogX._pow(x, c)));
     if ((Math.abs(res) > 0d) && MathUtils.isFinite(res) && //
         MathUtils.isFinite(res = (a / res))) {
       return res;
@@ -153,7 +164,7 @@ public final class LogisticModel extends ParametricUnaryFunction {
     b = parameters[1];
     c = parameters[2];
 
-    xc = LogisticModel._pow(x, c);
+    xc = LogisticModelOverLogX._pow(x, c);
 
     if (Math.abs(xc) <= 0d) {
       gradient[0] = 1d;
@@ -182,7 +193,7 @@ public final class LogisticModel extends ParametricUnaryFunction {
       return;
     }
 
-    div = LogisticModel._add3(1d, 2d * bxc, xc * xc * b * b);
+    div = LogisticModelOverLogX._add3(1d, 2d * bxc, xc * xc * b * b);
     if ((Math.abs(div) > 0d) && MathUtils.isFinite(div)) {
       g0 = ((-axc) / div);
       if (MathUtils.isFinite(g0)) {
@@ -190,7 +201,7 @@ public final class LogisticModel extends ParametricUnaryFunction {
       } else {
         gradient[1] = 0d;
       }
-      g0 = ((-(b * axc * LogisticModel._log(x))) / div);
+      g0 = ((-(b * axc * LogisticModelOverLogX._log(x))) / div);
       if (MathUtils.isFinite(g0)) {
         gradient[2] = g0;
       } else {
@@ -327,7 +338,7 @@ public final class LogisticModel extends ParametricUnaryFunction {
     private static final double __error(final double x0, final double y0,
         final double x1, final double y1, final double x2, final double y2,
         final double a, final double b, final double c) {
-      return LogisticModel._add3(//
+      return LogisticModelOverLogX._add3(//
           __LogisticGuesser.__error(x0, y0, a, b, c), //
           __LogisticGuesser.__error(x1, y1, a, b, c), //
           __LogisticGuesser.__error(x2, y2, a, b, c));
@@ -350,7 +361,7 @@ public final class LogisticModel extends ParametricUnaryFunction {
      */
     private static final double __error(final double x, final double y,
         final double a, final double b, final double c) {
-      return Math.abs(y - LogisticModel._compute(x, a, b, c));
+      return Math.abs(y - LogisticModelOverLogX._compute(x, a, b, c));
     }
 
     /**
@@ -439,7 +450,8 @@ public final class LogisticModel extends ParametricUnaryFunction {
      */
     private static final double __a_xybc(final double x, final double y,
         final double b, final double c) {
-      return ((x <= 0d) ? y : (((b * LogisticModel._pow(x, c)) + 1d) * y));
+      return ((x <= 0d) ? y
+          : (((b * LogisticModelOverLogX._pow(x, c)) + 1d) * y));
     }
 
     /**
@@ -460,7 +472,7 @@ public final class LogisticModel extends ParametricUnaryFunction {
         final double a, final double c) {
       final double b1, b2, b3, xc, xcy, e1, e2, e3;
 
-      xc = LogisticModel._pow(x, c);
+      xc = LogisticModelOverLogX._pow(x, c);
       xcy = (xc * y);
 
       b1 = ((a - y) / xcy);
@@ -512,16 +524,16 @@ public final class LogisticModel extends ParametricUnaryFunction {
         final double a, final double b) {
       final double c1, c2, c3, lx, by, e1, e2, e3;
 
-      lx = LogisticModel._log(x);
+      lx = LogisticModelOverLogX._log(x);
       if ((b <= (-1d)) && (0d < x) && (x < 1d) && (Math.abs(a) <= 0d)
           && (Math.abs(y) <= 0d)) {
         return Math.nextUp(Math.nextUp(//
-            LogisticModel._log(-1d / b) / lx));
+            LogisticModelOverLogX._log(-1d / b) / lx));
       }
 
       by = b * y;
-      c1 = LogisticModel._log((a / by) - (1 / b)) / lx;
-      c2 = LogisticModel._log((a - y) / by) / lx;
+      c1 = LogisticModelOverLogX._log((a / by) - (1 / b)) / lx;
+      c2 = LogisticModelOverLogX._log((a - y) / by) / lx;
 
       if (c1 == c2) {
         return c1;
@@ -572,8 +584,8 @@ public final class LogisticModel extends ParametricUnaryFunction {
         final double c) {
       final double x2c, x1c;
 
-      x1c = LogisticModel._pow(x1, c);
-      x2c = LogisticModel._pow(x2, c);
+      x1c = LogisticModelOverLogX._pow(x1, c);
+      x2c = LogisticModelOverLogX._pow(x2, c);
       return (((x2c - x1c) * y1 * y2) / ((x2c * y2) - (x1c * y1)));
     }
 
@@ -596,8 +608,8 @@ public final class LogisticModel extends ParametricUnaryFunction {
     private static final double __b_x1y1x2y2c(final double x1,
         final double y1, final double x2, final double y2,
         final double c) {
-      return ((y1 - y2) / ((LogisticModel._pow(x2, c) * y2)
-          - (LogisticModel._pow(x1, c) * y1)));
+      return ((y1 - y2) / ((LogisticModelOverLogX._pow(x2, c) * y2)
+          - (LogisticModelOverLogX._pow(x1, c) * y1)));
     }
 
     /**
@@ -621,13 +633,13 @@ public final class LogisticModel extends ParametricUnaryFunction {
         final double a) {
       final double lx1, lx2;
 
-      lx1 = LogisticModel._log(x1);
-      lx2 = LogisticModel._log(x2);
+      lx1 = LogisticModelOverLogX._log(x1);
+      lx2 = LogisticModelOverLogX._log(x2);
       return __LogisticGuesser.__exp(__LogisticGuesser.__add4(//
-          (lx1 * LogisticModel._log(a - y2)), //
-          -(lx2 * LogisticModel._log(a - y1)), //
-          -(lx1 * LogisticModel._log(y2)), //
-          (lx2 * LogisticModel._log(y1))) / (lx1 - lx2));
+          (lx1 * LogisticModelOverLogX._log(a - y2)), //
+          -(lx2 * LogisticModelOverLogX._log(a - y1)), //
+          -(lx1 * LogisticModelOverLogX._log(y2)), //
+          (lx2 * LogisticModelOverLogX._log(y1))) / (lx1 - lx2));
     }
 
     /**
@@ -1010,7 +1022,8 @@ public final class LogisticModel extends ParametricUnaryFunction {
       x2 = points[4];
       y2 = points[5];
 
-      maxY = Math.max(y0, Math.max(y1, y2));
+      maxY = ((random.nextInt(3) > 0)//
+          ? Math.max(y0, Math.max(y1, y2)) : this.m_maxY);
       steps = 100;
       newError = Double.POSITIVE_INFINITY;
 
