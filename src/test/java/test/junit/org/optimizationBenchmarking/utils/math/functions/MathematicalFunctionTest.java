@@ -71,7 +71,7 @@ public abstract class MathematicalFunctionTest extends TestBase {
         it = new PermutationIterator(test.m_in.length);
         do {
           perm = it.next();
-          for (; (--length) >= 0;) {
+          for (length = perm.length; (--length) >= 0;) {
             params[perm[length] - 1] = test.m_in[length].doubleValue();
           }
 
