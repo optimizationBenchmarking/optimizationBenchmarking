@@ -20,7 +20,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
-import org.optimizationBenchmarking.utils.math.fitting.models.LogisticModelOverLogX;
+import org.optimizationBenchmarking.utils.math.fitting.models.LogisticModelWithOffsetOverLogX;
 import org.optimizationBenchmarking.utils.math.fitting.models.QuadraticModel;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
@@ -53,7 +53,7 @@ public final class FittingExampleDatasets extends TestBase
   };
 
   /** the function modeling the objective value based on time */
-  private final LogisticModelOverLogX m_timeObjective;
+  private final LogisticModelWithOffsetOverLogX m_timeObjective;
 
   /** the function modeling dimensions of the same type */
   private final QuadraticModel m_sameType;
@@ -65,7 +65,7 @@ public final class FittingExampleDatasets extends TestBase
   public FittingExampleDatasets() {
     super();
 
-    this.m_timeObjective = new LogisticModelOverLogX();
+    this.m_timeObjective = new LogisticModelWithOffsetOverLogX();
     this.m_sameType = new QuadraticModel();
     this.m_sorter = new __Sorter();
   }

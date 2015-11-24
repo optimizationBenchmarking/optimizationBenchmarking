@@ -328,6 +328,83 @@ abstract class _ModelBase extends ParametricUnaryFunction {
   }
 
   /**
+   * the median of four numbers
+   *
+   * @param a
+   *          the first number
+   * @param b
+   *          the second number
+   * @param c
+   *          the third number
+   * @param d
+   *          the fourth number
+   * @return the median
+   */
+  static final double _med4(final double a, final double b, final double c,
+      final double d) {
+    double n1, n2, n3, n4, t;
+
+    n1 = a;
+    n2 = b;
+    n3 = c;
+    n4 = d;
+
+    if (n1 > n3) {
+      t = n1;
+      n1 = n3;
+      n3 = t;
+    }
+
+    if (n2 > n4) {
+      t = n2;
+      n2 = n4;
+      n4 = t;
+    }
+
+    if (n1 > n2) {
+      t = n1;
+      n1 = n2;
+      n2 = t;
+    }
+
+    if (n3 > n4) {
+      t = n3;
+      n3 = n4;
+      n4 = t;
+    }
+
+    if (n2 > n3) {
+      t = n2;
+      n2 = n3;
+      n3 = t;
+    }
+
+    t = (0.5d * (n2 + n3));
+    if (MathUtils.isFinite(t) && (t >= n2) && (t <= n3)) {
+      return t;
+    }
+
+    t = ((0.5d * n2) + (0.5d * n3));
+    if (MathUtils.isFinite(t) && (t >= n2) && (t <= n3)) {
+      return t;
+    }
+
+    if (MathUtils.isFinite(n2)) {
+      return n2;
+    }
+    if (MathUtils.isFinite(n3)) {
+      return n3;
+    }
+    if (MathUtils.isFinite(n1)) {
+      return n1;
+    }
+    if (MathUtils.isFinite(n4)) {
+      return n4;
+    }
+    return Double.NaN;
+  }
+
+  /**
    * Check an {@code a} value for the logistic model over log-scaled
    * {@code x}, i.e., {@code a/(1+b*x^c)}.
    *
@@ -338,7 +415,7 @@ abstract class _ModelBase extends ParametricUnaryFunction {
    * @return {@code true} if the {@code a} value is OK, {@code false}
    *         otherwise
    */
-  static final boolean _logisticModelOverLogXMCheckA(final double a,
+  static final boolean _logisticModelOverLogXCheckA(final double a,
       final double maxY) {
     final double abs;
     if (MathUtils.isFinite(a)) {
@@ -361,7 +438,7 @@ abstract class _ModelBase extends ParametricUnaryFunction {
    * @return {@code true} if the {@code b} value is OK, {@code false}
    *         otherwise
    */
-  static final boolean _logisticModelOverLogXMCheckB(final double b) {
+  static final boolean _logisticModelOverLogXCheckB(final double b) {
     final double abs;
     if (MathUtils.isFinite(b)) {
       abs = Math.abs(b);
@@ -383,7 +460,7 @@ abstract class _ModelBase extends ParametricUnaryFunction {
    * @return {@code true} if the {@code b} value is OK, {@code false}
    *         otherwise
    */
-  static final boolean _logisticModelOverLogXMCheckC(final double c) {
+  static final boolean _logisticModelOverLogXCheckC(final double c) {
     return (MathUtils.isFinite(c) && (c > 1e-4d) && (c < 1e4d));
   }
 
@@ -398,7 +475,7 @@ abstract class _ModelBase extends ParametricUnaryFunction {
    * @param parameters
    *          the parameters
    */
-  static final void _logisticModelOverLogXMFallback(final double maxY,
+  static final void _logisticModelOverLogXFallback(final double maxY,
       final Random random, final double[] parameters) {
     double v;
 
@@ -414,5 +491,100 @@ abstract class _ModelBase extends ParametricUnaryFunction {
     do {
       parameters[2] = (1d + random.nextGaussian());
     } while (parameters[2] <= 1e-7d);
+  }
+
+  /**
+   * Compute {@code a} from one point {@code (x,y)} and known {@code b} and
+   * {@code c} values.
+   *
+   * @param x
+   *          the {@code x}-coordinate of the point
+   * @param y
+   *          the {@code y}-coordinate of the point
+   * @param b
+   *          the {@code b} value
+   * @param c
+   *          the {@code c} value
+   * @return the {@code a} value
+   */
+  static final double _logisticModelOverLogX_a_xybc(final double x,
+      final double y, final double b, final double c) {
+    return ((x <= 0d) ? y : (((b * _ModelBase._pow(x, c)) + 1d) * y));
+  }
+
+  /**
+   * Compute {@code a} from two points {@code (x1,y1)} and {@code (x2,y2)}
+   * and a known {@code c} value.
+   *
+   * @param x1
+   *          the {@code x}-coordinate of the first point
+   * @param y1
+   *          the {@code y}-coordinate of the first point
+   * @param x2
+   *          the {@code x}-coordinate of the second point
+   * @param y2
+   *          the {@code y}-coordinate of the second point
+   * @param c
+   *          the {@code c} value
+   * @return the {@code a} value
+   */
+  static final double _logisticModelOverLogX_a_x1y1x2y2c(final double x1,
+      final double y1, final double x2, final double y2, final double c) {
+    final double x2c, x1c;
+
+    x1c = _ModelBase._pow(x1, c);
+    x2c = _ModelBase._pow(x2, c);
+    return (((x2c - x1c) * y1 * y2) / ((x2c * y2) - (x1c * y1)));
+  }
+
+  /**
+   * Compute {@code b} from two points {@code (x1,y1)} and {@code (x2,y2)}
+   * and a known {@code c} value.
+   *
+   * @param x1
+   *          the {@code x}-coordinate of the first point
+   * @param y1
+   *          the {@code y}-coordinate of the first point
+   * @param x2
+   *          the {@code x}-coordinate of the second point
+   * @param y2
+   *          the {@code y}-coordinate of the second point
+   * @param c
+   *          the {@code c} value
+   * @return the {@code b} value
+   */
+  static final double _logisticModelOverLogX_b_x1y1x2y2c(final double x1,
+      final double y1, final double x2, final double y2, final double c) {
+    return ((y1 - y2)
+        / ((_ModelBase._pow(x2, c) * y2) - (_ModelBase._pow(x1, c) * y1)));
+  }
+
+  /**
+   * Compute {@code b} from two points {@code (x1,y1)} and {@code (x2,y2)}
+   * and a known {@code a} value.
+   *
+   * @param x1
+   *          the {@code x}-coordinate of the first point
+   * @param y1
+   *          the {@code y}-coordinate of the first point
+   * @param x2
+   *          the {@code x}-coordinate of the second point
+   * @param y2
+   *          the {@code y}-coordinate of the second point
+   * @param a
+   *          the {@code a} value
+   * @return the {@code b} value
+   */
+  static final double _logisticModelOverLogX_b_x1y1x2y2a(final double x1,
+      final double y1, final double x2, final double y2, final double a) {
+    final double lx1, lx2;
+
+    lx1 = _ModelBase._log(x1);
+    lx2 = _ModelBase._log(x2);
+    return _ModelBase._exp(_ModelBase._add4(//
+        (lx1 * _ModelBase._log(a - y2)), //
+        -(lx2 * _ModelBase._log(a - y1)), //
+        -(lx1 * _ModelBase._log(y2)), //
+        (lx2 * _ModelBase._log(y1))) / (lx1 - lx2));
   }
 }

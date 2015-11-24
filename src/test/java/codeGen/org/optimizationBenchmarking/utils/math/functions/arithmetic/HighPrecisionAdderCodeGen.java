@@ -14,6 +14,7 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingAd
 import codeGen.CodeGeneratorBase;
 
 /**
+ * <p>
  * A generator for high-precision adders of three or more {@code double}
  * numbers. It generates code based of Kahan sums, but does not just apply
  * the algorithm once: It applies them to all permutations of the input
@@ -21,6 +22,13 @@ import codeGen.CodeGeneratorBase;
  * am not entirely sure whether this overhead will pay off, but I can
  * produce slightly different results by using it, so it may be worthwhile
  * doing it.
+ * </p>
+ * <p>
+ * One problem persists: If I add {@link Double#MAX_VALUE}, {@code 1}, and
+ * <code>-{@link Double#MAX_VALUE}</code>, I get {@code 0} instead of
+ * {@code 1}. Hence, the summation method may need to be improved in the
+ * future.
+ * </p>
  */
 public final class HighPrecisionAdderCodeGen extends CodeGeneratorBase {
 
