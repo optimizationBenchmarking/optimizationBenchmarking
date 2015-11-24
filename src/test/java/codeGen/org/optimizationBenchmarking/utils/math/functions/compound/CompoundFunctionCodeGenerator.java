@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.math.functions.compound;
+package codeGen.org.optimizationBenchmarking.utils.math.functions.compound;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -13,11 +13,7 @@ import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
-import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
-import org.optimizationBenchmarking.utils.math.functions.QuaternaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.TernaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Identity;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Negate;
@@ -39,34 +35,13 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
+import codeGen.CodeGeneratorBase;
+
 /**
  * This is the internal class used to generate the code for the compound
  * functions.
  */
-final class _CodeGenerator {
-
-  /** the mathematical functions of a given arity */
-  private static final Class<?>[] FUNCTIONS_OF_ARITY = {
-      MathematicalFunction.class, UnaryFunction.class,
-      BinaryFunction.class, TernaryFunction.class,
-      QuaternaryFunction.class };
-
-  /** the maximum arity */
-  private static final int MAX_ARITY = (_CodeGenerator.FUNCTIONS_OF_ARITY.length - 1);
-
-  /** position texts for given integers, only need {@link #MAX_ARITY} many */
-  private static final String[] INDEXES = { null,//
-      "first", //$NON-NLS-1$
-      "second",//$NON-NLS-1$
-      "third",//$NON-NLS-1$
-      "fourth"//$NON-NLS-1$
-  };
-
-  /** the package name */
-  private final String m_packageName;
-
-  /** the package path */
-  private final Path m_packagePath;
+public class CompoundFunctionCodeGenerator extends CodeGeneratorBase {
 
   /**
    * @param args
@@ -74,22 +49,9 @@ final class _CodeGenerator {
    * @throws IOException
    *           if i/o fails
    */
-  private _CodeGenerator(final String[] args) throws IOException {
-    super();
-    Path packagePath;
-
-    this.m_packageName = _CodeGenerator.class.getPackage().getName();
-
-    if ((args != null) && (args.length > 0)) {
-      packagePath = PathUtils.normalize(args[0]);
-    } else {
-      packagePath = PathUtils.getCurrentDir();
-    }
-    packagePath = PathUtils.createPathInside(packagePath,
-        ("src/main/java/" + this.m_packageName.replace('.', '/')));//$NON-NLS-1$
-
-    Files.createDirectories(packagePath);
-    this.m_packagePath = packagePath;
+  private CompoundFunctionCodeGenerator(final String[] args)
+      throws IOException {
+    super(args);
   }
 
   /**
@@ -108,66 +70,46 @@ final class _CodeGenerator {
     final String name, mAryName, nAryName;
     final Path path;
 
-    name = _CodeGenerator.__compound_name(m, n);
-    path = PathUtils
-        .createPathInside(this.m_packagePath, (name + ".java"));//$NON-NLS-1$
+    name = CompoundFunctionCodeGenerator.__compound_name(m, n);
+    path = PathUtils.createPathInside(this.getPackagePath(),
+        (name + ".java"));//$NON-NLS-1$
     System.out.println(((("Generating code for class '" //$NON-NLS-1$
         + name) + "' in file '") + path + '\'') + '.');//$NON-NLS-1$
 
     Files.deleteIfExists(path);
 
-    mAryName = _CodeGenerator.FUNCTIONS_OF_ARITY[m].getCanonicalName();
-    nAryName = _CodeGenerator.FUNCTIONS_OF_ARITY[n].getCanonicalName();
+    mAryName = CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+        .getCanonicalName();
+    nAryName = CodeGeneratorBase.getMathematicalFunctionClassOfArity(n)
+        .getCanonicalName();
 
     try (final OutputStream os = PathUtils.openOutputStream(path)) {
       try (final OutputStreamWriter osw = new OutputStreamWriter(os)) {
         try (final PrintWriter bw = new PrintWriter(osw)) {
 
-          bw.print("package ");//$NON-NLS-1$
-          bw.print(this.m_packageName);
-          bw.println(';');
-          bw.println();
+          CodeGeneratorBase.writePackage(this.getPackageName(), bw);
 
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(HashUtils.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(ITextOutput.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(MemoryTextOutput.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(DefaultParameterRenderer.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(IMath.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(AbstractParameterRenderer.class.getCanonicalName());
-          bw.println(';');
+          CodeGeneratorBase.importClass(HashUtils.class, bw);
+          CodeGeneratorBase.importClass(ITextOutput.class, bw);
+          CodeGeneratorBase.importClass(MemoryTextOutput.class, bw);
+          CodeGeneratorBase.importClass(DefaultParameterRenderer.class,
+              bw);
+          CodeGeneratorBase.importClass(IMath.class, bw);
+          CodeGeneratorBase.importClass(AbstractParameterRenderer.class,
+              bw);
           if (n == 1) {
-            bw.print("import ");//$NON-NLS-1$
-            bw.print(Absolute.class.getCanonicalName());
-            bw.println(';');
+            CodeGeneratorBase.importClass(Absolute.class, bw);
           }
 
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(mAryName);
-          bw.println(';');
+          CodeGeneratorBase.importClass(mAryName, bw);
           if (m != n) {
-            bw.print("import ");//$NON-NLS-1$
-            bw.print(nAryName);
-            bw.print(';');
-            bw.println();
+            CodeGeneratorBase.importClass(nAryName, bw);
           }
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(IParameterRenderer.class.getCanonicalName());
-          bw.println(';');
-
+          CodeGeneratorBase.importClass(IParameterRenderer.class, bw);
           bw.println();
 
-          bw.print("/** This is the automatically generated code for a {@link ");//$NON-NLS-1$
+          bw.print(
+              "/** This is the automatically generated code for a {@link ");//$NON-NLS-1$
           bw.print(mAryName);
           bw.print(' ');
           bw.print(m);
@@ -182,7 +124,8 @@ final class _CodeGenerator {
           bw.print("final class ");//$NON-NLS-1$
           bw.print(name);
           bw.print(" extends ");//$NON-NLS-1$
-          bw.print(_CodeGenerator.FUNCTIONS_OF_ARITY[m].getSimpleName());
+          bw.print(CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+              .getSimpleName());
           bw.println(" {");//$NON-NLS-1$
 
           bw.println();
@@ -193,23 +136,27 @@ final class _CodeGenerator {
           for (final Class<?> inType : new Class[] { byte.class,
               short.class, int.class, long.class, float.class,
               double.class }) {
-            _CodeGenerator.___compound_makeCompute(m, n, inType, inType,
-                bw);
+            CompoundFunctionCodeGenerator.___compound_makeCompute(m, n,
+                inType, inType, bw);
           }
 
           for (final Class<?> inType : new Class[] { int.class,
               long.class, }) {
-            _CodeGenerator.___compound_makeCompute(m, n, inType,
-                double.class, bw);
+            CompoundFunctionCodeGenerator.___compound_makeCompute(m, n,
+                inType, double.class, bw);
           }
 
-          _CodeGenerator.___compound_makeIsLongArithmeticAccurate(n, bw);
-          _CodeGenerator.___compound_makePrecedencePriority(bw);
-          _CodeGenerator.___compound_makeMathRenderMath(m, n, bw);
-          _CodeGenerator.___compound_makeMathRenderText(m, n, bw);
-          _CodeGenerator.___compound_makeHashCode(n, bw);
-          _CodeGenerator.___compound_makeEquals(m, n, bw);
-          _CodeGenerator.__makeToString(bw);
+          CompoundFunctionCodeGenerator
+              .___compound_makeIsLongArithmeticAccurate(n, bw);
+          CompoundFunctionCodeGenerator
+              .___compound_makePrecedencePriority(bw);
+          CompoundFunctionCodeGenerator.___compound_makeMathRenderMath(m,
+              n, bw);
+          CompoundFunctionCodeGenerator.___compound_makeMathRenderText(m,
+              n, bw);
+          CompoundFunctionCodeGenerator.___compound_makeHashCode(n, bw);
+          CompoundFunctionCodeGenerator.___compound_makeEquals(m, n, bw);
+          CompoundFunctionCodeGenerator.__makeToString(bw);
 
           this.__compound_renderer(m, n, bw);
 
@@ -254,8 +201,8 @@ final class _CodeGenerator {
     bw.print(outTypeName);
     bw.print(' ');
     outTypeNameInName = ("computeAs" + //$NON-NLS-1$
-        TextUtils.toUpperCase(outTypeName.charAt(0)) + outTypeName
-        .substring(1));
+        TextUtils.toUpperCase(outTypeName.charAt(0))
+        + outTypeName.substring(1));
     bw.print(outTypeNameInName);
     bw.print('(');
     for (i = 0; i < m; i++) {
@@ -387,7 +334,7 @@ final class _CodeGenerator {
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println(" @Override");//$NON-NLS-1$
     bw.println(" public final boolean equals(final Object o) {");//$NON-NLS-1$
-    name = _CodeGenerator.__compound_name(m, n);
+    name = CompoundFunctionCodeGenerator.__compound_name(m, n);
     bw.print(" final ");//$NON-NLS-1$
     bw.print(name);
     bw.println(" other;");//$NON-NLS-1$
@@ -457,32 +404,40 @@ final class _CodeGenerator {
 
     names = new String[n + 1];
     names[0] = (((((((((("The {@link " + //$NON-NLS-1$
-    _CodeGenerator.FUNCTIONS_OF_ARITY[n].getCanonicalName()) + ' ') + n) + //
-    "-ary} function used to compute this function's result based on the results of the ")//$NON-NLS-1$
-    + n) + //
-    " child {@link ") + //$NON-NLS-1$
-    _CodeGenerator.FUNCTIONS_OF_ARITY[m].getCanonicalName()) + ' ') + n) + //
-    "-ary} functions.");//$NON-NLS-1$
+        CodeGeneratorBase.getMathematicalFunctionClassOfArity(n)
+            .getCanonicalName())
+        + ' ') + n) + //
+        "-ary} function used to compute this function's result based on the results of the ")//$NON-NLS-1$
+        + n) + //
+        " child {@link ") + //$NON-NLS-1$
+        CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+            .getCanonicalName())
+        + ' ') + n) + //
+        "-ary} functions.");//$NON-NLS-1$
 
     bw.println();
     bw.print("/** @serial ");//$NON-NLS-1$
     bw.print(names[0]);
     bw.println(" */");//$NON-NLS-1$
     bw.print(" final ");//$NON-NLS-1$
-    bw.print(_CodeGenerator.FUNCTIONS_OF_ARITY[n].getSimpleName());
+    bw.print(CodeGeneratorBase.getMathematicalFunctionClassOfArity(n)
+        .getSimpleName());
     bw.println(" m_result;");//$NON-NLS-1$
 
     for (i = 1; i <= n; i++) {
-      names[i] = (((((("The " + _CodeGenerator.INDEXES[i]) + //$NON-NLS-1$
-      " child {@link ") + //$NON-NLS-1$
-      _CodeGenerator.FUNCTIONS_OF_ARITY[m].getCanonicalName()) + ' ') + m) + //
-      "-ary} function which contributes to the result.");//$NON-NLS-1$
+      names[i] = (((((("The " + CodeGeneratorBase.getPositionIndexName(i)) //$NON-NLS-1$
+          + " child {@link ")//$NON-NLS-1$
+          + CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+              .getCanonicalName())
+          + ' ') + m) + //
+          "-ary} function which contributes to the result.");//$NON-NLS-1$
       bw.println();
       bw.print("/** @serial ");//$NON-NLS-1$
       bw.print(names[i]);
       bw.println(" */");//$NON-NLS-1$
       bw.print(" final ");//$NON-NLS-1$
-      bw.print(_CodeGenerator.FUNCTIONS_OF_ARITY[m].getSimpleName());
+      bw.print(CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+          .getSimpleName());
       bw.print(" m_child");//$NON-NLS-1$
       bw.print(i);
       bw.println(';');
@@ -491,12 +446,17 @@ final class _CodeGenerator {
     bw.println();
     bw.println();
 
-    name = _CodeGenerator.__compound_name(m, n);
+    name = CompoundFunctionCodeGenerator.__compound_name(m, n);
     longName = (((((((((((((("{@link " + //$NON-NLS-1$
-    this.m_packageName) + '.') + name) + "}, a function which combines the result of ") + //$NON-NLS-1$
-    n) + " child {@link ") //$NON-NLS-1$
-    + _CodeGenerator.FUNCTIONS_OF_ARITY[m].getCanonicalName()) + ' ') + m) + "-ary} functions by using an {@link ") + //$NON-NLS-1$
-    _CodeGenerator.FUNCTIONS_OF_ARITY[n].getCanonicalName()) + ' ') + n) + "-ary} function");//$NON-NLS-1$
+        this.getPackageName()) + '.') + name)
+        + "}, a function which combines the result of ") + //$NON-NLS-1$
+        n) + " child {@link ") //$NON-NLS-1$
+        + CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+            .getCanonicalName())
+        + ' ') + m) + "-ary} functions by using an {@link ") + //$NON-NLS-1$
+        CodeGeneratorBase.getMathematicalFunctionClassOfArity(n)
+            .getCanonicalName())
+        + ' ') + n) + "-ary} function");//$NON-NLS-1$
 
     bw.print("/** Create the ");//$NON-NLS-1$
     bw.print(longName);
@@ -509,14 +469,17 @@ final class _CodeGenerator {
       bw.print(' ');
       bw.println(names[i]);
     }
-    bw.println(" * @throws IllegalArgumentException if any of the parameters is {@code null} */");//$NON-NLS-1$
-    bw.print(_CodeGenerator.__compound_name(m, n));
+    bw.println(
+        " * @throws IllegalArgumentException if any of the parameters is {@code null} */");//$NON-NLS-1$
+    bw.print(CompoundFunctionCodeGenerator.__compound_name(m, n));
     bw.print("(final ");//$NON-NLS-1$
-    bw.print(_CodeGenerator.FUNCTIONS_OF_ARITY[n].getSimpleName());
+    bw.print(CodeGeneratorBase.getMathematicalFunctionClassOfArity(n)
+        .getSimpleName());
     bw.print(" result");//$NON-NLS-1$
     for (i = 1; i <= n; i++) {
       bw.print(", final ");//$NON-NLS-1$
-      bw.print(_CodeGenerator.FUNCTIONS_OF_ARITY[m].getSimpleName());
+      bw.print(CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+          .getSimpleName());
       bw.print(" child");//$NON-NLS-1$
       bw.print(i);
     }
@@ -528,7 +491,7 @@ final class _CodeGenerator {
     bw.print(" \"Result function of "); //$NON-NLS-1$
     bw.print(longName);
     bw.println(//
-    ", cannot be null.\"); //$NON-NLS-1$");//$NON-NLS-1$
+        ", cannot be null.\"); //$NON-NLS-1$");//$NON-NLS-1$
 
     bw.println("}");//$NON-NLS-1$
 
@@ -541,10 +504,10 @@ final class _CodeGenerator {
       bw.println(" throw new IllegalArgumentException( //");//$NON-NLS-1$
       bw.print(" \"Child function ");//$NON-NLS-1$
       bw.print(i);
-      bw.print(" of "); //$NON-NLS-1$"
+      bw.print(" of "); //$NON-NLS-1$ "
       bw.print(longName);
       bw.println(//
-      ", cannot be null.\"); //$NON-NLS-1$");//$NON-NLS-1$
+          ", cannot be null.\"); //$NON-NLS-1$");//$NON-NLS-1$
       bw.println("}");//$NON-NLS-1$
       bw.print(" this.m_child");//$NON-NLS-1$
       bw.print(i);
@@ -582,18 +545,17 @@ final class _CodeGenerator {
     bw.print(IParameterRenderer.class.getSimpleName());
     bw.println(" renderer) {");//$NON-NLS-1$
     if (n <= 2) {
-      bw.print("final ");//$NON-NLS-1$
-      bw.print(_InternalMath.class.getSimpleName());
-      bw.println(" internalMath;");//$NON-NLS-1$
-      bw.print("internalMath = new ");//$NON-NLS-1$
-      bw.print(_InternalMath.class.getSimpleName());
-      bw.print("(out, new ");//$NON-NLS-1$
-      bw.print(_CodeGenerator.__compound_renderer_name(m, n));
+      bw.print("final _InternalMath internalMath;");//$NON-NLS-1$
+      bw.print("internalMath = new _InternalMath(out, new ");//$NON-NLS-1$
+      bw.print(
+          CompoundFunctionCodeGenerator.__compound_renderer_name(m, n));
       bw.println("(renderer));");//$NON-NLS-1$
-      bw.println("this.m_result.mathRender(internalMath, internalMath.m_renderer);");//$NON-NLS-1$
+      bw.println(
+          "this.m_result.mathRender(internalMath, internalMath.m_renderer);");//$NON-NLS-1$
     } else {
       bw.println("this.m_result.mathRender(out, new ");//$NON-NLS-1$
-      bw.print(_CodeGenerator.__compound_renderer_name(m, n));
+      bw.print(
+          CompoundFunctionCodeGenerator.__compound_renderer_name(m, n));
       bw.println("(renderer));");//$NON-NLS-1$
     }
     bw.println('}');
@@ -629,7 +591,8 @@ final class _CodeGenerator {
 
     if (n == 1) {
       bw.print("final ");//$NON-NLS-1$
-      bw.print(name1 = _CodeGenerator.__compound_renderer_name(m, n));
+      bw.print(name1 = CompoundFunctionCodeGenerator
+          .__compound_renderer_name(m, n));
       bw.println(" subRenderer;");//$NON-NLS-1$
       bw.print("final ");//$NON-NLS-1$
       bw.print(name2 = MemoryTextOutput.class.getSimpleName());
@@ -660,7 +623,8 @@ final class _CodeGenerator {
       bw.println("this.m_result.mathRender(out, subRenderer);");//$NON-NLS-1$
     } else {
       bw.print("this.m_result.mathRender(out, new ");//$NON-NLS-1$
-      bw.print(_CodeGenerator.__compound_renderer_name(m, n));
+      bw.print(
+          CompoundFunctionCodeGenerator.__compound_renderer_name(m, n));
       bw.println("(renderer));");//$NON-NLS-1$
     }
     bw.println('}');
@@ -697,29 +661,34 @@ final class _CodeGenerator {
       final PrintWriter bw) throws IOException {
     final String name;
 
-    name = _CodeGenerator.__compound_renderer_name(m, n);
+    name = CompoundFunctionCodeGenerator.__compound_renderer_name(m, n);
 
-    bw.print("/** This is the automatically generated code of the {@link ");//$NON-NLS-1$
+    bw.print(
+        "/** This is the automatically generated code of the {@link ");//$NON-NLS-1$
     bw.print(IParameterRenderer.class.getCanonicalName());
     bw.print(" parameter renderer} of the {@link ");//$NON-NLS-1$
-    bw.print(_CodeGenerator.__compound_name(m, n));
+    bw.print(CompoundFunctionCodeGenerator.__compound_name(m, n));
     bw.println("}. */");//$NON-NLS-1$
 
     bw.print("private final class ");//$NON-NLS-1$
     bw.print(name);
     bw.print(" extends ");//$NON-NLS-1$
     if (n <= 2) {
-      bw.print(_CompoundParameterRendererBase.class.getSimpleName());
+      bw.print("_CompoundParameterRendererBase");//$NON-NLS-1$
     } else {
       bw.print(AbstractParameterRenderer.class.getSimpleName());
     }
     bw.println(" {");//$NON-NLS-1$
 
     this.___compound_renderer_makeConstructorAndMembers(m, n, bw);
-    _CodeGenerator.___compound_renderer_makeRenderParameterMath(m, n, bw);
-    _CodeGenerator.___compound_renderer_makeRenderParameterText(m, n, bw);
-    _CodeGenerator.___compound_renderer_makeHashCode(m, n, bw);
-    _CodeGenerator.___compound_renderer_makeEquals(m, n, bw);
+    CompoundFunctionCodeGenerator
+        .___compound_renderer_makeRenderParameterMath(m, n, bw);
+    CompoundFunctionCodeGenerator
+        .___compound_renderer_makeRenderParameterText(m, n, bw);
+    CompoundFunctionCodeGenerator.___compound_renderer_makeHashCode(m, n,
+        bw);
+    CompoundFunctionCodeGenerator.___compound_renderer_makeEquals(m, n,
+        bw);
 
     bw.println('}');
 
@@ -742,7 +711,7 @@ final class _CodeGenerator {
 
     name = ("the {@link " + //$NON-NLS-1$
         IParameterRenderer.class.getCanonicalName() + //
-    " parameter renderer} to bridge to");//$NON-NLS-1$
+        " parameter renderer} to bridge to");//$NON-NLS-1$
     bw.print("/** ");//$NON-NLS-1$
     bw.print(name);
     bw.println(" */");//$NON-NLS-1$
@@ -754,19 +723,21 @@ final class _CodeGenerator {
     bw.print("/** Create the {@link ");//$NON-NLS-1$
     bw.print(IParameterRenderer.class.getCanonicalName());
     bw.print(" parameter renderer} of the {@link ");//$NON-NLS-1$
-    bw.print(_CodeGenerator.__compound_name(m, n));
+    bw.print(CompoundFunctionCodeGenerator.__compound_name(m, n));
     bw.println('}');
     bw.print("@param renderer ");//$NON-NLS-1$
     bw.println(name);
-    bw.println(" * @throws IllegalArgumentException if {@code renderer} is {@code null} */");//$NON-NLS-1$
-    bw.print(_CodeGenerator.__compound_renderer_name(m, n));
+    bw.println(
+        " * @throws IllegalArgumentException if {@code renderer} is {@code null} */");//$NON-NLS-1$
+    bw.print(CompoundFunctionCodeGenerator.__compound_renderer_name(m, n));
     bw.print("(final ");//$NON-NLS-1$
     bw.print(IParameterRenderer.class.getSimpleName());
     bw.println(" renderer) {");//$NON-NLS-1$
     bw.println(" super();");//$NON-NLS-1$
     bw.println("if(renderer==null) {");//$NON-NLS-1$
     bw.println("throw new IllegalArgumentException( //");//$NON-NLS-1$
-    bw.println("\"The parameter renderer to bridge to cannot be null.\"); //$NON-NLS-1$");//$NON-NLS-1$
+    bw.println(
+        "\"The parameter renderer to bridge to cannot be null.\"); //$NON-NLS-1$");//$NON-NLS-1$
     bw.println('}');
     bw.println("this.m_renderer = renderer;");//$NON-NLS-1$
     bw.println('}');
@@ -791,10 +762,10 @@ final class _CodeGenerator {
     bw.println("public final int hashCode() {");//$NON-NLS-1$
 
     bw.print(//
-    "return HashUtils.combineHashes(HashUtils.hashCode(this.m_renderer), ");//$NON-NLS-1$
-    bw.print(_CodeGenerator.__compound_name(m, n));
+        "return HashUtils.combineHashes(HashUtils.hashCode(this.m_renderer), ");//$NON-NLS-1$
+    bw.print(CompoundFunctionCodeGenerator.__compound_name(m, n));
     bw.println(//
-    ".this.hashCode());");//$NON-NLS-1$
+        ".this.hashCode());");//$NON-NLS-1$
     bw.println("}");//$NON-NLS-1$
   }
 
@@ -812,8 +783,8 @@ final class _CodeGenerator {
       final int n, final PrintWriter bw) {
     final String name, type;
 
-    name = _CodeGenerator.__compound_name(m, n);
-    type = _CodeGenerator.__compound_renderer_name(m, n);
+    name = CompoundFunctionCodeGenerator.__compound_name(m, n);
+    type = CompoundFunctionCodeGenerator.__compound_renderer_name(m, n);
     bw.println();
     bw.println();
     bw.println("/** the internal owner getter");//$NON-NLS-1$
@@ -875,7 +846,7 @@ final class _CodeGenerator {
 
     bw.println("switch(index) {");//$NON-NLS-1$
 
-    name = _CodeGenerator.__compound_name(m, n);
+    name = CompoundFunctionCodeGenerator.__compound_name(m, n);
 
     for (index = 0; index < n; index++) {
       bw.print("case ");//$NON-NLS-1$
@@ -995,7 +966,7 @@ final class _CodeGenerator {
 
     bw.println("switch(index) {");//$NON-NLS-1$
 
-    name = _CodeGenerator.__compound_name(m, n);
+    name = CompoundFunctionCodeGenerator.__compound_name(m, n);
 
     for (index = 0; index < n; index++) {
       bw.print("case ");//$NON-NLS-1$
@@ -1078,7 +1049,7 @@ final class _CodeGenerator {
   private static final String __compound_renderer_name(final int m,
       final int n) {
     return (((("__Compound" + n) + 'x') + m) + //$NON-NLS-1$
-    "ParameterRenderer"); //$NON-NLS-1$
+        "ParameterRenderer"); //$NON-NLS-1$
   }
 
   /**
@@ -1096,54 +1067,44 @@ final class _CodeGenerator {
     final String name, mAryName;
     final Path path;
 
-    name = _CodeGenerator.__selection_name(m, sel);
-    path = PathUtils
-        .createPathInside(this.m_packagePath, (name + ".java"));//$NON-NLS-1$
+    name = CompoundFunctionCodeGenerator.__selection_name(m, sel);
+    path = PathUtils.createPathInside(this.getPackagePath(),
+        (name + ".java"));//$NON-NLS-1$
     System.out.println(((("Generating code for class '" //$NON-NLS-1$
         + name) + "' in file '") + path + '\'') + '.');//$NON-NLS-1$
 
     Files.deleteIfExists(path);
 
-    mAryName = _CodeGenerator.FUNCTIONS_OF_ARITY[m].getCanonicalName();
+    mAryName = CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+        .getCanonicalName();
 
     try (final OutputStream os = PathUtils.openOutputStream(path)) {
       try (final OutputStreamWriter osw = new OutputStreamWriter(os)) {
         try (final PrintWriter bw = new PrintWriter(osw)) {
 
-          bw.print("package ");//$NON-NLS-1$
-          bw.print(this.m_packageName);
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(MemoryTextOutput.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(DefaultParameterRenderer.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(mAryName);
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(IMath.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(ITextOutput.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(IParameterRenderer.class.getCanonicalName());
-          bw.println(';');
+          CodeGeneratorBase.writePackage(this.getPackageName(), bw);
+          CodeGeneratorBase.importClass(MemoryTextOutput.class, bw);
+          CodeGeneratorBase.importClass(DefaultParameterRenderer.class,
+              bw);
+          CodeGeneratorBase.importClass(mAryName, bw);
+          CodeGeneratorBase.importClass(IMath.class, bw);
+          CodeGeneratorBase.importClass(ITextOutput.class, bw);
+          CodeGeneratorBase.importClass(IParameterRenderer.class, bw);
 
-          bw.print("/** This is the automatically generated code for a {@link ");//$NON-NLS-1$
+          bw.print(
+              "/** This is the automatically generated code for a {@link ");//$NON-NLS-1$
           bw.print(mAryName);
           bw.print(' ');
           bw.print(m);
           bw.print("-ary} which returns the ");//$NON-NLS-1$
-          bw.print(_CodeGenerator.INDEXES[sel]);
+          bw.print(CodeGeneratorBase.getPositionIndexName(sel));
           bw.println("of its input values. */");//$NON-NLS-1$
 
           bw.print("final class ");//$NON-NLS-1$
           bw.print(name);
           bw.print(" extends ");//$NON-NLS-1$
-          bw.print(_CodeGenerator.FUNCTIONS_OF_ARITY[m].getSimpleName());
+          bw.print(CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+              .getSimpleName());
           bw.println(" {");//$NON-NLS-1$
 
           bw.println();
@@ -1155,23 +1116,29 @@ final class _CodeGenerator {
           for (final Class<?> inType : new Class[] { byte.class,
               short.class, int.class, long.class, float.class,
               double.class }) {
-            _CodeGenerator.___selection_makeCompute(m, sel, inType,
-                inType, bw);
+            CompoundFunctionCodeGenerator.___selection_makeCompute(m, sel,
+                inType, inType, bw);
           }
 
           for (final Class<?> inType : new Class[] { int.class,
               long.class, }) {
-            _CodeGenerator.___selection_makeCompute(m, sel, inType,
-                double.class, bw);
+            CompoundFunctionCodeGenerator.___selection_makeCompute(m, sel,
+                inType, double.class, bw);
           }
 
-          _CodeGenerator.___selection_makeIsLongArithmeticAccurate(bw);
-          _CodeGenerator.___selection_makePrecedencePriority(bw);
-          _CodeGenerator.___selection_makeMathRender(sel, bw);
-          _CodeGenerator.___selection_makeHashCode(m, sel, bw);
-          _CodeGenerator.___selection_makeEquals(m, sel, bw);
-          _CodeGenerator.___selection_makeSerial(m, sel, bw);
-          _CodeGenerator.__makeToString(bw);
+          CompoundFunctionCodeGenerator
+              .___selection_makeIsLongArithmeticAccurate(bw);
+          CompoundFunctionCodeGenerator
+              .___selection_makePrecedencePriority(bw);
+          CompoundFunctionCodeGenerator.___selection_makeMathRender(sel,
+              bw);
+          CompoundFunctionCodeGenerator.___selection_makeHashCode(m, sel,
+              bw);
+          CompoundFunctionCodeGenerator.___selection_makeEquals(m, sel,
+              bw);
+          CompoundFunctionCodeGenerator.___selection_makeSerial(m, sel,
+              bw);
+          CompoundFunctionCodeGenerator.__makeToString(bw);
 
           bw.println('}');
         }
@@ -1214,8 +1181,8 @@ final class _CodeGenerator {
     bw.print(outTypeName);
     bw.print(' ');
     outTypeNameInName = ("computeAs" + //$NON-NLS-1$
-        TextUtils.toUpperCase(outTypeName.charAt(0)) + outTypeName
-        .substring(1));
+        TextUtils.toUpperCase(outTypeName.charAt(0))
+        + outTypeName.substring(1));
     bw.print(outTypeNameInName);
     bw.print('(');
     for (i = 0; i < m; i++) {
@@ -1273,7 +1240,7 @@ final class _CodeGenerator {
     bw.println(" @Override");//$NON-NLS-1$
     bw.println(" public final boolean equals(final Object o) {");//$NON-NLS-1$
     bw.print(" return (o instanceof ");//$NON-NLS-1$
-    bw.print(_CodeGenerator.__selection_name(m, sel));
+    bw.print(CompoundFunctionCodeGenerator.__selection_name(m, sel));
     bw.println(");");//$NON-NLS-1$
     bw.println("}");//$NON-NLS-1$
   }
@@ -1293,14 +1260,14 @@ final class _CodeGenerator {
 
     final String name;
 
-    name = _CodeGenerator.__selection_name(m, sel);
+    name = CompoundFunctionCodeGenerator.__selection_name(m, sel);
 
     bw.println();
     bw.println();
     bw.println(//
-    "  /** Write replace: the instance this method is invoked on will be replaced with the singleton instance {@link #INSTANCE} for serialization, i.e., when the instance is written with {@link java.io.ObjectOutputStream#writeObject(Object)}.");//$NON-NLS-1$
+        "  /** Write replace: the instance this method is invoked on will be replaced with the singleton instance {@link #INSTANCE} for serialization, i.e., when the instance is written with {@link java.io.ObjectOutputStream#writeObject(Object)}.");//$NON-NLS-1$
     bw.println(//
-    "   * @return the replacement instance (always {@link #INSTANCE})");//$NON-NLS-1$
+        "   * @return the replacement instance (always {@link #INSTANCE})");//$NON-NLS-1$
     bw.println(" */");//$NON-NLS-1$
     bw.println(" private final Object writeReplace() {");//$NON-NLS-1$
     bw.print(" return ");//$NON-NLS-1$
@@ -1309,9 +1276,9 @@ final class _CodeGenerator {
     bw.println("}");//$NON-NLS-1$
     bw.println();
     bw.println(//
-    "  /** Read resolve: The instance this method is invoked on will be replaced with the singleton instance {@link #INSTANCE} after serialization, i.e., when the instance is read with {@link java.io.ObjectInputStream#readObject()}.");//$NON-NLS-1$
+        "  /** Read resolve: The instance this method is invoked on will be replaced with the singleton instance {@link #INSTANCE} after serialization, i.e., when the instance is read with {@link java.io.ObjectInputStream#readObject()}.");//$NON-NLS-1$
     bw.println(//
-    "   * @return the replacement instance (always {@link #INSTANCE})");//$NON-NLS-1$
+        "   * @return the replacement instance (always {@link #INSTANCE})");//$NON-NLS-1$
     bw.println(" */");//$NON-NLS-1$
     bw.println(" private final Object readResolve() {");//$NON-NLS-1$
     bw.print(" return ");//$NON-NLS-1$
@@ -1340,8 +1307,9 @@ final class _CodeGenerator {
 
     bw.print("return ");//$NON-NLS-1$
     bw.print(Primes.nextPrime((int) (//
-        (((long) (Integer.MAX_VALUE)) * ((((m - 1) * m) >>> 1) + (sel - 1))) / //
-        ((((_CodeGenerator.MAX_ARITY * (_CodeGenerator.MAX_ARITY + 1)) >>> 1))))));
+    (((long) (Integer.MAX_VALUE)) * ((((m - 1) * m) >>> 1) + (sel - 1))) / //
+        ((((CodeGeneratorBase.MAX_FUNCTION_ARITY
+            * (CodeGeneratorBase.MAX_FUNCTION_ARITY + 1)) >>> 1))))));
 
     bw.println(';');
     bw.println("}");//$NON-NLS-1$
@@ -1380,11 +1348,14 @@ final class _CodeGenerator {
       final int sel, final PrintWriter bw) {
     final String name, longName;
 
-    name = _CodeGenerator.__selection_name(m, sel);
+    name = CompoundFunctionCodeGenerator.__selection_name(m, sel);
     longName = (((((((((("{@link " + //$NON-NLS-1$
-    this.m_packageName) + '.') + name) + "}, a {@link ") //$NON-NLS-1$
-    + _CodeGenerator.FUNCTIONS_OF_ARITY[m].getCanonicalName()) + ' ') + m) + "-ary} function which returns the value of the ") //$NON-NLS-1$
-    + _CodeGenerator.INDEXES[sel]) + " one of its parameters");//$NON-NLS-1$
+        this.getPackageName()) + '.') + name) + "}, a {@link ") //$NON-NLS-1$
+        + CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+            .getCanonicalName())
+        + ' ') + m) + "-ary} function which returns the value of the ") //$NON-NLS-1$
+        + CodeGeneratorBase.getPositionIndexName(sel))
+        + " one of its parameters");//$NON-NLS-1$
 
     bw.print("/** The globally shared instance of the ");//$NON-NLS-1$
     bw.print(longName);
@@ -1455,7 +1426,8 @@ final class _CodeGenerator {
    *          the selected element
    * @return the {@code sel-of-m}-selection node name
    */
-  private static final String __selection_name(final int m, final int sel) {
+  private static final String __selection_name(final int m,
+      final int sel) {
     if ((m <= 1) && (sel <= 1)) {
       return Identity.class.getSimpleName();
     }
@@ -1474,61 +1446,38 @@ final class _CodeGenerator {
     final String name, mAryName;
     final Path path;
 
-    name = _CodeGenerator.__const_name(m);
-    path = PathUtils
-        .createPathInside(this.m_packagePath, (name + ".java"));//$NON-NLS-1$
+    name = CompoundFunctionCodeGenerator.__const_name(m);
+    path = PathUtils.createPathInside(this.getPackagePath(),
+        (name + ".java"));//$NON-NLS-1$
     System.out.println(((("Generating code for class '" //$NON-NLS-1$
         + name) + "' in file '") + path + '\'') + '.');//$NON-NLS-1$
 
     Files.deleteIfExists(path);
 
-    mAryName = _CodeGenerator.FUNCTIONS_OF_ARITY[m].getCanonicalName();
+    mAryName = CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+        .getCanonicalName();
 
     try (final OutputStream os = PathUtils.openOutputStream(path)) {
       try (final OutputStreamWriter osw = new OutputStreamWriter(os)) {
         try (final PrintWriter bw = new PrintWriter(osw)) {
 
-          bw.print("package ");//$NON-NLS-1$
-          bw.print(this.m_packageName);
-          bw.println(';');
+          CodeGeneratorBase.writePackage(this.getPackageName(), bw);
 
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(mAryName);
-          bw.println(';');
+          CodeGeneratorBase.importClass(mAryName, bw);
+          CodeGeneratorBase.importClass(NumericalTypes.class, bw);
+          CodeGeneratorBase.importClass(IText.class, bw);
+          CodeGeneratorBase.importClass(IMath.class, bw);
+          CodeGeneratorBase.importClass(ITextOutput.class, bw);
+          CodeGeneratorBase.importClass(Negate.class, bw);
+          CodeGeneratorBase.importClass(MemoryTextOutput.class, bw);
+          CodeGeneratorBase.importClass(DefaultParameterRenderer.class,
+              bw);
+          CodeGeneratorBase.importClass(IParameterRenderer.class, bw);
+          CodeGeneratorBase.importClass(IMathRenderable.class, bw);
+          CodeGeneratorBase.importClass(NamedConstant.class, bw);
 
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(NumericalTypes.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(IText.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(IMath.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(ITextOutput.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(Negate.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(MemoryTextOutput.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(DefaultParameterRenderer.class.getCanonicalName());
-          bw.println(';');
-
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(IParameterRenderer.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(IMathRenderable.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(NamedConstant.class.getCanonicalName());
-          bw.println(';');
-
-          bw.print("/** This is the automatically generated code for a {@link ");//$NON-NLS-1$
+          bw.print(
+              "/** This is the automatically generated code for a {@link ");//$NON-NLS-1$
           bw.print(mAryName);
           bw.print(' ');
           bw.print(m);
@@ -1537,7 +1486,8 @@ final class _CodeGenerator {
           bw.print("final class ");//$NON-NLS-1$
           bw.print(name);
           bw.print(" extends ");//$NON-NLS-1$
-          bw.print(_CodeGenerator.FUNCTIONS_OF_ARITY[m].getSimpleName());
+          bw.print(CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+              .getSimpleName());
           bw.println(" {");//$NON-NLS-1$
 
           bw.println();
@@ -1549,21 +1499,24 @@ final class _CodeGenerator {
           for (final Class<?> inType : new Class[] { byte.class,
               short.class, int.class, long.class, float.class,
               double.class }) {
-            _CodeGenerator.___const_makeCompute(m, inType, inType, bw);
+            CompoundFunctionCodeGenerator.___const_makeCompute(m, inType,
+                inType, bw);
           }
 
           for (final Class<?> inType : new Class[] { int.class,
               long.class, }) {
-            _CodeGenerator.___const_makeCompute(m, inType, double.class,
-                bw);
+            CompoundFunctionCodeGenerator.___const_makeCompute(m, inType,
+                double.class, bw);
           }
 
-          _CodeGenerator.___const_makeIsLongArithmeticAccurate(bw);
-          _CodeGenerator.___const_makePrecedencePriority(bw);
-          _CodeGenerator.___const_makeMathRender(bw);
-          _CodeGenerator.___const_makeHashCode(m, bw);
-          _CodeGenerator.___const_makeEquals(m, bw);
-          _CodeGenerator.__makeToString(bw);
+          CompoundFunctionCodeGenerator
+              .___const_makeIsLongArithmeticAccurate(bw);
+          CompoundFunctionCodeGenerator
+              .___const_makePrecedencePriority(bw);
+          CompoundFunctionCodeGenerator.___const_makeMathRender(bw);
+          CompoundFunctionCodeGenerator.___const_makeHashCode(m, bw);
+          CompoundFunctionCodeGenerator.___const_makeEquals(m, bw);
+          CompoundFunctionCodeGenerator.__makeToString(bw);
           bw.println('}');
         }
       }
@@ -1585,7 +1538,8 @@ final class _CodeGenerator {
    *          the output writer
    */
   private static final void ___const_makeCompute(final int m,
-      final Class<?> inType, final Class<?> outType, final PrintWriter bw) {
+      final Class<?> inType, final Class<?> outType,
+      final PrintWriter bw) {
     final String inTypeName, outTypeName, outTypeNameInName;
     int i;
 
@@ -1602,8 +1556,8 @@ final class _CodeGenerator {
     bw.print(outTypeName);
     bw.print(' ');
     outTypeNameInName = ("computeAs" + //$NON-NLS-1$
-        TextUtils.toUpperCase(outTypeName.charAt(0)) + outTypeName
-        .substring(1));
+        TextUtils.toUpperCase(outTypeName.charAt(0))
+        + outTypeName.substring(1));
     bw.print(outTypeNameInName);
     bw.print('(');
     for (i = 0; i < m; i++) {
@@ -1722,7 +1676,8 @@ final class _CodeGenerator {
     bw.print("if(this.m_const instanceof ");//$NON-NLS-1$
     bw.print(NamedConstant.class.getSimpleName());
     bw.println(") { return Integer.MAX_VALUE; }");//$NON-NLS-1$
-    bw.print("return ((this.m_const.doubleValue() >= 0d) ? Integer.MAX_VALUE : ");//$NON-NLS-1$
+    bw.print(
+        "return ((this.m_const.doubleValue() >= 0d) ? Integer.MAX_VALUE : ");//$NON-NLS-1$
     bw.print(Negate.class.getSimpleName());
     bw.println(".PRECEDENCE_PRIORITY);");//$NON-NLS-1$
     bw.println("}");//$NON-NLS-1$
@@ -1740,7 +1695,7 @@ final class _CodeGenerator {
       final PrintWriter bw) {
     final String name;
 
-    name = _CodeGenerator.__const_name(m);
+    name = CompoundFunctionCodeGenerator.__const_name(m);
     bw.println();
     bw.println();
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
@@ -1773,7 +1728,8 @@ final class _CodeGenerator {
     bw.print(") { return ((");//$NON-NLS-1$
     bw.print(NamedConstant.class.getSimpleName());
     bw.println(")(this.m_const)).isLongArithmeticAccurate(); }");//$NON-NLS-1$
-    bw.println(" return ((NumericalTypes.getTypes(this.m_const) & NumericalTypes.IS_LONG) != 0);");//$NON-NLS-1$
+    bw.println(
+        " return ((NumericalTypes.getTypes(this.m_const) & NumericalTypes.IS_LONG) != 0);");//$NON-NLS-1$
     bw.println("}");//$NON-NLS-1$
   }
 
@@ -1801,17 +1757,19 @@ final class _CodeGenerator {
     bw.println();
     bw.println();
 
-    name = _CodeGenerator.__const_name(m);
+    name = CompoundFunctionCodeGenerator.__const_name(m);
     longName = (((("{@link " + //$NON-NLS-1$
-    this.m_packageName) + '.') + name) + "}, a function which returns a constant value");//$NON-NLS-1$
+        this.getPackageName()) + '.') + name)
+        + "}, a function which returns a constant value");//$NON-NLS-1$
 
     bw.print("/** Create the ");//$NON-NLS-1$
     bw.print(longName);
     bw.println('.');
     bw.print(" * @param constant ");//$NON-NLS-1$
     bw.println(paramName);
-    bw.println(" * @throws IllegalArgumentException if {@code constant} is {@code null} */");//$NON-NLS-1$
-    bw.print(_CodeGenerator.__const_name(m));
+    bw.println(
+        " * @throws IllegalArgumentException if {@code constant} is {@code null} */");//$NON-NLS-1$
+    bw.print(CompoundFunctionCodeGenerator.__const_name(m));
     bw.println("(final Number constant) {");//$NON-NLS-1$
     bw.println(" super();");//$NON-NLS-1$
 
@@ -1820,7 +1778,7 @@ final class _CodeGenerator {
     bw.print(" \"Constant result of "); //$NON-NLS-1$
     bw.print(longName);
     bw.println(//
-    ", cannot be null.\"); //$NON-NLS-1$");//$NON-NLS-1$
+        ", cannot be null.\"); //$NON-NLS-1$");//$NON-NLS-1$
 
     bw.println("}");//$NON-NLS-1$
 
@@ -1853,67 +1811,46 @@ final class _CodeGenerator {
     final Path path;
     int i;
 
-    name = _CodeGenerator.__builder_name(m);
-    path = PathUtils
-        .createPathInside(this.m_packagePath, (name + ".java"));//$NON-NLS-1$
+    name = CompoundFunctionCodeGenerator.__builder_name(m);
+    path = PathUtils.createPathInside(this.getPackagePath(),
+        (name + ".java"));//$NON-NLS-1$
     System.out.println(((("Generating code for class '" //$NON-NLS-1$
         + name) + "' in file '") + path + '\'') + '.');//$NON-NLS-1$
 
     Files.deleteIfExists(path);
 
-    mAryName = _CodeGenerator.FUNCTIONS_OF_ARITY[m].getCanonicalName();
+    mAryName = CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+        .getCanonicalName();
 
     try (final OutputStream os = PathUtils.openOutputStream(path)) {
       try (final OutputStreamWriter osw = new OutputStreamWriter(os)) {
         try (final PrintWriter bw = new PrintWriter(osw)) {
 
-          bw.print("package ");//$NON-NLS-1$
-          bw.print(this.m_packageName);
-          bw.println(';');
-          bw.println();
+          CodeGeneratorBase.writePackage(this.getPackageName(), bw);
 
-          for (i = 1; i <= _CodeGenerator.MAX_ARITY; i++) {
-            bw.print("import ");//$NON-NLS-1$
-            bw.print(_CodeGenerator.FUNCTIONS_OF_ARITY[i]
-                .getCanonicalName());
-            bw.println(';');
+          for (i = 1; i <= CodeGeneratorBase.MAX_FUNCTION_ARITY; i++) {
+            CodeGeneratorBase.importClass(
+                CodeGeneratorBase.getMathematicalFunctionClassOfArity(i),
+                bw);
           }
 
           if (m <= 1) {
-            bw.print("import ");//$NON-NLS-1$
-            bw.print(Identity.class.getCanonicalName());
-            bw.println(';');
+            CodeGeneratorBase.importClass(Identity.class, bw);
           }
 
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(Pow.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(Pow2.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(Pow10.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(Exp.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(Sqr.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(Cube.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(Sqrt.class.getCanonicalName());
-          bw.println(';');
-          bw.print("import ");//$NON-NLS-1$
-          bw.print(Cbrt.class.getCanonicalName());
-          bw.println(';');
+          CodeGeneratorBase.importClass(Pow.class, bw);
+          CodeGeneratorBase.importClass(Pow2.class, bw);
+          CodeGeneratorBase.importClass(Pow10.class, bw);
+          CodeGeneratorBase.importClass(Exp.class, bw);
+          CodeGeneratorBase.importClass(Sqr.class, bw);
+          CodeGeneratorBase.importClass(Cube.class, bw);
+          CodeGeneratorBase.importClass(Sqrt.class, bw);
+          CodeGeneratorBase.importClass(Cbrt.class, bw);
 
           bw.println();
 
           bw.print(//
-          "/** This is the automatically generated code for a {@link org.optimizationBenchmarking.utils.math.functions.compound builder} of {@link ");//$NON-NLS-1$
+              "/** This is the automatically generated code for a {@link org.optimizationBenchmarking.utils.math.functions.compound builder} of {@link ");//$NON-NLS-1$
           bw.print(mAryName);
           bw.print(' ');
           bw.print(m);
@@ -1922,21 +1859,25 @@ final class _CodeGenerator {
           bw.print("public final class ");//$NON-NLS-1$
           bw.print(name);
           bw.print(" extends FunctionBuilder<");//$NON-NLS-1$
-          bw.print(_CodeGenerator.FUNCTIONS_OF_ARITY[m].getSimpleName());
+          bw.print(CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+              .getSimpleName());
           bw.println("> {");//$NON-NLS-1$
 
           this.___builder_makeConstructorAndInstance(m, bw);
 
-          for (i = 1; i <= _CodeGenerator.MAX_ARITY; i++) {
-            _CodeGenerator.___builder_makeCompound(m, i, bw);
+          for (i = 1; i <= CodeGeneratorBase.MAX_FUNCTION_ARITY; i++) {
+            CompoundFunctionCodeGenerator.___builder_makeCompound(m, i,
+                bw);
           }
 
-          _CodeGenerator.___builder_makeConstant(m, bw);
-          _CodeGenerator.___builder_makeSelection(m, bw);
-          _CodeGenerator.___builder_makeFunctionArity(m, bw);
-          _CodeGenerator.___builder_makeFunctionClass(m, bw);
-          _CodeGenerator.___builder_makeEquals(m, bw);
-          _CodeGenerator.___builder_makeHashCode(m, bw);
+          CompoundFunctionCodeGenerator.___builder_makeConstant(m, bw);
+          CompoundFunctionCodeGenerator.___builder_makeSelection(m, bw);
+          CompoundFunctionCodeGenerator.___builder_makeFunctionArity(m,
+              bw);
+          CompoundFunctionCodeGenerator.___builder_makeFunctionClass(m,
+              bw);
+          CompoundFunctionCodeGenerator.___builder_makeEquals(m, bw);
+          CompoundFunctionCodeGenerator.___builder_makeHashCode(m, bw);
           bw.println('}');
         }
       }
@@ -1960,8 +1901,10 @@ final class _CodeGenerator {
     final String inType, outType, constType;
     int i;
 
-    inType = _CodeGenerator.FUNCTIONS_OF_ARITY[n].getSimpleName();
-    outType = _CodeGenerator.FUNCTIONS_OF_ARITY[m].getSimpleName();
+    inType = CodeGeneratorBase.getMathematicalFunctionClassOfArity(n)
+        .getSimpleName();
+    outType = CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+        .getSimpleName();
     bw.println();
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println(" @Override");//$NON-NLS-1$
@@ -1997,7 +1940,7 @@ final class _CodeGenerator {
     }
 
     if (n == 2) {
-      constType = _CodeGenerator.__const_name(m);
+      constType = CompoundFunctionCodeGenerator.__const_name(m);
       bw.print("if(func instanceof ");//$NON-NLS-1$
       bw.print(Pow.class.getSimpleName());
       bw.println(") {");//$NON-NLS-1$
@@ -2067,7 +2010,7 @@ final class _CodeGenerator {
 
     bw.print("return new ");//$NON-NLS-1$
 
-    bw.print(_CodeGenerator.__compound_name(m, n));
+    bw.print(CompoundFunctionCodeGenerator.__compound_name(m, n));
     bw.print("(func");//$NON-NLS-1$
     for (i = 1; i <= n; i++) {
       bw.print(", ");//$NON-NLS-1$
@@ -2093,11 +2036,12 @@ final class _CodeGenerator {
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println(" @Override");//$NON-NLS-1$
     bw.print(" public final ");//$NON-NLS-1$
-    bw.print(_CodeGenerator.FUNCTIONS_OF_ARITY[m].getSimpleName());
+    bw.print(CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+        .getSimpleName());
     bw.print(' ');
     bw.println("constant(final Number value) {"); //$NON-NLS-1$
     bw.print(" return new ");//$NON-NLS-1$
-    bw.print(_CodeGenerator.__const_name(m));
+    bw.print(CompoundFunctionCodeGenerator.__const_name(m));
     bw.println("(value);");//$NON-NLS-1$
     bw.println("}");//$NON-NLS-1$
   }
@@ -2134,7 +2078,8 @@ final class _CodeGenerator {
       final PrintWriter bw) {
     final String clazz;
 
-    clazz = _CodeGenerator.FUNCTIONS_OF_ARITY[m].getSimpleName();
+    clazz = CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+        .getSimpleName();
     bw.println();
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println(" @Override");//$NON-NLS-1$
@@ -2190,7 +2135,7 @@ final class _CodeGenerator {
     bw.println(" @Override");//$NON-NLS-1$
     bw.println(" public final boolean equals(final Object o) {");//$NON-NLS-1$
     bw.print(" return (o instanceof ");//$NON-NLS-1$
-    bw.print(_CodeGenerator.__builder_name(m));
+    bw.print(CompoundFunctionCodeGenerator.__builder_name(m));
     bw.println(");");//$NON-NLS-1$
     bw.println("}");//$NON-NLS-1$
   }
@@ -2234,7 +2179,8 @@ final class _CodeGenerator {
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println(" @Override");//$NON-NLS-1$
     bw.print(" public final ");//$NON-NLS-1$
-    bw.print(_CodeGenerator.FUNCTIONS_OF_ARITY[m].getSimpleName());
+    bw.print(CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+        .getSimpleName());
     bw.print(' ');
     bw.println("parameter(final int index) {"); //$NON-NLS-1$
     bw.println(" switch(index) {");//$NON-NLS-1$
@@ -2243,7 +2189,7 @@ final class _CodeGenerator {
       bw.print(" case ");//$NON-NLS-1$
       bw.print(i - 1);
       bw.print(": { return ");//$NON-NLS-1$
-      bw.print(_CodeGenerator.__selection_name(m, i));
+      bw.print(CompoundFunctionCodeGenerator.__selection_name(m, i));
       bw.println(".INSTANCE; }");//$NON-NLS-1$
     }
 
@@ -2270,9 +2216,11 @@ final class _CodeGenerator {
       final PrintWriter bw) {
     final String name, longName;
 
-    name = _CodeGenerator.__builder_name(m);
+    name = CompoundFunctionCodeGenerator.__builder_name(m);
     longName = (((("{@link org.optimizationBenchmarking.utils.math.functions.compound builder} of {@link "//$NON-NLS-1$
-    + _CodeGenerator.FUNCTIONS_OF_ARITY[m].getCanonicalName()) + ' ') + m) + "-ary} functions.");//$NON-NLS-1$
+        + CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+            .getCanonicalName())
+        + ' ') + m) + "-ary} functions.");//$NON-NLS-1$
 
     bw.print("/** The globally shared instance of the ");//$NON-NLS-1$
     bw.print(longName);
@@ -2316,7 +2264,8 @@ final class _CodeGenerator {
    * @return the {@code m}-ary function builder name
    */
   private static final String __builder_name(final int m) {
-    return (_CodeGenerator.FUNCTIONS_OF_ARITY[m].getSimpleName() + "Builder");//$NON-NLS-1$
+    return (CodeGeneratorBase.getMathematicalFunctionClassOfArity(m)
+        .getSimpleName() + "Builder");//$NON-NLS-1$
   }
 
   /**
@@ -2328,16 +2277,16 @@ final class _CodeGenerator {
    *           if i/o fails
    */
   public static final void main(final String[] args) throws IOException {
-    final _CodeGenerator gen;
+    final CompoundFunctionCodeGenerator gen;
     int m, n;
 
-    gen = new _CodeGenerator(args);
+    gen = new CompoundFunctionCodeGenerator(args);
 
     System.out.println((("Starting to generate code to folder '" //$NON-NLS-1$
-        + gen.m_packagePath) + '\'') + '.');
+        + gen.getPackagePath()) + '\'') + '.');
 
-    for (m = 1; m <= _CodeGenerator.MAX_ARITY; m++) {
-      for (n = 1; n <= _CodeGenerator.MAX_ARITY; n++) {
+    for (m = 1; m <= CodeGeneratorBase.MAX_FUNCTION_ARITY; m++) {
+      for (n = 1; n <= CodeGeneratorBase.MAX_FUNCTION_ARITY; n++) {
         gen.__compound(m, n);
 
         if ((m > 1) && (n <= m)) { // for m==1, we can use Identity

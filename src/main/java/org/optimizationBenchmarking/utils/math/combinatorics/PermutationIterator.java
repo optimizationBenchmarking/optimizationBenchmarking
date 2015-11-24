@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.math.combinatorics;
 import java.util.Arrays;
 
 import org.optimizationBenchmarking.utils.EmptyUtils;
-import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
+import org.optimizationBenchmarking.utils.collections.iterators.IterableIterator;
 
 /**
  * This iterator enumerates all permutations of a given length. It starts
@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
  * next permutation from the current permutation by performing a single,
  * adjacent swap (i.e., exchanging two neighboring elements).
  */
-public final class PermutationIterator extends BasicIterator<int[]> {
+public final class PermutationIterator extends IterableIterator<int[]> {
 
   /** the m_work */
   private final int[] m_work;
@@ -55,7 +55,8 @@ public final class PermutationIterator extends BasicIterator<int[]> {
     final int movePos, n, nMinus1;
     final int[] work;
     final boolean[] dir;
-    int largestMobile, largestMobileIndex, before, after, current, index, indexBefore;
+    int largestMobile, largestMobileIndex, before, after, current, index,
+        indexBefore;
     boolean largestMobileDir, currentDir;
 
     switch (this.m_state) {

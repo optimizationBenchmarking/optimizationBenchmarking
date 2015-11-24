@@ -6,8 +6,6 @@ import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.PolynomialFitter;
 import org.optimizationBenchmarking.utils.math.fitting.impl.SampleBasedParameterGuesser;
 import org.optimizationBenchmarking.utils.math.fitting.spec.IParameterGuesser;
-import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add3;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
@@ -18,7 +16,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * of similarly-typed dimensions (time-time, objective-objective):
  * {@code a+b*x+c*x*x}.
  */
-public final class QuadraticModel extends ParametricUnaryFunction {
+public final class QuadraticModel extends _ModelBase {
 
   /** create */
   public QuadraticModel() {
@@ -28,8 +26,7 @@ public final class QuadraticModel extends ParametricUnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double value(final double x, final double[] parameters) {
-    return Add3.INSTANCE.computeAsDouble(parameters[0],
-        (parameters[1] * x), //
+    return _ModelBase._add3(parameters[0], (parameters[1] * x),
         (parameters[2] * x * x));
   }
 
