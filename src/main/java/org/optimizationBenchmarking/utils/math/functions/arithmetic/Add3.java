@@ -604,7 +604,6 @@ public final class Add3 extends TernaryFunction {
       if (isCurrentSumLong) {
         return currentSumLong;
       }
-      onlyOverflow = false;
       if (bestCompensation < 0d) {
         bestCompensation = (-bestCompensation);
       } else {
@@ -612,6 +611,7 @@ public final class Add3 extends TernaryFunction {
           return bestSum;
         }
       }
+      onlyOverflow = false;
     }
 
     // now testing summation x0 + x2 + x1
@@ -688,7 +688,6 @@ public final class Add3 extends TernaryFunction {
       if (isCurrentSumLong) {
         return currentSumLong;
       }
-      onlyOverflow = false;
       currentCompensation = Math.abs(currentCompensation);
       if (onlyOverflow || (currentCompensation < bestCompensation)) {
         if (currentCompensation <= 0d) {
@@ -697,6 +696,7 @@ public final class Add3 extends TernaryFunction {
         bestCompensation = currentCompensation;
         bestSum = currentSum;
       }
+      onlyOverflow = false;
     }
 
     // now testing summation x2 + x0 + x1
@@ -773,7 +773,6 @@ public final class Add3 extends TernaryFunction {
       if (isCurrentSumLong) {
         return currentSumLong;
       }
-      onlyOverflow = false;
       currentCompensation = Math.abs(currentCompensation);
       if (onlyOverflow || (currentCompensation < bestCompensation)) {
         if (currentCompensation <= 0d) {
@@ -782,6 +781,7 @@ public final class Add3 extends TernaryFunction {
         bestCompensation = currentCompensation;
         bestSum = currentSum;
       }
+      onlyOverflow = false;
     }
 
     // now testing summation x2 + x1 + x0
@@ -858,7 +858,6 @@ public final class Add3 extends TernaryFunction {
       if (isCurrentSumLong) {
         return currentSumLong;
       }
-      onlyOverflow = false;
       currentCompensation = Math.abs(currentCompensation);
       if (onlyOverflow || (currentCompensation < bestCompensation)) {
         if (currentCompensation <= 0d) {
@@ -867,6 +866,7 @@ public final class Add3 extends TernaryFunction {
         bestCompensation = currentCompensation;
         bestSum = currentSum;
       }
+      onlyOverflow = false;
     }
 
     // now testing summation x1 + x2 + x0
@@ -943,7 +943,6 @@ public final class Add3 extends TernaryFunction {
       if (isCurrentSumLong) {
         return currentSumLong;
       }
-      onlyOverflow = false;
       currentCompensation = Math.abs(currentCompensation);
       if (onlyOverflow || (currentCompensation < bestCompensation)) {
         if (currentCompensation <= 0d) {
@@ -952,6 +951,7 @@ public final class Add3 extends TernaryFunction {
         bestCompensation = currentCompensation;
         bestSum = currentSum;
       }
+      onlyOverflow = false;
     }
 
     // now testing summation x1 + x0 + x2
@@ -1028,7 +1028,6 @@ public final class Add3 extends TernaryFunction {
       if (isCurrentSumLong) {
         return currentSumLong;
       }
-      onlyOverflow = false;
       currentCompensation = Math.abs(currentCompensation);
       if (onlyOverflow || (currentCompensation < bestCompensation)) {
         if (currentCompensation <= 0d) {
@@ -1037,6 +1036,7 @@ public final class Add3 extends TernaryFunction {
         bestCompensation = currentCompensation;
         bestSum = currentSum;
       }
+      onlyOverflow = false;
     }
     if (onlyOverflow) {
       if (pInf || nInf) {

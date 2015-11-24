@@ -555,8 +555,6 @@ public final class HighPrecisionAdderCodeGen extends CodeGeneratorBase {
       dest.println("return currentSumLong;");//$NON-NLS-1$
       dest.println('}');
 
-      dest.println("onlyOverflow = false;");//$NON-NLS-1$
-
       if (first) {
         first = false;
         dest.println("if(bestCompensation<0d) {");//$NON-NLS-1$
@@ -577,6 +575,8 @@ public final class HighPrecisionAdderCodeGen extends CodeGeneratorBase {
         dest.println("bestSum=currentSum;");//$NON-NLS-1$
         dest.println('}');
       }
+
+      dest.println("onlyOverflow = false;");//$NON-NLS-1$
 
       dest.println('}');
 
