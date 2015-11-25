@@ -107,7 +107,7 @@ public abstract class MathematicalFunctionTest extends TestBase {
         it = new PermutationIterator(test.m_in.length);
         do {
           perm = it.next();
-          for (; (--length) >= 0;) {
+          for (length = perm.length; (--length) >= 0;) {
             params[perm[length] - 1] = test.m_in[length].floatValue();
           }
 
@@ -143,7 +143,7 @@ public abstract class MathematicalFunctionTest extends TestBase {
         it = new PermutationIterator(test.m_in.length);
         do {
           perm = it.next();
-          for (; (--length) >= 0;) {
+          for (length = perm.length; (--length) >= 0;) {
             params[perm[length] - 1] = test.m_in[length].longValue();
           }
           Assert.assertEquals(test.m_out.longValue(),
@@ -178,7 +178,7 @@ public abstract class MathematicalFunctionTest extends TestBase {
         it = new PermutationIterator(test.m_in.length);
         do {
           perm = it.next();
-          for (; (--length) >= 0;) {
+          for (length = perm.length; (--length) >= 0;) {
             params[perm[length] - 1] = test.m_in[length].intValue();
           }
 
@@ -213,7 +213,7 @@ public abstract class MathematicalFunctionTest extends TestBase {
         it = new PermutationIterator(test.m_in.length);
         do {
           perm = it.next();
-          for (; (--length) >= 0;) {
+          for (length = perm.length; (--length) >= 0;) {
             params[perm[length] - 1] = test.m_in[length].shortValue();
           }
 
@@ -248,7 +248,7 @@ public abstract class MathematicalFunctionTest extends TestBase {
         it = new PermutationIterator(test.m_in.length);
         do {
           perm = it.next();
-          for (; (--length) >= 0;) {
+          for (length = perm.length; (--length) >= 0;) {
             params[perm[length] - 1] = test.m_in[length].byteValue();
           }
 
@@ -284,7 +284,7 @@ public abstract class MathematicalFunctionTest extends TestBase {
         it = new PermutationIterator(test.m_in.length);
         do {
           perm = it.next();
-          for (; (--length) >= 0;) {
+          for (length = perm.length; (--length) >= 0;) {
             params[perm[length] - 1] = test.m_in[length].longValue();
           }
 
@@ -320,7 +320,7 @@ public abstract class MathematicalFunctionTest extends TestBase {
         it = new PermutationIterator(test.m_in.length);
         do {
           perm = it.next();
-          for (; (--length) >= 0;) {
+          for (length = perm.length; (--length) >= 0;) {
             params[perm[length] - 1] = test.m_in[length].intValue();
           }
 
