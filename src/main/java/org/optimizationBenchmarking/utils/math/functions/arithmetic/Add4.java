@@ -94,7 +94,7 @@ public final class Add4 extends QuaternaryFunction {
   public final double computeAsDouble(final long x0, final long x1,
       final long x2, final long x3) {
     double lx;
-    return AddN._destructiveSum(new double[] { //
+    return AddN.destructiveSum(new double[] { //
         lx = x0, //
         (x0 - ((long) lx)), //
         lx = x1, //
@@ -110,6 +110,6 @@ public final class Add4 extends QuaternaryFunction {
   @Override
   public final double computeAsDouble(final double x0, final double x1,
       final double x2, final double x3) {
-    return AddN._destructiveSum(new double[] { x0, x1, x2, x3 });
+    return AddN.destructiveSum(new double[] { x0, x1, x2, x3 });
   }
 }

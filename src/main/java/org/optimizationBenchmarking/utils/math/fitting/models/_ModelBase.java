@@ -8,9 +8,11 @@ import org.optimizationBenchmarking.utils.math.MathUtils;
 import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add3;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add4;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.AddN;
 import org.optimizationBenchmarking.utils.math.functions.power.Exp;
 import org.optimizationBenchmarking.utils.math.functions.power.Ln;
 import org.optimizationBenchmarking.utils.math.functions.power.Pow;
+import org.optimizationBenchmarking.utils.math.functions.power.Sqrt;
 import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -48,6 +50,39 @@ abstract class _ModelBase extends ParametricUnaryFunction {
       return res;
     }
     return 0d;
+  }
+
+  /**
+   * compute the square root
+   *
+   * @param a
+   *          the number
+   * @return the result
+   */
+  static final double _sqrt(final double a) {
+    return Sqrt.INSTANCE.computeAsDouble(a);
+  }
+
+  /**
+   * compute the sum of a given set of numbers
+   *
+   * @param summands
+   *          the summand array
+   * @return the sum
+   */
+  static final double _sum(final double... summands) {
+    return AddN.destructiveSum(summands);
+  }
+
+  /**
+   * compute the square
+   *
+   * @param a
+   *          the number
+   * @return the result
+   */
+  static final double _sqr(final double a) {
+    return a * a;
   }
 
   /**

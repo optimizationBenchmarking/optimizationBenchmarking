@@ -5,13 +5,13 @@ import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
 /**
  * <p>
  * The {@code "+"} function for avariable number of {@code n} arguments.
- * This function's {@linkplain #_destructiveSum(double[]) guts} are gleaned
+ * This function's {@linkplain #destructiveSum(double[]) guts} are gleaned
  * from Python's {@code msum} method.
  * </p>
  * <h2>Inspiration</h2>
  * <p>
  * Python provides a function called {@code msum} whose {@code C} source
- * code is the inspiration of the {@link #_destructiveSum(double[])} method
+ * code is the inspiration of the {@link #destructiveSum(double[])} method
  * used internally here. (Well, I basically translated it to {@code Java}
  * and modified it a bit.)
  * </p>
@@ -161,7 +161,7 @@ _fsum_error:
  * namely:
  * </p>
  * <ol>
- * <li>The method {@link #_destructiveSum(double[])} takes the summands to
+ * <li>The method {@link #destructiveSum(double[])} takes the summands to
  * be added as input array and overrides this array in the process of
  * summation with the compensation values. Since &ndash; differently from
  * the original method &ndash; it does not allocate any additional memory
@@ -232,7 +232,7 @@ public final class AddN extends MathematicalFunction {
    *          the summand array &ndash; will be summed up and destroyed
    * @return the accurate sum of the elements of {@code summands}
    */
-  static final double _destructiveSum(final double[] summands) {
+  public static final double destructiveSum(final double... summands) {
     int i, j, n;
     double x, y, t, xsave, hi, yr, lo;
     boolean ninf, pinf;
@@ -326,7 +326,7 @@ public final class AddN extends MathematicalFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double... x) {
-    return AddN._destructiveSum(x.clone());
+    return AddN.destructiveSum(x.clone());
   }
 
   /** {@inheritDoc} */
@@ -344,7 +344,7 @@ public final class AddN extends MathematicalFunction {
       alloc[i++] = (l - ((long) lx));
     }
 
-    return AddN._destructiveSum(alloc);
+    return AddN.destructiveSum(alloc);
   }
 
   /** {@inheritDoc} */

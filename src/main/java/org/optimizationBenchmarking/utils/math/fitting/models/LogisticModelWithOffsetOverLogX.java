@@ -612,7 +612,7 @@ public final class LogisticModelWithOffsetOverLogX extends _ModelBase {
     private static final double __d_x1y1x2y2x3y3c(final double x1,
         final double y1, final double x2, final double y2, final double x3,
         final double y3, final double c) {
-      final double d1, d2, powx1c, powx2c, powx3c, dm;
+      final double d1, d2, powx1c, powx2c, powx3c, my;
 
       powx1c = _ModelBase._pow(x1, c);
       powx2c = _ModelBase._pow(x2, c);
@@ -631,21 +631,89 @@ public final class LogisticModelWithOffsetOverLogX extends _ModelBase {
         return d1;
       }
 
-      if (MathUtils.isFinite(d1)) {
-        if (MathUtils.isFinite(d2)) {
-          dm = (0.5d * (d1 + d2));
-          if (MathUtils.isFinite(dm) && (((dm >= d1) && (dm <= d2))
-              || ((dm >= d2) && (dm <= d1)))) {
-            return dm;
-          }
-        }
+      my = Math.min(y1, Math.min(y2, y3));
+      if (Math.abs(d1 - my) < Math.abs(d2 - my)) {
         return d1;
       }
+      return d2;
+    }
 
-      if (MathUtils.isFinite(d2)) {
-        return d2;
+    /**
+     * Compute {@code d} from two points {@code (x1,y1)} and
+     * {@code (x2,y2)} , {@code (x3,y3)} and known {@code c} and {@code a}
+     * values.
+     *
+     * @param x1
+     *          the {@code x}-coordinate of the first point
+     * @param y1
+     *          the {@code y}-coordinate of the first point
+     * @param x2
+     *          the {@code x}-coordinate of the second point
+     * @param y2
+     *          the {@code y}-coordinate of the second point
+     * @param a
+     *          the {@code a} value
+     * @param c
+     *          the {@code c} value
+     * @return the {@code d} value
+     */
+    private static final double __d_x1y1x2y2ac(final double x1,
+        final double y1, final double x2, final double y2, final double a,
+        final double c) {
+      final double d1, d2, x1c, x2c, miny;
+
+      x1c = _ModelBase._pow(x1, c);
+      x2c = _ModelBase._pow(x2, c);
+
+      d1 = (_ModelBase
+          ._sqrt(_ModelBase
+              ._sqr(_ModelBase._sum(-a * x1c, a * x2c, y1 * x1c, y2 * x1c,
+                  -y1 * x2c, -y2 * x2c))
+          - (4 * (x2c - x1c)
+              * (_ModelBase._add4(a * y1 * x1c, -a * y2 * x2c,
+                  -y1 * y2 * x1c, y1 * y2 * x2c))))
+          + _ModelBase._sum(a * x1c, -a * x2c, -y1 * x1c, -y2 * x1c,
+              y1 * x2c, y2 * x2c))
+          / (2 * (x2c - x1c));
+      d2 = -d1;
+
+      miny = Math.min(y1, y2);
+
+      if (Math.abs(d1 - miny) < Math.abs(d2 - miny)) {
+        return d1;
       }
-      return d1;
+      return d2;
+    }
+
+    /**
+     * Compute {@code d} from two points {@code (x1,y1)} and
+     * {@code (x2,y2)} , {@code (x3,y3)} and known {@code b} and {@code c}
+     * values.
+     *
+     * @param x1
+     *          the {@code x}-coordinate of the first point
+     * @param y1
+     *          the {@code y}-coordinate of the first point
+     * @param x2
+     *          the {@code x}-coordinate of the second point
+     * @param y2
+     *          the {@code y}-coordinate of the second point
+     * @param b
+     *          the {@code b} value
+     * @param c
+     *          the {@code c} value
+     * @return the {@code d} value
+     */
+    private static final double __d_x1y1x2y2bc(final double x1,
+        final double y1, final double x2, final double y2, final double b,
+        final double c) {
+      final double x2c, px;
+
+      x2c = _ModelBase._pow(x2, c);
+      px = _ModelBase._pow(x1,
+          ((_ModelBase._log(x2c)) / (_ModelBase._log(x2))));
+      return (_ModelBase._add4(b * y1 * px, -b * y2 * x2c, y1, -y2))
+          / (b * (px - x2c));
     }
 
     /**
@@ -731,8 +799,8 @@ public final class LogisticModelWithOffsetOverLogX extends _ModelBase {
     private static final double __a_x1y1x2y2x3y3c(final double x1,
         final double y1, final double x2, final double y2, final double x3,
         final double y3, final double c) {
-      final double a1, a2, powx1c, powx2c, powx3c, powx12c, powx22c,
-          powx32c, am, sy1, sy2, sy3, powx1cpowx2c, powx1cmpowx2c;
+      final double a, powx1c, powx2c, powx3c, powx12c, powx22c, powx32c,
+          sy1, sy2, sy3, powx1cpowx2c, powx1cmpowx2c;
 
       powx1c = _ModelBase._pow(x1, c);
       powx2c = _ModelBase._pow(x2, c);
@@ -746,35 +814,36 @@ public final class LogisticModelWithOffsetOverLogX extends _ModelBase {
       powx1cpowx2c = powx1c * powx2c;
       powx1cmpowx2c = powx1c - powx2c;
 
-      a1 = (((((_ModelBase._add4((powx1cmpowx2c) * powx32c,
-          (powx22c - powx12c) * powx3c, -powx1c * powx22c,
-          powx12c * powx2c)) * y1)
+      a = (_ModelBase._sum(
+          ((((_ModelBase._add4((powx1cmpowx2c) * powx32c,
+              (powx22c - powx12c) * powx3c, -powx1c * powx22c,
+              powx12c * powx2c)) * y1)
           + ((_ModelBase._add4((powx2c - powx1c) * powx32c,
               (powx12c - powx22c) * powx3c, powx1c * powx22c,
-              -powx12c * powx2c)) * y2))
-          * sy3)
-          + ((((_ModelBase._add4((powx2c - powx1c) * powx32c,
+              -powx12c * powx2c)) * y2)) * sy3),
+          ((((_ModelBase._add4((powx2c - powx1c) * powx32c,
               (powx12c - powx22c) * powx3c, powx1c * powx22c,
               -powx12c * powx2c)) * (sy1))
               + ((_ModelBase._add4((powx1cmpowx2c) * powx32c,
                   (powx22c - powx12c) * powx3c, -powx1c * powx22c,
                   powx12c * powx2c)) * (sy2)))
-              * y3)
-          + ((_ModelBase._add4((-powx12c * powx2c), powx1c * powx22c,
+              * y3),
+          ((_ModelBase._add4((-powx12c * powx2c), powx1c * powx22c,
               (powx12c - powx22c) * powx3c, (powx2c - powx1c) * powx32c))
-              * y1 * (sy2))
-          + ((_ModelBase._add4(powx12c * powx2c, -powx1c * powx22c,
+              * y1 * (sy2)),
+          ((_ModelBase._add4(powx12c * powx2c, -powx1c * powx22c,
               (powx22c - powx12c) * powx3c, (powx1cmpowx2c) * powx32c))
-              * (sy1) * y2))
-          / (((_ModelBase._add3(powx1c * powx32c,
-              -2 * powx1cpowx2c * powx3c, powx1c * powx22c)) * (sy1))
-              + ((_ModelBase._add4(((-powx1c) - powx2c) * powx32c,
+              * (sy1) * y2)))
+          / (_ModelBase._sum(
+              ((_ModelBase._add3(powx1c * powx32c,
+                  -2 * powx1cpowx2c * powx3c, powx1c * powx22c)) * (sy1)),
+              ((_ModelBase._add4(((-powx1c) - powx2c) * powx32c,
                   (_ModelBase._add3(powx12c, 2 * powx1cpowx2c, powx22c))
                       * powx3c,
-                  -powx1c * powx22c, -powx12c * powx2c)) * y1 * y2)
-              + ((_ModelBase._add3(powx2c * powx32c,
-                  -2 * powx1cpowx2c * powx3c, powx12c * powx2c)) * (sy2))
-              + ((((_ModelBase._add4((-powx12c * powx2c), powx1c * powx22c,
+                  -powx1c * powx22c, -powx12c * powx2c)) * y1 * y2),
+              ((_ModelBase._add3(powx2c * powx32c,
+                  -2 * powx1cpowx2c * powx3c, powx12c * powx2c)) * (sy2)),
+              ((((_ModelBase._add4((-powx12c * powx2c), powx1c * powx22c,
                   (_ModelBase._add3((-powx22c), 2 * powx1cpowx2c,
                       -powx12c)) * powx3c,
                   (powx1cmpowx2c) * powx32c)) * y2)
@@ -782,36 +851,20 @@ public final class LogisticModelWithOffsetOverLogX extends _ModelBase {
                       +(_ModelBase._add3((-powx22c), 2 * powx1cpowx2c,
                           -powx12c)) * powx3c,
                       +(powx2c - powx1c) * powx32c)) * y1))
-                  * y3)
-              + ((_ModelBase._add3(powx22c, -2 * powx1cpowx2c, powx12c))
-                  * powx3c * (sy3)));
+                  * y3),
+              ((_ModelBase._add3(powx22c, -2 * powx1cpowx2c, powx12c))
+                  * powx3c * (sy3))));
 
-      a2 = (_ModelBase._add4(-y1 * y2 * powx1c, y1 * y3 * powx1c,
+      if (MathUtils.isFinite(a)) {
+        return a;
+      }
+
+      return (_ModelBase._add4(-y1 * y2 * powx1c, y1 * y3 * powx1c,
           y2 * y3 * powx1c, -sy3 * powx1c)
           + _ModelBase._add4(y1 * y2 * powx2c, -y1 * y3 * powx2c,
               -y2 * y3 * powx2c, sy3 * powx2c))
           / (_ModelBase._add4(y2 * powx1c, -y3 * powx1c, -y1 * powx2c,
               y3 * powx2c));
-
-      if (a1 == a2) {
-        return a1;
-      }
-
-      if (MathUtils.isFinite(a1)) {
-        if (MathUtils.isFinite(a2)) {
-          am = ((0.9d * a1) + (0.1d * a2));// a1 seems to be more reliable
-          if (MathUtils.isFinite(am) && (((am >= a1) && (am <= a2))
-              || ((am >= a2) && (am <= a1)))) {
-            return am;
-          }
-        }
-        return a1;
-      }
-
-      if (MathUtils.isFinite(a2)) {
-        return a2;
-      }
-      return a1;
     }
 
     /**
@@ -1114,10 +1167,668 @@ public final class LogisticModelWithOffsetOverLogX extends _ModelBase {
               }
             }
 
+            f2 = (hasA && hasC);
+            if (f2) {
+              newD = __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x0, y0,
+                  x1, y1, newA, newC);
+              if (__LogisticWithOfffsetGuesser.__checkD(newD, minY)) {
+                hasD = changed = true;
+                break findD;
+              }
+            }
+
+            f3 = (hasB && hasC);
+            if (f3) {
+              newD = __LogisticWithOfffsetGuesser.__d_x1y1x2y2bc(x0, y0,
+                  x1, y1, newB, newC);
+              if (__LogisticWithOfffsetGuesser.__checkD(newD, minY)) {
+                hasD = changed = true;
+                break findD;
+              }
+            }
+
             // let's try using all formulas anyway
+
+            if ((!f2) && hasA) {
+              newD = __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x0, y0,
+                  x1, y1, newA, dest[2]);
+              if (__LogisticWithOfffsetGuesser.__checkD(newD, minY)) {
+                hasD = changed = true;
+                break findD;
+              }
+            }
+
             if (!f1) {
               newD = __LogisticWithOfffsetGuesser.__d_x1y1x2y2x3y3c(x0, y0,
-                  x1, y1, x2, y2, hasC ? newC : dest[2]);
+                  x1, y1, x2, y2, dest[2]);
+              if (__LogisticWithOfffsetGuesser.__checkD(newD, minY)) {
+                hasD = changed = true;
+                break findD;
+              }
+            }
+
+            if (!f2) {
+              newD = __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x0, y0,
+                  x1, y1, dest[0], dest[2]);
+              if (__LogisticWithOfffsetGuesser.__checkD(newD, minY)) {
+                hasD = changed = true;
+                break findD;
+              }
+            }
+
+            if (f3) {
+              newD = __LogisticWithOfffsetGuesser.__d_x1y1x2y2bc(x0, y0,
+                  x1, y1, (hasB ? newB : dest[1]),
+                  (hasC ? newC : dest[2]));
+              if (__LogisticWithOfffsetGuesser.__checkD(newD, minY)) {
+                hasD = changed = true;
+                break findD;
+              }
+            }
+          }
+        }
+
+        // Last straw: nothing has changed and we do not have A
+
+        if (!changed) {
+          lastStraw: {
+
+            if (!hasD) {
+              // try to obtain d:
+              // simply use the y value associated with the largest x as d
+
+              if (x0 > x1) {
+                if (x2 > x3) {
+                  if (x0 > x2) {
+                    newD = y0;
+                  } else {
+                    newD = y2;
+                  }
+                } else {
+                  if (x0 > x3) {
+                    newD = y0;
+                  } else {
+                    newD = y3;
+                  }
+                }
+              } else {
+                if (x2 > x3) {
+                  if (x1 > x2) {
+                    newD = y1;
+                  } else {
+                    newD = y2;
+                  }
+                } else {
+                  if (x1 > x3) {
+                    newD = y1;
+                  } else {
+                    newD = y3;
+                  }
+                }
+              }
+
+              changed = hasD = true;
+              break lastStraw;
+            }
+
+            if (!hasA) {
+              // try to obtain d:
+              // simply use the y value associated with the smallest x as a
+
+              if (x0 < x1) {
+                if (x2 < x3) {
+                  if (x0 < x2) {
+                    newA = y0;
+                  } else {
+                    newA = y2;
+                  }
+                } else {
+                  if (x0 < x3) {
+                    newA = y0;
+                  } else {
+                    newA = y3;
+                  }
+                }
+              } else {
+                if (x2 < x3) {
+                  if (x1 < x2) {
+                    newA = y1;
+                  } else {
+                    newA = y2;
+                  }
+                } else {
+                  if (x1 < x3) {
+                    newA = y1;
+                  } else {
+                    newA = y3;
+                  }
+                }
+              }
+
+              if (hasD) {
+                newA -= newD;
+              }
+
+              changed = hasA = true;
+              break lastStraw;
+            }
+          }
+
+        }
+
+        if (hasA && hasB && hasC && hasD) {
+          error = __LogisticWithOfffsetGuesser.__error(x0, y0, x1, y1, x2,
+              y2, x2, y3, newA, newB, newC, newD);
+          if (MathUtils.isFinite(error) && (error < bestError)) {
+            dest[0] = newA;
+            dest[1] = newB;
+            dest[2] = newC;
+            dest[3] = newD;
+            return error;
+          }
+
+          return bestError;
+        }
+      }
+
+      return bestError;
+    }
+
+    /**
+     * Update a guess for {@code a}, {@code b}, {@code c}, and {@coded} by
+     * using median computations.
+     *
+     * @param x0
+     *          the {@code x}-coordinate of the first point
+     * @param y0
+     *          the {@code y}-coordinate of the first point
+     * @param x1
+     *          the {@code x}-coordinate of the second point
+     * @param y1
+     *          the {@code y}-coordinate of the second point
+     * @param x2
+     *          the {@code x}-coordinate of the third point
+     * @param y2
+     *          the {@code y}-coordinate of the third point
+     * @param x3
+     *          the {@code x}-coordinate of the fourth point
+     * @param y3
+     *          the {@code y}-coordinate of the fourth point
+     * @param minY
+     *          the minimum {@code y} coordinate
+     * @param maxY
+     *          the maximum {@code y} coordinate
+     * @param dest
+     *          the destination array
+     * @param bestError
+     *          the best error so far
+     * @return the new (or old) best error
+     */
+    private static final double __updateMed(final double x0,
+        final double y0, final double x1, final double y1, final double x2,
+        final double y2, final double x3, final double y3,
+        final double minY, final double maxY, final double[] dest,
+        final double bestError) {
+      double newA, newB, newC, newD, error;
+      boolean hasA, hasB, hasC, hasD, changed, f1, f2, f3, f4;
+
+      newA = newB = newC = newD = Double.NaN;
+      hasA = hasB = hasC = hasD = false;
+
+      changed = true;
+      while (changed) {
+        changed = false;
+
+        if (!hasB) {
+          // find B based on the existing or new A, C, and D values
+          findB: {
+
+            // Try based on stuff we already calculated only
+            f1 = hasC;
+            if (f1) {
+              newB = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2x3y3c(x0, y0,
+                      x1, y1, x2, y2, newC), //
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2x3y3c(x0, y0,
+                      x1, y1, x3, y3, newC), //
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2x3y3c(x0, y0,
+                      x2, y2, x3, y3, newC), //
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2x3y3c(x1, y1,
+                      x2, y2, x3, y3, newC));
+
+              if (_ModelBase._logisticModelOverLogXCheckB(newB)) {
+                changed = hasB = true;
+                break findB;
+              }
+            }
+
+            f2 = f3 = f4 = false;
+            if (hasD) {
+              f2 = hasA;
+              if (f2) {
+                newB = _ModelBase._med4(//
+                    __LogisticWithOfffsetGuesser.__b_x1y1x2y2ad(x0, y0, x1,
+                        y1, newA, newD), //
+                    __LogisticWithOfffsetGuesser.__b_x1y1x2y2ad(x2, y2, x3,
+                        y3, newA, newD), //
+                    __LogisticWithOfffsetGuesser.__b_x1y1x2y2ad(x0, y0, x2,
+                        y2, newA, newD), //
+                    __LogisticWithOfffsetGuesser.__b_x1y1x2y2ad(x1, y1, x3,
+                        y3, newA, newD));
+
+                if (_ModelBase._logisticModelOverLogXCheckB(newB)) {
+                  changed = hasB = true;
+                  break findB;
+                }
+              }
+
+              f3 = hasC;
+              if (f3) {
+                newB = _ModelBase._med4(//
+                    __LogisticWithOfffsetGuesser.__b_x1y1x2y2cd(x0, y0, x3,
+                        y3, newC, newD), //
+                    __LogisticWithOfffsetGuesser.__b_x1y1x2y2cd(x2, y2, x1,
+                        y1, newC, newD), //
+                    __LogisticWithOfffsetGuesser.__b_x1y1x2y2cd(x1, y1, x0,
+                        y0, newC, newD), //
+                    __LogisticWithOfffsetGuesser.__b_x1y1x2y2cd(x3, y3, x1,
+                        y1, newC, newD));//
+
+                if (_ModelBase._logisticModelOverLogXCheckB(newB)) {
+                  changed = hasB = true;
+                  break findB;
+                }
+
+                f4 = hasA;
+                if (f4) {
+
+                  newB = _ModelBase._med4(//
+                      __LogisticWithOfffsetGuesser.__b_xyacd(x0, y0, newA,
+                          newC, newD), //
+                      __LogisticWithOfffsetGuesser.__b_xyacd(x1, y1, newA,
+                          newC, newD), //
+                      __LogisticWithOfffsetGuesser.__b_xyacd(x2, y2, newA,
+                          newC, newD), //
+                      __LogisticWithOfffsetGuesser.__b_xyacd(x3, y3, newA,
+                          newC, newD));//
+                  if (_ModelBase._logisticModelOverLogXCheckB(newB)) {
+                    changed = hasB = true;
+                    break findB;
+                  }
+                }
+              }
+            }
+
+            // OK, not enough data, let's try all formulas regardless of
+            // what we have.
+            if (!f2) {
+              newB = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2ad(x0, y0, x1,
+                      y1, (hasA ? newA : dest[0]),
+                      (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2ad(x3, y3, x2,
+                      y2, (hasA ? newA : dest[0]),
+                      (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2ad(x2, y2, x1,
+                      y1, (hasA ? newA : dest[0]),
+                      (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2ad(x3, y3, x0,
+                      y0, (hasA ? newA : dest[0]),
+                      (hasD ? newD : dest[3])));
+
+              if (_ModelBase._logisticModelOverLogXCheckB(newB)) {
+                changed = hasB = true;
+                break findB;
+              }
+            }
+
+            if (!f4) {
+              newB = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__b_xyacd(x0, y0,
+                      (hasA ? newA : dest[0]), (hasC ? newC : dest[2]),
+                      (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__b_xyacd(x1, y1,
+                      (hasA ? newA : dest[0]), (hasC ? newC : dest[2]),
+                      (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__b_xyacd(x2, y2,
+                      (hasA ? newA : dest[0]), (hasC ? newC : dest[2]),
+                      (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__b_xyacd(x3, y3,
+                      (hasA ? newA : dest[0]), (hasC ? newC : dest[2]),
+                      (hasD ? newD : dest[3])));//
+
+              if (_ModelBase._logisticModelOverLogXCheckB(newB)) {
+                changed = hasB = true;
+                break findB;
+              }
+            }
+
+            if (!f3) {
+              newB = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2cd(x0, y0, x1,
+                      y1, (hasC ? newC : dest[2]),
+                      (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2cd(x0, y0, x2,
+                      y2, (hasC ? newC : dest[2]),
+                      (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2cd(x2, y2, x3,
+                      y3, (hasC ? newC : dest[2]),
+                      (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2cd(x3, y3, x1,
+                      y1, (hasC ? newC : dest[2]),
+                      (hasD ? newD : dest[3])));
+
+              if (_ModelBase._logisticModelOverLogXCheckB(newB)) {
+                changed = hasB = true;
+                break findB;
+              }
+            }
+
+            if (!f1) {
+              newB = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2x3y3c(x0, y0,
+                      x1, y1, x2, y2, hasC ? newC : dest[2]), //
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2x3y3c(x3, y3,
+                      x2, y2, x1, y1, hasC ? newC : dest[2]), //
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2x3y3c(x3, y3,
+                      x0, y0, x2, y2, hasC ? newC : dest[2]), //
+                  __LogisticWithOfffsetGuesser.__b_x1y1x2y2x3y3c(x0, y0,
+                      x1, y1, x3, y3, hasC ? newC : dest[2]));
+              if (_ModelBase._logisticModelOverLogXCheckB(newB)) {
+                changed = hasB = true;
+                break findB;
+              }
+            }
+          }
+        }
+
+        // Finished with our attempt to compute B, let's try to compute C
+
+        if (!hasC) {
+          // find C based on the existing or new A, B, and D values
+
+          // first let's use formulas for which we already have data
+          f1 = (hasA && hasB && hasC);
+          if (f1) {
+            newC = _ModelBase._med4(//
+                __LogisticWithOfffsetGuesser.__c_xyabd(x0, y0, newA, newB,
+                    newD), //
+                __LogisticWithOfffsetGuesser.__c_xyabd(x1, y1, newA, newB,
+                    newD), //
+                __LogisticWithOfffsetGuesser.__c_xyabd(x2, y2, newA, newB,
+                    newD), //
+                __LogisticWithOfffsetGuesser.__c_xyabd(x3, y3, newA, newB,
+                    newD));
+            if (_ModelBase._logisticModelOverLogXCheckC(newC)) {
+              changed = hasC = true;
+            }
+          }
+
+          // now let's try all formulas
+          if (!f1) {
+            newC = _ModelBase._med4(//
+                __LogisticWithOfffsetGuesser.__c_xyabd(x0, y0,
+                    (hasA ? newA : dest[0]), (hasB ? newB : dest[1]),
+                    (hasD ? newD : dest[3])), //
+                __LogisticWithOfffsetGuesser.__c_xyabd(x1, y1,
+                    (hasA ? newA : dest[0]), (hasB ? newB : dest[1]),
+                    (hasD ? newD : dest[3])), //
+                __LogisticWithOfffsetGuesser.__c_xyabd(x2, y2,
+                    (hasA ? newA : dest[0]), (hasB ? newB : dest[1]),
+                    (hasD ? newD : dest[3])), //
+                __LogisticWithOfffsetGuesser.__c_xyabd(x3, y3,
+                    (hasA ? newA : dest[0]), (hasB ? newB : dest[1]),
+                    (hasD ? newD : dest[3])));//
+            if (_ModelBase._logisticModelOverLogXCheckC(newC)) {
+              changed = hasC = true;
+            }
+          }
+        }
+
+        // Finished with our attempt to compute C, let's try to compute A
+
+        if (!hasA) {
+          findA: {
+            // find A based on the existing or new B, C, and D values
+
+            f1 = hasC;
+            if (f1) {
+              newA = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__a_x1y1x2y2x3y3c(x0, y0,
+                      x1, y1, x2, y2, newC), //
+                  __LogisticWithOfffsetGuesser.__a_x1y1x2y2x3y3c(x0, y0,
+                      x2, y2, x3, y3, newC), //
+                  __LogisticWithOfffsetGuesser.__a_x1y1x2y2x3y3c(x3, y3,
+                      x2, y2, x1, y1, newC), //
+                  __LogisticWithOfffsetGuesser.__a_x1y1x2y2x3y3c(x2, y2,
+                      x3, y3, x0, y0, newC));//
+              if (__LogisticWithOfffsetGuesser.__checkA(newA, minY,
+                  maxY)) {
+                hasA = changed = true;
+                break findA;
+              }
+            }
+
+            f2 = hasB && hasC && hasD;
+            if (f2) {
+              newA = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__a_xybcd(x0, y0, newB,
+                      newC, newD), //
+                  __LogisticWithOfffsetGuesser.__a_xybcd(x1, y1, newB,
+                      newC, newD), //
+                  __LogisticWithOfffsetGuesser.__a_xybcd(x2, y2, newB,
+                      newC, newD), //
+                  __LogisticWithOfffsetGuesser.__a_xybcd(x3, y3, newB,
+                      newC, newD));//
+              if (__LogisticWithOfffsetGuesser.__checkA(newA, minY,
+                  maxY)) {
+                changed = hasA = true;
+                break findA;
+              }
+            }
+
+            f3 = hasC && hasD;
+            if (f3) {
+              newA = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__a_x1y1x2y2cd(x0, y0, x1,
+                      y1, newC, newD), //
+                  __LogisticWithOfffsetGuesser.__a_x1y1x2y2cd(x1, y1, x2,
+                      y2, newC, newD), //
+                  __LogisticWithOfffsetGuesser.__a_x1y1x2y2cd(x2, y2, x3,
+                      y3, newC, newD), //
+                  __LogisticWithOfffsetGuesser.__a_x1y1x2y2cd(x3, y3, x1,
+                      y1, newC, newD));//
+              if (__LogisticWithOfffsetGuesser.__checkA(newA, minY,
+                  maxY)) {
+                changed = hasA = true;
+                break findA;
+              }
+            }
+
+            // ok, let's try all formulas anyway
+
+            if (!f2) {
+              f2 = hasB;
+              if (f2) {
+                newA = _ModelBase._med4(//
+                    __LogisticWithOfffsetGuesser.__a_xybcd(x0, y0, newB,
+                        (hasC ? newC : dest[2]), (hasD ? newD : dest[3])), //
+                    __LogisticWithOfffsetGuesser.__a_xybcd(x1, y1, newB,
+                        (hasC ? newC : dest[2]), (hasD ? newD : dest[3])), //
+                    __LogisticWithOfffsetGuesser.__a_xybcd(x2, y2, newB,
+                        (hasC ? newC : dest[2]), (hasD ? newD : dest[3])), //
+                    __LogisticWithOfffsetGuesser.__a_xybcd(x3, y3, newB,
+                        (hasC ? newC : dest[2]), (hasD ? newD : dest[3])));//
+                if (__LogisticWithOfffsetGuesser.__checkA(newA, minY,
+                    maxY)) {
+                  changed = hasA = true;
+                  break findA;
+                }
+              }
+            }
+
+            if (!f3) {
+              newA = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__a_x1y1x2y2cd(x0, y0, x1,
+                      y1, (hasC ? newC : dest[2]),
+                      (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__a_x1y1x2y2cd(x2, y2, x3,
+                      y3, (hasC ? newC : dest[2]),
+                      (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__a_x1y1x2y2cd(x1, y1, x2,
+                      y2, (hasC ? newC : dest[2]),
+                      (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__a_x1y1x2y2cd(x3, y3, x0,
+                      y0, (hasC ? newC : dest[2]),
+                      (hasD ? newD : dest[3])));//
+              if (__LogisticWithOfffsetGuesser.__checkA(newA, minY,
+                  maxY)) {
+                changed = hasA = true;
+                break findA;
+              }
+            }
+
+            if (!f2) {
+              newA = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__a_xybcd(x0, y0, dest[1],
+                      (hasC ? newC : dest[2]), (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__a_xybcd(x1, y1, dest[1],
+                      (hasC ? newC : dest[2]), (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__a_xybcd(x2, y2, dest[1],
+                      (hasC ? newC : dest[2]), (hasD ? newD : dest[3])), //
+                  __LogisticWithOfffsetGuesser.__a_xybcd(x3, y3, dest[1],
+                      (hasC ? newC : dest[2]), (hasD ? newD : dest[3])));//
+              if (__LogisticWithOfffsetGuesser.__checkA(newA, minY,
+                  maxY)) {
+                changed = hasA = true;
+                break findA;
+              }
+            }
+          }
+        }
+
+        // OK, we are done with A, now let's try to find D
+
+        if (!hasD) {
+          // find D based on existing or computed A, B, and C values
+
+          findD: {
+            // let's try using existing data
+            f1 = hasC;
+            if (f1) {
+              newD = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2x3y3c(x0, y0,
+                      x1, y1, x2, y2, newC), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2x3y3c(x0, y0,
+                      x1, y1, x3, y3, newC), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2x3y3c(x0, y0,
+                      x2, y2, x3, y3, newC), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2x3y3c(x1, y1,
+                      x2, y2, x3, y3, newC));
+              if (__LogisticWithOfffsetGuesser.__checkD(newD, minY)) {
+                hasD = changed = true;
+                break findD;
+              }
+            }
+
+            f2 = (hasA && hasC);
+            if (f2) {
+              newD = _ModelBase._med4(
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x0, y0, x1,
+                      y1, newA, newC), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x1, y1, x2,
+                      y2, newA, newC), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x2, y2, x3,
+                      y3, newA, newC), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x3, y3, x0,
+                      y0, newA, newC));//
+              if (__LogisticWithOfffsetGuesser.__checkD(newD, minY)) {
+                hasD = changed = true;
+                break findD;
+              }
+            }
+
+            f3 = (hasB && hasC);
+            if (f3) {
+              newD = _ModelBase._med4(
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2bc(x0, y0, x1,
+                      y1, newB, newC), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2bc(x3, y3, x1,
+                      y1, newB, newC), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2bc(x2, y2, x0,
+                      y0, newB, newC), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2bc(x0, y0, x3,
+                      y3, newB, newC));//
+              if (__LogisticWithOfffsetGuesser.__checkD(newD, minY)) {
+                hasD = changed = true;
+                break findD;
+              }
+            }
+
+            // let's try using all formulas anyway
+
+            if ((!f2) && hasA) {
+              newD = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x0, y0, x1,
+                      y1, newA, dest[2]), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x3, y3, x2,
+                      y2, newA, dest[2]), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x2, y2, x1,
+                      y1, newA, dest[2]), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x1, y1, x3,
+                      y3, newA, dest[2]));//
+              if (__LogisticWithOfffsetGuesser.__checkD(newD, minY)) {
+                hasD = changed = true;
+                break findD;
+              }
+            }
+
+            if (!f1) {
+              newD = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2x3y3c(x0, y0,
+                      x1, y1, x2, y2, dest[2]), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2x3y3c(x3, y3,
+                      x2, y2, x1, y1, dest[2]), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2x3y3c(x0, y0,
+                      x2, y2, x3, y3, dest[2]), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2x3y3c(x1, y1,
+                      x3, y3, x0, y0, dest[2]));//
+              if (__LogisticWithOfffsetGuesser.__checkD(newD, minY)) {
+                hasD = changed = true;
+                break findD;
+              }
+            }
+
+            if (!f2) {
+              newD = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x0, y0, x1,
+                      y1, dest[0], dest[2]), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x2, y2, x0,
+                      y0, dest[0], dest[2]), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x1, y1, x3,
+                      y3, dest[0], dest[2]), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2ac(x3, y3, x2,
+                      y2, dest[0], dest[2]));
+              if (__LogisticWithOfffsetGuesser.__checkD(newD, minY)) {
+                hasD = changed = true;
+                break findD;
+              }
+            }
+
+            if (f3) {
+              newD = _ModelBase._med4(//
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2bc(x0, y0, x1,
+                      y1, (hasB ? newB : dest[1]),
+                      (hasC ? newC : dest[2])), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2bc(x2, y2, x3,
+                      y3, (hasB ? newB : dest[1]),
+                      (hasC ? newC : dest[2])), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2bc(x3, y3, x0,
+                      y0, (hasB ? newB : dest[1]),
+                      (hasC ? newC : dest[2])), //
+                  __LogisticWithOfffsetGuesser.__d_x1y1x2y2bc(x1, y1, x2,
+                      y2, (hasB ? newB : dest[1]),
+                      (hasC ? newC : dest[2])));//
               if (__LogisticWithOfffsetGuesser.__checkD(newD, minY)) {
                 hasD = changed = true;
                 break findD;
@@ -1249,9 +1960,9 @@ public final class LogisticModelWithOffsetOverLogX extends _ModelBase {
       x3 = points[6];
       y3 = points[7];
 
-      minY = ((random.nextInt(3) > 0)//
+      minY = ((random.nextInt(10) > 0)//
           ? Math.min(Math.min(y0, y1), Math.min(y2, y3)) : this.m_minY);
-      maxY = ((random.nextInt(3) > 0)//
+      maxY = ((random.nextInt(10) > 0)//
           ? Math.max(Math.max(y0, y1), Math.max(y2, y3)) : this.m_maxY);
       steps = 100;
       newError = Double.POSITIVE_INFINITY;
@@ -1310,6 +2021,11 @@ public final class LogisticModelWithOffsetOverLogX extends _ModelBase {
           newError = __LogisticWithOfffsetGuesser.__update(x1, y1, x0, y0,
               x2, y2, x3, y3, minY, maxY, dest, oldError);
 
+          newError = __LogisticWithOfffsetGuesser.__updateMed(x0, y0, x1,
+              y1, x2, y2, x3, y3, minY, maxY, dest, oldError);
+          newError = __LogisticWithOfffsetGuesser.__updateMed(x3, y3, x1,
+              y1, x2, y2, x0, y0, minY, maxY, dest, oldError);
+
           if ((--steps) <= 0) {
             return MathUtils.isFinite(newError);
           }
@@ -1331,9 +2047,9 @@ public final class LogisticModelWithOffsetOverLogX extends _ModelBase {
       double maxY, minY;
       int i;
 
-      maxY = ((random.nextInt(3) <= 0) ? this.m_maxY
+      maxY = ((random.nextInt(10) <= 0) ? this.m_maxY
           : Double.NEGATIVE_INFINITY);
-      minY = ((random.nextInt(3) <= 0) ? this.m_minY
+      minY = ((random.nextInt(10) <= 0) ? this.m_minY
           : Double.POSITIVE_INFINITY);
       for (i = (points.length - 1); i > 0; i -= 2) {
         maxY = Math.max(maxY, points[i]);

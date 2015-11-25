@@ -614,7 +614,7 @@ public final class LogisticModelOverLogX extends _ModelBase {
       x2 = points[4];
       y2 = points[5];
 
-      maxY = ((random.nextInt(3) > 0)//
+      maxY = ((random.nextInt(5) > 0)//
           ? Math.max(y0, Math.max(y1, y2)) : this.m_maxY);
       steps = 100;
       newError = Double.POSITIVE_INFINITY;
@@ -661,7 +661,7 @@ public final class LogisticModelOverLogX extends _ModelBase {
       double maxY;
       int i;
 
-      if (random.nextInt(3) <= 0) {
+      if (random.nextInt(10) <= 0) {
         maxY = this.m_maxX;
       } else {
         maxY = Double.NEGATIVE_INFINITY;
