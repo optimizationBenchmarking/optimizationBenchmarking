@@ -287,6 +287,13 @@ public final class AddN extends MathematicalFunction {
       }
     }
 
+    if (pinf) {
+      return Double.POSITIVE_INFINITY;
+    }
+    if (ninf) {
+      return Double.NEGATIVE_INFINITY;
+    }
+
     hi = 0d;
     if (n > 0) {
       hi = summands[--n];
