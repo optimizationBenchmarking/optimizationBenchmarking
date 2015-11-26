@@ -12,7 +12,8 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.StableSum;
 
 /** An example data set for the fitting of data. */
-public class FittingExampleDataset {
+public class FittingExampleDataset
+    implements Comparable<FittingExampleDataset> {
 
   /** the name of the example data set */
   public final String name;
@@ -117,7 +118,7 @@ public class FittingExampleDataset {
 
   /**
    * Get the error sum for a particular model parameter setting
-   * 
+   *
    * @param parameters
    *          the model parameters
    * @return the error sum
@@ -133,5 +134,11 @@ public class FittingExampleDataset {
               - this.data.getDouble(i, 1)));
     }
     return sum.doubleValue();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int compareTo(final FittingExampleDataset o) {
+    return ((o == this) ? 0 : (this.name.compareTo(o.name)));
   }
 }

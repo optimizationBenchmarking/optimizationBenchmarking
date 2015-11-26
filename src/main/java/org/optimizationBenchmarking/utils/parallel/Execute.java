@@ -7,6 +7,7 @@ import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 /**
@@ -38,7 +39,8 @@ public final class Execute {
    * @param tasks
    *          the tasks to wait for
    * @param destination
-   *          the destination array to receive the results
+   *          the destination array to receive the results, or {@code null}
+   *          to ignore all results
    * @param start
    *          the start index in the destination array
    * @param ignoreNullResults
@@ -46,7 +48,8 @@ public final class Execute {
    *          {@linkplain java.util.concurrent.Future#get() futures} be
    *          ignored, i.e., not stored in {@code destination}?
    * @return the index of the next element in {@code destination} right
-   *         after the last copied result item
+   *         after the last copied result item (or {@code start} if
+   *         {@code destination==null})
    * @param <X>
    *          the data type of the destination array's elements
    * @param <Y>
@@ -55,39 +58,8 @@ public final class Execute {
   public static final <X, Y extends X> int join(final Future<Y>[] tasks,
       final X[] destination, final int start,
       final boolean ignoreNullResults) {
-    Throwable cause;
-    Future<Y> future;
-    Y result;
-    int index, futureIndex;
-
-    index = start;
-    futureIndex = 0;
-    for (futureIndex = 0; futureIndex < tasks.length; futureIndex++) {
-      future = tasks[futureIndex];
-      if (future != null) {
-        tasks[futureIndex] = null;
-        try {
-          result = future.get();
-        } catch (final ExecutionException executionError) {
-          cause = executionError.getCause();
-          if (cause instanceof RuntimeException) {
-            throw ((RuntimeException) cause);
-          }
-          throw new RuntimeException("The execution of a task failed.", //$NON-NLS-1$
-              executionError);
-        } catch (final InterruptedException interrupted) {
-          throw new RuntimeException(
-              "A task was interrupted before completing.", //$NON-NLS-1$
-              interrupted);
-        }
-        if ((result == null) && ignoreNullResults) {
-          continue;
-        }
-        destination[index++] = result;
-      }
-    }
-
-    return index;
+    return Execute.join(new ArrayIterator<>(tasks), destination, start,
+        ignoreNullResults);
   }
 
   /**
@@ -99,7 +71,8 @@ public final class Execute {
    * @param tasks
    *          the tasks to wait for
    * @param destination
-   *          the destination array to receive the results
+   *          the destination array to receive the results, or {@code null}
+   *          to ignore all results
    * @param start
    *          the start index in the destination array
    * @param ignoreNullResults
@@ -107,7 +80,8 @@ public final class Execute {
    *          {@linkplain java.util.concurrent.Future#get() futures} be
    *          ignored, i.e., not stored in {@code destination}?
    * @return the index of the next element in {@code destination} right
-   *         after the last copied result item
+   *         after the last copied result item (or {@code start} if
+   *         {@code destination==null})
    * @param <X>
    *          the data type of the destination array's elements
    * @param <Y>
@@ -140,11 +114,29 @@ public final class Execute {
         if ((result == null) && ignoreNullResults) {
           continue;
         }
-        destination[index++] = result;
+        if (destination != null) {
+          destination[index++] = result;
+        }
       }
     }
 
     return index;
+  }
+
+  /**
+   * Wait for a set of {@code tasks} to complete while ignoring their
+   * results.
+   *
+   * @param tasks
+   *          the tasks to wait for
+   * @param <X>
+   *          the data type of the destination array's elements
+   * @param <Y>
+   *          the result type of the future tasks
+   */
+  public static final <X, Y extends X> void join(
+      final Iterable<Future<Y>> tasks) {
+    Execute.join(tasks, null, 0, true);
   }
 
   /**

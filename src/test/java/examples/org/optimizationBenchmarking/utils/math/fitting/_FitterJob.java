@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
@@ -22,6 +24,8 @@ final class _FitterJob implements Callable<FitterOutcome> {
 
   /** the root path */
   private final Path m_root;
+  /** the logger */
+  private final Logger m_logger;
 
   /**
    * create
@@ -32,14 +36,17 @@ final class _FitterJob implements Callable<FitterOutcome> {
    *          the data sets
    * @param root
    *          the root path
+   * @param logger
+   *          the logger
    */
-  _FitterJob(final FunctionFitter fitter,
+  _FitterJob(final Logger logger, final FunctionFitter fitter,
       final ArrayListView<FittingExampleDataset> datasets,
       final Path root) {
     super();
     this.m_fitter = fitter;
     this.m_root = root;
     this.m_datasets = datasets;
+    this.m_logger = logger;
   }
 
   /** {@inheritDoc} */
@@ -55,6 +62,10 @@ final class _FitterJob implements Callable<FitterOutcome> {
     final Path destFolder;
 
     fitter = this.m_fitter.getClass().getSimpleName();
+    if ((this.m_logger != null)
+        && (this.m_logger.isLoggable(Level.FINE))) {
+      this.m_logger.fine("Beginning to experiment with fitter " + fitter);//$NON-NLS-1$
+    }
 
     destFolder = PathUtils.createPathInside(this.m_root, fitter);
     try {
@@ -63,8 +74,8 @@ final class _FitterJob implements Callable<FitterOutcome> {
       data = this.m_datasets;
       jobs = new Future[data.size()];
       for (i = jobs.length; (--i) >= 0;) {
-        jobs[i] = Execute.parallel(
-            new _MultiFittingJob(data.get(i), this.m_fitter, destFolder));
+        jobs[i] = Execute.parallel(new _MultiFittingJob(this.m_logger,
+            data.get(i), this.m_fitter, destFolder));
       }
       res = new FittingOutcome[jobs.length];
       Execute.join(jobs, res, 0, false);
@@ -72,6 +83,11 @@ final class _FitterJob implements Callable<FitterOutcome> {
 
     } catch (final IOException ignore) {
       throw new RuntimeException(ignore);
+    }
+
+    if ((this.m_logger != null)
+        && (this.m_logger.isLoggable(Level.FINE))) {
+      this.m_logger.fine("Finished experimenting with fitter " + fitter);//$NON-NLS-1$
     }
 
     return outcome;

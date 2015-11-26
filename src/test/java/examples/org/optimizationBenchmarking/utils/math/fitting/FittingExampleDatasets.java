@@ -12,18 +12,21 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
-import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.fitting.models.LogisticModelWithOffsetOverLogX;
 import org.optimizationBenchmarking.utils.math.fitting.models.QuadraticModel;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
+import org.optimizationBenchmarking.utils.parallel.Execute;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 import examples.org.optimizationBenchmarking.experimentation.dataAndIO.BBOBExample;
@@ -61,13 +64,22 @@ public final class FittingExampleDatasets extends TestBase
   /** the internal sorter */
   private final __Sorter m_sorter;
 
-  /** create */
-  public FittingExampleDatasets() {
+  /** the logger */
+  final Logger m_logger;
+
+  /**
+   * create
+   *
+   * @param logger
+   *          the logger
+   */
+  public FittingExampleDatasets(final Logger logger) {
     super();
 
     this.m_timeObjective = new LogisticModelWithOffsetOverLogX();
     this.m_sameType = new QuadraticModel();
     this.m_sorter = new __Sorter();
+    this.m_logger = logger;
   }
 
   /** {@inheritDoc} */
@@ -75,22 +87,38 @@ public final class FittingExampleDatasets extends TestBase
   public final ArrayListView<FittingExampleDataset> call()
       throws IOException {
     final ArrayListView<FittingExampleDataset> result;
+    final ArrayList<Future<Void>> jobs;
     ArrayList<FittingExampleDataset> list;
+    FittingExampleDataset[] sets;
 
-    list = new ArrayList<>();
-    for (final String resource : FittingExampleDatasets.RESOURCES) {
-      this.__appendResource(resource, list);
+    if ((this.m_logger != null)
+        && (this.m_logger.isLoggable(Level.FINE))) {
+      this.m_logger.fine("Begin loading example datasets."); //$NON-NLS-1$
     }
 
-    this.__appendBBOB(list);
-    this.__appendTSPSuite(list);
+    list = new ArrayList<>();
+    jobs = new ArrayList<>();
 
-    result = ArrayListView.collectionToView(list);
+    for (final String resource : FittingExampleDatasets.RESOURCES) {
+      jobs.add(Execute.parallel(new __AppendResource(resource, list)));
+    }
+
+    jobs.add(Execute.parallel(new __AppendBBOB(list)));
+    jobs.add(Execute.parallel(new __AppendTSPSuite(list)));
+
+    Execute.join(jobs);
+
+    sets = list.toArray(new FittingExampleDataset[list.size()]);
+    Arrays.sort(sets);
+    result = new ArrayListView<>(sets);
 
     list.clear();
     list = null;
 
-    MemoryUtils.quickGC();
+    if ((this.m_logger != null)
+        && (this.m_logger.isLoggable(Level.FINE))) {
+      this.m_logger.fine("Finished loading example datasets."); //$NON-NLS-1$
+    }
 
     return result;
   }
@@ -105,7 +133,7 @@ public final class FittingExampleDatasets extends TestBase
    * @throws IOException
    *           if i/o fails
    */
-  private final void __appendResource(final String resource,
+  final void _appendResource(final String resource,
       final ArrayList<FittingExampleDataset> list) throws IOException {
     final ArrayList<IMatrix> loaded;
     final ArrayList<double[]> current;
@@ -242,8 +270,8 @@ public final class FittingExampleDatasets extends TestBase
    * @throws IOException
    *           if i/o fails
    */
-  private final void __appendBBOB(
-      final ArrayList<FittingExampleDataset> list) throws IOException {
+  final void _appendBBOB(final ArrayList<FittingExampleDataset> list)
+      throws IOException {
     this.__append("bbob", //$NON-NLS-1$
         new BBOBExample(TestBase.getNullLogger()), list, 25);
   }
@@ -256,8 +284,8 @@ public final class FittingExampleDatasets extends TestBase
    * @throws IOException
    *           if i/o fails
    */
-  private final void __appendTSPSuite(
-      final ArrayList<FittingExampleDataset> list) throws IOException {
+  final void _appendTSPSuite(final ArrayList<FittingExampleDataset> list)
+      throws IOException {
     this.__append("tsp", //$NON-NLS-1$
         new TSPSuiteExample(TestBase.getNullLogger()), list, 4, 4);
   }
@@ -357,7 +385,7 @@ public final class FittingExampleDatasets extends TestBase
     double[] randFitting;
     int index;
 
-    data = new FittingExampleDatasets().call();
+    data = new FittingExampleDatasets(null).call();
     root = PathUtils.getTempDir();
     rand = new Random();
     index = 0;
@@ -405,5 +433,124 @@ public final class FittingExampleDatasets extends TestBase
       return 0;
     }
 
+  }
+
+  /** the internal append resource job */
+  private final class __AppendResource implements Callable<Void> {
+
+    /** the resource */
+    private final String m_resource;
+
+    /** the list */
+    private final ArrayList<FittingExampleDataset> m_list;
+
+    /**
+     * create the job
+     *
+     * @param resource
+     *          the resource
+     * @param list
+     *          the list
+     */
+    __AppendResource(final String resource,
+        final ArrayList<FittingExampleDataset> list) {
+      super();
+      this.m_list = list;
+      this.m_resource = resource;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final Void call() throws Exception {
+      if ((FittingExampleDatasets.this.m_logger != null)
+          && (FittingExampleDatasets.this.m_logger
+              .isLoggable(Level.FINER))) {
+        FittingExampleDatasets.this.m_logger
+            .finer("Now beginning to load resource " + this.m_resource); //$NON-NLS-1$
+      }
+      FittingExampleDatasets.this._appendResource(this.m_resource,
+          this.m_list);
+      if ((FittingExampleDatasets.this.m_logger != null)
+          && (FittingExampleDatasets.this.m_logger
+              .isLoggable(Level.FINER))) {
+        FittingExampleDatasets.this.m_logger
+            .finer("Finished loading resource " + this.m_resource); //$NON-NLS-1$
+      }
+      return null;
+    }
+  }
+
+  /** the internal append bbob job */
+  private final class __AppendBBOB implements Callable<Void> {
+
+    /** the list */
+    private final ArrayList<FittingExampleDataset> m_list;
+
+    /**
+     * create the job
+     *
+     * @param list
+     *          the list
+     */
+    __AppendBBOB(final ArrayList<FittingExampleDataset> list) {
+      super();
+      this.m_list = list;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final Void call() throws Exception {
+      if ((FittingExampleDatasets.this.m_logger != null)
+          && (FittingExampleDatasets.this.m_logger
+              .isLoggable(Level.FINER))) {
+        FittingExampleDatasets.this.m_logger
+            .finer("Now beginning to load bbob"); //$NON-NLS-1$
+      }
+      FittingExampleDatasets.this._appendBBOB(this.m_list);
+      if ((FittingExampleDatasets.this.m_logger != null)
+          && (FittingExampleDatasets.this.m_logger
+              .isLoggable(Level.FINER))) {
+        FittingExampleDatasets.this.m_logger
+            .finer("Finished loading bbob"); //$NON-NLS-1$
+      }
+      return null;
+    }
+  }
+
+  /** the internal append tsp suite job */
+  private final class __AppendTSPSuite implements Callable<Void> {
+
+    /** the list */
+    private final ArrayList<FittingExampleDataset> m_list;
+
+    /**
+     * create the job
+     *
+     * @param list
+     *          the list
+     */
+    __AppendTSPSuite(final ArrayList<FittingExampleDataset> list) {
+      super();
+      this.m_list = list;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final Void call() throws Exception {
+      if ((FittingExampleDatasets.this.m_logger != null)
+          && (FittingExampleDatasets.this.m_logger
+              .isLoggable(Level.FINER))) {
+        FittingExampleDatasets.this.m_logger
+            .finer("Now beginning to load tsp suite"); //$NON-NLS-1$
+      }
+      FittingExampleDatasets.this._appendTSPSuite(this.m_list);
+      if ((FittingExampleDatasets.this.m_logger != null)
+          && (FittingExampleDatasets.this.m_logger
+              .isLoggable(Level.FINER))) {
+        FittingExampleDatasets.this.m_logger
+            .finer("Finished loading tsp suite"); //$NON-NLS-1$
+      }
+      return null;
+    }
   }
 }

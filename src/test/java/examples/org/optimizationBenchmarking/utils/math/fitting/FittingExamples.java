@@ -3,11 +3,13 @@ package examples.org.optimizationBenchmarking.utils.math.fitting;
 import java.nio.file.Path;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.fitting.impl.ls.LSFitter;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FunctionFitter;
+import org.optimizationBenchmarking.utils.parsers.LoggerParser;
 
 /** The examples for fitting. */
 public class FittingExamples {
@@ -31,18 +33,21 @@ public class FittingExamples {
     final ArrayListView<FittingExampleDataset> data;
     final Path dest;
     final Future[] wait;
+    final Logger logger;
     int i;
+
+    logger = LoggerParser.INSTANCE.parseString("global;ALL");//$NON-NLS-1$
 
     pool = new ForkJoinPool(
         Math.max(1, Runtime.getRuntime().availableProcessors() - 1));
-    data = pool.submit(new FittingExampleDatasets()).get();
+    data = pool.submit(new FittingExampleDatasets(logger)).get();
 
     dest = PathUtils.createPathInside(PathUtils.getTempDir(), "results"); //$NON-NLS-1$
     i = FittingExamples.FITTERS.size();
     wait = new Future[i];
     for (; (--i) >= 0;) {
-      wait[i] = pool.submit(
-          new _FitterJob(FittingExamples.FITTERS.get(i), data, dest));
+      wait[i] = pool.submit(new _FitterJob(logger,
+          FittingExamples.FITTERS.get(i), data, dest));
     }
     pool.shutdown();
     for (i = wait.length; (--i) >= 0;) {

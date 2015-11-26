@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FunctionFitter;
@@ -29,6 +31,8 @@ final class _MultiFittingJob implements Callable<FittingOutcome> {
 
   /** the root path */
   private final Path m_root;
+  /** the logger */
+  private final Logger m_logger;
 
   /**
    * create
@@ -39,13 +43,17 @@ final class _MultiFittingJob implements Callable<FittingOutcome> {
    *          the fitter
    * @param root
    *          the root path
+   * @param logger
+   *          the logger
    */
-  _MultiFittingJob(final FittingExampleDataset example,
-      final FunctionFitter fitter, final Path root) {
+  _MultiFittingJob(final Logger logger,
+      final FittingExampleDataset example, final FunctionFitter fitter,
+      final Path root) {
     super();
     this.m_example = example;
     this.m_fitter = fitter;
     this.m_root = root;
+    this.m_logger = logger;
   }
 
   /** {@inheritDoc} */
@@ -64,6 +72,12 @@ final class _MultiFittingJob implements Callable<FittingOutcome> {
     example = this.m_example.name;
     fitter = this.m_fitter.getClass().getSimpleName();
 
+    if ((this.m_logger != null)
+        && (this.m_logger.isLoggable(Level.FINER))) {
+      this.m_logger.finer("Beginning to apply fitter " + fitter//$NON-NLS-1$
+          + " to problem " + example);//$NON-NLS-1$
+    }
+
     try {
       name = ((fitter + '_') + example);
       destFolder = PathUtils.createPathInside(this.m_root, name);
@@ -71,8 +85,8 @@ final class _MultiFittingJob implements Callable<FittingOutcome> {
 
       jobs = new Future[_MultiFittingJob.NUM_RUNS];
       for (i = jobs.length; (--i) >= 0;) {
-        jobs[i] = Execute.parallel(new _SingleFittingJob(this.m_example,
-            this.m_fitter, (i + 1), destFolder));
+        jobs[i] = Execute.parallel(new _SingleFittingJob(this.m_logger,
+            this.m_example, this.m_fitter, (i + 1), destFolder));
       }
       res = new SingleFittingOutcome[jobs.length];
       Execute.join(jobs, res, 0, false);
@@ -186,6 +200,12 @@ final class _MultiFittingJob implements Callable<FittingOutcome> {
       }
     } catch (final IOException ignore) {
       throw new RuntimeException(ignore);
+    }
+
+    if ((this.m_logger != null)
+        && (this.m_logger.isLoggable(Level.FINER))) {
+      this.m_logger.finer("Beginning to applying fitter " + fitter//$NON-NLS-1$
+          + " to problem " + example);//$NON-NLS-1$
     }
 
     return outcome;

@@ -1,14 +1,19 @@
 package org.optimizationBenchmarking.utils.collections.iterators;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * an iterator for arrays
+ * An iterator for arrays. As a gimmick, this class implements
+ * {@link java.lang.Iterable} as well, in order to allow you to use its
+ * instances directly in the new {@code for(T x : Iterable<T>)}-style
+ * {@code for} loops. Handle with care.
  *
  * @param <T>
  *          the type
  */
-public final class ArrayIterator<T> extends BasicListIterator<T> {
+public final class ArrayIterator<T> extends BasicListIterator<T>
+    implements Iterable<T> {
   /** the array */
   private final T[] m_array;
   /** the position */
@@ -48,7 +53,8 @@ public final class ArrayIterator<T> extends BasicListIterator<T> {
    * @param startIndex
    *          the start index
    */
-  public ArrayIterator(final T[] arr, final int size, final int startIndex) {
+  public ArrayIterator(final T[] arr, final int size,
+      final int startIndex) {
     super();
 
     if ((size < 0) || (size > arr.length)) {
@@ -118,5 +124,11 @@ public final class ArrayIterator<T> extends BasicListIterator<T> {
   @Override
   public final int previousIndex() {
     return (this.m_pos - 1);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final Iterator<T> iterator() {
+    return this;
   }
 }

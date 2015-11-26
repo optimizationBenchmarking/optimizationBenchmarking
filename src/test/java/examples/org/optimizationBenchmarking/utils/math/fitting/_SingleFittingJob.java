@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
 import java.util.concurrent.Callable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.fitting.impl.opti.DataPoint;
@@ -33,6 +35,9 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
   /** the root path */
   private final Path m_root;
 
+  /** the logger */
+  private final Logger m_logger;
+
   /**
    * create
    *
@@ -44,14 +49,18 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
    *          the index
    * @param root
    *          the root path
+   * @param logger
+   *          the logger
    */
-  _SingleFittingJob(final FittingExampleDataset example,
-      final FunctionFitter fitter, final int index, final Path root) {
+  _SingleFittingJob(final Logger logger,
+      final FittingExampleDataset example, final FunctionFitter fitter,
+      final int index, final Path root) {
     super();
     this.m_example = example;
     this.m_fitter = fitter;
     this.m_index = index;
     this.m_root = root;
+    this.m_logger = logger;
   }
 
   /** {@inheritDoc} */
@@ -72,11 +81,18 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
     double x, y, z, error;
     Path dest;
 
-    result = this.m_fitter.use().setFunctionToFit(this.m_example.model)
-        .setPoints(this.m_example.data).create().call();
-
     example = this.m_example.name;
     fitter = this.m_fitter.getClass().getSimpleName();
+
+    if ((this.m_logger != null)
+        && (this.m_logger.isLoggable(Level.FINEST))) {
+      this.m_logger.finest("Beginning run " + this.m_index //$NON-NLS-1$
+          + " of fitter " + fitter//$NON-NLS-1$
+          + " on problem " + example);//$NON-NLS-1$
+    }
+
+    result = this.m_fitter.use().setFunctionToFit(this.m_example.model)
+        .setPoints(this.m_example.data).create().call();
 
     dest = PathUtils.createPathInside(this.m_root,
         ((((fitter + '_') + example) + '_') + this.m_index) + //
@@ -175,6 +191,13 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
       }
     } catch (final IOException ignore) {
       throw new RuntimeException(ignore);
+    }
+
+    if ((this.m_logger != null)
+        && (this.m_logger.isLoggable(Level.FINEST))) {
+      this.m_logger.finest("Finished run " + this.m_index //$NON-NLS-1$
+          + " of fitter " + fitter//$NON-NLS-1$
+          + " on problem " + example);//$NON-NLS-1$
     }
 
     return outcome;
