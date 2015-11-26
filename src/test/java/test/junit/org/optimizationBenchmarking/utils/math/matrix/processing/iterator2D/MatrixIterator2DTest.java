@@ -20,68 +20,68 @@ import test.junit.org.optimizationBenchmarking.utils.math.matrix.MatrixTest;
 public class MatrixIterator2DTest extends TestBase {
 
   /** the matrix data */
-  private static final long[][] DATA_1 = {//
-  // the first matrix
-      { 1L, 10L,//
-          5L, 55L,//
-          6L, 60L,//
-          6L, 61L,//
-          6L, 62L,//
-          7L, 70L,//
-          15L, 70L,//
+  private static final long[][] DATA_1 = { //
+      // the first matrix
+      { 1L, 10L, //
+          5L, 55L, //
+          6L, 60L, //
+          6L, 61L, //
+          6L, 62L, //
+          7L, 70L, //
+          15L, 70L, //
           16L, 71L,//
-      },//
+      }, //
       // the second matrix
-      { 2L, 22L,//
-          4L, 40L,//
-          5L, 56L,//
-          6L, 63L,//
-          8L, 80L,//
-          8L, 80L,//
-          12L, 80L,//
+      { 2L, 22L, //
+          4L, 40L, //
+          5L, 56L, //
+          6L, 63L, //
+          8L, 80L, //
+          8L, 80L, //
+          12L, 80L, //
           13L, 80L,//
-      },//
+      }, //
       // the third matrix
-      { 3L, 36L,//
-          4L, 50L,//
-          5L, 57L,//
-          6L, 64L,//
-          9L, 90L,//
-          10L, 90L,//
-          11L, 92L,//
+      { 3L, 36L, //
+          4L, 50L, //
+          5L, 57L, //
+          6L, 64L, //
+          9L, 90L, //
+          10L, 90L, //
+          11L, 92L, //
           20L, 92L,//
       } };
 
   /** the expected iteration result */
-  private static final long[][] EXPECTED_1 = {//
-  { 1L, 10L },//
-      { 2L, 10L, 22L },//
-      { 3L, 10L, 22L, 36L },//
-      { 4L, 10L, 40L, 50L },//
-      { 5L, 55L, 56L, 57L },//
-      { 6L, 62L, 63L, 64L },//
-      { 7L, 70L, 63L, 64L },//
-      { 8L, 70L, 80L, 64L },//
-      { 9L, 70L, 80L, 90L },//
-      { 11L, 70L, 80L, 92L },//
-      { 16L, 71L, 80L, 92L },//
+  private static final long[][] EXPECTED_1 = { //
+      { 1L, 10L }, //
+      { 2L, 10L, 22L }, //
+      { 3L, 10L, 22L, 36L }, //
+      { 4L, 10L, 40L, 50L }, //
+      { 5L, 55L, 56L, 57L }, //
+      { 6L, 62L, 63L, 64L }, //
+      { 7L, 70L, 63L, 64L }, //
+      { 8L, 70L, 80L, 64L }, //
+      { 9L, 70L, 80L, 90L }, //
+      { 11L, 70L, 80L, 92L }, //
+      { 16L, 71L, 80L, 92L }, //
       { 20L, 71L, 80L, 92L },//
   };
 
   /** the other expected iteration result */
-  private static final long[][] EXPECTED_1B = {//
-  { 1L, 10L },//
-      { 2L, 10L, 22L },//
-      { 3L, 10L, 22L, 36L },//
-      { 4L, 10L, 40L, 50L },//
-      { 5L, 55L, 56L, 57L },//
-      { 6L, 62L, 63L, 64L },//
-      { 7L, 70L, 63L, 64L },//
-      { 8L, 70L, 80L, 64L },//
-      { 9L, 70L, 80L, 90L },//
-      { 11L, 70L, 80L, 92L },//
-      { 13L, 70L, 80L, 92L },//
-      { 16L, 71L, 92L },//
+  private static final long[][] EXPECTED_1B = { //
+      { 1L, 10L }, //
+      { 2L, 10L, 22L }, //
+      { 3L, 10L, 22L, 36L }, //
+      { 4L, 10L, 40L, 50L }, //
+      { 5L, 55L, 56L, 57L }, //
+      { 6L, 62L, 63L, 64L }, //
+      { 7L, 70L, 63L, 64L }, //
+      { 8L, 70L, 80L, 64L }, //
+      { 9L, 70L, 80L, 90L }, //
+      { 11L, 70L, 80L, 92L }, //
+      { 13L, 70L, 80L, 92L }, //
+      { 16L, 71L, 92L }, //
       { 20L, 92L },//
   };
 
@@ -95,7 +95,7 @@ public class MatrixIterator2DTest extends TestBase {
   public void testLongIterationData1WithoutEarlyEnds() {
     final PermutationIterator it;
 
-    it = new PermutationIterator(MatrixIterator2DTest.DATA_1.length);
+    it = new PermutationIterator(MatrixIterator2DTest.DATA_1.length, true);
     while (it.hasNext()) {
       MatrixIterator2DTest.__testXLongYLong(MatrixIterator2DTest.DATA_1,
           it.next(), MatrixIterator2DTest.EXPECTED_1);
@@ -107,7 +107,7 @@ public class MatrixIterator2DTest extends TestBase {
   public void testDoubleIterationData1WithoutEarlyEnds() {
     final PermutationIterator it;
 
-    it = new PermutationIterator(MatrixIterator2DTest.DATA_1.length);
+    it = new PermutationIterator(MatrixIterator2DTest.DATA_1.length, true);
     while (it.hasNext()) {
       MatrixIterator2DTest.__testXDoubleYDouble(
           MatrixIterator2DTest.DATA_1, it.next(),
@@ -120,7 +120,7 @@ public class MatrixIterator2DTest extends TestBase {
   public void testDoubleIterationData1WithEarlyEnds() {
     final PermutationIterator it;
 
-    it = new PermutationIterator(MatrixIterator2DTest.DATA_1.length);
+    it = new PermutationIterator(MatrixIterator2DTest.DATA_1.length, true);
     while (it.hasNext()) {
       MatrixIterator2DTest.__testXDoubleYDoubleB(
           MatrixIterator2DTest.DATA_1, it.next(),
@@ -133,7 +133,7 @@ public class MatrixIterator2DTest extends TestBase {
   public void testLongIterationData1WithEarlyEnds() {
     final PermutationIterator it;
 
-    it = new PermutationIterator(MatrixIterator2DTest.DATA_1.length);
+    it = new PermutationIterator(MatrixIterator2DTest.DATA_1.length, true);
     while (it.hasNext()) {
       MatrixIterator2DTest.__testXLongYLongB(MatrixIterator2DTest.DATA_1,
           it.next(), MatrixIterator2DTest.EXPECTED_1B);
@@ -163,8 +163,8 @@ public class MatrixIterator2DTest extends TestBase {
     matrices = new IMatrix[i];
     have = new boolean[i];
     for (; (--i) >= 0;) {
-      matrices[perm[i] - 1] = new LongMatrix1D(data[i],
-          (data[i].length >>> 1), 2);
+      matrices[perm[i]] = new LongMatrix1D(data[i], (data[i].length >>> 1),
+          2);
     }
 
     iterator = MatrixIterator2D.iterate(0, 1, matrices, false);
@@ -220,8 +220,8 @@ public class MatrixIterator2DTest extends TestBase {
     matrices = new IMatrix[i];
     have = new boolean[i];
     for (; (--i) >= 0;) {
-      matrices[perm[i] - 1] = new LongMatrix1D(data[i],
-          (data[i].length >>> 1), 2);
+      matrices[perm[i]] = new LongMatrix1D(data[i], (data[i].length >>> 1),
+          2);
     }
 
     iterator = MatrixIterator2D.iterate(0, 1, matrices, true);
@@ -278,8 +278,8 @@ public class MatrixIterator2DTest extends TestBase {
     have = new boolean[i];
     for (; (--i) >= 0;) {
 
-      matrices[perm[i] - 1] = new DoubleMatrix1D(//
-          ArrayUtils.longsToDoubles(data[i]),//
+      matrices[perm[i]] = new DoubleMatrix1D(//
+          ArrayUtils.longsToDoubles(data[i]), //
           (data[i].length >>> 1), 2);
     }
 
@@ -337,8 +337,8 @@ public class MatrixIterator2DTest extends TestBase {
     have = new boolean[i];
     for (; (--i) >= 0;) {
 
-      matrices[perm[i] - 1] = new DoubleMatrix1D(//
-          ArrayUtils.longsToDoubles(data[i]),//
+      matrices[perm[i]] = new DoubleMatrix1D(//
+          ArrayUtils.longsToDoubles(data[i]), //
           (data[i].length >>> 1), 2);
     }
 

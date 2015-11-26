@@ -24,13 +24,19 @@ public final class PermutationIterator extends IterableIterator<int[]> {
   /** the state */
   private int m_state;
 
+  /** are the permutations zero-based (or one-based)? */
+  private final boolean m_zeroBased;
+
   /**
    * create the iterator
    *
    * @param n
    *          the length of the permutations
+   * @param zeroBased
+   *          {@code true} for zero-based permutations, {@code false} for
+   *          one-based permutations
    */
-  public PermutationIterator(final int n) {
+  public PermutationIterator(final int n, final boolean zeroBased) {
     super();
     if (n > 0) {
       this.m_work = new int[n];
@@ -39,13 +45,18 @@ public final class PermutationIterator extends IterableIterator<int[]> {
       this.m_work = EmptyUtils.EMPTY_INTS;
       this.m_dir = EmptyUtils.EMPTY_BOOLEANS;
     }
+    this.m_zeroBased = zeroBased;
     this.reset();
   }
 
   /** reset the state of the iterator */
   public final void reset() {
     this.m_state = 0;
-    CanonicalPermutation.makeCanonicalOne(this.m_work);
+    if (this.m_zeroBased) {
+      CanonicalPermutation.makeCanonicalZero(this.m_work);
+    } else {
+      CanonicalPermutation.makeCanonicalOne(this.m_work);
+    }
     Arrays.fill(this.m_dir, false);
   }
 

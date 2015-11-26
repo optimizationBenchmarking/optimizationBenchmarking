@@ -68,11 +68,11 @@ public abstract class MathematicalFunctionTest extends TestBase {
 
       if ((test.m_choices & TestCase.ALL_AS_DOUBLE) != 0) {
         params = new double[test.m_in.length];
-        it = new PermutationIterator(test.m_in.length);
+        it = new PermutationIterator(test.m_in.length, true);
         do {
           perm = it.next();
           for (length = perm.length; (--length) >= 0;) {
-            params[perm[length] - 1] = test.m_in[length].doubleValue();
+            params[perm[length]] = test.m_in[length].doubleValue();
           }
 
           Assert.assertEquals(test.m_out.doubleValue(),
@@ -104,11 +104,11 @@ public abstract class MathematicalFunctionTest extends TestBase {
       if ((test.m_choices & TestCase.ALL_AS_FLOAT) != 0) {
         params = new float[test.m_in.length];
 
-        it = new PermutationIterator(test.m_in.length);
+        it = new PermutationIterator(test.m_in.length, true);
         do {
           perm = it.next();
           for (length = perm.length; (--length) >= 0;) {
-            params[perm[length] - 1] = test.m_in[length].floatValue();
+            params[perm[length]] = test.m_in[length].floatValue();
           }
 
           Assert.assertEquals(test.m_out.floatValue(),
@@ -140,11 +140,11 @@ public abstract class MathematicalFunctionTest extends TestBase {
       if ((test.m_choices & TestCase.ALL_AS_LONG) != 0) {
         params = new long[test.m_in.length];
 
-        it = new PermutationIterator(test.m_in.length);
+        it = new PermutationIterator(test.m_in.length, true);
         do {
           perm = it.next();
           for (length = perm.length; (--length) >= 0;) {
-            params[perm[length] - 1] = test.m_in[length].longValue();
+            params[perm[length]] = test.m_in[length].longValue();
           }
           Assert.assertEquals(test.m_out.longValue(),
               function.computeAsLong(params));
@@ -175,11 +175,11 @@ public abstract class MathematicalFunctionTest extends TestBase {
       if ((test.m_choices & TestCase.ALL_AS_INT) != 0) {
         params = new int[test.m_in.length];
 
-        it = new PermutationIterator(test.m_in.length);
+        it = new PermutationIterator(test.m_in.length, true);
         do {
           perm = it.next();
           for (length = perm.length; (--length) >= 0;) {
-            params[perm[length] - 1] = test.m_in[length].intValue();
+            params[perm[length]] = test.m_in[length].intValue();
           }
 
           Assert.assertEquals(test.m_out.intValue(),
@@ -210,11 +210,11 @@ public abstract class MathematicalFunctionTest extends TestBase {
 
       if ((test.m_choices & TestCase.ALL_AS_SHORT) != 0) {
         params = new short[test.m_in.length];
-        it = new PermutationIterator(test.m_in.length);
+        it = new PermutationIterator(test.m_in.length, true);
         do {
           perm = it.next();
           for (length = perm.length; (--length) >= 0;) {
-            params[perm[length] - 1] = test.m_in[length].shortValue();
+            params[perm[length]] = test.m_in[length].shortValue();
           }
 
           Assert.assertEquals(test.m_out.shortValue(),
@@ -245,11 +245,11 @@ public abstract class MathematicalFunctionTest extends TestBase {
 
       if ((test.m_choices & TestCase.ALL_AS_BYTE) != 0) {
         params = new byte[test.m_in.length];
-        it = new PermutationIterator(test.m_in.length);
+        it = new PermutationIterator(test.m_in.length, true);
         do {
           perm = it.next();
           for (length = perm.length; (--length) >= 0;) {
-            params[perm[length] - 1] = test.m_in[length].byteValue();
+            params[perm[length]] = test.m_in[length].byteValue();
           }
 
           Assert.assertEquals(test.m_out.byteValue(),
@@ -281,11 +281,11 @@ public abstract class MathematicalFunctionTest extends TestBase {
 
       if ((test.m_choices & TestCase.IN_LONG_OUT_DOUBLE) != 0) {
         params = new long[test.m_in.length];
-        it = new PermutationIterator(test.m_in.length);
+        it = new PermutationIterator(test.m_in.length, true);
         do {
           perm = it.next();
           for (length = perm.length; (--length) >= 0;) {
-            params[perm[length] - 1] = test.m_in[length].longValue();
+            params[perm[length]] = test.m_in[length].longValue();
           }
 
           Assert.assertEquals(test.m_out.doubleValue(),
@@ -317,11 +317,11 @@ public abstract class MathematicalFunctionTest extends TestBase {
 
       if ((test.m_choices & TestCase.IN_INT_OUT_DOUBLE) != 0) {
         params = new int[test.m_in.length];
-        it = new PermutationIterator(test.m_in.length);
+        it = new PermutationIterator(test.m_in.length, true);
         do {
           perm = it.next();
           for (length = perm.length; (--length) >= 0;) {
-            params[perm[length] - 1] = test.m_in[length].intValue();
+            params[perm[length]] = test.m_in[length].intValue();
           }
 
           Assert.assertEquals(test.m_out.doubleValue(),
