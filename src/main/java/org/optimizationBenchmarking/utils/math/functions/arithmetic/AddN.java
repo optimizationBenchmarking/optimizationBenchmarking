@@ -233,65 +233,78 @@ public final class AddN extends MathematicalFunction {
    * @return the accurate sum of the elements of {@code summands}
    */
   public static final double destructiveSum(final double... summands) {
-    int i, j, n;
-    double x, y, t, xsave, hi, yr, lo;
+    int i, j, n, index;
+    double x, y, t, xsave, hi, yr, lo, summand;
     boolean ninf, pinf;
 
     n = 0;
     lo = 0d;
     ninf = pinf = false;
 
-    for (double summand : summands) {
-
-      xsave = summand;
-      for (i = j = 0; j < n; j++) {
-        y = summands[j];
-        if (Math.abs(summand) < Math.abs(y)) {
-          t = summand;
-          summand = y;
-          y = t;
-        }
-        hi = summand + y;
-        yr = hi - summand;
-        lo = y - yr;
-        if (lo != 0.0) {
-          summands[i++] = lo;
-        }
-        summand = hi;
-      }
-
-      n = i; /* ps[i:] = [summand] */
-      if (summand != 0d) {
-        if ((summand > Double.NEGATIVE_INFINITY)
-            && (summand < Double.POSITIVE_INFINITY)) {
-          summands[n++] = summand;// all finite, good, continue
-        } else {
-          if (xsave <= Double.NEGATIVE_INFINITY) {
-            if (pinf) {
-              return Double.NaN;
+    main: {
+      allIsOK: {
+        // the main summation routine
+        for (index = 0; index < summands.length; index++) {
+          xsave = summand = summands[index];
+          for (i = j = 0; j < n; j++) {
+            y = summands[j];
+            if (Math.abs(summand) < Math.abs(y)) {
+              t = summand;
+              summand = y;
+              y = t;
             }
-            ninf = true;
-          } else {
-            if (xsave >= Double.POSITIVE_INFINITY) {
-              if (ninf) {
-                return Double.NaN;
-              }
-              pinf = true;
-            } else {
-              return Double.NaN;
+            hi = summand + y;
+            yr = hi - summand;
+            lo = y - yr;
+            if (lo != 0.0) {
+              summands[i++] = lo;
             }
+            summand = hi;
           }
 
-          n = 0;
+          n = i;
+          if (summand != 0d) {
+            if ((summand > Double.NEGATIVE_INFINITY)
+                && (summand < Double.POSITIVE_INFINITY)) {
+              summands[n++] = summand;// all finite, good, continue
+            } else {
+              summands[index] = xsave;
+              break allIsOK;
+            }
+          }
+        }
+        break main;
+      }
+
+      // we have error'ed: either due to overflow or because there was an
+      // infinity or NaN value in the data
+      for (; index < summands.length; index++) {
+        summand = summands[index];
+
+        if (summand <= Double.NEGATIVE_INFINITY) {
+          if (pinf) {
+            return Double.NaN;
+          }
+          ninf = true;
+        } else {
+          if (summand >= Double.POSITIVE_INFINITY) {
+            if (ninf) {
+              return Double.NaN;
+            }
+            pinf = true;
+          }
         }
       }
-    }
 
-    if (pinf) {
-      return Double.POSITIVE_INFINITY;
-    }
-    if (ninf) {
-      return Double.NEGATIVE_INFINITY;
+      if (pinf) {
+        return Double.POSITIVE_INFINITY;
+      }
+      if (ninf) {
+        return Double.NEGATIVE_INFINITY;
+      }
+
+      // just a simple overflow. return NaN
+      return Double.NaN;
     }
 
     hi = 0d;

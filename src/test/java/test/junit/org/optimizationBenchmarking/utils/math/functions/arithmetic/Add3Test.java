@@ -33,7 +33,10 @@ public final class Add3Test extends MathematicalFunctionTest {
       new TestCase(123, (NumericalTypes.MAX_DOUBLE_LONG + 23L),
           -(NumericalTypes.MAX_DOUBLE_LONG + 20L), 120), //
       //
-      new TestCase(1, -Double.MAX_VALUE, 1, Double.MAX_VALUE),//
+      new TestCase(1, -Double.MAX_VALUE, 1, Double.MAX_VALUE), //
+      //
+      new TestCase(Double.POSITIVE_INFINITY, Double.MAX_VALUE,
+          Double.MAX_VALUE, Double.POSITIVE_INFINITY),//
   };
 
   /** create */
