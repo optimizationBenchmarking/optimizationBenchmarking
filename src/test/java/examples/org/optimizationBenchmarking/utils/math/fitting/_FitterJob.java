@@ -1,6 +1,9 @@
 package examples.org.optimizationBenchmarking.utils.math.fitting;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.Callable;
@@ -12,6 +15,8 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FunctionFitter;
 import org.optimizationBenchmarking.utils.parallel.Execute;
+import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** a fitting job */
 final class _FitterJob implements Callable<FitterOutcome> {
@@ -58,8 +63,9 @@ final class _FitterJob implements Callable<FitterOutcome> {
     final FittingOutcome[] res;
     final FitterOutcome outcome;
     final ArrayListView<FittingExampleDataset> data;
+    final ITextOutput text;
     int i;
-    final Path destFolder;
+    final Path destFolder, dest;
 
     fitter = this.m_fitter.getClass().getSimpleName();
     if ((this.m_logger != null)
@@ -80,6 +86,145 @@ final class _FitterJob implements Callable<FitterOutcome> {
       res = new FittingOutcome[jobs.length];
       Execute.join(jobs, res, 0, false);
       outcome = new FitterOutcome(this.m_fitter, res, destFolder);
+
+      dest = PathUtils.createPathInside(destFolder,
+          fitter + "-summary.txt");//$NON-NLS-1$
+
+      try (final OutputStream os = PathUtils.openOutputStream(dest)) {
+        try (final OutputStreamWriter osw = new OutputStreamWriter(os)) {
+          try (final BufferedWriter bw = new BufferedWriter(osw)) {
+            text = AbstractTextOutput.wrap(bw);
+
+            text.append("fitter:\t");//$NON-NLS-1$
+            text.append(fitter);
+            text.appendLineBreak();
+            text.appendLineBreak();
+            text.appendLineBreak();
+
+            text.append(
+                "======================= MEDIANS =======================");//$NON-NLS-1$
+            text.appendLineBreak();
+
+            text.append("quality: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.medianErrors.quality);
+            }
+            text.appendLineBreak();
+
+            text.append("rootMeanSquare: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.medianErrors.rootMeanSquareError);
+            }
+            text.appendLineBreak();
+
+            text.append("medianError: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.medianErrors.medianError);
+            }
+            text.appendLineBreak();
+
+            text.append("weighted-rootMeanSquare: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.medianErrors.weightedRootMeanSquareError);
+            }
+            text.appendLineBreak();
+
+            text.append("weighted-medianError: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.medianErrors.weightedMedianError);
+            }
+
+            text.appendLineBreak();
+            text.appendLineBreak();
+            text.appendLineBreak();
+
+            text.append(
+                "======================= MAX =======================");//$NON-NLS-1$
+            text.appendLineBreak();
+
+            text.append("quality: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.maxErrors.quality);
+            }
+            text.appendLineBreak();
+
+            text.append("rootMeanSquare: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.maxErrors.rootMeanSquareError);
+            }
+            text.appendLineBreak();
+
+            text.append("medianError: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.maxErrors.medianError);
+            }
+            text.appendLineBreak();
+
+            text.append("weighted-rootMeanSquare: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.maxErrors.weightedRootMeanSquareError);
+            }
+            text.appendLineBreak();
+
+            text.append("weighted-medianError: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.maxErrors.weightedMedianError);
+            }
+
+            text.appendLineBreak();
+            text.appendLineBreak();
+            text.appendLineBreak();
+
+            text.append(
+                "======================= STDDEV =======================");//$NON-NLS-1$
+            text.appendLineBreak();
+
+            text.append("quality: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.stddevErrors.quality);
+            }
+            text.appendLineBreak();
+
+            text.append("rootMeanSquare: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.stddevErrors.rootMeanSquareError);
+            }
+            text.appendLineBreak();
+
+            text.append("medianError: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.stddevErrors.medianError);
+            }
+            text.appendLineBreak();
+
+            text.append("weighted-rootMeanSquare: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.stddevErrors.weightedRootMeanSquareError);
+            }
+            text.appendLineBreak();
+
+            text.append("weighted-medianError: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.stddevErrors.weightedMedianError);
+            }
+          }
+        }
+      }
 
     } catch (final IOException ignore) {
       throw new RuntimeException(ignore);

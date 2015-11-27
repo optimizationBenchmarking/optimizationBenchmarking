@@ -67,19 +67,45 @@ public final class FittingExampleDatasets extends TestBase
   /** the logger */
   final Logger m_logger;
 
+  /** allow time-time and objective-objective data sets? */
+  private final boolean m_useSameType;
+
+  /** use bbob */
+  private final boolean m_useBBOB;
+
+  /** use tsp suite */
+  private final boolean m_useTSPSuite;
+
+  /** use max sat */
+  private final boolean m_useMaxSat;
+
   /**
    * create
    *
    * @param logger
    *          the logger
+   * @param useSameType
+   *          allow time-time and objective-objective data sets?
+   * @param useBBOB
+   *          use bbob data sets
+   * @param useTSPSuite
+   *          use the tsp suite data sets
+   * @param useMaxSat
+   *          use the max-sat data sets
    */
-  public FittingExampleDatasets(final Logger logger) {
+  public FittingExampleDatasets(final Logger logger,
+      final boolean useSameType, final boolean useBBOB,
+      final boolean useTSPSuite, final boolean useMaxSat) {
     super();
 
     this.m_timeObjective = new LogisticModelWithOffsetOverLogX();
     this.m_sameType = new QuadraticModel();
     this.m_sorter = new __Sorter();
     this.m_logger = logger;
+    this.m_useSameType = useSameType;
+    this.m_useMaxSat = useMaxSat;
+    this.m_useTSPSuite = useTSPSuite;
+    this.m_useBBOB = useBBOB;
   }
 
   /** {@inheritDoc} */
@@ -99,12 +125,19 @@ public final class FittingExampleDatasets extends TestBase
     list = new ArrayList<>();
     jobs = new ArrayList<>();
 
-    for (final String resource : FittingExampleDatasets.RESOURCES) {
-      jobs.add(Execute.parallel(new __AppendResource(resource, list)));
+    if (this.m_useMaxSat) {
+      for (final String resource : FittingExampleDatasets.RESOURCES) {
+        jobs.add(Execute.parallel(new __AppendResource(resource, list)));
+      }
     }
 
-    jobs.add(Execute.parallel(new __AppendBBOB(list)));
-    jobs.add(Execute.parallel(new __AppendTSPSuite(list)));
+    if (this.m_useBBOB) {
+      jobs.add(Execute.parallel(new __AppendBBOB(list)));
+    }
+
+    if (this.m_useTSPSuite) {
+      jobs.add(Execute.parallel(new __AppendTSPSuite(list)));
+    }
 
     Execute.join(jobs);
 
@@ -218,6 +251,10 @@ public final class FittingExampleDatasets extends TestBase
       }
       for (dimB = (dimA + 1); dimB < dimTypes.length; dimB++) {
         if (dimTypes[dimB] == 0) {
+          continue;
+        }
+
+        if ((!this.m_useSameType) && (dimTypes[dimA] == dimTypes[dimB])) {
           continue;
         }
 
@@ -385,7 +422,7 @@ public final class FittingExampleDatasets extends TestBase
     double[] randFitting;
     int index;
 
-    data = new FittingExampleDatasets(null).call();
+    data = new FittingExampleDatasets(null, true, true, true, true).call();
     root = PathUtils.getTempDir();
     rand = new Random();
     index = 0;

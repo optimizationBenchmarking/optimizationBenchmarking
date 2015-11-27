@@ -40,7 +40,10 @@ public class FittingExamples {
 
     pool = new ForkJoinPool(
         Math.max(1, Runtime.getRuntime().availableProcessors() - 1));
-    data = pool.submit(new FittingExampleDatasets(logger)).get();
+    data = pool
+        .submit(
+            new FittingExampleDatasets(logger, false, false, true, true))
+        .get();
 
     dest = PathUtils.createPathInside(PathUtils.getTempDir(), "results"); //$NON-NLS-1$
     i = FittingExamples.FITTERS.size();

@@ -3,9 +3,16 @@ package org.optimizationBenchmarking.utils.math.fitting.models;
 import java.util.Random;
 
 import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.math.MathUtils;
-import org.optimizationBenchmarking.utils.math.fitting.impl.SampleBasedParameterGuesser;
+import org.optimizationBenchmarking.utils.math.fitting.impl.SamplePermutationBasedParameterGuesser;
 import org.optimizationBenchmarking.utils.math.fitting.spec.IParameterGuesser;
+import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.AddN;
+import org.optimizationBenchmarking.utils.math.functions.power.Exp;
+import org.optimizationBenchmarking.utils.math.functions.power.Ln;
+import org.optimizationBenchmarking.utils.math.functions.power.Pow;
+import org.optimizationBenchmarking.utils.math.functions.power.Sqrt;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
@@ -60,625 +67,642 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * </li>
  * </ol>
  */
-public final class LogisticModelOverLogX extends _ModelBase {
+public class LogisticModelOverLogX extends ParametricUnaryFunction {
 
   /** create */
   public LogisticModelOverLogX() {
     super();
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public final double value(final double x, final double[] parameters) {
-    return _ModelBase._logisticModelOverLogXCompute(x, parameters[0],
-        parameters[1], parameters[2]);
+  /**
+   * compute the square root
+   *
+   * @param a
+   *          the number
+   * @return the result
+   */
+  static final double _sqrt(final double a) {
+    return Sqrt.INSTANCE.computeAsDouble(a);
+  }
+
+  /**
+   * compute the exponent
+   *
+   * @param a
+   *          the number
+   * @return the exponent
+   */
+  static final double _exp(final double a) {
+    return Exp.INSTANCE.computeAsDouble(a);
+  }
+
+  /**
+   * compute the square
+   *
+   * @param a
+   *          the number
+   * @return the result
+   */
+  static final double _sqr(final double a) {
+    return a * a;
+  }
+
+  /**
+   * compute the power
+   *
+   * @param a
+   *          the base
+   * @param b
+   *          the power
+   * @return the result
+   */
+  static final double _pow(final double a, final double b) {
+    return Pow.INSTANCE.computeAsDouble(a, b);
+  }
+
+  /**
+   * compute the natural logarithm
+   *
+   * @param a
+   *          the number
+   * @return the logarithm
+   */
+  static final double _log(final double a) {
+    return Ln.INSTANCE.computeAsDouble(a);
+  }
+
+  /**
+   * sum up some numbers
+   *
+   * @param summands
+   *          the numbers to sum up
+   * @return the sum
+   */
+  static final double _add(final double... summands) {
+    return AddN.destructiveSum(summands);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void gradient(final double x, final double[] parameters,
+  public double value(final double x, final double[] parameters) {
+    double res;
+
+    res = (1d
+        + (parameters[1] + LogisticModelOverLogX._pow(x, parameters[2])));
+    if ((Math.abs(res) > 0d) && MathUtils.isFinite(res) && //
+        MathUtils.isFinite(res = (parameters[0] / res))) {
+      return res;
+    }
+    return 0d;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void gradient(final double x, final double[] parameters,
       final double[] gradient) {
-    _ModelBase._logisticModelOverLogXGradient(x, parameters[0],
-        parameters[1], parameters[2], gradient);
+    final double b, xc, bxc, axc, div;
+    double g0;
+
+    xc = LogisticModelOverLogX._pow(x, parameters[2]);
+
+    if (Math.abs(xc) <= 0d) {
+      gradient[0] = 1d;
+      gradient[1] = gradient[2] = 0d;
+      return;
+    }
+
+    b = parameters[1];
+    bxc = (b * xc);
+    if (Math.abs(bxc) <= 0) {
+      gradient[0] = 1d;
+      gradient[1] = gradient[2] = 0d;
+      return;
+    }
+
+    g0 = (1d + bxc);
+    if ((Math.abs(g0) > 0d) && MathUtils.isFinite(g0)
+        && MathUtils.isFinite(g0 = (1d / g0))) {
+      gradient[0] = g0;
+    } else {
+      gradient[0] = 0d;
+    }
+
+    axc = (parameters[0] * xc);
+    if (Math.abs(axc) <= 0d) {
+      gradient[1] = gradient[2] = 0d;
+      return;
+    }
+
+    div = LogisticModelOverLogX._add(1d, 2d * bxc, xc * xc * b * b);
+    if ((Math.abs(div) > 0d) && MathUtils.isFinite(div)) {
+      g0 = ((-axc) / div);
+      if (MathUtils.isFinite(g0)) {
+        gradient[1] = g0;
+      } else {
+        gradient[1] = 0d;
+      }
+      g0 = ((-(b * axc * LogisticModelOverLogX._log(x))) / div);
+      if (MathUtils.isFinite(g0)) {
+        gradient[2] = g0;
+      } else {
+        gradient[2] = 0d;
+      }
+      return;
+    }
+
+    gradient[1] = gradient[2] = 0d;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int getParameterCount() {
+  public int getParameterCount() {
     return 3;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final IParameterGuesser createParameterGuesser(
-      final IMatrix data) {
-    return new __LogisticGuesser(data);
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public final void canonicalizeParameters(final double[] parameters) {
-    _ModelBase._logisticModelOverLogXCanonicalizeParameters(parameters);
+    parameters[0] = Math.abs(parameters[0]);
+    parameters[2] = Math.abs(parameters[2]);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void mathRender(final ITextOutput out,
+  public void mathRender(final ITextOutput out,
       final IParameterRenderer renderer, final IMathRenderable x) {
-    _ModelBase._logisticModelOverLogXMathRender(out, renderer, x);
+    renderer.renderParameter(0, out);
+    out.append('/');
+    out.append('1');
+    out.append('+');
+    renderer.renderParameter(1, out);
+    out.append('*');
+    x.mathRender(out, renderer);
+    out.append('^');
+    renderer.renderParameter(2, out);
+    out.append(')');
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void mathRender(final IMath out,
+  public void mathRender(final IMath out,
       final IParameterRenderer renderer, final IMathRenderable x) {
-    _ModelBase._logisticModelOverLogXMathRender(out, renderer, x);
+    try (final IMath div = out.div()) {
+      renderer.renderParameter(0, div);
+      try (final IMath add = div.add()) {
+        try (final IText num = add.number()) {
+          num.append('1');
+        }
+        try (final IMath mul = add.mul()) {
+          renderer.renderParameter(1, mul);
+          try (final IMath pow = mul.pow()) {
+            x.mathRender(pow, renderer);
+            renderer.renderParameter(2, pow);
+          }
+        }
+      }
+    }
   }
 
-  /** A parameter guesser for the logistic models. */
-  private static final class __LogisticGuesser
-      extends SampleBasedParameterGuesser {
+  /** {@inheritDoc} */
+  @Override
+  public IParameterGuesser createParameterGuesser(final IMatrix data) {
+    return new _LogisticModelOverLogXParameterGuesser(data);
+  }
+
+  /**
+   * check an {@code a} value for the logistic model over log-scaled
+   * {@code x}, i.e., {@code a/(1+b*x^c)}.
+   *
+   * @param a
+   *          the {@code a} value
+   * @return {@code true} if the {@code a} value is OK, {@code false}
+   *         otherwise
+   */
+  static final boolean _checkA(final double a) {
+    final double abs;
+    if (MathUtils.isFinite(a)) {
+      abs = Math.abs(a);
+      return ((abs > 1e-12d) && (abs < 1e100));
+    }
+    return false;
+  }
+
+  /**
+   * _check an {@code b} value for the logistic model over log-scaled
+   * {@code x}, i.e., {@code a/(1+b*x^c)}.
+   *
+   * @param b
+   *          the {@code b} value
+   * @return {@code true} if the {@code b} value is OK, {@code false}
+   *         otherwise
+   */
+  static final boolean _checkB(final double b) {
+    final double abs;
+    if (MathUtils.isFinite(b)) {
+      abs = Math.abs(b);
+      if (abs > 1e-10d) {
+        if (abs < 1e10d) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * _check an {@code c} value for the logistic model over log-scaled
+   * {@code x}, i.e., {@code a/(1+b*x^c)}.
+   *
+   * @param c
+   *          the {@code c} value
+   * @return {@code true} if the {@code b} value is OK, {@code false}
+   *         otherwise
+   */
+  static final boolean _checkC(final double c) {
+    return (MathUtils.isFinite(c) && (c > 1e-4d) && (c < 1e4d));
+  }
+
+  /**
+   * choose amongst two numbers
+   *
+   * @param a1
+   *          the first number
+   * @param a2
+   *          the second number
+   * @return their mean, if finite, or any of the two numbers which is
+   *         finite, or mean
+   */
+  static final double _choose(final double a1, final double a2) {
+    final double med;
+    final int cmp;
+
+    if (a1 == a2) {
+      if (a1 == 0d) {
+        return 0d;
+      }
+      return a1;
+    }
+
+    med = ((0.5d * a1) + (0.5d * a2));
+    if (MathUtils.isFinite(med)) {
+      return med;
+    }
+    if (MathUtils.isFinite(a1)) {
+      if (MathUtils.isFinite(a2)) {
+        cmp = Integer.compare(Math.abs(Math.getExponent(a1)),
+            Math.abs(Math.getExponent(a2)));
+        if (cmp < 0) {
+          return a1;
+        }
+        if (cmp == 0) {
+          if (Math.abs(a1) < Math.abs(a2)) {
+            return a1;
+          }
+        }
+        return a2;
+      }
+
+      return a1;
+    }
+    if (MathUtils.isFinite(a2)) {
+      return a2;
+    }
+    return med;
+  }
+
+  /**
+   * Compute {@code a} from one point {@code (x,y)} and known {@code b} and
+   * {@code c} values.
+   *
+   * @param x
+   *          the {@code x}-coordinate of the point
+   * @param y
+   *          the {@code y}-coordinate of the point
+   * @param b
+   *          the {@code b} value
+   * @param c
+   *          the {@code c} value
+   * @return the {@code a} value
+   */
+  static final double _a_xybc(final double x, final double y,
+      final double b, final double c) {
+    return ((x <= 0d) ? y
+        : (((b * LogisticModelOverLogX._pow(x, c)) + 1d) * y));
+  }
+
+  /**
+   * Compute {@code a} from two points {@code (x1,y1)} and {@code (x2,y2)}
+   * and a known {@code c} value.
+   *
+   * @param x1
+   *          the {@code x}-coordinate of the first point
+   * @param y1
+   *          the {@code y}-coordinate of the first point
+   * @param x2
+   *          the {@code x}-coordinate of the second point
+   * @param y2
+   *          the {@code y}-coordinate of the second point
+   * @param c
+   *          the {@code c} value
+   * @return the {@code a} value
+   */
+  static final double _a_x1y1x2y2c(final double x1, final double y1,
+      final double x2, final double y2, final double c) {
+    final double x2c, x1c;
+
+    x1c = LogisticModelOverLogX._pow(x1, c);
+    x2c = LogisticModelOverLogX._pow(x2, c);
+    return (((x2c - x1c) * y1 * y2) / ((x2c * y2) - (x1c * y1)));
+  }
+
+  /**
+   * Compute {@code b} from two points {@code (x1,y1)} and {@code (x2,y2)}
+   * and a known {@code c} value.
+   *
+   * @param x1
+   *          the {@code x}-coordinate of the first point
+   * @param y1
+   *          the {@code y}-coordinate of the first point
+   * @param x2
+   *          the {@code x}-coordinate of the second point
+   * @param y2
+   *          the {@code y}-coordinate of the second point
+   * @param c
+   *          the {@code c} value
+   * @return the {@code b} value
+   */
+  static final double _b_x1y1x2y2c(final double x1, final double y1,
+      final double x2, final double y2, final double c) {
+    return ((y1 - y2) / ((LogisticModelOverLogX._pow(x2, c) * y2)
+        - (LogisticModelOverLogX._pow(x1, c) * y1)));
+  }
+
+  /**
+   * Compute {@code b} from two points {@code (x1,y1)} and {@code (x2,y2)}
+   * and a known {@code a} value.
+   *
+   * @param x1
+   *          the {@code x}-coordinate of the first point
+   * @param y1
+   *          the {@code y}-coordinate of the first point
+   * @param x2
+   *          the {@code x}-coordinate of the second point
+   * @param y2
+   *          the {@code y}-coordinate of the second point
+   * @param a
+   *          the {@code a} value
+   * @return the {@code b} value
+   */
+  static final double _b_x1y1x2y2a(final double x1, final double y1,
+      final double x2, final double y2, final double a) {
+    final double lx1, lx2;
+
+    lx1 = LogisticModelOverLogX._log(x1);
+    lx2 = LogisticModelOverLogX._log(x2);
+    return LogisticModelOverLogX._exp(LogisticModelOverLogX._add(//
+        (lx1 * LogisticModelOverLogX._log(a - y2)), //
+        -(lx2 * LogisticModelOverLogX._log(a - y1)), //
+        -(lx1 * LogisticModelOverLogX._log(y2)), //
+        (lx2 * LogisticModelOverLogX._log(y1))) / (lx1 - lx2));
+  }
+
+  /**
+   * Compute {@code b} from one point {@code (x,y)} and known {@code a} and
+   * {@code c} values.
+   *
+   * @param x
+   *          the {@code x}-coordinate of the point
+   * @param y
+   *          the {@code y}-coordinate of the point
+   * @param a
+   *          the {@code a} value
+   * @param c
+   *          the {@code c} value
+   * @return the {@code b} value
+   */
+  static final double _b_xyac(final double x, final double y,
+      final double a, final double c) {
+    final double xc, xcy;
+
+    xc = LogisticModelOverLogX._pow(x, c);
+    xcy = (xc * y);
+
+    return LogisticModelOverLogX._choose(//
+        ((a - y) / xcy), //
+        ((a / xcy) - (1d / xc)));
+  }
+
+  /**
+   * Compute {@code c} from one point {@code (x,y)} and known {@code a} and
+   * {@code b} values.
+   *
+   * @param x
+   *          the {@code x}-coordinate of the point
+   * @param y
+   *          the {@code y}-coordinate of the point
+   * @param a
+   *          the {@code a} value
+   * @param b
+   *          the {@code b} value
+   * @return the {@code c} value
+   */
+  static final double _c_xyab(final double x, final double y,
+      final double a, final double b) {
+    final double lx, by;
+
+    lx = LogisticModelOverLogX._log(x);
+    if ((b <= (-1d)) && (0d < x) && (x < 1d) && (Math.abs(a) <= 0d)
+        && (Math.abs(y) <= 0d)) {
+      return Math.nextUp(Math.nextUp(//
+          LogisticModelOverLogX._log(-1d / b) / lx));
+    }
+
+    by = b * y;
+    return LogisticModelOverLogX._choose(//
+        LogisticModelOverLogX._log((a / by) - (1 / b)) / lx, //
+        LogisticModelOverLogX._log((a - y) / by) / lx);
+  }
+
+  /** the parameter guesser */
+  class _LogisticModelOverLogXParameterGuesser
+      extends SamplePermutationBasedParameterGuesser {
 
     /**
-     * create the guesser
+     * Create the parameter guesser
      *
      * @param data
      *          the data
      */
-    __LogisticGuesser(final IMatrix data) {
-      super(data, 3);
+    _LogisticModelOverLogXParameterGuesser(final IMatrix data) {
+      super(data, LogisticModelOverLogX.this.getParameterCount());
     }
 
     /**
-     * compute the error of a given fitting
+     * compute a fallback point of everything else fails.
      *
-     * @param x0
-     *          the first x-coordinate
-     * @param y0
-     *          the first y-coordinate
-     * @param x1
-     *          the second x-coordinate
-     * @param y1
-     *          the second y-coordinate
-     * @param x2
-     *          the third x-coordinate
-     * @param y2
-     *          the third y-coordinate
-     * @param a
-     *          the first fitting parameter
-     * @param b
-     *          the second fitting parameter
-     * @param c
-     *          the third fitting parameter
-     * @return the fitting error
-     */
-    private static final double __error(final double x0, final double y0,
-        final double x1, final double y1, final double x2, final double y2,
-        final double a, final double b, final double c) {
-      return _ModelBase._add3(//
-          __LogisticGuesser.__error(x0, y0, a, b, c), //
-          __LogisticGuesser.__error(x1, y1, a, b, c), //
-          __LogisticGuesser.__error(x2, y2, a, b, c));
-    }
-
-    /**
-     * Compute the error of the fitting for a single point
-     *
-     * @param x
-     *          the {@code x}-coordinate of the point
-     * @param y
-     *          the {@code y}-coordinate of the point
-     * @param a
-     *          the {@code a} value
-     * @param b
-     *          the {@code b} value
-     * @param c
-     *          the {@code c} value
-     * @return the error
-     */
-    private static final double __error(final double x, final double y,
-        final double a, final double b, final double c) {
-      return Math.abs(//
-          y - _ModelBase._logisticModelOverLogXCompute(x, a, b, c));
-    }
-
-    /**
-     * Compute {@code b} from one point {@code (x,y)} and known {@code a}
-     * and {@code c} values.
-     *
-     * @param x
-     *          the {@code x}-coordinate of the point
-     * @param y
-     *          the {@code y}-coordinate of the point
-     * @param a
-     *          the {@code a} value
-     * @param c
-     *          the {@code c} value
-     * @return the {@code b} value
-     */
-    private static final double __b_xyac(final double x, final double y,
-        final double a, final double c) {
-      final double b1, b2, b3, xc, xcy, e1, e2, e3;
-
-      xc = _ModelBase._pow(x, c);
-      xcy = (xc * y);
-
-      b1 = ((a - y) / xcy);
-      b2 = ((a / xcy) - (1d / xc));
-
-      if (b1 == b2) {
-        return b1;
-      }
-
-      e1 = __LogisticGuesser.__error(x, y, a, b1, c);
-      e2 = __LogisticGuesser.__error(x, y, a, b2, c);
-      if (MathUtils.isFinite(e1)) {
-        if (MathUtils.isFinite(e2)) {
-          if (e1 == e2) {
-            b3 = (0.5d * (b1 + b2));
-            if ((b3 != b2) && (b3 != b1) && ((b1 < b3) || (b2 < b3))
-                && ((b3 < b1) || (b3 < b2))) {
-              e3 = __LogisticGuesser.__error(x, y, a, b3, c);
-              if (MathUtils.isFinite(e3) && (e3 <= e1) && (e3 <= e2)) {
-                return b3;
-              }
-            }
-          }
-          return ((e1 < e2) ? b1 : b2);
-        }
-        return b1;
-      }
-      if (MathUtils.isFinite(e2)) {
-        return b2;
-      }
-      return ((e1 < e2) ? b1 : b2);
-    }
-
-    /**
-     * Compute {@code c} from one point {@code (x,y)} and known {@code a}
-     * and {@code b} values.
-     *
-     * @param x
-     *          the {@code x}-coordinate of the point
-     * @param y
-     *          the {@code y}-coordinate of the point
-     * @param a
-     *          the {@code a} value
-     * @param b
-     *          the {@code b} value
-     * @return the {@code c} value
-     */
-    private static final double __c_xyab(final double x, final double y,
-        final double a, final double b) {
-      final double c1, c2, c3, lx, by, e1, e2, e3;
-
-      lx = _ModelBase._log(x);
-      if ((b <= (-1d)) && (0d < x) && (x < 1d) && (Math.abs(a) <= 0d)
-          && (Math.abs(y) <= 0d)) {
-        return Math.nextUp(Math.nextUp(//
-            _ModelBase._log(-1d / b) / lx));
-      }
-
-      by = b * y;
-      c1 = _ModelBase._log((a / by) - (1 / b)) / lx;
-      c2 = _ModelBase._log((a - y) / by) / lx;
-
-      if (c1 == c2) {
-        return c1;
-      }
-
-      e1 = __LogisticGuesser.__error(x, y, a, b, c1);
-      e2 = __LogisticGuesser.__error(x, y, a, b, c2);
-      if (MathUtils.isFinite(e1)) {
-        if (MathUtils.isFinite(e2)) {
-          if (e1 == e2) {
-            c3 = (0.5d * (c1 + c2));
-            if ((c3 != c2) && (c3 != c1) && ((c1 < c3) || (c2 < c3))
-                && ((c3 < c1) || (c3 < c2))) {
-              e3 = __LogisticGuesser.__error(x, y, a, b, c3);
-              if (MathUtils.isFinite(e3) && (e3 <= e1) && (e3 <= e2)) {
-                return c3;
-              }
-            }
-          }
-          return ((e1 < e2) ? c1 : c2);
-        }
-        return c1;
-      }
-      if (MathUtils.isFinite(e2)) {
-        return c2;
-      }
-      return ((e1 < e2) ? c1 : c2);
-    }
-
-    /**
-     * Update a guess for {@code a}, {@code b}, and {@code c} by using
-     * median results from all formulas
-     *
-     * @param x0
-     *          the {@code x}-coordinate of the first point
-     * @param y0
-     *          the {@code y}-coordinate of the first point
-     * @param x1
-     *          the {@code x}-coordinate of the second point
-     * @param y1
-     *          the {@code y}-coordinate of the second point
-     * @param x2
-     *          the {@code x}-coordinate of the third point
-     * @param y2
-     *          the {@code y}-coordinate of the third point
-     * @param maxY
-     *          the maximum {@code y} coordinate
+     * @param points
+     *          the points
      * @param dest
-     *          the destination array
-     * @param bestError
-     *          the best error so far
-     * @return the new (or old) best error
+     *          the destination
+     * @param random
+     *          the random number generator
+     * @param offset
+     *          the offset
      */
-    private static final double __updateMed(final double x0,
-        final double y0, final double x1, final double y1, final double x2,
-        final double y2, final double maxY, final double[] dest,
-        final double bestError) {
-      double newA, newB, newC, error;
-      boolean hasA, hasB, hasC, changed;
-
-      newA = newB = newC = Double.NaN;
-      hasA = hasB = hasC = false;
-
-      changed = true;
-      while (changed) {
-        changed = false;
-
-        if (!hasB) {
-          // find B based on the existing or new A and C values
-          newB = _ModelBase._med3(//
-              _ModelBase._logisticModelOverLogX_b_x1y1x2y2a(x0, y0, x1, y1,
-                  (hasA ? newA : dest[0])), //
-              _ModelBase._logisticModelOverLogX_b_x1y1x2y2a(x1, y1, x2, y2,
-                  (hasA ? newA : dest[0])), //
-              _ModelBase._logisticModelOverLogX_b_x1y1x2y2a(x2, y2, x0, y0,
-                  (hasA ? newA : dest[0])));
-
-          if (_ModelBase._logisticModelOverLogXCheckB(newB)) {
-            changed = hasB = true;
-          } else {
-            newB = _ModelBase._med3(//
-                __LogisticGuesser.__b_xyac(x0, y0, (hasA ? newA : dest[0]),
-                    (hasC ? newC : dest[2])), //
-                __LogisticGuesser.__b_xyac(x1, y1, (hasA ? newA : dest[0]),
-                    (hasC ? newC : dest[2])), //
-                __LogisticGuesser.__b_xyac(x2, y2, (hasA ? newA : dest[0]),
-                    (hasC ? newC : dest[2])));
-
-            if (_ModelBase._logisticModelOverLogXCheckB(newB)) {
-              changed = hasB = true;
-            } else {
-              newB = _ModelBase._med3(//
-                  _ModelBase._logisticModelOverLogX_b_x1y1x2y2c(x0, y0, x1,
-                      y1, (hasC ? newC : dest[2])), //
-                  _ModelBase._logisticModelOverLogX_b_x1y1x2y2c(x1, y1, x2,
-                      y2, (hasC ? newC : dest[2])), //
-                  _ModelBase._logisticModelOverLogX_b_x1y1x2y2c(x2, y2, x0,
-                      y0, (hasC ? newC : dest[2])));
-
-              if (_ModelBase._logisticModelOverLogXCheckB(newB)) {
-                changed = hasB = true;
-              }
-            }
-          }
-        }
-
-        if (!hasC) {
-          // find C based on the existing or new A and B values
-          newC = _ModelBase._med3(//
-              __LogisticGuesser.__c_xyab(x0, y0, (hasA ? newA : dest[0]),
-                  (hasB ? newB : dest[1])), //
-              __LogisticGuesser.__c_xyab(x1, y1, (hasA ? newA : dest[0]),
-                  (hasB ? newB : dest[1])), //
-              __LogisticGuesser.__c_xyab(x2, y2, (hasA ? newA : dest[0]),
-                  (hasB ? newB : dest[1])));
-
-          if (_ModelBase._logisticModelOverLogXCheckC(newC)) {
-            changed = hasC = true;
-          }
-        }
-
-        if (!hasA) {
-          findA: {
-            // find A based on the existing or new B and C values
-            if (hasB) {
-              newA = _ModelBase._med3(//
-                  _ModelBase._logisticModelOverLogX_a_xybc(x0, y0, newB,
-                      (hasC ? newC : dest[2])), //
-                  _ModelBase._logisticModelOverLogX_a_xybc(x1, y1, newB,
-                      (hasC ? newC : dest[2])), //
-                  _ModelBase._logisticModelOverLogX_a_xybc(x2, y2, newB,
-                      (hasC ? newC : dest[2])));
-
-              if (_ModelBase._logisticModelOverLogXCheckA(newA, maxY)) {
-                changed = hasA = true;
-                break findA;
-              }
-            }
-
-            newA = _ModelBase._med3(//
-                _ModelBase._logisticModelOverLogX_a_x1y1x2y2c(x0, y0, x1,
-                    y1, (hasC ? newC : dest[2])), //
-                _ModelBase._logisticModelOverLogX_a_x1y1x2y2c(x1, y1, x2,
-                    y2, (hasC ? newC : dest[2])), //
-                _ModelBase._logisticModelOverLogX_a_x1y1x2y2c(x2, y2, x0,
-                    y0, (hasC ? newC : dest[2])));//
-
-            if (_ModelBase._logisticModelOverLogXCheckA(newA, maxY)) {
-              changed = hasA = true;
-              break findA;
-            }
-
-            if (!hasB) {
-              newA = _ModelBase._med3(//
-                  _ModelBase._logisticModelOverLogX_a_xybc(x0, y0, dest[1],
-                      (hasC ? newC : dest[2])), //
-                  _ModelBase._logisticModelOverLogX_a_xybc(x1, y1, dest[1],
-                      (hasC ? newC : dest[2])), //
-                  _ModelBase._logisticModelOverLogX_a_xybc(x2, y2, dest[1],
-                      (hasC ? newC : dest[2])));
-
-              if (_ModelBase._logisticModelOverLogXCheckA(newA, maxY)) {
-                changed = hasA = true;
-                break findA;
-              }
-            }
-
-            if (!changed) {
-              if (Math.abs(x0) <= 0d) {
-                newA = y0;
-                changed = hasA = true;
-                break findA;
-              }
-              if (Math.abs(x1) <= 0d) {
-                newA = y1;
-                changed = hasA = true;
-                break findA;
-              }
-              if (Math.abs(x2) <= 0d) {
-                newA = y2;
-                changed = hasA = true;
-                break findA;
-              }
-            }
-          }
-        }
-
-        if (hasA && hasB && hasC) {
-          error = __LogisticGuesser.__error(x0, y0, x1, y1, x2, y2, newA,
-              newB, newC);
-          if (MathUtils.isFinite(error) && (error < bestError)) {
-            dest[0] = newA;
-            dest[1] = newB;
-            dest[2] = newC;
-            return error;
-          }
-
-          return bestError;
-        }
-      }
-
-      return bestError;
-    }
-
-    /**
-     * Update a guess for {@code a}, {@code b}, and {@code c} by using the
-     * first two points for calculating the new values (and the last one
-     * only in the error computation)
-     *
-     * @param x0
-     *          the {@code x}-coordinate of the first point
-     * @param y0
-     *          the {@code y}-coordinate of the first point
-     * @param x1
-     *          the {@code x}-coordinate of the second point
-     * @param y1
-     *          the {@code y}-coordinate of the second point
-     * @param x2
-     *          the {@code x}-coordinate of the third point
-     * @param y2
-     *          the {@code y}-coordinate of the third point
-     * @param maxY
-     *          the maximum {@code y} coordinate
-     * @param dest
-     *          the destination array
-     * @param bestError
-     *          the best error so far
-     * @return the new (or old) best error
-     */
-    private static final double __update(final double x0, final double y0,
-        final double x1, final double y1, final double x2, final double y2,
-        final double maxY, final double[] dest, final double bestError) {
-      double newA, newB, newC, error;
-      boolean hasA, hasB, hasC, changed;
-
-      newA = newB = newC = Double.NaN;
-      hasA = hasB = hasC = false;
-
-      changed = true;
-      while (changed) {
-        changed = false;
-
-        if (!hasB) {
-          // find B based on the existing or new A and C values
-          newB = _ModelBase._logisticModelOverLogX_b_x1y1x2y2a(x0, y0, x1,
-              y1, (hasA ? newA : dest[0]));
-          if (_ModelBase._logisticModelOverLogXCheckB(newB)) {
-            changed = hasB = true;
-          } else {
-            newB = __LogisticGuesser.__b_xyac(x0, y0,
-                (hasA ? newA : dest[0]), (hasC ? newC : dest[2]));
-            if (_ModelBase._logisticModelOverLogXCheckB(newB)) {
-              changed = hasB = true;
-            } else {
-              newB = _ModelBase._logisticModelOverLogX_b_x1y1x2y2c(x0, y0,
-                  x1, y1, (hasC ? newC : dest[2]));
-              if (_ModelBase._logisticModelOverLogXCheckB(newB)) {
-                changed = hasB = true;
-              }
-            }
-          }
-        }
-
-        if (!hasC) {
-          // find C based on the existing or new A and B values
-          newC = __LogisticGuesser.__c_xyab(x0, y0,
-              (hasA ? newA : dest[0]), (hasB ? newB : dest[1]));
-          if (_ModelBase._logisticModelOverLogXCheckC(newC)) {
-            changed = hasC = true;
-          }
-        }
-
-        if (!hasA) {
-          findA: {
-            // find A based on the existing or new B and C values
-            if (hasB) {
-              newA = _ModelBase._logisticModelOverLogX_a_xybc(x0, y0, newB,
-                  (hasC ? newC : dest[2]));
-              if (_ModelBase._logisticModelOverLogXCheckA(newA, maxY)) {
-                changed = hasA = true;
-                break findA;
-              }
-            }
-
-            newA = _ModelBase._logisticModelOverLogX_a_x1y1x2y2c(x0, y0,
-                x1, y1, (hasC ? newC : dest[2]));
-            if (_ModelBase._logisticModelOverLogXCheckA(newA, maxY)) {
-              changed = hasA = true;
-              break findA;
-            }
-
-            if (!hasB) {
-              newA = _ModelBase._logisticModelOverLogX_a_xybc(x0, y0,
-                  dest[1], (hasC ? newC : dest[2]));
-              if (_ModelBase._logisticModelOverLogXCheckA(newA, maxY)) {
-                changed = hasA = true;
-                break findA;
-              }
-            }
-
-            if (!changed) {
-              if (Math.abs(x0) <= 0d) {
-                newA = y0;
-                changed = hasA = true;
-                break findA;
-              }
-              if (Math.abs(x1) <= 0d) {
-                newA = y1;
-                changed = hasA = true;
-                break findA;
-              }
-              if (Math.abs(x2) <= 0d) {
-                newA = y2;
-                changed = hasA = true;
-                break findA;
-              }
-            }
-          }
-        }
-
-        if (hasA && hasB && hasC) {
-          error = __LogisticGuesser.__error(x0, y0, x1, y1, x2, y2, newA,
-              newB, newC);
-          if (MathUtils.isFinite(error) && (error < bestError)) {
-            dest[0] = newA;
-            dest[1] = newB;
-            dest[2] = newC;
-            return error;
-          }
-
-          return bestError;
-        }
-      }
-
-      return bestError;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected final boolean guess(final double[] points,
-        final double[] dest, final Random random) {
-      final double maxY, x0, y0, x1, y1, x2, y2;
-      double oldError, newError;
-      int steps;
-
-      x0 = points[0];
-      y0 = points[1];
-      x1 = points[2];
-      y1 = points[3];
-      x2 = points[4];
-      y2 = points[5];
-
-      maxY = ((random.nextInt(5) > 0)//
-          ? Math.max(y0, Math.max(y1, y2)) : this.m_maxY);
-      steps = 100;
-      newError = Double.POSITIVE_INFINITY;
-
-      while ((--steps) > 0) {
-        _ModelBase._logisticModelOverLogXFallback(maxY, random, dest);
-        for (;;) {
-          oldError = newError;
-
-          newError = __LogisticGuesser.__update(x0, y0, x1, y1, x2, y2,
-              maxY, dest, oldError);
-          newError = __LogisticGuesser.__update(x0, y0, x2, y2, x1, y1,
-              maxY, dest, newError);
-          newError = __LogisticGuesser.__update(x1, y1, x0, y0, x2, y2,
-              maxY, dest, newError);
-          newError = __LogisticGuesser.__update(x1, y1, x2, y2, x0, y0,
-              maxY, dest, newError);
-          newError = __LogisticGuesser.__update(x2, y2, x0, y0, x1, y1,
-              maxY, dest, newError);
-          newError = __LogisticGuesser.__update(x2, y2, x1, y1, x0, y0,
-              maxY, dest, newError);
-
-          newError = __LogisticGuesser.__updateMed(x0, y0, x1, y1, x2, y2,
-              maxY, dest, newError);
-
-          if ((--steps) <= 0) {
-            return MathUtils.isFinite(newError);
-          }
-          if (newError >= oldError) {
-            if (MathUtils.isFinite(newError)) {
-              return true;
-            }
-          }
-        }
-      }
-
-      return false;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected final boolean fallback(final double[] points,
-        final double[] dest, final Random random) {
+    final void _fallback(final double[] points, final double[] dest,
+        final Random random, final double offset) {
       double maxY;
       int i;
 
-      if (random.nextInt(10) <= 0) {
-        maxY = this.m_maxX;
-      } else {
+      findMaxY: {
+        if (random.nextInt(10) <= 0) {
+          maxY = this.m_maxY;
+          if (MathUtils.isFinite(maxY)) {
+            break findMaxY;
+          }
+        }
         maxY = Double.NEGATIVE_INFINITY;
         for (i = (points.length - 1); i > 0; i -= 2) {
           maxY = Math.max(maxY, points[i]);
         }
       }
 
-      _ModelBase._logisticModelOverLogXFallback(maxY, random, dest);
+      maxY = Math.abs(maxY - offset);
+      if (maxY < 1e-6d) {
+        maxY = 1e-6d;
+      }
+
+      dest[0] = maxY = (maxY * Math.abs((1d + //
+          Math.abs(0.05d * random.nextGaussian()))));
+
+      dest[1] = (-Math.abs(//
+          maxY * (1d / (17d + (3d * random.nextGaussian())))));
+
+      do {
+        dest[2] = (1d + random.nextGaussian());
+      } while (dest[2] <= 1e-7d);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected boolean fallback(final double[] points, final double[] dest,
+        final Random random) {
+      this._fallback(points, dest, random, 0d);
       return true;
     }
 
     /** {@inheritDoc} */
     @Override
-    protected final void fallback(final double[] dest,
-        final Random random) {
-      _ModelBase._logisticModelOverLogXFallback(this.m_maxY, random, dest);
+    protected final double value(final double x,
+        final double[] parameters) {
+      return LogisticModelOverLogX.this.value(x, parameters);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected void guessBasedOnPermutation(final double[] points,
+        final double[] bestGuess, final double[] destGuess) {
+      final double x0, y0, x1, y1, x2, y2, oldA, oldB, oldC;
+      double newA, newB, newC;
+      boolean hasA, hasB, hasC, changed;
+
+      hasA = hasB = hasC = false;
+      x0 = points[0];
+      y0 = points[1];
+      x1 = points[2];
+      y1 = points[3];
+      x2 = points[4];
+      y2 = points[5];
+      newA = oldA = bestGuess[0];
+      newB = oldB = bestGuess[1];
+      newC = oldC = bestGuess[2];
+
+      changed = true;
+      while (changed) {
+        changed = false;
+
+        if (!hasB) {
+          // find B based on the existing or new A and C values
+          newB = LogisticModelOverLogX._b_x1y1x2y2a(x0, y0, x1, y1,
+              (hasA ? newA : oldA));
+          if (LogisticModelOverLogX._checkB(newB)) {
+            changed = hasB = true;
+          } else {
+            newB = LogisticModelOverLogX._b_xyac(x0, y0,
+                (hasA ? newA : bestGuess[0]), (hasC ? newC : oldC));
+            if (LogisticModelOverLogX._checkB(newB)) {
+              changed = hasB = true;
+            } else {
+              newB = LogisticModelOverLogX._b_x1y1x2y2c(x0, y0, x1, y1,
+                  (hasC ? newC : oldC));
+              if (LogisticModelOverLogX._checkB(newB)) {
+                changed = hasB = true;
+              }
+            }
+          }
+        }
+
+        if (!hasC) {
+          // find C based on the existing or new A and B values
+          newC = LogisticModelOverLogX._c_xyab(x0, y0,
+              (hasA ? newA : oldA), (hasB ? newB : oldB));
+          if (LogisticModelOverLogX._checkC(newC)) {
+            changed = hasC = true;
+          }
+        }
+
+        if (!hasA) {
+          findA: {
+            // find A based on the existing or new B and C values
+            if (hasB) {
+              newA = LogisticModelOverLogX._a_xybc(x0, y0, newB,
+                  (hasC ? newC : oldC));
+              if (LogisticModelOverLogX._checkA(newA)) {
+                changed = hasA = true;
+                break findA;
+              }
+            }
+
+            newA = LogisticModelOverLogX._a_x1y1x2y2c(x0, y0, x1, y1,
+                (hasC ? newC : oldC));
+            if (LogisticModelOverLogX._checkA(newA)) {
+              changed = hasA = true;
+              break findA;
+            }
+
+            if (!hasB) {
+              newA = LogisticModelOverLogX._a_xybc(x0, y0, oldB,
+                  (hasC ? newC : oldC));
+              if (LogisticModelOverLogX._checkA(newA)) {
+                changed = hasA = true;
+                break findA;
+              }
+            }
+
+            if (!changed) {
+              if (Math.abs(x0) <= 0d) {
+                newA = y0;
+                changed = hasA = true;
+                break findA;
+              }
+              if (Math.abs(x1) <= 0d) {
+                newA = y1;
+                changed = hasA = true;
+                break findA;
+              }
+              if (Math.abs(x2) <= 0d) {
+                newA = y2;
+                changed = hasA = true;
+                break findA;
+              }
+            }
+          }
+        }
+      }
+
+      destGuess[0] = newA;
+      destGuess[1] = newB;
+      destGuess[2] = newC;
     }
   }
 }

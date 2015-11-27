@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.optimizationBenchmarking.utils.EmptyUtils;
 import org.optimizationBenchmarking.utils.collections.iterators.IterableIterator;
+import org.optimizationBenchmarking.utils.math.functions.combinatoric.Factorial;
 
 /**
  * This iterator enumerates all permutations of a given length. It starts
@@ -47,6 +48,15 @@ public final class PermutationIterator extends IterableIterator<int[]> {
     }
     this.m_zeroBased = zeroBased;
     this.reset();
+  }
+
+  /**
+   * Get the total number of permutations
+   *
+   * @return the total number of permutations
+   */
+  public final long size() {
+    return Factorial.INSTANCE.computeAsLong(this.m_work.length);
   }
 
   /** reset the state of the iterator */
