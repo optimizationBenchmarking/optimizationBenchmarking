@@ -6,16 +6,16 @@ import java.util.Random;
  * An internal default implementation of the {@link IParameterGuesser}
  * interface.
  */
-final class _DefaultParameterGuesser implements IParameterGuesser {
+public class DefaultParameterGuesser implements IParameterGuesser {
 
   /** create */
-  _DefaultParameterGuesser() {
+  public DefaultParameterGuesser() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void createRandomGuess(final double[] parameters,
+  public void createRandomGuess(final double[] parameters,
       final Random random) {
     for (int index = parameters.length; (--index) >= 0;) {
       parameters[index] = (random.nextGaussian()

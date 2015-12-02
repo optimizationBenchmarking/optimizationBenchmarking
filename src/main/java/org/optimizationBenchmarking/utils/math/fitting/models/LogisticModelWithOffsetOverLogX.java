@@ -376,143 +376,6 @@ public final class LogisticModelWithOffsetOverLogX
   }
 
   /**
-   * choose amongst two numbers
-   *
-   * @param a1
-   *          the first number
-   * @param a2
-   *          the second number
-   * @param goal
-   *          the goal value
-   * @return their mean, if finite, or any of the two numbers which is
-   *         finite, or mean
-   */
-  private static final double __chooseClosest(final double a1,
-      final double a2, final double goal) {
-    final double med, d1, d2, d3;
-
-    if (a1 == a2) {
-      if (a1 == 0d) {
-        return 0d;
-      }
-      return a1;
-    }
-
-    med = ((0.5d * a1) + (0.5d * a2));
-    d1 = Math.abs(goal - a1);
-    d2 = Math.abs(goal - a2);
-    if (MathUtils.isFinite(med)) {
-      d3 = Math.abs(goal - med);
-
-      if (d1 < d2) {
-        if (d3 < d1) {
-          return med;
-        }
-        return a1;
-      }
-      if (d3 < d2) {
-        return med;
-      }
-      return a2;
-    }
-
-    if (MathUtils.isFinite(a1)) {
-      if (MathUtils.isFinite(a2)) {
-        if (d2 < d1) {
-          return a2;
-        }
-      }
-      return a1;
-    }
-    if (MathUtils.isFinite(a2)) {
-      return a2;
-    }
-    return med;
-  }
-
-  /**
-   * Compute {@code d} from three points {@code (x1,y1)}, {@code (x2,y2)} ,
-   * {@code (x3,y3)} and a known {@code c} value.
-   *
-   * @param x1
-   *          the {@code x}-coordinate of the first point
-   * @param y1
-   *          the {@code y}-coordinate of the first point
-   * @param x2
-   *          the {@code x}-coordinate of the second point
-   * @param y2
-   *          the {@code y}-coordinate of the second point
-   * @param x3
-   *          the {@code x}-coordinate of the third point
-   * @param y3
-   *          the {@code y}-coordinate of the third point
-   * @param c
-   *          the {@code c} value
-   * @return the {@code d} value
-   */
-  static final double _d_x1y1x2y2x3y3c(final double x1, final double y1,
-      final double x2, final double y2, final double x3, final double y3,
-      final double c) {
-    final double powx1c, powx2c, powx3c;
-
-    powx1c = LogisticModelOverLogX._pow(x1, c);
-    powx2c = LogisticModelOverLogX._pow(x2, c);
-    powx3c = LogisticModelOverLogX._pow(x3, c);
-
-    return LogisticModelWithOffsetOverLogX.__chooseClosest(//
-        LogisticModelOverLogX._add(-y1 * y2 * powx1c, y1 * y3 * powx1c,
-            y1 * y2 * powx2c, -y2 * y3 * powx2c)
-            / LogisticModelOverLogX._add(-y2 * powx1c, y3 * powx1c,
-                y1 * powx2c, -y3 * powx2c), //
-        -(((((powx1c - powx3c) * y1) + ((powx3c - powx2c) * y2)) * y3)
-            + ((powx2c - powx1c) * y1 * y2))
-            / (LogisticModelOverLogX._add((powx3c - powx2c) * y1,
-                +(powx1c - powx3c) * y2, +(powx2c - powx1c) * y3)), //
-        Math.min(y1, Math.min(y2, y3)));
-  }
-
-  /**
-   * Compute {@code d} from two points {@code (x1,y1)} and {@code (x2,y2)}
-   * , {@code (x3,y3)} and known {@code c} and {@code a} values.
-   *
-   * @param x1
-   *          the {@code x}-coordinate of the first point
-   * @param y1
-   *          the {@code y}-coordinate of the first point
-   * @param x2
-   *          the {@code x}-coordinate of the second point
-   * @param y2
-   *          the {@code y}-coordinate of the second point
-   * @param a
-   *          the {@code a} value
-   * @param c
-   *          the {@code c} value
-   * @return the {@code d} value
-   */
-  static final double _d_x1y1x2y2ac(final double x1, final double y1,
-      final double x2, final double y2, final double a, final double c) {
-    final double d1, d2, x1c, x2c;
-
-    x1c = LogisticModelOverLogX._pow(x1, c);
-    x2c = LogisticModelOverLogX._pow(x2, c);
-
-    d1 = (LogisticModelOverLogX
-        ._sqrt(LogisticModelOverLogX
-            ._sqr(LogisticModelOverLogX._add(-a * x1c, a * x2c, y1 * x1c,
-                y2 * x1c, -y1 * x2c, -y2 * x2c))
-        - (4d * (x2c - x1c)
-            * (LogisticModelOverLogX._add(a * y1 * x1c, -a * y2 * x2c,
-                -y1 * y2 * x1c, y1 * y2 * x2c))))
-        + LogisticModelOverLogX._add(a * x1c, -a * x2c, -y1 * x1c,
-            -y2 * x1c, y1 * x2c, y2 * x2c))
-        / (2d * (x2c - x1c));
-    d2 = -d1;
-
-    return LogisticModelWithOffsetOverLogX.__chooseClosest(d1, d2,
-        Math.min(y1, y2));
-  }
-
-  /**
    * Compute {@code d} from two points {@code (x1,y1)} and {@code (x2,y2)}
    * , {@code (x3,y3)} and known {@code b} and {@code c} values.
    *
@@ -648,8 +511,8 @@ public final class LogisticModelWithOffsetOverLogX
     powx1cpowx2c = powx1c * powx2c;
     powx1cmpowx2c = powx1c - powx2c;
 
-    return LogisticModelWithOffsetOverLogX
-        .__chooseClosest(//
+    return LogisticModelOverLogX
+        ._choose(//
             ((LogisticModelOverLogX
                 ._add(
                     ((((LogisticModelOverLogX._add((powx1cmpowx2c)
@@ -701,8 +564,87 @@ public final class LogisticModelWithOffsetOverLogX
             + LogisticModelOverLogX._add(y1 * y2 * powx2c,
                 -y1 * y3 * powx2c, -y2 * y3 * powx2c, sy3 * powx2c))
             / (LogisticModelOverLogX._add(y2 * powx1c, -y3 * powx1c,
-                -y1 * powx2c, y3 * powx2c))), //
-        (Math.max(Math.max(y1, y2), y3) - Math.min(Math.min(y1, y2), y3)));
+                -y1 * powx2c, y3 * powx2c))));
+  }
+
+  /**
+   * Compute {@code d} from three points {@code (x1,y1)}, {@code (x2,y2)} ,
+   * {@code (x3,y3)} and a known {@code c} value.
+   *
+   * @param x1
+   *          the {@code x}-coordinate of the first point
+   * @param y1
+   *          the {@code y}-coordinate of the first point
+   * @param x2
+   *          the {@code x}-coordinate of the second point
+   * @param y2
+   *          the {@code y}-coordinate of the second point
+   * @param x3
+   *          the {@code x}-coordinate of the third point
+   * @param y3
+   *          the {@code y}-coordinate of the third point
+   * @param c
+   *          the {@code c} value
+   * @return the {@code d} value
+   */
+  static final double _d_x1y1x2y2x3y3c(final double x1, final double y1,
+      final double x2, final double y2, final double x3, final double y3,
+      final double c) {
+    final double powx1c, powx2c, powx3c;
+
+    powx1c = LogisticModelOverLogX._pow(x1, c);
+    powx2c = LogisticModelOverLogX._pow(x2, c);
+    powx3c = LogisticModelOverLogX._pow(x3, c);
+
+    return LogisticModelOverLogX._choose(//
+        LogisticModelOverLogX._add(-y1 * y2 * powx1c, y1 * y3 * powx1c,
+            y1 * y2 * powx2c, -y2 * y3 * powx2c)
+            / LogisticModelOverLogX._add(-y2 * powx1c, y3 * powx1c,
+                y1 * powx2c, -y3 * powx2c), //
+        -(((((powx1c - powx3c) * y1) + ((powx3c - powx2c) * y2)) * y3)
+            + ((powx2c - powx1c) * y1 * y2))
+            / (LogisticModelOverLogX._add((powx3c - powx2c) * y1,
+                +(powx1c - powx3c) * y2, +(powx2c - powx1c) * y3)));
+  }
+
+  /**
+   * Compute {@code d} from two points {@code (x1,y1)} and {@code (x2,y2)}
+   * , {@code (x3,y3)} and known {@code c} and {@code a} values.
+   *
+   * @param x1
+   *          the {@code x}-coordinate of the first point
+   * @param y1
+   *          the {@code y}-coordinate of the first point
+   * @param x2
+   *          the {@code x}-coordinate of the second point
+   * @param y2
+   *          the {@code y}-coordinate of the second point
+   * @param a
+   *          the {@code a} value
+   * @param c
+   *          the {@code c} value
+   * @return the {@code d} value
+   */
+  static final double _d_x1y1x2y2ac(final double x1, final double y1,
+      final double x2, final double y2, final double a, final double c) {
+    final double d1, d2, x1c, x2c;
+
+    x1c = LogisticModelOverLogX._pow(x1, c);
+    x2c = LogisticModelOverLogX._pow(x2, c);
+
+    d1 = (LogisticModelOverLogX
+        ._sqrt(LogisticModelOverLogX
+            ._sqr(LogisticModelOverLogX._add(-a * x1c, a * x2c, y1 * x1c,
+                y2 * x1c, -y1 * x2c, -y2 * x2c))
+        - (4d * (x2c - x1c)
+            * (LogisticModelOverLogX._add(a * y1 * x1c, -a * y2 * x2c,
+                -y1 * y2 * x1c, y1 * y2 * x2c))))
+        + LogisticModelOverLogX._add(a * x1c, -a * x2c, -y1 * x1c,
+            -y2 * x1c, y1 * x2c, y2 * x2c))
+        / (2d * (x2c - x1c));
+    d2 = -d1;
+
+    return LogisticModelOverLogX._choose(d1, d2);
   }
 
   /**
@@ -763,7 +705,8 @@ public final class LogisticModelWithOffsetOverLogX
     protected void guessBasedOnPermutation(final double[] points,
         final double[] bestGuess, final double[] destGuess) {
 
-      final double x0, y0, x1, y1, x2, y2, x3, y3, oldA, oldB, oldC, oldD;
+      final double x0, y0, x1, y1, x2, y2, /* x3, y3, */ oldA, oldB, oldC,
+          oldD;
       double newA, newB, newC, newD;
       boolean hasA, hasB, hasC, hasD, changed;
 
@@ -774,8 +717,8 @@ public final class LogisticModelWithOffsetOverLogX
       y1 = points[3];
       x2 = points[4];
       y2 = points[5];
-      x3 = points[6];
-      y3 = points[7];
+      // x3 = points[6];
+      // y3 = points[7];
       newA = oldA = bestGuess[0];
       newB = oldB = bestGuess[1];
       newC = oldC = bestGuess[2];
@@ -787,7 +730,7 @@ public final class LogisticModelWithOffsetOverLogX
 
         if (!hasB) {
           findB: {
-            // find B based on the existing or new A and C values
+            // find B based on the existing or new A, C and D values
             newB = LogisticModelWithOffsetOverLogX._b_x1y1x2y2ad(x0, y0,
                 x1, y1, (hasA ? newA : oldA), (hasD ? newD : oldD));
             if (LogisticModelOverLogX._checkB(newB)) {
@@ -905,7 +848,7 @@ public final class LogisticModelWithOffsetOverLogX
         if (!changed) {
           emergency: {
             if (!hasD) {
-              newD = Math.min(Math.min(y0, y1), Math.min(y2, y3));
+              newD = Math.min(Math.min(y0, y1), y2);// Math.min(y2, y3));
               changed = hasD = LogisticModelWithOffsetOverLogX
                   ._checkD(newD);
               if (changed) {
@@ -933,12 +876,12 @@ public final class LogisticModelWithOffsetOverLogX
                   changed = hasA = true;
                   break findA2;
                 }
-                if (Math.abs(x3) <= 0d) {
-                  newA = Math.max(Double.MIN_NORMAL,
-                      y3 - (hasD ? newD : oldD));
-                  changed = hasA = true;
-                  break findA2;
-                }
+                // if (Math.abs(x3) <= 0d) {
+                // newA = Math.max(Double.MIN_NORMAL,
+                // y3 - (hasD ? newD : oldD));
+                // changed = hasA = true;
+                // break findA2;
+                // }
               }
             }
           }

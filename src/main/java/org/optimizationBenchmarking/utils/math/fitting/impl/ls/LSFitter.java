@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.math.fitting.impl.ls;
 
-import org.optimizationBenchmarking.utils.math.fitting.impl.opti.OptiFittingJob;
+import org.optimizationBenchmarking.utils.math.fitting.spec.FittingJob;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FittingJobBuilder;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FunctionFitter;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
@@ -74,8 +74,8 @@ public final class LSFitter extends FunctionFitter {
 
   /** {@inheritDoc} */
   @Override
-  protected final OptiFittingJob create(final FittingJobBuilder builder) {
-    return new LSFittingJob(builder);
+  protected final FittingJob create(final FittingJobBuilder builder) {
+    return new _LSFittingJob(builder);
   }
 
   /**

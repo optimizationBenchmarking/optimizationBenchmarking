@@ -102,7 +102,68 @@ final class _FitterJob implements Callable<FitterOutcome> {
             text.appendLineBreak();
 
             text.append(
-                "======================= MEDIANS =======================");//$NON-NLS-1$
+                "===== medians of error:\tmin\tmedian\tmax\t/\tstddev ===== ");//$NON-NLS-1$
+            text.appendLineBreak();
+            text.append("quality:\t");//$NON-NLS-1$
+            text.append(outcome.minErrors.quality);
+            text.append('\t');
+            text.append(outcome.medianErrors.quality);
+            text.append('\t');
+            text.append(outcome.maxErrors.quality);
+            text.append('\t');
+            text.append('/');
+            text.append('\t');
+            text.append(outcome.stddevErrors.quality);
+            text.appendLineBreak();
+
+            text.append("rootMeanSquareError:\t");//$NON-NLS-1$
+            text.append(outcome.minErrors.rootMeanSquareError);
+            text.append('\t');
+            text.append(outcome.medianErrors.rootMeanSquareError);
+            text.append('\t');
+            text.append(outcome.maxErrors.rootMeanSquareError);
+            text.append('\t');
+            text.append('/');
+            text.append('\t');
+            text.append(outcome.stddevErrors.rootMeanSquareError);
+            text.appendLineBreak();
+
+            text.append("median error:\t");//$NON-NLS-1$
+            text.append(outcome.minErrors.medianError);
+            text.append('\t');
+            text.append(outcome.medianErrors.medianError);
+            text.append('\t');
+            text.append(outcome.maxErrors.medianError);
+            text.append('\t');
+            text.append('/');
+            text.append('\t');
+            text.append(outcome.stddevErrors.medianError);
+            text.appendLineBreak();
+
+            text.append("runtime:\t");//$NON-NLS-1$
+            text.append(outcome.minErrors.runtime);
+            text.append('\t');
+            text.append(outcome.medianErrors.runtime);
+            text.append('\t');
+            text.append(outcome.maxErrors.runtime);
+            text.append('\t');
+            text.append('/');
+            text.append('\t');
+            text.append(outcome.stddevErrors.runtime);
+            text.appendLineBreak();
+
+            text.appendLineBreak();
+            text.appendLineBreak();
+
+            text.append(
+                "======================= MEDIANS/CASE =======================");//$NON-NLS-1$
+            text.appendLineBreak();
+
+            text.append("case: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.example.name);
+            }
             text.appendLineBreak();
 
             text.append("quality: ");//$NON-NLS-1$
@@ -125,26 +186,18 @@ final class _FitterJob implements Callable<FitterOutcome> {
               text.append(oc.medianErrors.medianError);
             }
             text.appendLineBreak();
-
-            text.append("weighted-rootMeanSquare: ");//$NON-NLS-1$
-            for (final FittingOutcome oc : res) {
-              text.append('\t');
-              text.append(oc.medianErrors.weightedRootMeanSquareError);
-            }
-            text.appendLineBreak();
-
-            text.append("weighted-medianError: ");//$NON-NLS-1$
-            for (final FittingOutcome oc : res) {
-              text.append('\t');
-              text.append(oc.medianErrors.weightedMedianError);
-            }
-
-            text.appendLineBreak();
             text.appendLineBreak();
             text.appendLineBreak();
 
             text.append(
-                "======================= MAX =======================");//$NON-NLS-1$
+                "======================= MAX/CASE =======================");//$NON-NLS-1$
+            text.appendLineBreak();
+
+            text.append("case: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.example.name);
+            }
             text.appendLineBreak();
 
             text.append("quality: ");//$NON-NLS-1$
@@ -167,26 +220,18 @@ final class _FitterJob implements Callable<FitterOutcome> {
               text.append(oc.maxErrors.medianError);
             }
             text.appendLineBreak();
-
-            text.append("weighted-rootMeanSquare: ");//$NON-NLS-1$
-            for (final FittingOutcome oc : res) {
-              text.append('\t');
-              text.append(oc.maxErrors.weightedRootMeanSquareError);
-            }
-            text.appendLineBreak();
-
-            text.append("weighted-medianError: ");//$NON-NLS-1$
-            for (final FittingOutcome oc : res) {
-              text.append('\t');
-              text.append(oc.maxErrors.weightedMedianError);
-            }
-
-            text.appendLineBreak();
             text.appendLineBreak();
             text.appendLineBreak();
 
             text.append(
-                "======================= STDDEV =======================");//$NON-NLS-1$
+                "======================= STDDEV/CASE =======================");//$NON-NLS-1$
+            text.appendLineBreak();
+
+            text.append("case: ");//$NON-NLS-1$
+            for (final FittingOutcome oc : res) {
+              text.append('\t');
+              text.append(oc.example.name);
+            }
             text.appendLineBreak();
 
             text.append("quality: ");//$NON-NLS-1$
@@ -209,19 +254,6 @@ final class _FitterJob implements Callable<FitterOutcome> {
               text.append(oc.stddevErrors.medianError);
             }
             text.appendLineBreak();
-
-            text.append("weighted-rootMeanSquare: ");//$NON-NLS-1$
-            for (final FittingOutcome oc : res) {
-              text.append('\t');
-              text.append(oc.stddevErrors.weightedRootMeanSquareError);
-            }
-            text.appendLineBreak();
-
-            text.append("weighted-medianError: ");//$NON-NLS-1$
-            for (final FittingOutcome oc : res) {
-              text.append('\t');
-              text.append(oc.stddevErrors.weightedMedianError);
-            }
           }
         }
       }

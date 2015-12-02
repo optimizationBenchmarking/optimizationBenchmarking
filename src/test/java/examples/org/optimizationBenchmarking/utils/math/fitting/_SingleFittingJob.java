@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
-import org.optimizationBenchmarking.utils.math.fitting.impl.opti.DataPoint;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FittingResult;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FunctionFitter;
 import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
@@ -69,14 +68,15 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
     final FittingResult result;
     final ITextOutput text;
     final String example, fitter;
-    final QuantileAggregate median, weightedMedian;
-    final ArithmeticMeanAggregate mean, weightedMean;
+    final QuantileAggregate median;
+    final ArithmeticMeanAggregate mean;
     final IMatrix data;
     final ParametricUnaryFunction model;
     final double[] parameters;
     final int m;
     final SingleFittingOutcome outcome;
     final Errors errors;
+    long runtime;
     int i;
     double x, y, z, error;
     Path dest;
@@ -91,8 +91,10 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
           + " on problem " + example);//$NON-NLS-1$
     }
 
+    runtime = System.nanoTime();
     result = this.m_fitter.use().setFunctionToFit(this.m_example.model)
         .setPoints(this.m_example.data).create().call();
+    runtime = (System.nanoTime() - runtime);
 
     dest = PathUtils.createPathInside(this.m_root,
         ((((fitter + '_') + example) + '_') + this.m_index) + //
@@ -130,6 +132,12 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
           }
           text.appendLineBreak();
 
+          text.append("# runtime [ns]:\t");//$NON-NLS-1$
+          text.append(runtime);
+          text.appendLineBreak();
+
+          text.append('#');
+          text.appendLineBreak();
           text.append('#');
           text.appendLineBreak();
 
@@ -139,9 +147,7 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
           data = this.m_example.data;
           m = data.m();
           median = new QuantileAggregate(0.5d);
-          weightedMedian = new QuantileAggregate(0.5d);
           mean = new ArithmeticMeanAggregate();
-          weightedMean = new ArithmeticMeanAggregate();
           model = this.m_example.model;
           for (i = 0; i < m; i++) {
             x = data.getDouble(i, 0);
@@ -157,10 +163,6 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
             error = Math.abs(y - z);
             median.append(error);
             mean.append(error * error);
-
-            error /= DataPoint.computeInverseWeight(y);
-            weightedMedian.append(error);
-            weightedMean.append(error * error);
           }
 
           text.append('#');
@@ -168,8 +170,7 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
 
           errors = new Errors(result.getQuality(),
               Math.sqrt(mean.doubleValue()), median.doubleValue(),
-              Math.sqrt(weightedMean.doubleValue()),
-              weightedMedian.doubleValue());
+              runtime);
           outcome = new SingleFittingOutcome(parameters, dest, errors);
 
           text.append("# rootMeanSquareError\t");//$NON-NLS-1$
@@ -178,14 +179,6 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
 
           text.append("# median error\t");//$NON-NLS-1$
           text.append(errors.medianError);
-          text.appendLineBreak();
-
-          text.append("# weighted rootMeanSquareError\t");//$NON-NLS-1$
-          text.append(errors.weightedRootMeanSquareError);
-          text.appendLineBreak();
-
-          text.append("# weighted median error\t");//$NON-NLS-1$
-          text.append(errors.weightedMedianError);
           text.appendLineBreak();
         }
       }

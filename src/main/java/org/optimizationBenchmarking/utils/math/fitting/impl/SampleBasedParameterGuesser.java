@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.math.fitting.impl;
 import java.util.Random;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.math.fitting.spec.IParameterGuesser;
+import org.optimizationBenchmarking.utils.math.fitting.spec.DefaultParameterGuesser;
 import org.optimizationBenchmarking.utils.math.functions.trigonometric.Hypot;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
@@ -38,7 +38,7 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
  * </p>
  */
 public abstract class SampleBasedParameterGuesser
-    implements IParameterGuesser {
+    extends DefaultParameterGuesser {
 
   /** the data matrix */
   private final IMatrix m_data;
@@ -227,9 +227,7 @@ public abstract class SampleBasedParameterGuesser
    *          the random number generator
    */
   protected void fallback(final double[] dest, final Random random) {
-    for (int i = dest.length; (--i) >= 0;) {
-      dest[i] = random.nextGaussian();
-    }
+    super.createRandomGuess(dest, random);
   }
 
   /**
@@ -543,7 +541,7 @@ public abstract class SampleBasedParameterGuesser
           }
         }
 
-        for (pointSetChoice = 30; (--pointSetChoice) >= 0;) {
+        for (pointSetChoice = 20; (--pointSetChoice) >= 0;) {
           // Draw a set of points.
           SampleBasedParameterGuesser.__drawCandidate(bestChoice, indexes,
               data, random, useX, useY);
@@ -563,7 +561,7 @@ public abstract class SampleBasedParameterGuesser
             }
           }
 
-          for (guessAttempts = 5; (--guessAttempts) >= 0;) {
+          for (guessAttempts = 3; (--guessAttempts) >= 0;) {
             if (this.guess(bestChoice, parameters, random)) {
               return;
             }

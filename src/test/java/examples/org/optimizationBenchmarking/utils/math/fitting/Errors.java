@@ -9,10 +9,8 @@ public final class Errors {
   public final double rootMeanSquareError;
   /** the median error */
   public final double medianError;
-  /** the weighted mean square error */
-  public final double weightedRootMeanSquareError;
-  /** the weighted median error */
-  public final double weightedMedianError;
+  /** the measured runtime */
+  public final double runtime;
 
   /**
    * create the errors
@@ -23,19 +21,15 @@ public final class Errors {
    *          the mean square error
    * @param _medianError
    *          the median error
-   * @param _weightedRootMeanSquareError
-   *          the weighted mean square error
-   * @param _weightedMedianError
-   *          the weighted median error
+   * @param _runtime
+   *          the consumed runtime
    */
   Errors(final double _quality, final double _rootMeanSquareError,
-      final double _medianError, final double _weightedRootMeanSquareError,
-      final double _weightedMedianError) {
+      final double _medianError, final double _runtime) {
     super();
     this.quality = _quality;
     this.rootMeanSquareError = _rootMeanSquareError;
     this.medianError = _medianError;
-    this.weightedRootMeanSquareError = _weightedRootMeanSquareError;
-    this.weightedMedianError = _weightedMedianError;
+    this.runtime = _runtime;
   }
 }

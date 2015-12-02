@@ -50,17 +50,6 @@ public abstract class ParametricUnaryFunction implements IMathRenderable {
   public abstract int getParameterCount();
 
   /**
-   * Make the parameters canonical, i.e., try to map redundant settings to
-   * a canonical one
-   *
-   * @param parameters
-   *          the parameters
-   */
-  public void canonicalizeParameters(final double[] parameters) {
-    // do nothing
-  }
-
-  /**
    * Create a parameter guesser
    *
    * @param data
@@ -68,7 +57,7 @@ public abstract class ParametricUnaryFunction implements IMathRenderable {
    * @return the parameter guesser
    */
   public IParameterGuesser createParameterGuesser(final IMatrix data) {
-    return new _DefaultParameterGuesser();
+    return new DefaultParameterGuesser();
   }
 
   /** {@inheritDoc} */

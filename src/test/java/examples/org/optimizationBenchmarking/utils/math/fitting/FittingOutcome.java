@@ -65,7 +65,7 @@ public final class FittingOutcome {
     this.median = new double[i];
     this.stddev = new double[i];
 
-    i = Math.max(_example.model.getParameterCount(), 5);
+    i = Math.max(_example.model.getParameterCount(), 4);
 
     _stddev = new StandardDeviationAggregate[i];
     med = new QuantileAggregate[i];
@@ -97,27 +97,22 @@ public final class FittingOutcome {
       med[1].append(o.errors.rootMeanSquareError);
       _stddev[2].append(o.errors.medianError);
       med[2].append(o.errors.medianError);
-      _stddev[3].append(o.errors.weightedRootMeanSquareError);
-      med[3].append(o.errors.weightedRootMeanSquareError);
-      _stddev[4].append(o.errors.weightedMedianError);
-      med[4].append(o.errors.weightedMedianError);
+      _stddev[3].append(o.errors.runtime);
+      med[3].append(o.errors.runtime);
     }
 
     this.minErrors = new Errors(_stddev[0].getMinimum().doubleValue(),
         _stddev[1].getMinimum().doubleValue(),
         _stddev[2].getMinimum().doubleValue(),
-        _stddev[3].getMinimum().doubleValue(),
-        _stddev[4].getMinimum().doubleValue());
+        _stddev[3].getMinimum().doubleValue());
     this.maxErrors = new Errors(_stddev[0].getMaximum().doubleValue(),
         _stddev[1].getMaximum().doubleValue(),
         _stddev[2].getMaximum().doubleValue(),
-        _stddev[3].getMaximum().doubleValue(),
-        _stddev[4].getMaximum().doubleValue());
+        _stddev[3].getMaximum().doubleValue());
     this.stddevErrors = new Errors(_stddev[0].doubleValue(),
         _stddev[1].doubleValue(), _stddev[2].doubleValue(),
-        _stddev[3].doubleValue(), _stddev[4].doubleValue());
+        _stddev[3].doubleValue());
     this.medianErrors = new Errors(med[0].doubleValue(),
-        med[1].doubleValue(), med[2].doubleValue(), med[3].doubleValue(),
-        med[4].doubleValue());
+        med[1].doubleValue(), med[2].doubleValue(), med[3].doubleValue());
   }
 }

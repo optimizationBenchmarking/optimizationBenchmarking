@@ -147,8 +147,8 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
   public double value(final double x, final double[] parameters) {
     double res;
 
-    res = (1d
-        + (parameters[1] + LogisticModelOverLogX._pow(x, parameters[2])));
+    res = (1d + (parameters[1] * //
+        LogisticModelOverLogX._pow(x, parameters[2])));
     if ((Math.abs(res) > 0d) && MathUtils.isFinite(res) && //
         MathUtils.isFinite(res = (parameters[0] / res))) {
       return res;
@@ -221,17 +221,11 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final void canonicalizeParameters(final double[] parameters) {
-    parameters[0] = Math.abs(parameters[0]);
-    parameters[2] = Math.abs(parameters[2]);
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public void mathRender(final ITextOutput out,
       final IParameterRenderer renderer, final IMathRenderable x) {
     renderer.renderParameter(0, out);
     out.append('/');
+    out.append('(');
     out.append('1');
     out.append('+');
     renderer.renderParameter(1, out);
@@ -534,7 +528,8 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
      *          the data
      */
     _LogisticModelOverLogXParameterGuesser(final IMatrix data) {
-      super(data, LogisticModelOverLogX.this.getParameterCount());
+      super(data, LogisticModelOverLogX.this.getParameterCount(), //
+          (LogisticModelOverLogX.this.getParameterCount() - 1));
     }
 
     /**
@@ -602,7 +597,7 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
     @Override
     protected void guessBasedOnPermutation(final double[] points,
         final double[] bestGuess, final double[] destGuess) {
-      final double x0, y0, x1, y1, x2, y2, oldA, oldB, oldC;
+      final double x0, y0, x1, y1/* , x2, y2 */, oldA, oldB, oldC;
       double newA, newB, newC;
       boolean hasA, hasB, hasC, changed;
 
@@ -611,8 +606,8 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
       y0 = points[1];
       x1 = points[2];
       y1 = points[3];
-      x2 = points[4];
-      y2 = points[5];
+      // x2 = points[4];
+      // y2 = points[5];
       newA = oldA = bestGuess[0];
       newB = oldB = bestGuess[1];
       newC = oldC = bestGuess[2];
@@ -690,11 +685,11 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
                 changed = hasA = true;
                 break findA;
               }
-              if (Math.abs(x2) <= 0d) {
-                newA = y2;
-                changed = hasA = true;
-                break findA;
-              }
+              // if (Math.abs(x2) <= 0d) {
+              // newA = y2;
+              // changed = hasA = true;
+              // break findA;
+              // }
             }
           }
         }

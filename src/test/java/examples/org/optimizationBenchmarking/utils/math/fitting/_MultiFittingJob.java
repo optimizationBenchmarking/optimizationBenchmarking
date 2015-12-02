@@ -173,28 +173,17 @@ final class _MultiFittingJob implements Callable<FittingOutcome> {
             text.append(outcome.stddevErrors.medianError);
             text.appendLineBreak();
 
-            text.append("weighted rootMeanSquareError:\t");//$NON-NLS-1$
-            text.append(outcome.minErrors.weightedRootMeanSquareError);
+            text.append("runtime:\t");//$NON-NLS-1$
+            text.append(outcome.minErrors.runtime);
             text.append('\t');
-            text.append(outcome.medianErrors.weightedRootMeanSquareError);
+            text.append(outcome.medianErrors.runtime);
             text.append('\t');
-            text.append(outcome.maxErrors.weightedRootMeanSquareError);
+            text.append(outcome.maxErrors.runtime);
             text.append('\t');
             text.append('/');
             text.append('\t');
-            text.append(outcome.stddevErrors.weightedRootMeanSquareError);
+            text.append(outcome.stddevErrors.runtime);
             text.appendLineBreak();
-
-            text.append("weighted median error:\t");//$NON-NLS-1$
-            text.append(outcome.minErrors.weightedMedianError);
-            text.append('\t');
-            text.append(outcome.medianErrors.weightedMedianError);
-            text.append('\t');
-            text.append(outcome.maxErrors.weightedMedianError);
-            text.append('\t');
-            text.append('/');
-            text.append('\t');
-            text.append(outcome.stddevErrors.weightedMedianError);
           }
         }
       }
