@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.parallel;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -26,6 +27,50 @@ public final class Execute {
   /** the forbidden constructor */
   private Execute() {
     ErrorUtils.doNotCall();
+  }
+
+  /**
+   * Submit a {@link java.lang.Runnable} to the common
+   * {@link java.util.concurrent.ForkJoinPool}.
+   *
+   * @param task
+   *          the task
+   * @param result
+   *          the result
+   * @return the {@link java.util.concurrent.Future} denoting the task's
+   *         completion
+   */
+  public static final <T> Future<T> submitToCommonPool(final Runnable task,
+      final T result) {
+    return __CommonForkJoinPool.COMMON_POOL.submit(task, result);
+  }
+
+  /**
+   * Submit a {@link java.util.concurrent.Callable} to the common
+   * {@link java.util.concurrent.ForkJoinPool}.
+   *
+   * @param task
+   *          the task
+   * @return the {@link java.util.concurrent.Future} denoting the task's
+   *         completion
+   */
+  public static final <T> Future<T> submitToCommonPool(
+      final Callable<T> task) {
+    return __CommonForkJoinPool.COMMON_POOL.submit(task);
+  }
+
+  /**
+   * Submit a {@link java.util.concurrent.ForkJoinTask} to the common
+   * {@link java.util.concurrent.ForkJoinPool}.
+   *
+   * @param task
+   *          the task
+   * @return the {@link java.util.concurrent.Future} denoting the task's
+   *         completion
+   */
+  public static final <T> Future<T> submitToCommonPool(
+      final ForkJoinTask<T> task) {
+    return __CommonForkJoinPool.COMMON_POOL.submit(task);
   }
 
   /**
@@ -875,4 +920,33 @@ public final class Execute {
     }
   }
 
+  /** a class holding the common fork-join pool */
+  private static final class __CommonForkJoinPool {
+
+    /** the common fork-join pool */
+    static final ForkJoinPool COMMON_POOL = __CommonForkJoinPool
+        .__getCommonPool();
+
+    /**
+     * get the common fork-join pool
+     *
+     * @return the common pool
+     */
+    private static final ForkJoinPool __getCommonPool() {
+      ForkJoinPool pool;
+
+      try {
+        pool = ((ForkJoinPool) (ForkJoinPool.class.getMethod("commonPool") //$NON-NLS-1$
+            .invoke(null)));
+        if (pool != null) {
+          return pool;
+        }
+      } catch (@SuppressWarnings("unused") final Throwable error) {
+        // can be ignored
+      }
+
+      return new ForkJoinPool();
+    }
+
+  }
 }

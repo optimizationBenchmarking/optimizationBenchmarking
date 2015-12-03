@@ -14,6 +14,7 @@ import org.apache.commons.math3.optim.ConvergenceChecker;
 import org.apache.commons.math3.optim.InitialGuess;
 import org.apache.commons.math3.optim.MaxEval;
 import org.apache.commons.math3.optim.MaxIter;
+import org.apache.commons.math3.optim.PointValuePair;
 import org.apache.commons.math3.optim.SimpleBounds;
 import org.apache.commons.math3.optim.SimpleValueChecker;
 import org.apache.commons.math3.optim.nonlinear.scalar.GoalType;
@@ -26,26 +27,80 @@ import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.NelderMeadSimplex
 import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.SimplexOptimizer;
 import org.apache.commons.math3.random.JDKRandomGenerator;
 import org.apache.commons.math3.util.Incrementor;
+import org.optimizationBenchmarking.utils.math.BasicNumberWrapper;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FittingJob;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FittingJobBuilder;
 import org.optimizationBenchmarking.utils.math.fitting.spec.IParameterGuesser;
 import org.optimizationBenchmarking.utils.math.fitting.spec.ParametricUnaryFunction;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.StableSum;
+import org.optimizationBenchmarking.utils.math.statistics.aggregate.StandardDeviationAggregate;
 
-/** A function fitting job based on differential evolution */
+/**
+ * A function fitting job which proceeds as follows:
+ * <ol>
+ * <li>repeat at most {@value #LOOP_OUTER_MAX_ITERATIONS} times
+ * <ol>
+ * <li>do {@value #LOOP_INNER_MAX_ITERATIONS} times
+ * <ol>
+ * <li>draw several guesses from the parameter guesser associated with the
+ * function, keep the best guess</li>
+ * <li>use this guess as starting point for the Levenberg-Marquardt
+ * algorithm (or Gauss-Newton if that fails)</li>
+ * <li>use the result of the above as starting point for either BOBYQA or
+ * CMA-ES</li>
+ * </ol>
+ * </li>
+ * <li>if at least {@value #LOOP_MAX_IMPROVEMENTS} of the
+ * {@value #LOOP_INNER_MAX_ITERATIONS} led to result improvements, continue
+ * the outer loop</li>
+ * <li>if the standard deviation of the result decision variables or result
+ * qualities divided by their means has dropped below
+ * {@value #LOOP_STDDEV_FRACTION} multiplied with the loop counter, stop.
+ * </li>
+ * </ol>
+ * </ol>
+ * </li>
+ * </ol>
+ * <p>
+ * The goal is to obtain high-quality fittings by first using an ordinary
+ * least-squares problem approach (Levenberg-Marquardt or Gauss-Newton
+ * algorithm) and then to refine the result using direct, black-box
+ * optimizers (BOBYQA, CMA-ES).
+ * </p>
+ * <p>
+ * Besides getting high-quality results, having stable and reproducible
+ * results is also very important. This is why we perform the above several
+ * times, more often if results seem to be unstable.
+ * </p>
+ */
 final class _LSFittingJob extends FittingJob
     implements MultivariateFunction, LeastSquaresProblem,
     ConvergenceChecker<Evaluation> {
 
   /** Relative tolerance threshold. */
-  private static final double RELATIVE_THRESHOLD = 1e-10d;
+  private static final double OPTIMIZER_RELATIVE_THRESHOLD = 1e-10d;
 
   /** the maximum number of iterations */
-  private static final int MAX_ITERATIONS = 768;
+  private static final int OPTIMIZER_MAX_ITERATIONS = 768;
+
+  /** the maximum number of inner loop iterations */
+  private static final int LOOP_INNER_MAX_ITERATIONS = 7;
+  /** the maximum number of outer loop iterations */
+  private static final int LOOP_OUTER_MAX_ITERATIONS = 10;
+  /**
+   * the fraction of the standard deviation/arithmetic mean at which the
+   * outer loop must be continued
+   */
+  private static final double LOOP_STDDEV_FRACTION = 1e-5d;
+  /**
+   * the number of improvements when the outer loop needs to be continued
+   */
+  private static final int LOOP_MAX_IMPROVEMENTS = ((_LSFittingJob.LOOP_INNER_MAX_ITERATIONS >>> 1)
+      + 1);
 
   /** the random number generator */
-  private final Random m_random;
+  private Random m_random;
 
   /** the evaluation counter */
   private Incrementor m_evaluationCounter;
@@ -88,8 +143,6 @@ final class _LSFittingJob extends FittingJob
    */
   protected _LSFittingJob(final FittingJobBuilder builder) {
     super(builder);
-
-    this.m_random = new Random();
   }
 
   /** {@inheritDoc} */
@@ -97,25 +150,6 @@ final class _LSFittingJob extends FittingJob
   public final RealVector getStart() {
     return this.m_startVector;
   }
-
-  // /** create the initial guess */
-  // private final void __createInitialGuess() {
-  // final int dim;
-  // final double[] temp,start;
-  // IParameterGuesser guesser;
-  // int index;
-  //
-  // dim = this.m_function.getParameterCount();
-  // temp =this.m_temp;
-  // start=this.m_start;
-  //
-  // guesser = this.m_function.createParameterGuesser(this.m_data);
-  // for (index = Math.max(100, Math.min(1000000, ((int) (Math.round(//
-  // 30d * Math.pow(3d, dim)))))); (--index) >= 0;) {
-  // guesser.createRandomGuess(dest, this.m_random);
-  // this.evaluate(dest);
-  // }
-  // }
 
   /** {@inheritDoc} */
   @Override
@@ -209,9 +243,10 @@ final class _LSFittingJob extends FittingJob
   private final double[] __refineStartWithGaussNewton() {
     try {
       this.m_iterationCounter = new Incrementor(
-          _LSFittingJob.MAX_ITERATIONS);
+          _LSFittingJob.OPTIMIZER_MAX_ITERATIONS);
       this.m_evaluationCounter = new Incrementor(
-          _LSFittingJob.MAX_ITERATIONS * _LSFittingJob.MAX_ITERATIONS);
+          _LSFittingJob.OPTIMIZER_MAX_ITERATIONS
+              * _LSFittingJob.OPTIMIZER_MAX_ITERATIONS);
 
       if (this.m_gaussNewton == null) {
         this.m_gaussNewton = new GaussNewtonOptimizer(
@@ -229,13 +264,35 @@ final class _LSFittingJob extends FittingJob
   }
 
   /**
+   * register a solution
+   *
+   * @param pvp
+   *          the solution
+   * @param stddevs
+   *          the standard deviations
+   */
+  private static final void __register(final PointValuePair pvp,
+      final StandardDeviationAggregate[] stddevs) {
+    int index;
+
+    index = (-1);
+    for (final double d : pvp.getPoint()) {
+      stddevs[++index].append(d);
+    }
+    stddevs[++index].append(pvp.getValue().doubleValue());
+  }
+
+  /**
    * refine the current best solution using BOBYQA
    *
    * @param point
    *          the point to be refined
+   * @param stddevs
+   *          the standard deviation aggregates
    * @return {@code true} on success, {@code false} on failure
    */
-  private final boolean __refineWithBOBYQA(final double[] point) {
+  private final boolean __refineWithBOBYQA(final double[] point,
+      final StandardDeviationAggregate[] stddevs) {
     final int dim;
 
     try {
@@ -251,13 +308,15 @@ final class _LSFittingJob extends FittingJob
         this.m_bounds = SimpleBounds.unbounded(dim);
       }
 
-      this.m_bobyqa.optimize(//
-          new InitialGuess(point), //
-          this.m_objective, //
-          this.__getMaxEval(), //
-          this.__getMaxIter(), //
-          this.m_bounds, //
-          GoalType.MINIMIZE).getPoint();
+      _LSFittingJob.__register(//
+          this.m_bobyqa.optimize(//
+              new InitialGuess(point), //
+              this.m_objective, //
+              this.__getMaxEval(), //
+              this.__getMaxIter(), //
+              this.m_bounds, //
+              GoalType.MINIMIZE),
+          stddevs);
     } catch (@SuppressWarnings("unused") final Throwable error) {
       return false;
     }
@@ -269,9 +328,12 @@ final class _LSFittingJob extends FittingJob
    *
    * @param point
    *          the point to be refined
+   * @param stddevs
+   *          the standard deviation aggregates
    * @return {@code true} on success, {@code false} on failure
    */
-  private final boolean __refineWithNelderMead(final double[] point) {
+  private final boolean __refineWithNelderMead(final double[] point,
+      final StandardDeviationAggregate[] stddevs) {
     try {
       if (this.m_simplex == null) {
         this.m_simplex = new SimplexOptimizer(1e-10d,
@@ -280,13 +342,15 @@ final class _LSFittingJob extends FittingJob
       if (this.m_objective == null) {
         this.m_objective = new ObjectiveFunction(this);
       }
-      this.m_simplex.optimize(//
-          new NelderMeadSimplex(point), //
-          new InitialGuess(point), //
-          this.m_objective, //
-          this.__getMaxEval(), //
-          this.__getMaxIter(), //
-          GoalType.MINIMIZE).getPoint();
+      _LSFittingJob.__register(//
+          this.m_simplex.optimize(//
+              new NelderMeadSimplex(point), //
+              new InitialGuess(point), //
+              this.m_objective, //
+              this.__getMaxEval(), //
+              this.__getMaxIter(), //
+              GoalType.MINIMIZE),
+          stddevs);
     } catch (@SuppressWarnings("unused") final Throwable error) {
       return false;
     }
@@ -324,9 +388,12 @@ final class _LSFittingJob extends FittingJob
    *
    * @param point
    *          the point to be refined
+   * @param stddevs
+   *          the standard deviation aggregates
    * @return {@code true} on success, {@code false} on failure
    */
-  private final boolean __refineWithCMAES(final double[] point) {
+  private final boolean __refineWithCMAES(final double[] point,
+      final StandardDeviationAggregate[] stddevs) {
     final double[] sigma;
     final int dim, ps, maxEval;
     int index;
@@ -360,14 +427,16 @@ final class _LSFittingJob extends FittingJob
         sigma[index] = Math.max(1d, (0.5d * Math.abs(point[index])));
       }
 
-      this.m_cmaes.optimize(//
-          new Sigma(sigma), // r
-          new InitialGuess(point), //
-          this.m_objective, //
-          this.m_bounds, //
-          this.m_populationSize, //
-          this.__getMaxEval(), //
-          GoalType.MINIMIZE).getPoint();
+      _LSFittingJob.__register(//
+          this.m_cmaes.optimize(//
+              new Sigma(sigma), // r
+              new InitialGuess(point), //
+              this.m_objective, //
+              this.m_bounds, //
+              this.m_populationSize, //
+              this.__getMaxEval(), //
+              GoalType.MINIMIZE),
+          stddevs);
     } catch (@SuppressWarnings("unused") final Throwable error) {
       return false;
     }
@@ -382,9 +451,10 @@ final class _LSFittingJob extends FittingJob
   private final double[] __refineStartWithLevenbergMarquardt() {
     try {
       this.m_iterationCounter = new Incrementor(
-          _LSFittingJob.MAX_ITERATIONS);
+          _LSFittingJob.OPTIMIZER_MAX_ITERATIONS);
       this.m_evaluationCounter = new Incrementor(
-          _LSFittingJob.MAX_ITERATIONS * _LSFittingJob.MAX_ITERATIONS);
+          _LSFittingJob.OPTIMIZER_MAX_ITERATIONS
+              * _LSFittingJob.OPTIMIZER_MAX_ITERATIONS);
 
       if (this.m_levenbergMarquardt == null) {
         this.m_levenbergMarquardt = new LevenbergMarquardtOptimizer();
@@ -404,12 +474,17 @@ final class _LSFittingJob extends FittingJob
   @Override
   protected final void fit() {
     final int dim, maxPoints;
-    double[] start, temp, result1;// , result2;
+    final StandardDeviationAggregate[] stddevs;
+    final BasicNumberWrapper[] means;
+    double[] start, temp, result1;
     IParameterGuesser guesser;
     boolean cmaesFirst;
     double best, current;
-    int index, looper;
+    int index, looper, improved, mainTrials;
 
+    // initialize and allocate all needed variables
+
+    this.m_random = new Random();
     dim = this.m_function.getParameterCount();
     start = new double[dim];
     temp = new double[dim];
@@ -419,44 +494,109 @@ final class _LSFittingJob extends FittingJob
     maxPoints = Math.max(100, Math.min(10000, ((int) (Math.round(//
         2d * Math.pow(3d, dim))))));
 
-    mainLoop: for (looper = 7; (--looper) >= 0;) {
+    index = (dim + 1);
+    stddevs = new StandardDeviationAggregate[index];
+    means = new BasicNumberWrapper[index];
+    for (; (--index) >= 0;) {
+      means[index] = (stddevs[index] = //
+      new StandardDeviationAggregate()).getArithmeticMean();
+    }
 
-      best = Double.POSITIVE_INFINITY;
-      for (index = maxPoints; (--index) >= 0;) {
-        guesser.createRandomGuess(temp, this.m_random);
-        current = this.evaluate(temp);
+    // perform the main loop
+    mainLoop: for (mainTrials = 1; mainTrials <= _LSFittingJob.LOOP_OUTER_MAX_ITERATIONS; mainTrials++) {
+      improved = 0;
+
+      // inner loop: 1) generate initial guess, 2) use least-squares
+      // approach to refine, 3) use sophisticated optimizer to refine
+      innerLoop: for (looper = _LSFittingJob.LOOP_INNER_MAX_ITERATIONS; (--looper) >= 0;) {
+
+        // find initial guess: we use the parameter guesser provided by the
+        // model to create a few guesses and keep the best one
+        best = Double.POSITIVE_INFINITY;
+        for (index = maxPoints; (--index) >= 0;) {
+          guesser.createRandomGuess(temp, this.m_random);
+          current = this.evaluate(temp);
+          if (current < best) {
+            System.arraycopy(temp, 0, start, 0, dim);
+            best = current;
+          }
+        }
+
+        best = this.m_result.getQuality();
+
+        // Refine initial guess by using a least-squares solver for
+        // traditional function fitting.
+        result1 = this.__refineStartWithLevenbergMarquardt();
+        if (result1 == null) { // Levenberg-Marquardt failed
+          result1 = this.__refineStartWithGaussNewton();
+          if (result1 == null) {
+            continue innerLoop;
+          }
+        }
+
+        // The least-squares method may get trapped in a local optimum. We
+        // need to refine its results using a strong, numerical,
+        // non-linear-capable optimizer. We choose to do this either with
+        // BOBYQA or CMA-ES. BOBYQA is faster but CMA-ES more reliable..
+        cmaesFirst = ((looper & 1) != 0);
+
+        refineWithNumericalBlackBoxMethod: {
+          if (cmaesFirst) {// use CMA-ES!
+            if (this.__refineWithCMAES(result1, stddevs)) {
+              break refineWithNumericalBlackBoxMethod;
+            }
+          }
+          // either CMA-ES failed or we should use BOBYQA anyway
+          if (this.__refineWithBOBYQA(result1, stddevs)) {
+            break refineWithNumericalBlackBoxMethod;
+          }
+          if (!cmaesFirst) {
+            // BOBYQA failed, but we did not yet try CMA-ES
+            if (this.__refineWithCMAES(result1, stddevs)) {
+              break refineWithNumericalBlackBoxMethod;
+            }
+          }
+
+          // Both CMA-ES and BOBYQA failed, let's try Nelder-Mead
+          this.__refineWithNelderMead(result1, stddevs);
+        }
+
+        // Finished refining, check
+        current = this.m_result.getQuality();
         if (current < best) {
-          System.arraycopy(temp, 0, start, 0, dim);
+          ++improved;
           best = current;
         }
       }
 
-      result1 = this.__refineStartWithLevenbergMarquardt();
-      if (result1 == null) {
-        result1 = this.__refineStartWithGaussNewton();
-        if (result1 == null) {
+      // If we improved the solution at least 4 out of 7 times, this may be
+      // an indicator for many local optima and we better try again to be
+      // sure.
+      if (improved >= _LSFittingJob.LOOP_MAX_IMPROVEMENTS) {
+        continue mainLoop;
+      }
+
+      // If the standard deviation of the discovered results over the seven
+      // iterations in the inner loop is big in comparison to the mean,
+      // then this, too, is an indicator of many local optima. Then we
+      // better do some more runs, just in case. We also divide by the
+      // number of main loop iterations to reduce the amount of main loop
+      // iterations after each inner loop a bit.
+      for (index = stddevs.length; (--index) >= 0;) {
+        current = Math.abs(means[index].doubleValue());
+        if (current <= Double.MIN_NORMAL) {
+          current = Double.MIN_NORMAL;
+        }
+        current = (stddevs[index].doubleValue() / (current * mainTrials));
+        if (current >= _LSFittingJob.LOOP_STDDEV_FRACTION) {
           continue mainLoop;
         }
       }
 
-      cmaesFirst = ((looper & 1) != 0);
-
-      if (cmaesFirst) {
-        if (this.__refineWithCMAES(result1)) {
-          continue;
-        }
-      }
-      if (this.__refineWithBOBYQA(result1)) {
-        continue;
-      }
-      if (!cmaesFirst) {
-        if (this.__refineWithCMAES(result1)) {
-          continue;
-        }
-      }
-      this.__refineWithNelderMead(result1);
+      break mainLoop;
     }
 
+    // Dispose all the variables.
     this.m_cmaes = null;
     this.m_bobyqa = null;
     this.m_gaussNewton = null;
@@ -467,6 +607,7 @@ final class _LSFittingJob extends FittingJob
     this.m_objective = null;
     this.m_maxEval = null;
     this.m_maxIter = null;
+    this.m_random = null;
   }
 
   /** {@inheritDoc} */
@@ -484,7 +625,7 @@ final class _LSFittingJob extends FittingJob
     double ci;
     int i;
 
-    if (iteration >= _LSFittingJob.MAX_ITERATIONS) {
+    if (iteration >= _LSFittingJob.OPTIMIZER_MAX_ITERATIONS) {
       return true;
     }
 
@@ -497,7 +638,7 @@ final class _LSFittingJob extends FittingJob
     i = (-1);
     for (final double ppi : p) {
       ci = c[++i];
-      if (Math.abs(ppi - ci) > (_LSFittingJob.RELATIVE_THRESHOLD
+      if (Math.abs(ppi - ci) > (_LSFittingJob.OPTIMIZER_RELATIVE_THRESHOLD
           * Math.max(Math.abs(ppi), Math.abs(ci)))) {
         return false;
       }

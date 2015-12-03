@@ -4,7 +4,7 @@ import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.math.fitting.spec.FunctionFitter;
-import org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileAggregate;
+import org.optimizationBenchmarking.utils.math.statistics.aggregate.ArithmeticMeanAggregate;
 
 /** the outcome of multiple fitting applications */
 public final class FitterOutcome {
@@ -41,16 +41,16 @@ public final class FitterOutcome {
       final FittingOutcome[] results, final Path _path) {
     super();
 
-    final QuantileAggregate[] med;
+    final ArithmeticMeanAggregate[] med;
     int i;
 
     this.fitter = _fitter;
     this.outcomes = new ArrayListView<>(results);
     this.path = _path;
 
-    med = new QuantileAggregate[4];
+    med = new ArithmeticMeanAggregate[4];
     for (i = med.length; (--i) >= 0;) {
-      med[i] = new QuantileAggregate(0.5d);
+      med[i] = new ArithmeticMeanAggregate();
     }
 
     for (final FittingOutcome o : results) {
@@ -63,7 +63,7 @@ public final class FitterOutcome {
     this.minErrors = new Errors(med[0].doubleValue(), med[1].doubleValue(),
         med[2].doubleValue(), med[3].doubleValue());
 
-    for (final QuantileAggregate agg : med) {
+    for (final ArithmeticMeanAggregate agg : med) {
       agg.reset();
     }
 
@@ -77,7 +77,7 @@ public final class FitterOutcome {
     this.maxErrors = new Errors(med[0].doubleValue(), med[1].doubleValue(),
         med[2].doubleValue(), med[3].doubleValue());
 
-    for (final QuantileAggregate agg : med) {
+    for (final ArithmeticMeanAggregate agg : med) {
       agg.reset();
     }
 
@@ -91,7 +91,7 @@ public final class FitterOutcome {
     this.medianErrors = new Errors(med[0].doubleValue(),
         med[1].doubleValue(), med[2].doubleValue(), med[3].doubleValue());
 
-    for (final QuantileAggregate agg : med) {
+    for (final ArithmeticMeanAggregate agg : med) {
       agg.reset();
     }
 
