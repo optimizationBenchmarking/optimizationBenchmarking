@@ -44,7 +44,8 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.StandardDevi
  * <li>do {@value #LOOP_INNER_MAX_ITERATIONS} times
  * <ol>
  * <li>draw several guesses from the parameter guesser associated with the
- * function, keep the best guess</li>
+ * function, keep the best guess, that is sufficiently different from
+ * previous best guesses</li>
  * <li>use this guess as starting point for the Levenberg-Marquardt
  * algorithm (or Gauss-Newton if that fails)</li>
  * <li>use the result of the above as starting point for either BOBYQA or
@@ -87,17 +88,20 @@ final class _LSFittingJob extends FittingJob
   /** the maximum number of inner loop iterations */
   private static final int LOOP_INNER_MAX_ITERATIONS = 7;
   /** the maximum number of outer loop iterations */
-  private static final int LOOP_OUTER_MAX_ITERATIONS = 10;
+  private static final int LOOP_OUTER_MAX_ITERATIONS = 12;// 9;
   /**
    * the fraction of the standard deviation/arithmetic mean at which the
    * outer loop must be continued
    */
-  private static final double LOOP_STDDEV_FRACTION = 1e-5d;
+  private static final double LOOP_STDDEV_FRACTION = 2e-5d;
   /**
    * the number of improvements when the outer loop needs to be continued
    */
-  private static final int LOOP_MAX_IMPROVEMENTS = ((_LSFittingJob.LOOP_INNER_MAX_ITERATIONS >>> 1)
-      + 1);
+  private static final int LOOP_MAX_IMPROVEMENTS = //
+  ((_LSFittingJob.LOOP_INNER_MAX_ITERATIONS >>> 1) + 1);
+
+  /** the minimum required weighted distance between starting points */
+  private static final double MIN_REQUIRED_DISTANCE = 1e-5d;
 
   /** the random number generator */
   private Random m_random;
@@ -470,31 +474,90 @@ final class _LSFittingJob extends FittingJob
     }
   }
 
+  /**
+   * compute the weighted distance between two vectors
+   *
+   * @param a
+   *          the first vector
+   * @param b
+   *          the second vector
+   * @return {@code true} if the distance is not large enough,
+   *         {@code false} otherwise
+   */
+  private static final boolean __isNotUnique(final double[] a,
+      final double[] b) {
+    double dist, bi;
+    int index;
+
+    dist = 0d;
+    index = (-1);
+    for (final double ai : a) {
+      bi = b[++index];
+      if (ai != bi) {
+        bi = ((ai - bi) / Math.max(Double.MIN_NORMAL, //
+            Math.max(Math.abs(ai), Math.abs(bi))));
+        dist += (bi * bi);
+      }
+    }
+
+    return (dist <= (index * _LSFittingJob.MIN_REQUIRED_DISTANCE));
+  }
+
+  /**
+   * check if a vector is sufficiently unique
+   *
+   * @param matrix
+   *          the matrix (also containing the vector)
+   * @param element
+   *          the vector
+   * @return {@code true} if the vector is sufficiently unique,
+   *         {@code false} otherwise
+   */
+  private static final boolean __isUnique(final double[][] matrix,
+      final double[] element) {
+    for (final double[] vector : matrix) {
+      if (vector == element) {
+        return true;
+      }
+      if (_LSFittingJob.__isNotUnique(vector, element)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   /** {@inheritDoc} */
   @Override
   protected final void fit() {
-    final int dim, maxPoints;
+    final int numParameters, maxStartPointSamples;
     final StandardDeviationAggregate[] stddevs;
     final BasicNumberWrapper[] means;
-    double[] start, temp, result1;
+    final double[][] startPoints;
+    final double[] bestStartGuess;
+    double[] currentStartGuess, result1;
     IParameterGuesser guesser;
     boolean cmaesFirst;
     double best, current;
-    int index, looper, improved, mainTrials;
+    int index, innerLoopIteration, improved, outerLoopIteration,
+        totalInnerLoopIterations;
 
     // initialize and allocate all needed variables
 
     this.m_random = new Random();
-    dim = this.m_function.getParameterCount();
-    start = new double[dim];
-    temp = new double[dim];
+    numParameters = this.m_function.getParameterCount();
+
+    startPoints = new double[(_LSFittingJob.LOOP_OUTER_MAX_ITERATIONS
+        * _LSFittingJob.LOOP_INNER_MAX_ITERATIONS) + 1][numParameters];
+    bestStartGuess = startPoints[startPoints.length - 1];
+
     guesser = this.m_function.createParameterGuesser(this.m_data);
-    this.m_startVector = new ArrayRealVector(start, false);
+    this.m_startVector = new ArrayRealVector(bestStartGuess, false);
 
-    maxPoints = Math.max(100, Math.min(10000, ((int) (Math.round(//
-        2d * Math.pow(3d, dim))))));
+    maxStartPointSamples = Math.max(100,
+        Math.min(10000, ((int) (Math.round(//
+            2d * Math.pow(3d, numParameters))))));
 
-    index = (dim + 1);
+    index = (numParameters + 1);
     stddevs = new StandardDeviationAggregate[index];
     means = new BasicNumberWrapper[index];
     for (; (--index) >= 0;) {
@@ -502,25 +565,37 @@ final class _LSFittingJob extends FittingJob
       new StandardDeviationAggregate()).getArithmeticMean();
     }
 
+    totalInnerLoopIterations = 0;
+
     // perform the main loop
-    mainLoop: for (mainTrials = 1; mainTrials <= _LSFittingJob.LOOP_OUTER_MAX_ITERATIONS; mainTrials++) {
+    outerLoop: for (outerLoopIteration = 1; outerLoopIteration <= _LSFittingJob.LOOP_OUTER_MAX_ITERATIONS; outerLoopIteration++) {
       improved = 0;
 
       // inner loop: 1) generate initial guess, 2) use least-squares
       // approach to refine, 3) use sophisticated optimizer to refine
-      innerLoop: for (looper = _LSFittingJob.LOOP_INNER_MAX_ITERATIONS; (--looper) >= 0;) {
+      innerLoop: for (innerLoopIteration = _LSFittingJob.LOOP_INNER_MAX_ITERATIONS; //
+      (--innerLoopIteration) >= 0; ++totalInnerLoopIterations) {
 
         // find initial guess: we use the parameter guesser provided by the
         // model to create a few guesses and keep the best one
-        best = Double.POSITIVE_INFINITY;
-        for (index = maxPoints; (--index) >= 0;) {
-          guesser.createRandomGuess(temp, this.m_random);
-          current = this.evaluate(temp);
+        currentStartGuess = startPoints[totalInnerLoopIterations];
+        guesser.createRandomGuess(bestStartGuess, this.m_random);
+        best = this.evaluate(bestStartGuess);
+
+        for (index = maxStartPointSamples; (--index) >= 0;) {
+          guesser.createRandomGuess(currentStartGuess, this.m_random);
+          current = this.evaluate(currentStartGuess);
           if (current < best) {
-            System.arraycopy(temp, 0, start, 0, dim);
-            best = current;
+            // try to get starting points which are, sort of, different
+            if (_LSFittingJob.__isUnique(startPoints, currentStartGuess)) {
+              System.arraycopy(currentStartGuess, 0, bestStartGuess, 0,
+                  numParameters);
+              best = current;
+            }
           }
         }
+        System.arraycopy(bestStartGuess, 0, currentStartGuess, 0,
+            numParameters);
 
         best = this.m_result.getQuality();
 
@@ -538,7 +613,7 @@ final class _LSFittingJob extends FittingJob
         // need to refine its results using a strong, numerical,
         // non-linear-capable optimizer. We choose to do this either with
         // BOBYQA or CMA-ES. BOBYQA is faster but CMA-ES more reliable..
-        cmaesFirst = ((looper & 1) != 0);
+        cmaesFirst = ((innerLoopIteration & 1) != 0);
 
         refineWithNumericalBlackBoxMethod: {
           if (cmaesFirst) {// use CMA-ES!
@@ -573,7 +648,7 @@ final class _LSFittingJob extends FittingJob
       // an indicator for many local optima and we better try again to be
       // sure.
       if (improved >= _LSFittingJob.LOOP_MAX_IMPROVEMENTS) {
-        continue mainLoop;
+        continue outerLoop;
       }
 
       // If the standard deviation of the discovered results over the seven
@@ -587,13 +662,14 @@ final class _LSFittingJob extends FittingJob
         if (current <= Double.MIN_NORMAL) {
           current = Double.MIN_NORMAL;
         }
-        current = (stddevs[index].doubleValue() / (current * mainTrials));
+        current = (stddevs[index].doubleValue()
+            / (current * outerLoopIteration));
         if (current >= _LSFittingJob.LOOP_STDDEV_FRACTION) {
-          continue mainLoop;
+          continue outerLoop;
         }
       }
 
-      break mainLoop;
+      break outerLoop;
     }
 
     // Dispose all the variables.
