@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.math.statistics.aggregate;
 
-import java.util.Arrays;
-
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Mul;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingSub;
@@ -70,7 +68,6 @@ public final class QuantileAggregate extends _QuantileBasedAggregate {
       return;
     }
 
-    Arrays.sort(data, 0, count);
     quantile = this.m_p;
 
     if (quantile <= 0d) {
@@ -136,7 +133,6 @@ public final class QuantileAggregate extends _QuantileBasedAggregate {
       return;
     }
 
-    Arrays.sort(data, 0, count);
     quantile = this.m_p;
 
     if (quantile <= 0d) {

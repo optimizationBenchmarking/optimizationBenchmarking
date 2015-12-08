@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.math.statistics.aggregate;
 
-import java.util.Arrays;
-
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Mul;
@@ -92,7 +90,6 @@ public final class InterQuantileRangeAggregate
       return;
     }
 
-    Arrays.sort(data, 0, count);
     quantile = this.m_pLow;
 
     lowLong = Long.MAX_VALUE;
@@ -260,7 +257,6 @@ public final class InterQuantileRangeAggregate
       return;
     }
 
-    Arrays.sort(data, 0, count);
     quantile = this.m_pLow;
 
     // compute lower quantile

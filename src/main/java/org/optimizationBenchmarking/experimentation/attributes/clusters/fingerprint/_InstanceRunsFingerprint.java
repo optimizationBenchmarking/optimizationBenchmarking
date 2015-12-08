@@ -10,11 +10,11 @@ import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.math.fitting.impl.ls.LSFitter;
-import org.optimizationBenchmarking.utils.math.fitting.models.LogisticModelOverLogX;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.MatrixBuilder;
+import org.optimizationBenchmarking.utils.ml.fitting.impl.lssimplex.LSSimplexFitter;
+import org.optimizationBenchmarking.utils.ml.fitting.models.LogisticModelOverLogX;
 
 /**
  * <p>
@@ -119,9 +119,9 @@ final class _InstanceRunsFingerprint
         }
 
         // get all the points
-        fittingResult = LSFitter.getInstance().use()
+        fittingResult = LSSimplexFitter.getInstance().use()
             .setFunctionToFit(model).setPoints(rawMatrix).setLogger(logger)
-            .create().call().getFittedParameters();
+            .create().call().getFittedParametersRef();
 
         builder.append(fittingResult);
       }
