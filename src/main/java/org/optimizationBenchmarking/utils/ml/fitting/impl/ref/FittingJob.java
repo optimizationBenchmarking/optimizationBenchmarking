@@ -229,6 +229,8 @@ public class FittingJob extends ToolJob implements IFittingJob {
       if (MathUtils.isFinite(this.m_result.quality)) {
         return this.m_result;
       }
+    } catch (final IllegalArgumentException iae) {
+      throw iae;
     } catch (final Throwable cause) {
       error = cause;
     }

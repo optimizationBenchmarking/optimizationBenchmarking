@@ -11,7 +11,6 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElement;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElementSet;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.numbers.AlphabeticNumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -44,8 +43,8 @@ abstract class _FingerprintClustering<CT extends _FingerprintCluster<?>>
    * @param names
    *          the names
    */
-  _FingerprintClustering(final IExperimentSet owner,
-      final IMatrix clusters, final INamedElementSet source,
+  _FingerprintClustering(final IExperimentSet owner, final int[] clusters,
+      final INamedElementSet source,
       final ArrayListView<? extends INamedElement> names) {
     super();
     final ArrayList<CT> list;
@@ -60,19 +59,18 @@ abstract class _FingerprintClustering<CT extends _FingerprintCluster<?>>
     list = new ArrayList<>(20);
 
     total = 0;
-    for (clusterIndex = 1;; ++clusterIndex) {
+    for (clusterIndex = 0;; ++clusterIndex) {
       selection = null;
-      for (find = clusters.n(); (--find) >= 0;) {
-        if (clusters.getLong(0, find) == clusterIndex) {
+      for (find = clusters.length; (--find) >= 0;) {
+        if (clusters[find] == clusterIndex) {
           if (selection == null) {
             selection = new DataSelection(owner);
           }
           name = names.get(find).getName();
           ne = source.find(name);
           if (ne == null) {
-            throw new IllegalStateException(
-                "Cannot find element of name '" //$NON-NLS-1$
-                    + name + "' in " + names); //$NON-NLS-1$
+            throw new IllegalStateException("Cannot find element of name '" //$NON-NLS-1$
+                + name + "' in " + names); //$NON-NLS-1$
           }
           if (ne instanceof IInstance) {
             selection.addInstance((IInstance) ne);
@@ -94,7 +92,8 @@ abstract class _FingerprintClustering<CT extends _FingerprintCluster<?>>
         break;
       }
       list.add(this._create(AlphabeticNumberAppender.UPPER_CASE_INSTANCE
-          .toString((clusterIndex - 1), ETextCase.IN_SENTENCE), selection));
+          .toString((clusterIndex - 1), ETextCase.IN_SENTENCE),
+          selection));
     }
 
     if (total != names.size()) {

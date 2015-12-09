@@ -22,7 +22,6 @@ public final class LSSimplexFitter extends FunctionFitter {
 
     cannot = null;
     try {
-
       ReflectionUtils.ensureClassesAreLoaded(
           "org.apache.commons.math3.analysis.MultivariateFunction", //$NON-NLS-1$
           // "org.apache.commons.math3.fitting.leastsquares.GaussNewtonOptimizer",
@@ -75,7 +74,7 @@ public final class LSSimplexFitter extends FunctionFitter {
   /** {@inheritDoc} */
   @Override
   protected final FittingJob create(final FittingJobBuilder builder) {
-    return new LSSimplexFittingJob(builder);
+    return new _LSSimplexFittingJob(builder);
   }
 
   /**
@@ -85,6 +84,12 @@ public final class LSSimplexFitter extends FunctionFitter {
    */
   public static final LSSimplexFitter getInstance() {
     return _DECurveFitterHolder.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "Least-Squares + Simpled Fitter"; //$NON-NLS-1$
   }
 
   /** the instance holder */

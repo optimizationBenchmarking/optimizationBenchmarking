@@ -43,7 +43,7 @@ import org.optimizationBenchmarking.utils.ml.fitting.spec.ParametricUnaryFunctio
  * times, more often if results seem to be unstable.
  * </p>
  */
-public class LSSimplexFittingJob extends FittingJob
+final class _LSSimplexFittingJob extends FittingJob
     implements MultivariateFunction, LeastSquaresProblem,
     ConvergenceChecker<Evaluation> {
 
@@ -62,17 +62,16 @@ public class LSSimplexFittingJob extends FittingJob
   /** a solution was used as input to levenberg-marquardt */
   private static final int PROCESSED_BY_LEVENBERG_MARQUARDT = 1;
   /** a solution was used as input to gauss-newton */
-  private static final int PROCESSED_BY_GAUSS_NEWTON = (LSSimplexFittingJob.PROCESSED_BY_LEVENBERG_MARQUARDT << 1);
-  /** a solution was used as input to CMA-ES */
-  private static final int PROCESSED_BY_CMA_ES = (LSSimplexFittingJob.PROCESSED_BY_GAUSS_NEWTON << 1);
-  /** a solution was used as input to BOBYQA */
-  private static final int PROCESSED_BY_BOBYQA = (LSSimplexFittingJob.PROCESSED_BY_CMA_ES << 1);
+  private static final int PROCESSED_BY_GAUSS_NEWTON = //
+  (_LSSimplexFittingJob.PROCESSED_BY_LEVENBERG_MARQUARDT << 1);
   /** a solution was used as input to nelder-mead */
-  private static final int PROCESSED_BY_NELDER_MEAD = (LSSimplexFittingJob.PROCESSED_BY_BOBYQA << 1);
+  private static final int PROCESSED_BY_NELDER_MEAD = //
+  (_LSSimplexFittingJob.PROCESSED_BY_GAUSS_NEWTON << 1);
 
   /** the solution was used as input for any of least-squares solvers */
-  private static final int PROCESSED_BY_LEAST_SQUARES = (LSSimplexFittingJob.PROCESSED_BY_LEVENBERG_MARQUARDT
-      | LSSimplexFittingJob.PROCESSED_BY_GAUSS_NEWTON);
+  private static final int PROCESSED_BY_LEAST_SQUARES = //
+  (_LSSimplexFittingJob.PROCESSED_BY_LEVENBERG_MARQUARDT
+      | _LSSimplexFittingJob.PROCESSED_BY_GAUSS_NEWTON);
 
   /** the evaluation counter */
   private Incrementor m_evaluationCounter;
@@ -107,7 +106,7 @@ public class LSSimplexFittingJob extends FittingJob
    * @param builder
    *          the builder
    */
-  protected LSSimplexFittingJob(final FittingJobBuilder builder) {
+  protected _LSSimplexFittingJob(final FittingJobBuilder builder) {
     super(builder);
   }
 
@@ -158,7 +157,7 @@ public class LSSimplexFittingJob extends FittingJob
     double x, expectedY, inverseWeight, residual, squareErrorSum, rms;
     int i, j;
 
-    vector = LSSimplexFittingJob.__toArray(point);
+    vector = _LSSimplexFittingJob.__toArray(point);
 
     func = this.m_function;
     data = this.m_data;
@@ -218,21 +217,21 @@ public class LSSimplexFittingJob extends FittingJob
     double ci;
     int i;
 
-    if (iteration >= LSSimplexFittingJob.OPTIMIZER_MAX_ITERATIONS) {
+    if (iteration >= _LSSimplexFittingJob.OPTIMIZER_MAX_ITERATIONS) {
       return true;
     }
 
     pv = previous.getPoint();
     cv = current.getPoint();
 
-    p = LSSimplexFittingJob.__toArray(pv);
-    c = LSSimplexFittingJob.__toArray(cv);
+    p = _LSSimplexFittingJob.__toArray(pv);
+    c = _LSSimplexFittingJob.__toArray(cv);
 
     i = (-1);
     for (final double ppi : p) {
       ci = c[++i];
       if (Math.abs(
-          ppi - ci) > (LSSimplexFittingJob.OPTIMIZER_RELATIVE_THRESHOLD
+          ppi - ci) > (_LSSimplexFittingJob.OPTIMIZER_RELATIVE_THRESHOLD
               * Math.max(Math.abs(ppi), Math.abs(ci)))) {
         return false;
       }
@@ -258,41 +257,9 @@ public class LSSimplexFittingJob extends FittingJob
   public final ConvergenceChecker<Evaluation> getConvergenceChecker() {
     return this;
   }
-
   //// END: basic functions of the implemented interfaces
 
-  //// BEGIN: getting cached objects
-
-  /**
-   * get the maximum evaluations
-   *
-   * @return the maximum evaluations
-   */
-  private final MaxEval __getMaxEval() {
-    final int dim;
-    if (this.m_maxEval == null) {
-      dim = this.m_function.getParameterCount();
-      this.m_maxEval = new MaxEval(dim * dim * 300);
-    }
-    return this.m_maxEval;
-  }
-
-  /**
-   * get the maximum iterations
-   *
-   * @return the maximum iterations
-   */
-  private final MaxIter __getMaxIter() {
-    if (this.m_maxIter == null) {
-      this.m_maxIter = new MaxIter(this.__getMaxEval().getMaxEval());
-    }
-    return this.m_maxIter;
-  }
-
-  //// END: getting cached objects
-
   //// BEGIN: optimization routines
-
   /**
    * Refine the current {@link #m_startVector start point} with the
    * Levenberg-Marquardt method.
@@ -309,14 +276,14 @@ public class LSSimplexFittingJob extends FittingJob
     final double quality;
 
     if ((source.m_processedBy
-        & LSSimplexFittingJob.PROCESSED_BY_LEVENBERG_MARQUARDT) == 0) {
-      source.m_processedBy |= LSSimplexFittingJob.PROCESSED_BY_LEVENBERG_MARQUARDT;
+        & _LSSimplexFittingJob.PROCESSED_BY_LEVENBERG_MARQUARDT) == 0) {
+      source.m_processedBy |= _LSSimplexFittingJob.PROCESSED_BY_LEVENBERG_MARQUARDT;
       try {
         this.m_iterationCounter = new Incrementor(
-            LSSimplexFittingJob.OPTIMIZER_MAX_ITERATIONS);
+            _LSSimplexFittingJob.OPTIMIZER_MAX_ITERATIONS);
         this.m_evaluationCounter = new Incrementor(
-            LSSimplexFittingJob.OPTIMIZER_MAX_ITERATIONS
-                * LSSimplexFittingJob.OPTIMIZER_MAX_ITERATIONS);
+            _LSSimplexFittingJob.OPTIMIZER_MAX_ITERATIONS
+                * _LSSimplexFittingJob.OPTIMIZER_MAX_ITERATIONS);
 
         if (this.m_levenbergMarquardt == null) {
           this.m_levenbergMarquardt = new LevenbergMarquardtOptimizer();
@@ -326,12 +293,13 @@ public class LSSimplexFittingJob extends FittingJob
         quality = res.getRMS();
 
         if (MathUtils.isFinite(quality)) {
-          source.m_processedBy |= LSSimplexFittingJob.PROCESSED_BY_LEAST_SQUARES;
+          source.m_processedBy |= _LSSimplexFittingJob.PROCESSED_BY_LEAST_SQUARES;
           if (quality < source.quality) {
             dest.quality = quality;
-            System.arraycopy(LSSimplexFittingJob.__toArray(res.getPoint()),
-                0, dest.solution, 0, dest.solution.length);
-            dest.m_processedBy = LSSimplexFittingJob.PROCESSED_BY_LEAST_SQUARES;
+            System.arraycopy(
+                _LSSimplexFittingJob.__toArray(res.getPoint()), 0,
+                dest.solution, 0, dest.solution.length);
+            dest.m_processedBy = _LSSimplexFittingJob.PROCESSED_BY_LEAST_SQUARES;
             return true;
           }
         }
@@ -361,14 +329,14 @@ public class LSSimplexFittingJob extends FittingJob
     final double quality;
 
     if ((source.m_processedBy
-        & LSSimplexFittingJob.PROCESSED_BY_GAUSS_NEWTON) == 0) {
-      source.m_processedBy |= LSSimplexFittingJob.PROCESSED_BY_GAUSS_NEWTON;
+        & _LSSimplexFittingJob.PROCESSED_BY_GAUSS_NEWTON) == 0) {
+      source.m_processedBy |= _LSSimplexFittingJob.PROCESSED_BY_GAUSS_NEWTON;
       try {
         this.m_iterationCounter = new Incrementor(
-            LSSimplexFittingJob.OPTIMIZER_MAX_ITERATIONS);
+            _LSSimplexFittingJob.OPTIMIZER_MAX_ITERATIONS);
         this.m_evaluationCounter = new Incrementor(
-            LSSimplexFittingJob.OPTIMIZER_MAX_ITERATIONS
-                * LSSimplexFittingJob.OPTIMIZER_MAX_ITERATIONS);
+            _LSSimplexFittingJob.OPTIMIZER_MAX_ITERATIONS
+                * _LSSimplexFittingJob.OPTIMIZER_MAX_ITERATIONS);
 
         if (this.m_gaussNewton == null) {
           this.m_gaussNewton = new GaussNewtonOptimizer(
@@ -379,12 +347,13 @@ public class LSSimplexFittingJob extends FittingJob
         quality = res.getRMS();
 
         if (MathUtils.isFinite(quality)) {
-          source.m_processedBy |= LSSimplexFittingJob.PROCESSED_BY_LEAST_SQUARES;
+          source.m_processedBy |= _LSSimplexFittingJob.PROCESSED_BY_LEAST_SQUARES;
           if (quality < source.quality) {
             dest.quality = quality;
-            System.arraycopy(LSSimplexFittingJob.__toArray(res.getPoint()),
-                0, dest.solution, 0, dest.solution.length);
-            dest.m_processedBy = LSSimplexFittingJob.PROCESSED_BY_LEAST_SQUARES;
+            System.arraycopy(
+                _LSSimplexFittingJob.__toArray(res.getPoint()), 0,
+                dest.solution, 0, dest.solution.length);
+            dest.m_processedBy = _LSSimplexFittingJob.PROCESSED_BY_LEAST_SQUARES;
             return true;
           }
         }
@@ -430,12 +399,13 @@ public class LSSimplexFittingJob extends FittingJob
   @SuppressWarnings("unused")
   private final boolean __refineWithNelderMead(final _Candidate source,
       final _Candidate dest) {
+    final int dim;
     PointValuePair res;
     double quality;
 
     if ((source.m_processedBy
-        & LSSimplexFittingJob.PROCESSED_BY_NELDER_MEAD) == 0) {
-      source.m_processedBy |= LSSimplexFittingJob.PROCESSED_BY_NELDER_MEAD;
+        & _LSSimplexFittingJob.PROCESSED_BY_NELDER_MEAD) == 0) {
+      source.m_processedBy |= _LSSimplexFittingJob.PROCESSED_BY_NELDER_MEAD;
       try {
         if (this.m_simplex == null) {
           this.m_simplex = new SimplexOptimizer(1e-10d,
@@ -444,13 +414,19 @@ public class LSSimplexFittingJob extends FittingJob
         if (this.m_objective == null) {
           this.m_objective = new ObjectiveFunction(this);
         }
+        dim = source.solution.length;
+
+        if (this.m_maxEval == null) {
+          this.m_maxEval = new MaxEval(dim * dim * 300);
+        }
+        if (this.m_maxIter == null) {
+          this.m_maxIter = new MaxIter(this.m_maxEval.getMaxEval());
+        }
 
         res = this.m_simplex.optimize(//
             new NelderMeadSimplex(source.solution), //
             new InitialGuess(source.solution), //
-            this.m_objective, //
-            this.__getMaxEval(), //
-            this.__getMaxIter(), //
+            this.m_objective, this.m_maxEval, this.m_maxIter,
             GoalType.MINIMIZE);
 
         quality = res.getValue().doubleValue();
@@ -459,7 +435,7 @@ public class LSSimplexFittingJob extends FittingJob
           dest.quality = quality;
           System.arraycopy(res.getPoint(), 0, dest.solution, 0,
               dest.solution.length);
-          dest.m_processedBy |= LSSimplexFittingJob.PROCESSED_BY_NELDER_MEAD;
+          dest.m_processedBy |= _LSSimplexFittingJob.PROCESSED_BY_NELDER_MEAD;
           return true;
         }
 
@@ -491,7 +467,7 @@ public class LSSimplexFittingJob extends FittingJob
     numParameters = this.m_function.getParameterCount();
 
     manager = new _CandidateManager(
-        (LSSimplexFittingJob.MAIN_LOOP_ITERATIONS * 4), numParameters);
+        (_LSSimplexFittingJob.MAIN_LOOP_ITERATIONS * 4), numParameters);
 
     guesser = this.m_function.createParameterGuesser(this.m_data);
 
@@ -506,7 +482,7 @@ public class LSSimplexFittingJob extends FittingJob
     // Inner loop: 1) generate initial guess, 2) use least-squares
     // approach to refine, 3) use direct black-box optimizer to refine,
     // 4) if that worked, try least-squares again
-    for (iterations = LSSimplexFittingJob.MAIN_LOOP_ITERATIONS; (--iterations) >= 0;) {
+    for (iterations = _LSSimplexFittingJob.MAIN_LOOP_ITERATIONS; (--iterations) >= 0;) {
 
       currentSolution = manager._create();
 
@@ -521,7 +497,7 @@ public class LSSimplexFittingJob extends FittingJob
         if (currentQuality < currentSolution.quality) {
           // Try to get starting points which are, sort of, different.
           if (manager._isUnique(tempStartGuess,
-              LSSimplexFittingJob.MIN_REQUIRED_DISTANCE)) {
+              _LSSimplexFittingJob.MIN_REQUIRED_DISTANCE)) {
             System.arraycopy(tempStartGuess, 0, currentSolution.solution,
                 0, numParameters);
             currentSolution.quality = currentQuality;

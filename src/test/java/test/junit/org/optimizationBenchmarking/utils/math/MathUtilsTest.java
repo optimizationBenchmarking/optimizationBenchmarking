@@ -76,6 +76,17 @@ public class MathUtilsTest {
     }
   }
 
+  /** test some basic cases of the step difference */
+  @Test(timeout = 3600000)
+  public void testDifferenceBetweenTwoValuesBasic() {
+    Assert.assertEquals(MathUtils.difference(1d, Math.nextUp(1d)), 1L);
+    Assert.assertEquals(MathUtils.difference(1d,
+        Math.nextAfter(1d, Double.NEGATIVE_INFINITY)), 1L);
+    Assert.assertEquals(MathUtils.difference(Math.nextUp(1d), 1d), 1L);
+    Assert.assertEquals(MathUtils
+        .difference(Math.nextAfter(1d, Double.NEGATIVE_INFINITY), 1d), 1L);
+  }
+
   /** test the border cases of the step difference */
   @Test(timeout = 3600000)
   public void testDifferenceBetweenTwoValuesBorderCases() {

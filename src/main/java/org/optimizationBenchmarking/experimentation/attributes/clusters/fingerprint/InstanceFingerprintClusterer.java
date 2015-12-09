@@ -4,13 +4,11 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElement;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElementSet;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /**
  * A clusterer for clustering via instance fingerprints.
  */
-public final class InstanceFingerprintClusterer
-    extends
+public final class InstanceFingerprintClusterer extends
     _FingerprintClusterer<InstanceFingerprintCluster, InstanceFingerprintClustering> {
 
   /**
@@ -30,7 +28,7 @@ public final class InstanceFingerprintClusterer
   /** {@inheritDoc} */
   @Override
   final InstanceFingerprintClustering _create(final IExperimentSet data,
-      final IMatrix clustering, final INamedElementSet source,
+      final int[] clustering, final INamedElementSet source,
       final ArrayListView<? extends INamedElement> names) {
     return new InstanceFingerprintClustering(data, clustering, source,
         names);

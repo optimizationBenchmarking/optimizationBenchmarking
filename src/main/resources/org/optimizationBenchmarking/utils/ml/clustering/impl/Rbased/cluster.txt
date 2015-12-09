@@ -5,11 +5,13 @@
 #   2. finding good numbers of clusters
 #   3. finding a good clustering
 #
-# input : "data": a matrix whose rows correspond to instances/experiments,
-#                 columns to features
+# input : "data"    : a matrix whose rows correspond to the instances,
+#                     columns to features
+#         "nCluster": the desired number of clusters, -1 means that we
+#                     should find this number by ourselves
 #
 # output: "clusters": the assignment of instances to clusters 
-##
+#         "quality" : the quality measure
 #
 #
 ##
@@ -25,7 +27,11 @@ tryCatch(
    data <- prcomp(data, center=TRUE, tol=0.05)$x
   })
 #
-#
+## If the number of clusters has been specified, then use it as-is
+if(nCluster > 0) {
+	cluster.n <- c(nCluster);
+} else {
+## ...otherwise
 ##
 ## Step 2: Determine how many clusters we need.
 ## Here we use five different approaches mainly based on
@@ -37,7 +43,7 @@ tryCatch(
 ## Having more than ten clusters makes no sense, as understanding
 ## the data will become very hard.
 maxClusters <- max(1, min(12, dim(data)[1]));
-cluster.n <- integer(0);
+cluster.n   <- integer(0);
 #
 # Determine the ideal number of clusters with the pamk function of the
 # fpc package
@@ -101,7 +107,8 @@ if(length(cluster.n) > 0) {
   cluster.n <- as.integer(sort(unique(cluster.n)));
 } else {
   cluster.n <- c(2, 3, 4, 5);
-}                      
+}        
+}# end determine number of clusters              
 ##
 ## Step 3: Perform the actual clustering. We do that for each unique
 ## suggested cluster number. From the results, we keep the best clustering,
@@ -164,4 +171,5 @@ rm(data);
 rm(cluster.n);
 rm(hierarchicalClustering);
 clusters <- bestClustering$clustering;
+quality  <- bestClustering$silhouette;
 rm(bestClustering);

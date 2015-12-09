@@ -1,6 +1,5 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
 
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,10 +11,10 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElement;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElementSet;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.io.StreamLineIterator;
-import org.optimizationBenchmarking.utils.math.mathEngine.impl.R.R;
-import org.optimizationBenchmarking.utils.math.mathEngine.impl.R.REngine;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.Rbased.RBasedClusterer;
+import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusterer;
+import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusteringJob;
 
 /**
  * Cluster experimental data based on performance fingerprints. It can
@@ -63,19 +62,20 @@ abstract class _FingerprintClusterer<CT extends _FingerprintCluster<CCT>, CCT ex
    *          the element names
    * @return the clustering
    */
-  abstract CCT _create(final IExperimentSet data, final IMatrix clustering,
+  abstract CCT _create(final IExperimentSet data, final int[] clustering,
       final INamedElementSet source,
       final ArrayListView<? extends INamedElement> names);
 
   /** {@inheritDoc} */
-  @SuppressWarnings("resource")
   @Override
   protected final CCT compute(final IExperimentSet data,
       final Logger logger) {
     final INamedElementSet names;
     final CCT result;
+    IClusteringJob job;
     String what;
     IMatrix matrix;
+    int[] res;
 
     names = this._getClusterSource(OnlySharedInstances.INSTANCE.get(//
         data, logger));
@@ -99,26 +99,12 @@ abstract class _FingerprintClusterer<CT extends _FingerprintCluster<CCT>, CCT ex
           + matrix.m() + '*' + matrix.n() + " fingerprint matrix.");//$NON-NLS-1$
     }
 
-    try (final REngine engine = R.getInstance().use().setLogger(logger)
-        .create()) {
-      engine.setMatrix("data", matrix);//$NON-NLS-1$
-      matrix = null;
-      try {
-        engine.execute(new StreamLineIterator(_FingerprintClusterer.class,
-            "cluster.txt"));//$NON-NLS-1$
-      } catch (final Throwable error) {
-        throw new IllegalStateException(//
-            "Error while communicating REngine. Maybe the data is just too odd, or some required packages are missing and cannot be installed.", //$NON-NLS-1$
-            error);
-      }
-      matrix = engine.getMatrix("clusters"); //$NON-NLS-1$
-    } catch (final IOException ioe) {
-      throw new IllegalStateException(//
-          "Error while starting REngine. Maybe R is not installed properly?", //$NON-NLS-1$
-          ioe);
-    }
+    job = __Engine.ENGINE.use().setLogger(logger).setData(matrix).create();
+    matrix = null;
+    res = job.call().getClustersRef();
+    job = null;
 
-    result = this._create(data, matrix, this._getClusterSource(data),
+    result = this._create(data, res, this._getClusterSource(data),
         names.getData());
 
     if ((logger != null) && (logger.isLoggable(Level.FINER))) {
@@ -136,5 +122,15 @@ abstract class _FingerprintClusterer<CT extends _FingerprintCluster<CCT>, CCT ex
     }
 
     return result;
+  }
+
+  /** the clustering engine to use */
+  private static final class __Engine {
+    /** the clustering engine */
+    static final IClusterer ENGINE;
+
+    static {
+      ENGINE = RBasedClusterer.getInstance();
+    }
   }
 }

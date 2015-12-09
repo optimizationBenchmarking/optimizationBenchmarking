@@ -1,7 +1,7 @@
 # Set the number of printed digits to the maximum in order to
 # provide exact data during communication with host process.
 options(digits=22);
-
+#
 # Transform a matrix to text so that the host process can
 # read it. Unfortunately, write.table et al. seem to not
 # respect the above option with digits, hence we need to brew
@@ -52,7 +52,7 @@ rcommPrintMatrix <- function(mat) {
   }  
   options(op);
 }
-
+#
 ## This function executes a command or expression. It eats away
 ## possible errors and output.
 rcommExec <- function(expression) {
@@ -60,8 +60,7 @@ rcommExec <- function(expression) {
     tryCatch(expression, error=function(e) { }))));
   rm(temp);
 }
-
-
+#
 # Load a library. Silently install it if it is not yet installed.
 # Quit if it cannot be installed.
 rcommUsePackage <- function(package) {
