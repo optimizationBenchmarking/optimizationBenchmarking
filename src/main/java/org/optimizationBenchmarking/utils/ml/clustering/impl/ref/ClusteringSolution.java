@@ -9,12 +9,7 @@ import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
-/**
- * This record represents a solution to a clustering problem. Its
- * {@link #getNumberOfClusters()} method assumes that the
- * {@link #assignment cluster assignment} is stored in
- * {@link ClusteringJob#normalizeClusters(int[]) normalized form}.
- */
+/**This record represents a solution to a clustering problem. */
 public class ClusteringSolution implements IClusteringResult,
     Comparable<ClusteringSolution>, ITextable {
 
@@ -129,11 +124,5 @@ public class ClusteringSolution implements IClusteringResult,
     return HashUtils.combineHashes(//
         Arrays.hashCode(this.assignment), //
         HashUtils.hashCode(this.quality));
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final int getNumberOfClusters() {
-    return (this.assignment[this.assignment.length - 1] + 1);
   }
 }
