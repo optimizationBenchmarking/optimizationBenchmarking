@@ -1,7 +1,6 @@
 package examples.org.optimizationBenchmarking.utils.ml.fitting;
 
 import java.nio.file.Path;
-import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
@@ -9,6 +8,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.ml.fitting.impl.lssimplex.LSSimplexFitter;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IFunctionFitter;
+import org.optimizationBenchmarking.utils.parallel.Execute;
 import org.optimizationBenchmarking.utils.parsers.LoggerParser;
 
 /** The examples for fitting. */
@@ -29,7 +29,6 @@ public class FittingExamples {
    */
   @SuppressWarnings("rawtypes")
   public static final void main(final String[] args) throws Exception {
-    final ForkJoinPool pool;
     final ArrayListView<FittingExampleDataset> data;
     final Path dest;
     final Future[] wait;
@@ -38,24 +37,17 @@ public class FittingExamples {
 
     logger = LoggerParser.INSTANCE.parseString("global;ALL");//$NON-NLS-1$
 
-    pool = new ForkJoinPool(
-        Math.max(1, Runtime.getRuntime().availableProcessors() - 1));
-    data = pool
-        .submit(
-            new FittingExampleDatasets(logger, false, false, true, true))
-        .get();
+    data = Execute.submitToCommonPool(new FittingExampleDatasets(//
+        logger, false, false, true, true)).get();
 
     dest = PathUtils.createPathInside(PathUtils.getTempDir(), "results"); //$NON-NLS-1$
     i = FittingExamples.FITTERS.size();
     wait = new Future[i];
     for (; (--i) >= 0;) {
-      wait[i] = pool.submit(new _FitterJob(logger,
+      wait[i] = Execute.submitToCommonPool(new _FitterJob(logger,
           FittingExamples.FITTERS.get(i), data, dest));
     }
-    pool.shutdown();
-    for (i = wait.length; (--i) >= 0;) {
-      wait[i].get();
-    }
+    Execute.join(wait);
   }
 
 }

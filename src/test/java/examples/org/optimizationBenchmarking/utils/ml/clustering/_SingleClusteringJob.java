@@ -41,7 +41,7 @@ final class _SingleClusteringJob
   @Override
   public final SingleClusteringOutcome call() {
     final IClusteringResult cr;
-    int diff, index;
+    int diff, index, max, min;
     final long start, end;
 
     start = System.nanoTime();
@@ -51,13 +51,24 @@ final class _SingleClusteringJob
 
     diff = 0;
     index = (-1);
+    min = Integer.MAX_VALUE;
+    max = Integer.MIN_VALUE;
     for (final int a : cr.getClustersRef()) {
       if (a != this.m_ds.clusters[++index]) {
         diff++;
       }
+      if (a < min) {
+        min = a;
+      }
+      if (a > max) {
+        max = a;
+      }
     }
 
-    return new SingleClusteringOutcome(diff, cr,
-        Math.max(0L, (end - start)));
+    return new SingleClusteringOutcome(cr, //
+        Math.max(0L, (end - start)), //
+        (diff / ((double) (this.m_ds.clusters.length))), //
+        ((((max - min) + 1) - this.m_ds.classes)
+            / ((double) (this.m_ds.classes))));
   }
 }

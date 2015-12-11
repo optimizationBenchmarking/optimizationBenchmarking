@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.ml.clustering.impl.ref;
+package org.optimizationBenchmarking.utils.ml.clustering.impl.abstr;
 
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusteringJobBuilder;

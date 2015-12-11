@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.ml.fitting.impl.ref;
+package org.optimizationBenchmarking.utils.ml.fitting.impl.abstr;
 
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.text.DoubleConstantParameters;

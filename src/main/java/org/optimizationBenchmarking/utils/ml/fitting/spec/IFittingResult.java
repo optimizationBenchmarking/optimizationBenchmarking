@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.ml.fitting.spec;
 
-import org.optimizationBenchmarking.utils.ml.fitting.impl.ref.FunctionFitter;
+import org.optimizationBenchmarking.utils.ml.fitting.impl.abstr.FunctionFitter;
 
 /** The result of a fitting process. */
 public interface IFittingResult {

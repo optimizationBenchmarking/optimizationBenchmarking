@@ -11,16 +11,15 @@ import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
-import org.optimizationBenchmarking.utils.text.ITextable;
+import org.optimizationBenchmarking.utils.text.Textable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * An class which can be used to store and re-use configurations for
  * creating graphics.
  */
-public class GraphicConfiguration implements ITextable {
+public class GraphicConfiguration extends Textable {
 
   /** the minimum allowed dpi */
   private static final int MIN_DPI = 26;
@@ -59,8 +58,8 @@ public class GraphicConfiguration implements ITextable {
   protected GraphicConfiguration(final GraphicConfiguration copy) {
     super();
 
-    GraphicConfiguration._checkDriver(this.m_driver = copy
-        .getGraphicDriver());
+    GraphicConfiguration
+        ._checkDriver(this.m_driver = copy.getGraphicDriver());
 
     this.m_colorModel = copy.m_colorModel;
     if (this.m_colorModel != null) {
@@ -270,16 +269,6 @@ public class GraphicConfiguration implements ITextable {
       builder.setLogger(logger);
     }
     return builder.create();
-  }
-
-  /** to string */
-  @Override
-  public final String toString() {
-    final MemoryTextOutput mto;
-
-    mto = new MemoryTextOutput();
-    this.toText(mto);
-    return mto.toString();
   }
 
   /** to string */

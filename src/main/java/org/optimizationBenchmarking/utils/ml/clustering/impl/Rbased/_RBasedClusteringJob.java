@@ -6,9 +6,9 @@ import org.optimizationBenchmarking.utils.io.StreamLineIterator;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.R.R;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.R.REngine;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.ref.ClusteringJob;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.ref.ClusteringJobBuilder;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.ref.ClusteringSolution;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringJob;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringJobBuilder;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringSolution;
 
 /** The {@code R}-based clustering job. */
 final class _RBasedClusteringJob extends ClusteringJob {

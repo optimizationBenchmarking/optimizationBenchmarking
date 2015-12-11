@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.ml.fitting.impl.ref;
+package org.optimizationBenchmarking.utils.ml.fitting.impl.abstr;
 
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IFunctionFitter;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;

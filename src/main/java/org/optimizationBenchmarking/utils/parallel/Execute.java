@@ -174,14 +174,25 @@ public final class Execute {
    *
    * @param tasks
    *          the tasks to wait for
-   * @param <X>
-   *          the data type of the destination array's elements
    * @param <Y>
    *          the result type of the future tasks
    */
-  public static final <X, Y extends X> void join(
-      final Iterable<Future<Y>> tasks) {
+  public static final <Y> void join(final Iterable<Future<Y>> tasks) {
     Execute.join(tasks, null, 0, true);
+  }
+
+  /**
+   * Wait for a set of {@code tasks} to complete while ignoring their
+   * results.
+   *
+   * @param tasks
+   *          the tasks to wait for
+   * @param <Y>
+   *          the result type of the future tasks
+   */
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public static final <Y> void join(final Future... tasks) {
+    Execute.join(new ArrayIterator(tasks));
   }
 
   /**

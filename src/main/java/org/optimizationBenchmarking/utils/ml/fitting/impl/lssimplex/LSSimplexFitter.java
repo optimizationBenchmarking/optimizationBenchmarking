@@ -1,8 +1,8 @@
 package org.optimizationBenchmarking.utils.ml.fitting.impl.lssimplex;
 
-import org.optimizationBenchmarking.utils.ml.fitting.impl.ref.FittingJob;
-import org.optimizationBenchmarking.utils.ml.fitting.impl.ref.FittingJobBuilder;
-import org.optimizationBenchmarking.utils.ml.fitting.impl.ref.FunctionFitter;
+import org.optimizationBenchmarking.utils.ml.fitting.impl.abstr.FittingJob;
+import org.optimizationBenchmarking.utils.ml.fitting.impl.abstr.FittingJobBuilder;
+import org.optimizationBenchmarking.utils.ml.fitting.impl.abstr.FunctionFitter;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /**

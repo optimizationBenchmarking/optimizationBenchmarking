@@ -5,44 +5,28 @@ import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.QRDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+import org.optimizationBenchmarking.utils.ml.fitting.spec.FittingEvaluation;
 
 /** The internal evaluation. */
-final class _InternalEvaluation implements Evaluation {
+final class _InternalEvaluation extends FittingEvaluation
+    implements Evaluation {
 
   /** the jacobian */
-  private final RealMatrix m_jacobian;
+  RealMatrix m_jacobian;
   /** the residuals */
-  private final RealVector m_residuals;
+  RealVector m_residuals;
   /** the point */
   private final RealVector m_point;
-  /** the cost */
-  private final double m_cost;
-  /** the root-mean-square error */
-  private final double m_rms;
 
   /**
    * create the internal evaluation
    *
-   * @param jacobian
-   *          the jacobian
-   * @param residuals
-   *          the residuals
    * @param point
    *          the point
-   * @param cost
-   *          the cost
-   * @param rms
-   *          the root-mean-square error
    */
-  _InternalEvaluation(final RealMatrix jacobian,
-      final RealVector residuals, final RealVector point,
-      final double cost, final double rms) {
+  _InternalEvaluation(final RealVector point) {
     super();
-    this.m_jacobian = jacobian;
     this.m_point = point;
-    this.m_residuals = residuals;
-    this.m_cost = cost;
-    this.m_rms = rms;
   }
 
   /** {@inheritDoc} */
@@ -94,12 +78,12 @@ final class _InternalEvaluation implements Evaluation {
   /** {@inheritDoc} */
   @Override
   public final double getRMS() {
-    return this.m_rms;
+    return this.rmsError;
   }
 
   /** {@inheritDoc} */
   @Override
   public final double getCost() {
-    return this.m_cost;
+    return this.rsError;
   }
 }

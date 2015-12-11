@@ -71,6 +71,8 @@ public final class ClusteringExamples {
 
     System.out.println();
     System.out.println();
+    System.out.println("================== MEAN ==================="); //$NON-NLS-1$
+    System.out.println();
     System.out.print("clusterer");//$NON-NLS-1$
     for (final ClusteringExampleDataset ds : datasets) {
       System.out.print('\t');
@@ -82,12 +84,29 @@ public final class ClusteringExamples {
       System.out.print(oc.clusterer.toString());
       for (final MultiClusteringOutcome mco : oc.outcomes) {
         System.out.print('\t');
-        System.out.print(mco.totalDifference);
-        System.out.print('/');
-        System.out.print(mco.totalRuntime);
+        System.out.print(mco.mean);
       }
       System.out.println();
     }
 
+    System.out.println();
+    System.out.println();
+    System.out.println("================== STDDEV ==================="); //$NON-NLS-1$
+    System.out.println();
+    System.out.print("clusterer");//$NON-NLS-1$
+    for (final ClusteringExampleDataset ds : datasets) {
+      System.out.print('\t');
+      System.out.print(ds.name);
+    }
+    System.out.println();
+
+    for (final ClustererOutcome oc : outcomes) {
+      System.out.print(oc.clusterer.toString());
+      for (final MultiClusteringOutcome mco : oc.outcomes) {
+        System.out.print('\t');
+        System.out.print(mco.stddev);
+      }
+      System.out.println();
+    }
   }
 }

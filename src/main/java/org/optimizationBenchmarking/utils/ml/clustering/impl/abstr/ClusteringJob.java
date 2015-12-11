@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.ml.clustering.impl.ref;
+package org.optimizationBenchmarking.utils.ml.clustering.impl.abstr;
 
 import java.util.Arrays;
 

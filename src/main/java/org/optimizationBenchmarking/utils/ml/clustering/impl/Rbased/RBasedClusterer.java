@@ -1,8 +1,8 @@
 package org.optimizationBenchmarking.utils.ml.clustering.impl.Rbased;
 
-import org.optimizationBenchmarking.utils.ml.clustering.impl.ref.Clusterer;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.ref.ClusteringJob;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.ref.ClusteringJobBuilder;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.Clusterer;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringJob;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringJobBuilder;
 
 /** The {@code R}-based clustering engine. */
 public final class RBasedClusterer extends Clusterer {

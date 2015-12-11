@@ -5,9 +5,8 @@ import java.util.Map;
 
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
-import org.optimizationBenchmarking.utils.text.ITextable;
+import org.optimizationBenchmarking.utils.text.Textable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * A basic implementation of the {@link java.util.Map.Entry} interface
@@ -19,8 +18,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * @param <V>
  *          the value type
  */
-public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
-    Serializable, Cloneable, ITextable {
+public abstract class BasicMapEntry<K, V> extends Textable
+    implements Map.Entry<K, V>, Serializable, Cloneable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -63,7 +62,7 @@ public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
   @Override
   public int hashCode() {
     return (HashUtils.hashCode(this.getKey()) ^ //
-    HashUtils.hashCode(this.getValue()));
+        HashUtils.hashCode(this.getValue()));
   }
 
   /** {@inheritDoc} */
@@ -81,11 +80,11 @@ public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
       e = ((Map.Entry) o);
 
       return ((((o1 = this.getKey()) == null)//
-      ? (e.getKey() == null)//
+          ? (e.getKey() == null)//
           : (o1.equals(e.getKey()))) && //
-      (((o1 = this.getValue()) == null)//
-      ? (e.getValue() == null)//
-          : (o1.equals(e.getValue()))));
+          (((o1 = this.getValue()) == null)//
+              ? (e.getValue() == null)//
+              : (o1.equals(e.getValue()))));
     }
 
     return false;
@@ -97,15 +96,6 @@ public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
     textOut.append(this.getKey());
     textOut.append('=');
     textOut.append(this.getValue());
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String toString() {
-    final MemoryTextOutput mo;
-    mo = new MemoryTextOutput(64);
-    this.toText(mo);
-    return mo.toString();
   }
 
   /** {@inheritDoc} */

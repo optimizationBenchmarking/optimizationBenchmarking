@@ -5,6 +5,7 @@ import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.math.statistics.aggregate.StandardDeviationAggregate;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusterer;
 import org.optimizationBenchmarking.utils.parallel.Execute;
 
@@ -48,8 +49,8 @@ final class _MultiClusteringJob
   public final MultiClusteringOutcome call() {
     final Future<SingleClusteringOutcome>[] futures;
     final SingleClusteringOutcome[] results;
+    final StandardDeviationAggregate rt, df, cl;
     int index;
-    long total, runtime;
 
     index = _MultiClusteringJob.RUNS;
     futures = new Future[index];
@@ -60,13 +61,20 @@ final class _MultiClusteringJob
     results = new SingleClusteringOutcome[futures.length];
     Execute.join(futures, results, 0, true);
 
-    total = runtime = 0L;
+    rt = new StandardDeviationAggregate();
+    df = new StandardDeviationAggregate();
+    cl = new StandardDeviationAggregate();
     for (final SingleClusteringOutcome oc : results) {
-      total += oc.differences;
-      runtime += oc.runtime;
+      rt.append(oc.runtime);
+      df.append(oc.assignmentError);
+      cl.append(oc.clusterNumError);
     }
 
-    return new MultiClusteringOutcome(new ArrayListView<>(results), total,
-        this.m_ds, runtime);
+    return new MultiClusteringOutcome(new ArrayListView<>(results), //
+        this.m_ds, //
+        new Errors(rt.getArithmeticMean().doubleValue(), //
+            df.getArithmeticMean().doubleValue(), //
+            cl.getArithmeticMean().doubleValue()), //
+        new Errors(rt.doubleValue(), df.doubleValue(), cl.doubleValue()));
   }
 }

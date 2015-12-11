@@ -3,8 +3,8 @@ package org.optimizationBenchmarking.utils.ml.fitting.models;
 import java.util.Random;
 
 import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.math.PolynomialFitter;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add3;
+import org.optimizationBenchmarking.utils.math.Polynomials;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.AddN;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
@@ -28,8 +28,8 @@ public final class QuadraticModel extends ParametricUnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double value(final double x, final double[] parameters) {
-    return Add3.INSTANCE.computeAsDouble(parameters[0],
-        (parameters[1] * x), (parameters[2] * x * x));
+    return AddN.destructiveSum(parameters[0], (parameters[1] * x),
+        (parameters[2] * x * x));
   }
 
   /** {@inheritDoc} */
@@ -75,18 +75,18 @@ public final class QuadraticModel extends ParametricUnaryFunction {
   public final void mathRender(final IMath out,
       final IParameterRenderer renderer, final IMathRenderable x) {
     try (final IMath add = out.add()) {
-      renderer.renderParameter(0, out);
+      renderer.renderParameter(0, add);
 
       try (final IMath add2 = add.add()) {
         try (final IMath mul = add2.mul()) {
-          renderer.renderParameter(1, out);
+          renderer.renderParameter(1, mul);
           x.mathRender(mul, renderer);
         }
 
-        try (final IMath add3 = add2.add()) {
-          try (final IMath mul = add3.mul()) {
-            renderer.renderParameter(2, out);
-            x.mathRender(mul, renderer);
+        try (final IMath mul = add2.mul()) {
+          renderer.renderParameter(2, mul);
+          try (final IMath sqr = mul.sqr()) {
+            x.mathRender(sqr, renderer);
           }
         }
       }
@@ -111,7 +111,7 @@ public final class QuadraticModel extends ParametricUnaryFunction {
     @Override
     protected final boolean guess(final double[] points,
         final double[] dest, final Random random) {
-      return PolynomialFitter.findCoefficientsDegree2(points[0], points[1],
+      return Polynomials.degree2FindCoefficients(points[0], points[1],
           points[2], points[3], points[4], points[5], dest);
     }
 
@@ -121,12 +121,12 @@ public final class QuadraticModel extends ParametricUnaryFunction {
         final double[] dest, final Random random) {
       switch (points.length) {
         case 2: {
-          return PolynomialFitter.findCoefficientsDegree0(points[0],
-              points[1], dest);
+          return Polynomials.degree0FindCoefficients(points[0], points[1],
+              dest);
         }
         case 4: {
-          return PolynomialFitter.findCoefficientsDegree1(points[0],
-              points[1], points[2], points[3], dest);
+          return Polynomials.degree1FindCoefficients(points[0], points[1],
+              points[2], points[3], dest);
         }
         default: {
           this.fallback(dest, random);

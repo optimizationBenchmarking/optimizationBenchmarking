@@ -4,12 +4,11 @@ import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.ISequenceable;
-import org.optimizationBenchmarking.utils.text.ITextable;
+import org.optimizationBenchmarking.utils.text.Textable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** a label implementation */
-public class Label implements ILabel, ISequenceable, ITextable {
+public class Label extends Textable implements ILabel, ISequenceable {
 
   /** the label type */
   final ELabelType m_type;
@@ -135,15 +134,4 @@ public class Label implements ILabel, ISequenceable, ITextable {
       textOut.append(']');
     }
   }
-
-  /** {@inheritDoc} */
-  @Override
-  public final String toString() {
-    final MemoryTextOutput mto;
-
-    mto = new MemoryTextOutput(128);
-    this.toText(mto);
-    return mto.toString();
-  }
-
 }

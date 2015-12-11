@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.ref.ClusteringJob;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringJob;
 
 import test.junit.TestBase;
 

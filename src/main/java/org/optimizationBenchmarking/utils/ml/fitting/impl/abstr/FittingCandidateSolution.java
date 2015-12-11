@@ -1,16 +1,15 @@
-package org.optimizationBenchmarking.utils.ml.fitting.impl.ref;
+package org.optimizationBenchmarking.utils.ml.fitting.impl.abstr;
 
 import java.util.Arrays;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
-import org.optimizationBenchmarking.utils.text.ITextable;
+import org.optimizationBenchmarking.utils.text.Textable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A candidate solution of the fitting process. */
-public class FittingCandidateSolution
-    implements ITextable, Comparable<FittingCandidateSolution> {
+public class FittingCandidateSolution extends Textable
+    implements Comparable<FittingCandidateSolution> {
 
   /** the fitting solution */
   public final double[] solution;
@@ -20,7 +19,7 @@ public class FittingCandidateSolution
 
   /**
    * Create the fitting candidate solution
-   * 
+   *
    * @param parameterCount
    *          the number of parameters
    */
@@ -40,13 +39,13 @@ public class FittingCandidateSolution
 
   /** {@inheritDoc} */
   @Override
-  public void toText(ITextOutput textOut) {
+  public void toText(final ITextOutput textOut) {
     char x;
 
     textOut.append(this.quality);
     textOut.append(':');
     x = '[';
-    for (double d : this.solution) {
+    for (final double d : this.solution) {
       textOut.append(x);
       textOut.append(d);
       x = ',';
@@ -68,18 +67,8 @@ public class FittingCandidateSolution
 
   /** {@inheritDoc} */
   @Override
-  public final String toString() {
-    final MemoryTextOutput mto;
-
-    mto = new MemoryTextOutput();
-    this.toText(mto);
-    return mto.toString();
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public final int compareTo(final FittingCandidateSolution o) {
-    final int max;
+    final int l1, l2;
     int res, index;
 
     if (o == this) {
@@ -93,26 +82,32 @@ public class FittingCandidateSolution
       return res;
     }
 
-    max = Math.min(this.solution.length, o.solution.length);
-    if (max > 0) {
-      index = (-1);
-      for (double d : this.solution) {
-        res = EComparison.compareDoubles(d, o.solution[++index]);
-        if (res != 0) {
-          return res;
-        }
-        if (index >= max) {
-          break;
-        }
+    l1 = this.solution.length;
+    l2 = o.solution.length;
+    if (l1 < l2) {
+      return -1;
+    }
+    if (l1 > l2) {
+      return 1;
+    }
+
+    index = (-1);
+    for (final double d : this.solution) {
+      res = EComparison.compareDoubles(d, o.solution[++index]);
+      if (res != 0) {
+        return res;
+      }
+      if (index >= l1) {
+        break;
       }
     }
 
-    return Integer.compare(this.solution.length, o.solution.length);
+    return 0;
   }
 
   /**
    * Copy the contents of another candidate solution into this record
-   * 
+   *
    * @param other
    *          the other solution
    */

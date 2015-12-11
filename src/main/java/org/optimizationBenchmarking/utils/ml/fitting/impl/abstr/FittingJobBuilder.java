@@ -1,7 +1,9 @@
-package org.optimizationBenchmarking.utils.ml.fitting.impl.ref;
+package org.optimizationBenchmarking.utils.ml.fitting.impl.abstr;
 
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.ml.fitting.quality.FittingQualityMeasure;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IFittingJobBuilder;
+import org.optimizationBenchmarking.utils.ml.fitting.spec.IFittingQualityMeasure;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.ParametricUnaryFunction;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
 
@@ -19,6 +21,9 @@ public class FittingJobBuilder
   /** a function to fit */
   private ParametricUnaryFunction m_function;
 
+  /** the fitting quality measure */
+  private IFittingQualityMeasure m_measure;
+
   /**
    * create
    *
@@ -33,8 +38,17 @@ public class FittingJobBuilder
   /** {@inheritDoc} */
   @Override
   public final FittingJobBuilder setPoints(final IMatrix points) {
-    FittingJobBuilder._validateData(points);
+    FittingQualityMeasure.validateData(points);
     this.m_points = points;
+    return this;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final FittingJobBuilder setQualityMeasure(
+      final IFittingQualityMeasure measure) {
+    FittingJobBuilder.validateMeasure(measure);
+    this.m_measure = measure;
     return this;
   }
 
@@ -57,24 +71,12 @@ public class FittingJobBuilder
   }
 
   /**
-   * Validate the data matrix
+   * Get the fitting quality measure
    *
-   * @param points
-   *          the matrix' points
+   * @return the fitting quality measure
    */
-  static final void _validateData(final IMatrix points) {
-    if (points == null) {
-      throw new IllegalArgumentException("Cannot set points to null."); //$NON-NLS-1$
-    }
-    if (points.m() <= 0) {
-      throw new IllegalArgumentException(
-          "Cannot set empty set of points.");//$NON-NLS-1$
-    }
-    if (points.n() != 2) {
-      throw new IllegalArgumentException(
-          "Point matrix must have n=2, but has n="//$NON-NLS-1$
-              + points.n());
-    }
+  public final IFittingQualityMeasure getQualityMeasure() {
+    return this.m_measure;
   }
 
   /**
@@ -83,10 +85,25 @@ public class FittingJobBuilder
    * @param func
    *          the function to fit
    */
-  static final void _validateFunction(final ParametricUnaryFunction func) {
+  public static final void validateFunction(
+      final ParametricUnaryFunction func) {
     if (func == null) {
       throw new IllegalArgumentException(
           "Cannot set function to fit to null."); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * Validate the fitting quality measure to fit
+   *
+   * @param measure
+   *          the quality measure
+   */
+  public static final void validateMeasure(
+      final IFittingQualityMeasure measure) {
+    if (measure == null) {
+      throw new IllegalArgumentException(
+          "Cannot set fitting quality measure to null."); //$NON-NLS-1$
     }
   }
 
@@ -94,7 +111,7 @@ public class FittingJobBuilder
   @Override
   public final FittingJobBuilder setFunctionToFit(
       final ParametricUnaryFunction func) {
-    FittingJobBuilder._validateFunction(func);
+    FittingJobBuilder.validateFunction(func);
     this.m_function = func;
     return this;
   }
@@ -103,8 +120,9 @@ public class FittingJobBuilder
   @Override
   protected void validate() {
     super.validate();
-    FittingJobBuilder._validateData(this.m_points);
-    FittingJobBuilder._validateFunction(this.m_function);
+    FittingQualityMeasure.validateData(this.m_points);
+    FittingJobBuilder.validateFunction(this.m_function);
+    FittingJobBuilder.validateMeasure(this.m_measure);
   }
 
   /** {@inheritDoc} */

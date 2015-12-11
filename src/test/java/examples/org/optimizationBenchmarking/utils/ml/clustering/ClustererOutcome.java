@@ -4,39 +4,28 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusterer;
 
 /** an outcome for a clusterer */
-public final class ClustererOutcome {
-
-  /** the single outcomes */
-  public final ArrayListView<MultiClusteringOutcome> outcomes;
-
-  /** the total difference */
-  public final long totalDifference;
+public final class ClustererOutcome
+    extends _MultiOutcome<MultiClusteringOutcome> {
 
   /** the clusterer */
   public final IClusterer clusterer;
-
-  /** the runtime */
-  public final long totalRuntime;
 
   /**
    * create
    *
    * @param _outcomes
    *          the outcomes
-   * @param _totalDifference
-   *          the total difference
    * @param _clusterer
    *          the clusterer
-   * @param _totalRuntime
-   *          the total runtime
+   * @param _mean
+   *          the mean error
+   * @param _stddev
+   *          the error standard deviation
    */
   ClustererOutcome(final ArrayListView<MultiClusteringOutcome> _outcomes,
-      final long _totalDifference, final IClusterer _clusterer,
-      final long _totalRuntime) {
-    super();
-    this.outcomes = _outcomes;
-    this.totalDifference = _totalDifference;
+      final IClusterer _clusterer, final Errors _mean,
+      final Errors _stddev) {
+    super(_outcomes, _mean, _stddev);
     this.clusterer = _clusterer;
-    this.totalRuntime = _totalRuntime;
   }
 }

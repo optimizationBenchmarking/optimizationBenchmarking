@@ -1,17 +1,16 @@
-package org.optimizationBenchmarking.utils.ml.clustering.impl.ref;
+package org.optimizationBenchmarking.utils.ml.clustering.impl.abstr;
 
 import java.util.Arrays;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusteringResult;
-import org.optimizationBenchmarking.utils.text.ITextable;
+import org.optimizationBenchmarking.utils.text.Textable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
-/**This record represents a solution to a clustering problem. */
-public class ClusteringSolution implements IClusteringResult,
-    Comparable<ClusteringSolution>, ITextable {
+/** This record represents a solution to a clustering problem. */
+public class ClusteringSolution extends Textable
+    implements IClusteringResult, Comparable<ClusteringSolution> {
 
   /** the assignment of data rows to clusters */
   public final int[] assignment;
@@ -106,16 +105,6 @@ public class ClusteringSolution implements IClusteringResult,
           && (Arrays.equals(this.assignment, s.assignment)));
     }
     return false;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final String toString() {
-    final MemoryTextOutput mto;
-
-    mto = new MemoryTextOutput();
-    this.toText(mto);
-    return mto.toString();
   }
 
   /** {@inheritDoc} */

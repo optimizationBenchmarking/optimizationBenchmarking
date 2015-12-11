@@ -8,19 +8,20 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
-import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.TextUtils;
+import org.optimizationBenchmarking.utils.text.Textable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * The base class for evaluation jobs.
  *
- * @param <DT>
+ * @param
+ *          <DT>
  *          the data type
  */
-public abstract class EvaluationJob<DT extends IElementSet> implements
-    IEvaluationJob, ITextable {
+public abstract class EvaluationJob<DT extends IElementSet>
+    extends Textable implements IEvaluationJob {
 
   /** the initial state */
   private static final int STATE_NOTHING = 0;
@@ -28,32 +29,38 @@ public abstract class EvaluationJob<DT extends IElementSet> implements
    * we are before calling
    * {@link #doInitialize(IElementSet, IDocument, Logger)}
    */
-  private static final int STATE_BEFORE_INIT = (EvaluationJob.STATE_NOTHING + 1);
+  private static final int STATE_BEFORE_INIT = (EvaluationJob.STATE_NOTHING
+      + 1);
   /**
    * we are after calling
    * {@link #doInitialize(IElementSet, IDocument, Logger)}
    */
-  private static final int STATE_AFTER_INIT = (EvaluationJob.STATE_BEFORE_INIT + 1);
+  private static final int STATE_AFTER_INIT = (EvaluationJob.STATE_BEFORE_INIT
+      + 1);
   /**
    * we are before calling
    * {@link #doSummary(IElementSet, IPlainText, Logger)}
    */
-  private static final int STATE_BEFORE_SUMMARY = (EvaluationJob.STATE_AFTER_INIT + 1);
+  private static final int STATE_BEFORE_SUMMARY = (EvaluationJob.STATE_AFTER_INIT
+      + 1);
   /**
    * we are after calling
    * {@link #doSummary(IElementSet, IPlainText, Logger)}
    */
-  private static final int STATE_AFTER_SUMMARY = (EvaluationJob.STATE_BEFORE_SUMMARY + 1);
+  private static final int STATE_AFTER_SUMMARY = (EvaluationJob.STATE_BEFORE_SUMMARY
+      + 1);
   /**
    * we are before calling
    * {@link #doMain(IElementSet, ISectionContainer, Logger)}
    */
-  private static final int STATE_BEFORE_MAIN = (EvaluationJob.STATE_AFTER_SUMMARY + 1);
+  private static final int STATE_BEFORE_MAIN = (EvaluationJob.STATE_AFTER_SUMMARY
+      + 1);
   /**
    * we are after calling
    * {@link #doMain(IElementSet, ISectionContainer, Logger)}
    */
-  private static final int STATE_AFTER_MAIN = (EvaluationJob.STATE_BEFORE_MAIN + 1);
+  private static final int STATE_AFTER_MAIN = (EvaluationJob.STATE_BEFORE_MAIN
+      + 1);
 
   /** the state names */
   private static final char[][] STATE_NAMES = {
@@ -63,7 +70,8 @@ public abstract class EvaluationJob<DT extends IElementSet> implements
           'g', ' ', 'd', 'o', 'I', 'n', 'i', 't', 'i', 'a', 'l', 'i', 'z',
           'e', },
       { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'a', 'l', 'l', 'i', 'n', 'g',
-          ' ', 'd', 'o', 'I', 'n', 'i', 't', 'i', 'a', 'l', 'i', 'z', 'e', },
+          ' ', 'd', 'o', 'I', 'n', 'i', 't', 'i', 'a', 'l', 'i', 'z',
+          'e', },
       { 'b', 'e', 'f', 'o', 'r', 'e', ' ', 'c', 'a', 'l', 'l', 'i', 'n',
           'g', ' ', 'd', 'o', 'S', 'u', 'm', 'm', 'a', 'r', 'y', },
       { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'a', 'l', 'l', 'i', 'n', 'g',
@@ -107,7 +115,8 @@ public abstract class EvaluationJob<DT extends IElementSet> implements
    * @param data
    *          the data
    */
-  static final void _checkData(final Object caller, final IElementSet data) {
+  static final void _checkData(final Object caller,
+      final IElementSet data) {
     final ArrayListView<?> list;
 
     if (data == null) {
@@ -144,7 +153,8 @@ public abstract class EvaluationJob<DT extends IElementSet> implements
    * @param next
    *          the next state
    */
-  private synchronized final void __step(final int expected, final int next) {
+  private synchronized final void __step(final int expected,
+      final int next) {
     final MemoryTextOutput mto;
 
     if (this.m_state != expected) {
@@ -262,14 +272,5 @@ public abstract class EvaluationJob<DT extends IElementSet> implements
       textOut.append(" on "); //$NON-NLS-1$
       textOut.append(this.m_data);
     }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final String toString() {
-    final MemoryTextOutput mto;
-    mto = new MemoryTextOutput();
-    this.toText(mto);
-    return mto.toString();
   }
 }

@@ -26,7 +26,7 @@ import org.optimizationBenchmarking.utils.ml.fitting.spec.DefaultParameterGuesse
  * the left side (small {@code x} value), one in the middle (medium
  * {@code x} value), and one on the right side (comparatively large
  * {@code x} value). We can
- * {@linkplain org.optimizationBenchmarking.utils.math.PolynomialFitter#findCoefficientsDegree2(double, double, double, double, double, double, double[])
+ * {@linkplain org.optimizationBenchmarking.utils.math.Polynomials#degree2FindCoefficients(double, double, double, double, double, double, double[])
  * compute} the exact values of {@code a}, {@code b}, and {@code c} of a
  * quadratic function going through the three points. Of course, since we
  * only took three points from the data set, our guess may be bad and

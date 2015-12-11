@@ -13,6 +13,7 @@ import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ArithmeticMeanAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileAggregate;
+import org.optimizationBenchmarking.utils.ml.fitting.quality.WeightedRootMeanSquareError;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IFittingResult;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IFunctionFitter;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.ParametricUnaryFunction;
@@ -93,7 +94,10 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
 
     runtime = System.nanoTime();
     result = this.m_fitter.use().setFunctionToFit(this.m_example.model)
-        .setPoints(this.m_example.data).create().call();
+        .setPoints(this.m_example.data)
+        .setQualityMeasure(//
+            new WeightedRootMeanSquareError(this.m_example.data))
+        .create().call();
     runtime = (System.nanoTime() - runtime);
 
     dest = PathUtils.createPathInside(this.m_root,

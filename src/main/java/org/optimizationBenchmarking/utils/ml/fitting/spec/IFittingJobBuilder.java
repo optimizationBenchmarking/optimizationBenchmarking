@@ -29,6 +29,16 @@ public interface IFittingJobBuilder extends IToolJobBuilder {
   public abstract IFittingJobBuilder setFunctionToFit(
       final ParametricUnaryFunction func);
 
+  /**
+   * Set the fitting quality measure
+   *
+   * @param measure
+   *          the fitting quality measure
+   * @return this builder
+   */
+  public abstract IFittingJobBuilder setQualityMeasure(
+      final IFittingQualityMeasure measure);
+
   /** {@inheritDoc} */
   @Override
   public abstract IFittingJob create();

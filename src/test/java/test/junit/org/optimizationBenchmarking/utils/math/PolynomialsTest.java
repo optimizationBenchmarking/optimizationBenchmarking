@@ -4,16 +4,16 @@ import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.optimizationBenchmarking.utils.math.PolynomialFitter;
+import org.optimizationBenchmarking.utils.math.Polynomials;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add3;
 
 /**
  * A test for the simple polynomial fitter
  */
-public class PolynomialFitterTest {
+public class PolynomialsTest {
 
   /** the constructor */
-  public PolynomialFitterTest() {
+  public PolynomialsTest() {
     super();
   }
 
@@ -25,7 +25,7 @@ public class PolynomialFitterTest {
    * @return the random coefficient
    */
   private static final double __random(final Random rand) {
-    switch (rand.nextInt(3)) {
+    switch (rand.nextInt(4)) {
       case 0: {
         return rand.nextDouble();
       }
@@ -55,6 +55,7 @@ public class PolynomialFitterTest {
   }
 
   /** test random polynomials of degree 1 */
+  @SuppressWarnings("incomplete-switch")
   @Test(timeout = 3600000)
   public void testRandom1() {
     final Random rand;
@@ -65,20 +66,36 @@ public class PolynomialFitterTest {
     rand = new Random();
     res = new double[2];
     for (i = 100000; (--i) >= 0;) {
-      a0 = PolynomialFitterTest.__random(rand);
-      a1 = PolynomialFitterTest.__random(rand);
+      a0 = PolynomialsTest.__random(rand);
+      a1 = PolynomialsTest.__random(rand);
 
-      x0 = PolynomialFitterTest.__random(rand);
+      switch (i) {
+        case 0: {
+          a0 = a1 = 0d;
+          break;
+        }
+        case 1: {
+          a0 = 0d;
+          break;
+        }
+        case 2: {
+          a1 = 0d;
+          break;
+        }
+      }
+
+      x0 = PolynomialsTest.__random(rand);
       do {
-        x1 = PolynomialFitterTest.__random(rand);
-      } while (PolynomialFitterTest.__similar(x1, x0));
+        x1 = PolynomialsTest.__random(rand);
+      } while (PolynomialsTest.__similar(x1, x0));
 
-      PolynomialFitter.findCoefficientsDegree1(//
-          x0, PolynomialFitterTest.__poly1(a0, a1, x0), //
-          x1, PolynomialFitterTest.__poly1(a0, a1, x1), //
+      Polynomials.degree1FindCoefficients(//
+          x0, PolynomialsTest.__poly1(a0, a1, x0), //
+          x1, PolynomialsTest.__poly1(a0, a1, x1), //
           res);
 
-      delta = (Math.max(Math.abs(a0), Math.abs(a1)) * 1e-8d);
+      delta = (Math.max(Math.max(Double.MIN_NORMAL, Math.abs(a0)),
+          Math.abs(a1)) * 1e-8d);
       Assert.assertEquals(a0, res[0], delta);
       Assert.assertEquals(a1, res[1], delta);
     }
@@ -145,9 +162,9 @@ public class PolynomialFitterTest {
       final double y0, final double x1, final double y1, final double x2,
       final double y2, final double a0, final double a1, final double a2) {
     return Add3.INSTANCE.computeAsDouble(//
-        Math.abs(y0 - PolynomialFitterTest.__poly2(a0, a1, a2, x0)), //
-        Math.abs(y1 - PolynomialFitterTest.__poly2(a0, a1, a2, x1)), //
-        Math.abs(y2 - PolynomialFitterTest.__poly2(a0, a1, a2, x2)));//
+        Math.abs(y0 - PolynomialsTest.__poly2(a0, a1, a2, x0)), //
+        Math.abs(y1 - PolynomialsTest.__poly2(a0, a1, a2, x1)), //
+        Math.abs(y2 - PolynomialsTest.__poly2(a0, a1, a2, x2)));//
   }
 
   /**
@@ -169,6 +186,7 @@ public class PolynomialFitterTest {
   }
 
   /** test random polynomials of degree 2 */
+  @SuppressWarnings("incomplete-switch")
   @Test(timeout = 3600000)
   public void testRandom2() {
     final Random rand;
@@ -179,30 +197,62 @@ public class PolynomialFitterTest {
     rand = new Random();
     res = new double[3];
     for (i = 100000; (--i) >= 0;) {
-      a0 = PolynomialFitterTest.__random(rand);
-      a1 = PolynomialFitterTest.__random(rand);
-      a2 = PolynomialFitterTest.__random(rand);
 
-      x0 = PolynomialFitterTest.__random(rand);
-      do {
-        x1 = PolynomialFitterTest.__random(rand);
-      } while (PolynomialFitterTest.__similar(x1, x0));
-      do {
-        x2 = PolynomialFitterTest.__random(rand);
-      } while (PolynomialFitterTest.__similar(x2, x0)
-          || PolynomialFitterTest.__similar(x2, x1));
+      a0 = PolynomialsTest.__random(rand);
+      a1 = PolynomialsTest.__random(rand);
+      a2 = PolynomialsTest.__random(rand);
 
-      PolynomialFitter.findCoefficientsDegree2(//
-          x0, y0 = PolynomialFitterTest.__poly2(a0, a1, a2, x0), //
-          x1, y1 = PolynomialFitterTest.__poly2(a0, a1, a2, x1), //
-          x2, y2 = PolynomialFitterTest.__poly2(a0, a1, a2, x2), //
+      switch (i) {
+        case 0: {
+          a0 = a1 = a2 = 0d;
+          break;
+        }
+        case 1: {
+          a0 = a1 = 0d;
+          break;
+        }
+        case 2: {
+          a1 = a2 = 0d;
+          break;
+        }
+        case 3: {
+          a0 = a2 = 0d;
+          break;
+        }
+        case 4: {
+          a0 = 0d;
+          break;
+        }
+        case 5: {
+          a1 = 0d;
+          break;
+        }
+        case 6: {
+          a2 = 0d;
+          break;
+        }
+      }
+
+      x0 = PolynomialsTest.__random(rand);
+      do {
+        x1 = PolynomialsTest.__random(rand);
+      } while (PolynomialsTest.__similar(x1, x0));
+      do {
+        x2 = PolynomialsTest.__random(rand);
+      } while (PolynomialsTest.__similar(x2, x0)
+          || PolynomialsTest.__similar(x2, x1));
+
+      Polynomials.degree2FindCoefficients(//
+          x0, y0 = PolynomialsTest.__poly2(a0, a1, a2, x0), //
+          x1, y1 = PolynomialsTest.__poly2(a0, a1, a2, x1), //
+          x2, y2 = PolynomialsTest.__poly2(a0, a1, a2, x2), //
           res);
 
       Assert.assertTrue(//
-          PolynomialFitterTest.__errorDegree2(x0, y0, x1, y1, x2, y2,
-              res[0], res[1], res[2]) < //
-              (1e-9d * Math.max(Math.abs(y0),
-                  Math.max(Math.abs(y1), Math.abs(y2)))));
+          PolynomialsTest.__errorDegree2(x0, y0, x1, y1, x2, y2, res[0],
+              res[1], res[2]) < //
+              (1e-9d * Math.max(Double.MIN_NORMAL, Math.max(Math.abs(y0),
+                  Math.max(Math.abs(y1), Math.abs(y2))))));
     }
   }
 

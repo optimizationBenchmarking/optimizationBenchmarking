@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.ml.fitting.impl.lssimplex;
 
-import org.optimizationBenchmarking.utils.ml.fitting.impl.ref.FittingCandidateSolution;
+import org.optimizationBenchmarking.utils.ml.fitting.impl.abstr.FittingCandidateSolution;
 
 /** an internal candidate solution */
 final class _Candidate extends FittingCandidateSolution {

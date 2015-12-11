@@ -20,6 +20,13 @@ public final class ClusteringExampleDatasets
       "simple2", //$NON-NLS-1$
       "simple3", //$NON-NLS-1$
       "simple4", //$NON-NLS-1$
+      "exp3-2", //$NON-NLS-1$
+      "exp4-2", //$NON-NLS-1$
+      "exp5-2", //$NON-NLS-1$
+      "exp6-2", //$NON-NLS-1$
+      "exp3-10", //$NON-NLS-1$
+      "exp4-10", //$NON-NLS-1$
+      "exp5-10", //$NON-NLS-1$
       "iris", //$NON-NLS-1$
   };
 

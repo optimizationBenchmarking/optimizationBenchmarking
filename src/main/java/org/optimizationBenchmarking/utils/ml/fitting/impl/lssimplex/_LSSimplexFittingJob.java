@@ -22,12 +22,9 @@ import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.NelderMeadSimplex
 import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.SimplexOptimizer;
 import org.apache.commons.math3.util.Incrementor;
 import org.optimizationBenchmarking.utils.math.MathUtils;
-import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
-import org.optimizationBenchmarking.utils.math.statistics.aggregate.StableSum;
-import org.optimizationBenchmarking.utils.ml.fitting.impl.ref.FittingJob;
-import org.optimizationBenchmarking.utils.ml.fitting.impl.ref.FittingJobBuilder;
+import org.optimizationBenchmarking.utils.ml.fitting.impl.abstr.FittingJob;
+import org.optimizationBenchmarking.utils.ml.fitting.impl.abstr.FittingJobBuilder;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IParameterGuesser;
-import org.optimizationBenchmarking.utils.ml.fitting.spec.ParametricUnaryFunction;
 
 /**
  * A function fitting job which proceeds as follows:
@@ -145,61 +142,17 @@ final class _LSSimplexFittingJob extends FittingJob
   /** {@inheritDoc} */
   @Override
   public final Evaluation evaluate(final RealVector point) {
-    final double[][] jacobian;
-    final double[] residuals;
+    final _InternalEvaluation eval;
     final double[] vector;
-    final ParametricUnaryFunction func;
-    final int numSamples, numParams;
-    final IMatrix data;
-    final double minInverseWeight;
-    final StableSum sum;
-    double[] jacobianRow;
-    double x, expectedY, inverseWeight, residual, squareErrorSum, rms;
-    int i, j;
 
+    eval = new _InternalEvaluation(point);
     vector = _LSSimplexFittingJob.__toArray(point);
+    this.m_measure.evaluate(this.m_function, vector, eval);
+    this.register(eval.quality, vector);
 
-    func = this.m_function;
-    data = this.m_data;
-    minInverseWeight = this.m_minInverseWeight;
-
-    numSamples = data.m();
-    residuals = new double[numSamples];
-    numParams = vector.length;// =func.getParameterCount();
-    jacobian = new double[numSamples][numParams];
-    sum = this.m_sum;
-
-    sum.reset();
-    for (i = numSamples; (--i) >= 0;) {
-      x = data.getDouble(i, 0);
-      expectedY = data.getDouble(i, 1);
-
-      inverseWeight = Math.abs(expectedY);
-      if (inverseWeight < minInverseWeight) {
-        inverseWeight = minInverseWeight;
-      }
-
-      residuals[i] = residual = ((expectedY - func.value(x, vector))
-          / inverseWeight);
-      sum.append(residual * residual);
-
-      jacobianRow = jacobian[i];
-      func.gradient(x, vector, jacobianRow);
-      for (j = numParams; (--j) >= 0;) {
-        jacobianRow[j] /= inverseWeight;
-      }
-    }
-
-    squareErrorSum = sum.doubleValue();
-    rms = Math.sqrt(squareErrorSum / numSamples);
-    this.register(rms, vector);
-
-    return new _InternalEvaluation(//
-        new Array2DRowRealMatrix(jacobian, false), //
-        new ArrayRealVector(residuals, false), //
-        point, //
-        Math.sqrt(squareErrorSum), //
-        rms);//
+    eval.m_jacobian = new Array2DRowRealMatrix(eval.jacobian, false);
+    eval.m_residuals = new ArrayRealVector(eval.residuals, false);
+    return eval;
   }
 
   /** {@inheritDoc} */

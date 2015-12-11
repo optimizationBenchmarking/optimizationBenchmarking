@@ -3,32 +3,26 @@ package examples.org.optimizationBenchmarking.utils.ml.clustering;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusteringResult;
 
 /** A single clustering outcome */
-public final class SingleClusteringOutcome {
+public final class SingleClusteringOutcome extends Errors {
 
   /** the clustering result */
   public final IClusteringResult result;
 
-  /** the differences */
-  public final int differences;
-
-  /** the runtime */
-  public final long runtime;
-
   /**
    * Create a single clustering outcome
    *
-   * @param _differences
-   *          the differences
    * @param _result
    *          the result
-   * @param _runtime
+   * @param rt
    *          the runtime
+   * @param as
+   *          the assignment error
+   * @param cl
+   *          the cluster count error
    */
-  SingleClusteringOutcome(final int _differences,
-      final IClusteringResult _result, final long _runtime) {
-    super();
-    this.differences = _differences;
+  SingleClusteringOutcome(final IClusteringResult _result, final double rt,
+      final double as, final double cl) {
+    super(rt, as, cl);
     this.result = _result;
-    this.runtime = _runtime;
   }
 }
