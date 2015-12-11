@@ -41,7 +41,8 @@ public abstract class Tool extends Textable implements ITool {
   /** {@inheritDoc} */
   @Override
   public boolean equals(final Object o) {
-    return ((o == this) || (o.getClass() == this.getClass()));
+    return ((o == this) || //
+        ((o != null) && (o.getClass() == this.getClass())));
   }
 
   /** {@inheritDoc} */

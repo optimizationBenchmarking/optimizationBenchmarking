@@ -126,7 +126,8 @@ public abstract class ParametricUnaryFunction implements IMathRenderable {
   /** {@inheritDoc} */
   @Override
   public boolean equals(final Object o) {
-    return ((o == this) || (o.getClass() == this.getClass()));
+    return ((o == this) || //
+        ((o != null) && (o.getClass() == this.getClass())));
   }
 
   /** {@inheritDoc} */
