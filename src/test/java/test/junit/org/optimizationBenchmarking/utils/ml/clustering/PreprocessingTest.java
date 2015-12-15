@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringJob;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringTools;
 
 import test.junit.TestBase;
 
@@ -36,7 +36,7 @@ public class PreprocessingTest extends TestBase {
         1d, 1, 0//
     }, 3, 3);
 
-    Assert.assertEquals(b, ClusteringJob.preprocess(a));
+    Assert.assertEquals(b, ClusteringTools.preprocessDataMatrix(a));
   }
 
   /** Test the pre-processing of a simple matrix */
@@ -56,7 +56,7 @@ public class PreprocessingTest extends TestBase {
         1d, 0//
     }, 3, 2);
 
-    Assert.assertEquals(b, ClusteringJob.preprocess(a));
+    Assert.assertEquals(b, ClusteringTools.preprocessDataMatrix(a));
   }
 
   /** Test the pre-processing of a simple matrix */
@@ -76,7 +76,7 @@ public class PreprocessingTest extends TestBase {
         1d, 0//
     }, 3, 2);
 
-    Assert.assertEquals(b, ClusteringJob.preprocess(a));
+    Assert.assertEquals(b, ClusteringTools.preprocessDataMatrix(a));
   }
 
   /** Test the pre-processing of a simple matrix */
@@ -96,7 +96,7 @@ public class PreprocessingTest extends TestBase {
         1d, //
     }, 3, 1);
 
-    Assert.assertEquals(b, ClusteringJob.preprocess(a));
+    Assert.assertEquals(b, ClusteringTools.preprocessDataMatrix(a));
   }
 
   /** Test the pre-processing of a simple matrix */
@@ -116,7 +116,7 @@ public class PreprocessingTest extends TestBase {
         1d, //
     }, 3, 1);
 
-    Assert.assertEquals(b, ClusteringJob.preprocess(a));
+    Assert.assertEquals(b, ClusteringTools.preprocessDataMatrix(a));
   }
 
   /** Test the pre-processing of a simple matrix */
@@ -138,7 +138,7 @@ public class PreprocessingTest extends TestBase {
         1d, 1d,//
     }, 3, 2);
 
-    Assert.assertEquals(b, ClusteringJob.preprocess(a));
+    Assert.assertEquals(b, ClusteringTools.preprocessDataMatrix(a));
   }
 
 }

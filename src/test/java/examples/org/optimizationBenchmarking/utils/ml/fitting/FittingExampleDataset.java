@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.StableSum;
@@ -22,7 +23,7 @@ public class FittingExampleDataset
   public final IMatrix data;
 
   /** the model to be fitted */
-  public final ParametricUnaryFunction model;
+  public final ArrayListView<ParametricUnaryFunction> models;
 
   /** the number of sources this data set is composed from */
   public final int sources;
@@ -34,17 +35,18 @@ public class FittingExampleDataset
    *          the name of the example data set
    * @param _data
    *          the data matrix
-   * @param _model
-   *          the model to be fitted
+   * @param _models
+   *          the models to be fitted
    * @param _sources
    *          the number of sources this data set is composed from
    */
   public FittingExampleDataset(final String _name, final IMatrix _data,
-      final ParametricUnaryFunction _model, final int _sources) {
+      final ArrayListView<ParametricUnaryFunction> _models,
+      final int _sources) {
     super();
 
     this.data = _data;
-    this.model = _model;
+    this.models = _models;
     this.sources = _sources;
     this.name = _name;
   }
@@ -53,7 +55,7 @@ public class FittingExampleDataset
   @Override
   public final String toString() {
     return this.name + ": " + //$NON-NLS-1$
-        this.model.getClass().getSimpleName() + " on " + //$NON-NLS-1$
+        this.models.toString() + " on " + //$NON-NLS-1$
         this.data.m() + " points"; //$NON-NLS-1$
   }
 
@@ -62,6 +64,8 @@ public class FittingExampleDataset
    *
    * @param dest
    *          the destination path
+   * @param model
+   *          the model to plot
    * @param fitting
    *          the fitting
    * @param quality
@@ -69,7 +73,8 @@ public class FittingExampleDataset
    * @throws IOException
    *           if i/o fails
    */
-  public final void plot(final Path dest, final double[] fitting,
+  public final void plot(final Path dest,
+      final ParametricUnaryFunction model, final double[] fitting,
       final double quality) throws IOException {
     final StableSum sum;
     final int size;
@@ -86,7 +91,7 @@ public class FittingExampleDataset
             bw.write('\t');
             bw.write(Double.toString(y = this.data.getDouble(index, 1)));
             bw.write('\t');
-            bw.write(Double.toString(calc = this.model.value(x, fitting)));
+            bw.write(Double.toString(calc = model.value(x, fitting)));
             calc = Math.abs(calc - y);
             y = Math.abs(y);
             if (y > 0d) {
@@ -114,26 +119,6 @@ public class FittingExampleDataset
         }
       }
     }
-  }
-
-  /**
-   * Get the error sum for a particular model parameter setting
-   *
-   * @param parameters
-   *          the model parameters
-   * @return the error sum
-   */
-  public final double evaluate(final double[] parameters) {
-    final StableSum sum;
-    int i;
-
-    sum = new StableSum();
-    for (i = this.data.m(); (--i) >= 0;) {
-      sum.append(
-          Math.abs(this.model.value(this.data.getDouble(i, 0), parameters)
-              - this.data.getDouble(i, 1)));
-    }
-    return sum.doubleValue();
   }
 
   /** {@inheritDoc} */

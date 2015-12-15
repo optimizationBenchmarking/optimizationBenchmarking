@@ -96,7 +96,7 @@ public final class MultiFittingJobBuilder
    *          the functions to fit
    * @return this builder
    */
-  public final MultiFittingJobBuilder setFunctions(
+  public final MultiFittingJobBuilder setFunctionsToFit(
       final Iterable<ParametricUnaryFunction> functions) {
     MultiFittingJobBuilder._validateFunctions(functions);
     this.m_functions = functions;

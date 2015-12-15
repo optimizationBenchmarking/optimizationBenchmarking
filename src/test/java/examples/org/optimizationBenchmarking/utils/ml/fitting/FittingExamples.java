@@ -38,7 +38,7 @@ public class FittingExamples {
     logger = LoggerParser.INSTANCE.parseString("global;ALL");//$NON-NLS-1$
 
     data = Execute.submitToCommonPool(new FittingExampleDatasets(//
-        logger, false, false, true, true)).get();
+        logger, false, true, true, true)).get();
 
     dest = PathUtils.createPathInside(PathUtils.getTempDir(), "results"); //$NON-NLS-1$
     i = FittingExamples.FITTERS.size();

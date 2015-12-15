@@ -5,19 +5,18 @@ import org.optimizationBenchmarking.utils.math.matrix.AbstractMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /**
- * A matrix backed by a one-dimensional {@code long} array.
+ * A square matrix whose diagonal elements are all {@code 0} and the
+ * elements below the diagonal mirror those above, backed by a
+ * one-dimensional array of {@code double}.
  */
-public final class LongMatrix1D extends AbstractMatrix
+public final class DoubleDistanceMatrix1D extends AbstractMatrix
     implements IImmutable {
 
   /** the m */
   private final int m_m;
 
-  /** the n */
-  private final int m_n;
-
   /** the data */
-  private final long[] m_data;
+  private final double[] m_data;
 
   /**
    * create the matrix
@@ -26,10 +25,8 @@ public final class LongMatrix1D extends AbstractMatrix
    *          the data
    * @param m
    *          the m
-   * @param n
-   *          the n
    */
-  public LongMatrix1D(final long[] data, final int m, final int n) {
+  public DoubleDistanceMatrix1D(final double[] data, final int m) {
     super();
 
     if ((data == null) || (data.length <= 0)) {
@@ -37,16 +34,16 @@ public final class LongMatrix1D extends AbstractMatrix
           "Matrix data must not be null and must have at least one row."); //$NON-NLS-1$
     }
 
-    if (data.length != (m * n)) {
+    if (data.length != (((m * (m - 1)) >>> 1))) {
       throw new IllegalArgumentException(//
-          ((("Matrix data must contain exactly " + (m * n) + //$NON-NLS-1$
-              " elements to facilitate an " + m) + '*') + n + //$NON-NLS-1$
-              " matrix, but contains " + data.length) + '.'); //$NON-NLS-1$
+          ((("Distance matrix data must contain exactly " + //$NON-NLS-1$
+              (((m * (m - 1)) >>> 1)) + //
+              " non-zero elements to facilitate an " + m) + '*') + //$NON-NLS-1$
+              m + " distance matrix, but contains " + data.length) + '.'); //$NON-NLS-1$
     }
 
     this.m_data = data;
     this.m_m = m;
-    this.m_n = n;
   }
 
   /** {@inheritDoc} */
@@ -58,15 +55,23 @@ public final class LongMatrix1D extends AbstractMatrix
   /** {@inheritDoc} */
   @Override
   public final int n() {
-    return this.m_n;
+    return this.m_m;
   }
 
   /** {@inheritDoc} */
   @Override
   public final double getDouble(final int row, final int column) {
     if ((row >= 0) && (row < this.m_m) && (column >= 0)
-        && (column < this.m_n)) {
-      return this.m_data[(row * this.m_n) + column];
+        && (column < this.m_m)) {
+      if (row < column) {
+        return this.m_data[(((row * this.m_m) - ((row * (row + 3)) >>> 1))
+            + column) - 1];
+      }
+      if (row > column) {
+        return this.m_data[(((column * this.m_m)
+            - ((column * (column + 3)) >>> 1)) + row) - 1];
+      }
+      return 0d;
     }
     return super.getDouble(row, column);// throw IndexOutOfBoundsException
   }
@@ -74,10 +79,17 @@ public final class LongMatrix1D extends AbstractMatrix
   /** {@inheritDoc} */
   @Override
   public final long getLong(final int row, final int column) {
-
     if ((row >= 0) && (row < this.m_m) && (column >= 0)
-        && (column < this.m_n)) {
-      return this.m_data[(row * this.m_n) + column];
+        && (column < this.m_m)) {
+      if (row < column) {
+        return ((long) (this.m_data[(((row * this.m_m)
+            - ((row * (row + 3)) >>> 1)) + column) - 1]));
+      }
+      if (row > column) {
+        return ((long) (this.m_data[(((column * this.m_m)
+            - ((column * (column + 3)) >>> 1)) + row) - 1]));
+      }
+      return 0L;
     }
     return super.getLong(row, column);// throw IndexOutOfBoundsException
   }
@@ -85,7 +97,7 @@ public final class LongMatrix1D extends AbstractMatrix
   /** {@inheritDoc} */
   @Override
   public final boolean isIntegerMatrix() {
-    return true;
+    return false;
   }
 
   /** {@inheritDoc} */
@@ -94,12 +106,18 @@ public final class LongMatrix1D extends AbstractMatrix
     return this;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final IMatrix transpose() {
+    return this;
+  }
+
   /**
    * Get the array backing this matrix
    *
    * @return the array backing this matrix
    */
-  public final long[] getDataRef() {
+  public final double[] getDataRef() {
     return this.m_data;
   }
 }

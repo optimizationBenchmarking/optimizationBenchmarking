@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
@@ -13,6 +14,7 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IFunctionFitter;
+import org.optimizationBenchmarking.utils.ml.fitting.spec.ParametricUnaryFunction;
 import org.optimizationBenchmarking.utils.parallel.Execute;
 import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -64,8 +66,9 @@ final class _MultiFittingJob implements Callable<FittingOutcome> {
     final String example, fitter;
     final Future<SingleFittingOutcome>[] jobs;
     final SingleFittingOutcome[] res;
+    final HashSet<ParametricUnaryFunction> models;
     final FittingOutcome outcome;
-    int i;
+    int i, maxParams;
     String name;
     Path destFolder, dest;
 
@@ -90,7 +93,17 @@ final class _MultiFittingJob implements Callable<FittingOutcome> {
       }
       res = new SingleFittingOutcome[jobs.length];
       Execute.join(jobs, res, 0, false);
-      outcome = new FittingOutcome(this.m_example, res, destFolder);
+
+      models = new HashSet<>();
+      maxParams = Integer.MIN_VALUE;
+      for (final SingleFittingOutcome oc : res) {
+        if (models.add(oc.model)) {
+          maxParams = Math.max(maxParams, oc.model.getParameterCount());
+        }
+      }
+
+      outcome = new FittingOutcome(this.m_example, maxParams, res,
+          destFolder);
 
       dest = PathUtils.createPathInside(destFolder, name + "_summary.txt"); //$NON-NLS-1$
 
@@ -104,7 +117,7 @@ final class _MultiFittingJob implements Callable<FittingOutcome> {
             text.appendLineBreak();
 
             text.append("model:\t");//$NON-NLS-1$
-            text.append(this.m_example.model.getClass().getSimpleName());
+            text.append(models);
             text.appendLineBreak();
 
             text.append("fitter:\t");//$NON-NLS-1$

@@ -5,9 +5,10 @@ import org.optimizationBenchmarking.utils.math.matrix.AbstractMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /**
- * A two-dimensional matrix composed of {@code short} values
+ * A matrix backed by a one-dimensional {@code short} array.
  */
-public class ShortMatrix1D extends AbstractMatrix implements IImmutable {
+public final class ShortMatrix1D extends AbstractMatrix
+    implements IImmutable {
 
   /** the m */
   private final int m_m;
@@ -89,7 +90,16 @@ public class ShortMatrix1D extends AbstractMatrix implements IImmutable {
 
   /** {@inheritDoc} */
   @Override
-  public IMatrix copy() {
+  public final IMatrix copy() {
     return this;
+  }
+
+  /**
+   * Get the array backing this matrix
+   *
+   * @return the array backing this matrix
+   */
+  public final short[] getDataRef() {
+    return this.m_data;
   }
 }

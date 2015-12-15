@@ -4,7 +4,7 @@ import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.Rbased.RBasedClusterer;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.Rbased.RBasedDataClusterer;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusterer;
 import org.optimizationBenchmarking.utils.parallel.Execute;
 import org.optimizationBenchmarking.utils.parsers.LoggerParser;
@@ -15,7 +15,7 @@ public final class ClusteringExamples {
   /** The list of clusterers */
   public static final ArrayListView<IClusterer> CLUSTERERS = new ArrayListView<>(
       new IClusterer[] { //
-          RBasedClusterer.getInstance(),//
+          RBasedDataClusterer.getInstance(),//
   });
 
   /**

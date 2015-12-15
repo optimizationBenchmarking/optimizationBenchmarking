@@ -12,9 +12,9 @@ import org.optimizationBenchmarking.experimentation.data.spec.INamedElement;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElementSet;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.Rbased.RBasedClusterer;
-import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusterer;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.Rbased.RBasedDataClusterer;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusteringJob;
+import org.optimizationBenchmarking.utils.ml.clustering.spec.IDataClusterer;
 
 /**
  * Cluster experimental data based on performance fingerprints. It can
@@ -127,10 +127,10 @@ abstract class _FingerprintClusterer<CT extends _FingerprintCluster<CCT>, CCT ex
   /** the clustering engine to use */
   private static final class __Engine {
     /** the clustering engine */
-    static final IClusterer ENGINE;
+    static final IDataClusterer ENGINE;
 
     static {
-      ENGINE = RBasedClusterer.getInstance();
+      ENGINE = RBasedDataClusterer.getInstance();
     }
   }
 }

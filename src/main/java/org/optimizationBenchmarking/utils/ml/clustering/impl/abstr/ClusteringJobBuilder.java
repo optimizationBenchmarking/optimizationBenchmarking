@@ -1,22 +1,28 @@
 package org.optimizationBenchmarking.utils.ml.clustering.impl.abstr;
 
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusteringJob;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusteringJobBuilder;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
 
-/** The base class for clustering job builders. */
-public class ClusteringJobBuilder
-    extends ToolJobBuilder<ClusteringJob, ClusteringJobBuilder>
+/**
+ * The base class for clustering job builders.
+ *
+ * @param <R>
+ *          the return type of the setter methods
+ */
+public class ClusteringJobBuilder<R extends ClusteringJobBuilder<R>>
+    extends ToolJobBuilder<IClusteringJob, R>
     implements IClusteringJobBuilder {
 
   /** the owning clusterer */
-  private final Clusterer m_clusterer;
-
-  /** the data matrix */
-  IMatrix m_matrix;
+  private final Clusterer<?> m_clusterer;
 
   /** the number of classes, {@code -1} if unspecified */
   int m_classes;
+
+  /** the matrix */
+  IMatrix m_matrix;
 
   /**
    * create the clustering job builder
@@ -24,10 +30,28 @@ public class ClusteringJobBuilder
    * @param clusterer
    *          the owning clusterer
    */
-  protected ClusteringJobBuilder(final Clusterer clusterer) {
+  protected ClusteringJobBuilder(final Clusterer<?> clusterer) {
     super();
     this.m_classes = (-1);
     this.m_clusterer = clusterer;
+  }
+
+  /**
+   * Set the internal matrix. Regardless whether this is a distance or a
+   * data clustering job builder, there can be at most one matrix.
+   *
+   * @param matrix
+   *          the matrix to set
+   * @param isDistance
+   *          is the matrix a distance matrix
+   * @return this builder
+   */
+  @SuppressWarnings("unchecked")
+  protected final R setMatrix(final IMatrix matrix,
+      final boolean isDistance) {
+    ClusteringJobBuilder.checkMatrix(matrix, isDistance);
+    this.m_matrix = matrix;
+    return ((R) this);
   }
 
   /**
@@ -35,27 +59,28 @@ public class ClusteringJobBuilder
    *
    * @param matrix
    *          the matrix
+   * @param isDistance
+   *          is the matrix a distance matrix?
    */
-  static final void _checkMatrix(final IMatrix matrix) {
+  protected static final void checkMatrix(final IMatrix matrix,
+      final boolean isDistance) {
+    final int m, n;
     if (matrix == null) {
       throw new IllegalArgumentException("Matrix cannot be null."); //$NON-NLS-1$
     }
-    if (matrix.m() <= 0) {
+    if ((m = matrix.m()) <= 0) {
       throw new IllegalArgumentException(
           "Matrix must have at least one row."); //$NON-NLS-1$
     }
-    if (matrix.n() <= 0) {
+    if ((n = matrix.n()) <= 0) {
       throw new IllegalArgumentException(
           "Matrix must have at least one column."); //$NON-NLS-1$
     }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final ClusteringJobBuilder setData(final IMatrix matrix) {
-    ClusteringJobBuilder._checkMatrix(matrix);
-    this.m_matrix = matrix;
-    return this;
+    if (isDistance && (m != n)) {
+      throw new IllegalArgumentException(//
+          "Distance/disimilarity matrix must be quadratic, but you specified an "//$NON-NLS-1$
+              + m + " by " + n + " matrix."); //$NON-NLS-1$//$NON-NLS-2$
+    }
   }
 
   /**
@@ -78,11 +103,21 @@ public class ClusteringJobBuilder
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unchecked")
   @Override
-  public final IClusteringJobBuilder setClusterNumber(final int number) {
+  public final R setClusterNumber(final int number) {
     ClusteringJobBuilder._checkClusterNumber(number, false);
     this.m_classes = number;
-    return this;
+    return ((R) this);
+  }
+
+  /**
+   * Get this builder's matrix
+   *
+   * @return this builder's matrix
+   */
+  protected final IMatrix getMatrix() {
+    return this.m_matrix;
   }
 
   /** {@inheritDoc} */
@@ -90,7 +125,6 @@ public class ClusteringJobBuilder
   protected void validate() {
     super.validate();
     ClusteringJobBuilder._checkClusterNumber(this.m_classes, true);
-    ClusteringJobBuilder._checkMatrix(this.m_matrix);
   }
 
   /**
@@ -102,19 +136,10 @@ public class ClusteringJobBuilder
     return this.m_classes;
   }
 
-  /**
-   * Get the data matrix
-   *
-   * @return the data to be clustered
-   */
-  public final IMatrix getData() {
-    return this.m_matrix;
-  }
-
   /** {@inheritDoc} */
   @Override
-  public final ClusteringJob create() {
-    return this.m_clusterer.create(this);
+  public final IClusteringJob create() {
+    this.validate();
+    return this.m_clusterer._create(this);
   }
-
 }

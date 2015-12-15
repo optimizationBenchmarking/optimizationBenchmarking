@@ -5,9 +5,10 @@ import org.optimizationBenchmarking.utils.math.matrix.AbstractMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /**
- * A two-dimensional matrix composed of {@code long} values
+ * A matrix backed by a two-dimensional {@code long} array.
  */
-public class LongMatrix2D extends AbstractMatrix implements IImmutable {
+public final class LongMatrix2D extends AbstractMatrix
+    implements IImmutable {
 
   /** the data */
   private final long[][] m_data;
@@ -71,7 +72,16 @@ public class LongMatrix2D extends AbstractMatrix implements IImmutable {
 
   /** {@inheritDoc} */
   @Override
-  public IMatrix copy() {
+  public final IMatrix copy() {
     return this;
+  }
+
+  /**
+   * Get the array backing this matrix
+   *
+   * @return the array backing this matrix
+   */
+  public final long[][] getDataRef() {
+    return this.m_data;
   }
 }

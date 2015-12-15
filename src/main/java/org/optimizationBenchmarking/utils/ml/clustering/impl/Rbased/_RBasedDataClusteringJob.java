@@ -6,19 +6,19 @@ import org.optimizationBenchmarking.utils.io.StreamLineIterator;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.R.R;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.R.REngine;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringJob;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringJobBuilder;
 import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringSolution;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.DataClusteringJob;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.DataClusteringJobBuilder;
 
 /** The {@code R}-based clustering job. */
-final class _RBasedClusteringJob extends ClusteringJob {
+final class _RBasedDataClusteringJob extends DataClusteringJob {
   /**
    * create the clustering job
    *
    * @param builder
    *          the job builder
    */
-  _RBasedClusteringJob(final ClusteringJobBuilder builder) {
+  _RBasedDataClusteringJob(final DataClusteringJobBuilder builder) {
     super(builder);
   }
 
@@ -37,7 +37,7 @@ final class _RBasedClusteringJob extends ClusteringJob {
       engine.setLong("nCluster", this.m_classes);//$NON-NLS-1$
       try {
         try (final StreamLineIterator iterator = new StreamLineIterator(//
-            _RBasedClusteringJob.class, "cluster.txt")) {//$NON-NLS-1$
+            _RBasedDataClusteringJob.class, "dataCluster.txt")) {//$NON-NLS-1$
           engine.execute(iterator);
         }
       } catch (final Throwable error) {

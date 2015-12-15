@@ -45,8 +45,10 @@ public final class FittingOutcome {
    *          the results
    * @param _path
    *          the path
+   * @param maxParams
+   *          the maximum number of parameters
    */
-  FittingOutcome(final FittingExampleDataset _example,
+  FittingOutcome(final FittingExampleDataset _example, final int maxParams,
       final SingleFittingOutcome[] results, final Path _path) {
     super();
 
@@ -59,13 +61,12 @@ public final class FittingOutcome {
     this.path = _path;
     this.outcomes = new ArrayListView<>(results);
 
-    i = _example.model.getParameterCount();
-    this.min = new double[i];
-    this.max = new double[i];
-    this.median = new double[i];
-    this.stddev = new double[i];
+    this.min = new double[maxParams];
+    this.max = new double[maxParams];
+    this.median = new double[maxParams];
+    this.stddev = new double[maxParams];
 
-    i = Math.max(_example.model.getParameterCount(), 4);
+    i = Math.max(maxParams, 4);
 
     _stddev = new StandardDeviationAggregate[i];
     med = new QuantileAggregate[i];

@@ -16,6 +16,7 @@ import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.experimentation.attributes.modeling.DimensionRelationshipModels;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
@@ -24,8 +25,6 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
-import org.optimizationBenchmarking.utils.ml.fitting.models.LogisticModelWithOffsetOverLogX;
-import org.optimizationBenchmarking.utils.ml.fitting.models.QuadraticModel;
 import org.optimizationBenchmarking.utils.parallel.Execute;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
@@ -54,12 +53,6 @@ public final class FittingExampleDatasets extends TestBase
       "2FlipHC-uf250-09.txt", //$NON-NLS-1$
       "2FlipHC-uf250-10.txt", //$NON-NLS-1$
   };
-
-  /** the function modeling the objective value based on time */
-  private final LogisticModelWithOffsetOverLogX m_timeObjective;
-
-  /** the function modeling dimensions of the same type */
-  private final QuadraticModel m_sameType;
 
   /** the internal sorter */
   private final __Sorter m_sorter;
@@ -98,8 +91,6 @@ public final class FittingExampleDatasets extends TestBase
       final boolean useTSPSuite, final boolean useMaxSat) {
     super();
 
-    this.m_timeObjective = new LogisticModelWithOffsetOverLogX();
-    this.m_sameType = new QuadraticModel();
     this.m_sorter = new __Sorter();
     this.m_logger = logger;
     this.m_useSameType = useSameType;
@@ -219,7 +210,7 @@ public final class FittingExampleDatasets extends TestBase
   }
 
   /**
-   * Postprocess the loaded data
+   * Post-process the loaded data
    *
    * @param name
    *          the name of the example data set
@@ -289,8 +280,8 @@ public final class FittingExampleDatasets extends TestBase
 
         ds = new FittingExampleDataset(useName, //
             new DoubleMatrix2D(rawPoints), //
-            ((dimTypes[useDimA] == dimTypes[useDimB]) ? this.m_sameType
-                : this.m_timeObjective),
+            DimensionRelationshipModels.getModels((dimTypes[useDimA] < 0),
+                (dimTypes[useDimB] < 0)),
             loaded.size());
         synchronized (list) {
           list.add(ds);
@@ -433,13 +424,13 @@ public final class FittingExampleDatasets extends TestBase
       System.out.print('\t');
       System.out.println(ds);
 
-      randFitting = new double[ds.model.getParameterCount()];
-      ds.model.createParameterGuesser(ds.data)
+      randFitting = new double[ds.models.get(0).getParameterCount()];
+      ds.models.get(0).createParameterGuesser(ds.data)
           .createRandomGuess(randFitting, rand);
 
       dest = PathUtils.createPathInside(root,
           (Integer.toString(index) + ".txt")); //$NON-NLS-1$
-      ds.plot(dest, randFitting, 0d);
+      ds.plot(dest, ds.models.get(0), randFitting, 0d);
     }
   }
 

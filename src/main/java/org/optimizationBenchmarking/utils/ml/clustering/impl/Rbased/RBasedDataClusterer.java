@@ -1,28 +1,28 @@
 package org.optimizationBenchmarking.utils.ml.clustering.impl.Rbased;
 
-import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.Clusterer;
 import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringJob;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringJobBuilder;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.DataClusterer;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.DataClusteringJobBuilder;
 
 /** The {@code R}-based clustering engine. */
-public final class RBasedClusterer extends Clusterer {
+public final class RBasedDataClusterer extends DataClusterer {
 
   /** create */
-  RBasedClusterer() {
+  RBasedDataClusterer() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
   protected final ClusteringJob create(
-      final ClusteringJobBuilder builder) {
-    return new _RBasedClusteringJob(builder);
+      final DataClusteringJobBuilder builder) {
+    return new _RBasedDataClusteringJob(builder);
   }
 
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "R-based Clusterer"; //$NON-NLS-1$
+    return "R-based Data Clusterer"; //$NON-NLS-1$
   }
 
   /**
@@ -30,13 +30,13 @@ public final class RBasedClusterer extends Clusterer {
    *
    * @return the globally shared instance of the {@code R}-based clusterer.
    */
-  public static final RBasedClusterer getInstance() {
+  public static final RBasedDataClusterer getInstance() {
     return __RBasedClustererHolder.INSTANCE;
   }
 
   /** the clusterer holder */
   private static final class __RBasedClustererHolder {
     /** the globally shared instance */
-    static final RBasedClusterer INSTANCE = new RBasedClusterer();
+    static final RBasedDataClusterer INSTANCE = new RBasedDataClusterer();
   }
 }

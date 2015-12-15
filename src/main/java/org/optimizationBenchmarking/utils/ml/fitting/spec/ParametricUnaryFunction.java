@@ -136,6 +136,12 @@ public abstract class ParametricUnaryFunction implements IMathRenderable {
     return ((this.getClass().hashCode() - 1709) * 991);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
+    return this.getClass().getSimpleName();
+  }
+
   /**
    * The internal unary function wrapping a specific setup of a parametric
    * unary function

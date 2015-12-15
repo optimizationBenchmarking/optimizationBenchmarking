@@ -13,6 +13,7 @@ import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ArithmeticMeanAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileAggregate;
+import org.optimizationBenchmarking.utils.ml.fitting.multi.MultiFunctionFitter;
 import org.optimizationBenchmarking.utils.ml.fitting.quality.WeightedRootMeanSquareError;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IFittingResult;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IFunctionFitter;
@@ -93,7 +94,9 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
     }
 
     runtime = System.nanoTime();
-    result = this.m_fitter.use().setFunctionToFit(this.m_example.model)
+    result = MultiFunctionFitter.getInstance().use()//
+        .setFitters(this.m_fitter)//
+        .setFunctionsToFit(this.m_example.models)//
         .setPoints(this.m_example.data)
         .setQualityMeasure(//
             new WeightedRootMeanSquareError(this.m_example.data))
@@ -113,7 +116,7 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
           text.appendLineBreak();
 
           text.append("# model:\t");//$NON-NLS-1$
-          text.append(this.m_example.model.getClass().getSimpleName());
+          text.append(result.getFittedFunction());
           text.appendLineBreak();
 
           text.append("# fitter:\t");//$NON-NLS-1$
@@ -152,7 +155,7 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
           m = data.m();
           median = new QuantileAggregate(0.5d);
           mean = new ArithmeticMeanAggregate();
-          model = this.m_example.model;
+          model = result.getFittedFunction();
           for (i = 0; i < m; i++) {
             x = data.getDouble(i, 0);
             y = data.getDouble(i, 1);
@@ -175,7 +178,8 @@ final class _SingleFittingJob implements Callable<SingleFittingOutcome> {
           errors = new Errors(result.getQuality(),
               Math.sqrt(mean.doubleValue()), median.doubleValue(),
               runtime);
-          outcome = new SingleFittingOutcome(parameters, dest, errors);
+          outcome = new SingleFittingOutcome(parameters, dest, errors,
+              result.getFittedFunction());
 
           text.append("# rootMeanSquareError\t");//$NON-NLS-1$
           text.append(errors.rootMeanSquareError);

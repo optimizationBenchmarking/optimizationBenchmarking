@@ -12,14 +12,10 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
 import org.optimizationBenchmarking.utils.ml.fitting.impl.DefaultFunctionFitter;
-import org.optimizationBenchmarking.utils.ml.fitting.models.LogisticModelOverLogX;
-import org.optimizationBenchmarking.utils.ml.fitting.models.LogisticModelWithOffsetOverLogX;
-import org.optimizationBenchmarking.utils.ml.fitting.models.QuadraticModel;
 import org.optimizationBenchmarking.utils.ml.fitting.multi.MultiFunctionFitter;
 import org.optimizationBenchmarking.utils.ml.fitting.quality.WeightedRootMeanSquareError;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IFittingQualityMeasure;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IFittingResult;
-import org.optimizationBenchmarking.utils.ml.fitting.spec.ParametricUnaryFunction;
 
 /**
  * The base class for model attributes.
@@ -28,20 +24,6 @@ import org.optimizationBenchmarking.utils.ml.fitting.spec.ParametricUnaryFunctio
  *          the result type
  */
 abstract class _ModelAttributeBase<R> extends Attribute<IInstanceRuns, R> {
-
-  /** The models attempted for time-objective relationships */
-  private static final ArrayListView<ParametricUnaryFunction> TIME_OBJECTIVE_MODELS = //
-  new ArrayListView<>(new ParametricUnaryFunction[] { //
-      new LogisticModelOverLogX(), //
-      new LogisticModelWithOffsetOverLogX(), //
-      new QuadraticModel(),//
-  });
-
-  /** The models attempted for relationships of equal-type dimensions */
-  private static final ArrayListView<ParametricUnaryFunction> EQUAL_TYPE_MODELS = //
-  new ArrayListView<>(new ParametricUnaryFunction[] { //
-      new QuadraticModel(),//
-  });
 
   /** the dimension to be used as model input */
   private final int m_dimX;
@@ -69,10 +51,9 @@ abstract class _ModelAttributeBase<R> extends Attribute<IInstanceRuns, R> {
       final int dimY, final int dimTypesAndClass) {
     super(type);
 
-    if (((dimTypesAndClass & 2) != 0) && ((dimTypesAndClass & 1) == 0)) {
-      throw new IllegalArgumentException(//
-          "Only time-objective, objective-objective, and time-time relatioships can be modeled, but you specified an objective-time relationship."); //$NON-NLS-1$
-    }
+    DimensionRelationshipModels._checkDimensions(
+        ((dimTypesAndClass & 1) != 0), //
+        ((dimTypesAndClass & 2) != 0));
 
     this.m_dimX = dimX;
     this.m_dimY = dimY;
@@ -210,10 +191,9 @@ abstract class _ModelAttributeBase<R> extends Attribute<IInstanceRuns, R> {
         MultiFunctionFitter.getInstance().use()//
             .setLogger(logger)//
             .setFitters(DefaultFunctionFitter.getAvailableInstance())//
-            .setFunctions(((this.m_dimTypesAndClazz & 1) == //
-            ((this.m_dimTypesAndClazz & 2) >>> 1))//
-                ? _ModelAttributeBase.EQUAL_TYPE_MODELS//
-                : _ModelAttributeBase.TIME_OBJECTIVE_MODELS)//
+            .setFunctionsToFit(DimensionRelationshipModels.getModels(//
+                ((this.m_dimTypesAndClazz & 1) != 0), //
+                ((this.m_dimTypesAndClazz & 2) != 0)))//
             .setQualityMeasure(measure)//
             .setPoints(matrix).create().call(), //
         measure);

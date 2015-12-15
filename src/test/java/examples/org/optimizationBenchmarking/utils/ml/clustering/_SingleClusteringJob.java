@@ -3,8 +3,14 @@ package examples.org.optimizationBenchmarking.utils.ml.clustering;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringTools;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.DistanceClusteringJobBuilder;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.dist.EuclideanDistance;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusterer;
+import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusteringJob;
+import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusteringJobBuilder;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusteringResult;
+import org.optimizationBenchmarking.utils.ml.clustering.spec.IDataClusteringJobBuilder;
 
 /** the single clustering job */
 final class _SingleClusteringJob
@@ -43,10 +49,22 @@ final class _SingleClusteringJob
     final IClusteringResult cr;
     int diff, index, max, min;
     final long start, end;
-
+    IClusteringJobBuilder builder;
+    IClusteringJob job;
     start = System.nanoTime();
-    cr = this.m_clusterer.use().setLogger(this.m_logger)
-        .setData(this.m_ds.data).create().call();
+
+    builder = this.m_clusterer.use().setLogger(this.m_logger);
+    if (builder instanceof IDataClusteringJobBuilder) {
+      ((IDataClusteringJobBuilder) builder).setData(this.m_ds.data);
+    } else {
+      ((DistanceClusteringJobBuilder) builder).setDistanceMatrix(//
+          ClusteringTools.dataToDistanceMatrix(this.m_ds.data,
+              new EuclideanDistance()));
+    }
+    job = builder.create();
+    builder = null;
+    cr = job.call();
+    job = null;
     end = System.nanoTime();
 
     diff = 0;
