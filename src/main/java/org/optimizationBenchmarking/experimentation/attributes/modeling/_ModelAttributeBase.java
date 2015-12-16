@@ -7,7 +7,6 @@ import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
-import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
@@ -15,7 +14,6 @@ import org.optimizationBenchmarking.utils.ml.fitting.impl.DefaultFunctionFitter;
 import org.optimizationBenchmarking.utils.ml.fitting.multi.MultiFunctionFitter;
 import org.optimizationBenchmarking.utils.ml.fitting.quality.WeightedRootMeanSquareError;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IFittingQualityMeasure;
-import org.optimizationBenchmarking.utils.ml.fitting.spec.IFittingResult;
 
 /**
  * The base class for model attributes.
@@ -179,15 +177,15 @@ abstract class _ModelAttributeBase<R> extends Attribute<IInstanceRuns, R> {
    *          the logger
    * @return the result
    */
-  final ImmutableAssociation<IFittingResult, IFittingQualityMeasure> _compute(
-      final IInstanceRuns data, final Logger logger) {
+  final DimensionRelationshipData _compute(final IInstanceRuns data,
+      final Logger logger) {
     final DoubleMatrix1D matrix;
     final IFittingQualityMeasure measure;
 
     matrix = this._getDataMatrix(data);
     measure = this._getMeasure(matrix);
 
-    return new ImmutableAssociation<>(//
+    return new DimensionRelationshipData(//
         MultiFunctionFitter.getInstance().use()//
             .setLogger(logger)//
             .setFitters(DefaultFunctionFitter.getAllInstance())//
@@ -196,6 +194,6 @@ abstract class _ModelAttributeBase<R> extends Attribute<IInstanceRuns, R> {
                 ((this.m_dimTypesAndClazz & 2) != 0)))//
             .setQualityMeasure(measure)//
             .setPoints(matrix).create().call(), //
-        measure);
+        matrix, measure);
   }
 }

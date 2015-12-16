@@ -22,7 +22,7 @@ final class _DimensionRelationshipViaSideEffect
    *          the owner
    */
   public _DimensionRelationshipViaSideEffect(
-      final DimensionRelationshipWithMetric owner) {
+      final DimensionRelationshipAndData owner) {
     super(EAttributeType.PERMANENTLY_STORED, 112261, owner);
   }
 

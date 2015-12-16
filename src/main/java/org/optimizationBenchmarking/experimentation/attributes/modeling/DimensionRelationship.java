@@ -33,6 +33,6 @@ public final class DimensionRelationship
   @Override
   protected final IFittingResult compute(final IInstanceRuns data,
       final Logger logger) {
-    return this._compute(data, logger).getKey();
+    return this._compute(data, logger).fitting;
   }
 }
