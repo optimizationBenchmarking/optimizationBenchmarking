@@ -93,13 +93,4 @@ public final class LongMatrix1D extends AbstractMatrix
   public final IMatrix copy() {
     return this;
   }
-
-  /**
-   * Get the array backing this matrix
-   *
-   * @return the array backing this matrix
-   */
-  public final long[] getDataRef() {
-    return this.m_data;
-  }
 }

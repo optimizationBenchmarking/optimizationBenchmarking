@@ -92,13 +92,4 @@ public final class DoubleMatrix1D extends AbstractMatrix
   public final IMatrix copy() {
     return this;
   }
-
-  /**
-   * Get the array backing this matrix
-   *
-   * @return the array backing this matrix
-   */
-  public final double[] getDataRef() {
-    return this.m_data;
-  }
 }

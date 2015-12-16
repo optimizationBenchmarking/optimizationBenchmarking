@@ -93,13 +93,4 @@ public final class ShortMatrix1D extends AbstractMatrix
   public final IMatrix copy() {
     return this;
   }
-
-  /**
-   * Get the array backing this matrix
-   *
-   * @return the array backing this matrix
-   */
-  public final short[] getDataRef() {
-    return this.m_data;
-  }
 }

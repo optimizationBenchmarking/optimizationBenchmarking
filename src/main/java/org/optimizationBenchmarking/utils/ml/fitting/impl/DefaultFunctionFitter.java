@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.ml.fitting.impl;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.ml.fitting.impl.lssimplex.LSSimplexFitter;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IFunctionFitter;
@@ -16,22 +15,41 @@ public final class DefaultFunctionFitter {
     ErrorUtils.doNotCall();
   }
 
+  /** No fitter was found. */
+  private static final void __noFitter() {
+    throw new IllegalStateException("No useable function fitter found."); //$NON-NLS-1$
+  }
+
   /**
    * Get the default function fitter
    *
    * @return the default function fitter
+   * @throws IllegalStateException
+   *           if no working fitter exists
    */
   public static final IFunctionFitter getInstance() {
-    return __DefaultHolder.INSTANCE;
+    final IFunctionFitter inst;
+    inst = __DefaultHolder.INSTANCE;
+    if (inst == null) {
+      DefaultFunctionFitter.__noFitter();
+    }
+    return inst;
   }
 
   /**
    * Get the available function fitter instances
    *
    * @return the available function fitter instances
+   * @throws IllegalStateException
+   *           if no working fitter exists
    */
-  public static final ArrayListView<IFunctionFitter> getAvailableInstance() {
-    return __AllHolder.INSTANCES;
+  public static final ArrayListView<IFunctionFitter> getAllInstance() {
+    final ArrayListView<IFunctionFitter> fitters;
+    fitters = __AllHolder.INSTANCES;
+    if (fitters == null) {
+      DefaultFunctionFitter.__noFitter();
+    }
+    return fitters;
   }
 
   /** the internal holder for the default fitter */
@@ -53,7 +71,6 @@ public final class DefaultFunctionFitter {
   }
 
   /** the internal holder for all available fitters */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
   private static final class __AllHolder {
 
     /** the instances */
@@ -66,7 +83,7 @@ public final class DefaultFunctionFitter {
       if (fitter != null) {
         INSTANCES = new ArrayListView<>(new IFunctionFitter[] { fitter });
       } else {
-        INSTANCES = ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW));
+        INSTANCES = null;
       }
     }
   }

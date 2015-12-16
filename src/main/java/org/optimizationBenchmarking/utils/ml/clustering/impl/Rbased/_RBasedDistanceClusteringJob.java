@@ -6,19 +6,21 @@ import org.optimizationBenchmarking.utils.io.StreamLineIterator;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.R.R;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.R.REngine;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleDistanceMatrix1D;
 import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringSolution;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.DataClusteringJob;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.DataClusteringJobBuilder;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.DistanceClusteringJob;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.DistanceClusteringJobBuilder;
 
-/** The {@code R}-based data clustering job. */
-final class _RBasedDataClusteringJob extends DataClusteringJob {
+/** The {@code R}-based distance clustering job. */
+final class _RBasedDistanceClusteringJob extends DistanceClusteringJob {
   /**
    * create the clustering job
    *
    * @param builder
    *          the job builder
    */
-  _RBasedDataClusteringJob(final DataClusteringJobBuilder builder) {
+  _RBasedDistanceClusteringJob(
+      final DistanceClusteringJobBuilder builder) {
     super(builder);
   }
 
@@ -32,20 +34,23 @@ final class _RBasedDataClusteringJob extends DataClusteringJob {
 
     try (final REngine engine = R.getInstance().use()
         .setLogger(this.getLogger()).create()) {
-      engine.setMatrix("data", this.m_matrix);//$NON-NLS-1$
+
+      engine.setMatrix("distance", //$NON-NLS-1$
+          (this.m_matrix instanceof DoubleDistanceMatrix1D)//
+              ? ((DoubleDistanceMatrix1D) (this.m_matrix)).asRowVector()//
+              : this.m_matrix);
+      engine.setLong("m", this.m_matrix.m()); //$NON-NLS-1$
       this.m_matrix = null;
       engine.setLong("nCluster", this.m_classes);//$NON-NLS-1$
       try {
         try (final StreamLineIterator iterator = new StreamLineIterator(//
-            _RBasedDataClusteringJob.class, "dataCluster.txt")) {//$NON-NLS-1$
+            _RBasedDistanceClusteringJob.class, "distanceCluster.txt")) {//$NON-NLS-1$
           engine.execute(iterator);
         }
       } catch (final Throwable error) {
         throw new IllegalStateException(//
-            "Error while communicating REngine. Maybe the data is just too odd, or some required packages are missing and cannot be installed.", //$NON-NLS-1$
+            "Error while communicating REngine. Maybe the distance matrix is just too odd, or some required packages are missing and cannot be installed.", //$NON-NLS-1$
             error);
-      } finally {
-        this.m_matrix = null;
       }
 
       result = engine.getMatrix("clusters"); //$NON-NLS-1$
@@ -54,6 +59,8 @@ final class _RBasedDataClusteringJob extends DataClusteringJob {
       throw new IllegalStateException(//
           "Error while starting REngine. Maybe R is not installed properly?", //$NON-NLS-1$
           ioe);
+    } finally {
+      this.m_matrix = null;
     }
 
     n = result.n();

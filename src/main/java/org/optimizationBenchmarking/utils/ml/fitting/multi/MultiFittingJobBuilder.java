@@ -129,7 +129,7 @@ public final class MultiFittingJobBuilder
   /**
    * Set the function fitters to be used. If this method is not called,
    * only the
-   * {@linkplain org.optimizationBenchmarking.utils.ml.fitting.impl.DefaultFunctionFitter#getAvailableInstance()
+   * {@linkplain org.optimizationBenchmarking.utils.ml.fitting.impl.DefaultFunctionFitter#getAllInstance()
    * default fitter} of the system will be applied.
    *
    * @param fitters
@@ -152,7 +152,7 @@ public final class MultiFittingJobBuilder
   /**
    * Set the function fitters to be used. If this method is not called,
    * only the
-   * {@linkplain org.optimizationBenchmarking.utils.ml.fitting.impl.DefaultFunctionFitter#getAvailableInstance()
+   * {@linkplain org.optimizationBenchmarking.utils.ml.fitting.impl.DefaultFunctionFitter#getAllInstance()
    * default fitter} of the system will be applied.
    *
    * @param fitters
@@ -211,7 +211,7 @@ public final class MultiFittingJobBuilder
   public final MultiFittingJob create() {
     final ArrayListView<IFunctionFitter> fitters;
     if (this.m_fitters == null) {
-      fitters = DefaultFunctionFitter.getAvailableInstance();
+      fitters = DefaultFunctionFitter.getAllInstance();
       if (fitters.size() > 0) {
         this.setFitters(fitters);
       }

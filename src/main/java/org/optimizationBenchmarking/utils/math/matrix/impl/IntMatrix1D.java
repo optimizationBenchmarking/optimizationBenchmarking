@@ -93,13 +93,4 @@ public final class IntMatrix1D extends AbstractMatrix
   public final IMatrix copy() {
     return this;
   }
-
-  /**
-   * Get the array backing this matrix
-   *
-   * @return the array backing this matrix
-   */
-  public final int[] getDataRef() {
-    return this.m_data;
-  }
 }

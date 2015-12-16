@@ -1,0 +1,49 @@
+# This script will perform a clustering of elements based on their
+# distance.
+#
+# input : "distance": either a full m*m distance matrix or the upper
+#                     triangular matrix of m*(m-1)/2 elements
+#         "nCluster": the desired number of clusters, -1 means that we
+#                     should find this number by ourselves
+#         "m"       : the number of elements to cluster
+#
+# output: "clusters": the assignment of instances to clusters 
+#         "quality" : the quality measure
+#
+##
+## 1. Building Distance Matrix
+##
+dimDist<-dim(distance);#
+#
+if((m != 1) && ((dimDist[1]==1) || (dimDist[2]==1))) {
+  # Only a distance vector was supplied.
+  # We transform it first to a full distance matrix, then
+  # to a `dist` object.
+  distanceMatrix <- matrix(NA, ncol=m, nrow=m);#
+  distanceMatrix[lower.tri(distanceMatrix)] <- distance;#
+  distance <- as.dist(distanceMatrix);#
+  rm(distanceMatrix);#
+} else {#
+  # A full distance matrix was supplied, transform to `dist`
+  # object directly.
+  distance <- as.dist(distance);#
+}#
+##
+## 2. Clustering Step
+##
+rcommUsePackage("fpc");#
+#
+if(nCluster > 0) {#
+  # The number of clusters has been supplied, directly use it.
+  pamResult <- pam(x=distance, k=nCluster, diss=TRUE);#
+} else {#
+  # No cluster number has been supplied. Try to find the best one.
+  pamResult <- pamk(data=distance, krange=2:(min(m-1,10)), diss=TRUE)$pamobject;#
+}#
+#
+## 3. Output preparation
+##
+clusters <- pamResult$clustering;#
+quality  <- pamResult$silinfo$avg.width;#
+#
+rm(pamResult)#

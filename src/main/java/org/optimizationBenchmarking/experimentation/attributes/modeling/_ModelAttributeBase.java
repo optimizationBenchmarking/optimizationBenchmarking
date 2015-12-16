@@ -190,7 +190,7 @@ abstract class _ModelAttributeBase<R> extends Attribute<IInstanceRuns, R> {
     return new ImmutableAssociation<>(//
         MultiFunctionFitter.getInstance().use()//
             .setLogger(logger)//
-            .setFitters(DefaultFunctionFitter.getAvailableInstance())//
+            .setFitters(DefaultFunctionFitter.getAllInstance())//
             .setFunctionsToFit(DimensionRelationshipModels.getModels(//
                 ((this.m_dimTypesAndClazz & 1) != 0), //
                 ((this.m_dimTypesAndClazz & 2) != 0)))//

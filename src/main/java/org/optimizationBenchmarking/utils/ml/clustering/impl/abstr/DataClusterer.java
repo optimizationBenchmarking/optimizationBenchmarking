@@ -14,6 +14,7 @@ public abstract class DataClusterer
   /** {@inheritDoc} */
   @Override
   public final DataClusteringJobBuilder use() {
+    this.checkCanUse();
     return new DataClusteringJobBuilder(this);
   }
 }

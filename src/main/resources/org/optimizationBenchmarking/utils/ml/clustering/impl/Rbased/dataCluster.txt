@@ -1,6 +1,5 @@
-# This script will perform a clustering of instances or experiments
-# according to their performance fingerprints.
-# It proceeds in 3 steps:
+# This script will perform a clustering of data based on their
+# features. It proceeds in 3 steps:
 #   1. feature reduction/selection
 #   2. finding good numbers of clusters
 #   3. finding a good clustering

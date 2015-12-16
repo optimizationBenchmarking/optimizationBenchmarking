@@ -113,11 +113,11 @@ public final class DoubleDistanceMatrix1D extends AbstractMatrix
   }
 
   /**
-   * Get the array backing this matrix
+   * Convert this distance matrix to a row vector
    *
-   * @return the array backing this matrix
+   * @return a row vector backed by the same array as this matrix.
    */
-  public final double[] getDataRef() {
-    return this.m_data;
+  public final DoubleMatrix1D asRowVector() {
+    return new DoubleMatrix1D(this.m_data, 1, this.m_data.length);
   }
 }
