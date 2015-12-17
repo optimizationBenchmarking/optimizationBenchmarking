@@ -26,7 +26,7 @@ public final class DoubleDistanceMatrix1D extends AbstractMatrix
    * @param m
    *          the m
    */
-  public DoubleDistanceMatrix1D(final double[] data, final int m) {
+  DoubleDistanceMatrix1D(final double[] data, final int m) {
     super();
 
     if ((data == null) || (data.length <= 0)) {

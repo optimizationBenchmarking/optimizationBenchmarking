@@ -43,6 +43,19 @@ public abstract class ClusteringJob extends ToolJob
    * @throws Exception
    *           if something goes wrong
    */
+  ClusteringSolution _cluster() throws Exception {
+    return this.cluster();
+  }
+
+  /**
+   * Perform the clustering and return a solution record. The result of
+   * this method will be automatically
+   * {@link ClusteringTools#normalizeClusters(int[])} normalized.
+   *
+   * @return the solution
+   * @throws Exception
+   *           if something goes wrong
+   */
   protected abstract ClusteringSolution cluster() throws Exception;
 
   /** {@inheritDoc} */
@@ -54,7 +67,7 @@ public abstract class ClusteringJob extends ToolJob
 
     error = null;
     try {
-      solution = this.cluster();
+      solution = this._cluster();
       if (MathUtils.isFinite(solution.quality)) {
         ClusteringTools.normalizeClusters(solution.assignment);
         return solution;

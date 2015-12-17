@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
+package org.optimizationBenchmarking.experimentation.attributes.clusters.behavior;
 
 import java.util.ArrayList;
 
@@ -16,13 +16,13 @@ import org.optimizationBenchmarking.utils.text.numbers.AlphabeticNumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
- * The performance fingerprint clustering contains a division of
- * experiments or instances according to their performance fingerprints.
+ * A behavior-based clustering uses algorithm behavior to divide algorithms
+ * or instances into groups.
  *
  * @param <CT>
  *          the cluster type
  */
-abstract class _FingerprintClustering<CT extends _FingerprintCluster<?>>
+abstract class _BehaviorClustering<CT extends _BehaviorCluster<?>>
     extends DataElement implements IClustering {
 
   /** the owning experiment set */
@@ -32,7 +32,7 @@ abstract class _FingerprintClustering<CT extends _FingerprintCluster<?>>
   private final ArrayListView<CT> m_data;
 
   /**
-   * create the performance fingerprint clustering
+   * create the behavior-based clustering
    *
    * @param owner
    *          the owner
@@ -43,7 +43,7 @@ abstract class _FingerprintClustering<CT extends _FingerprintCluster<?>>
    * @param names
    *          the names
    */
-  _FingerprintClustering(final IExperimentSet owner, final int[] clusters,
+  _BehaviorClustering(final IExperimentSet owner, final int[] clusters,
       final INamedElementSet source,
       final ArrayListView<? extends INamedElement> names) {
     super();
@@ -92,8 +92,7 @@ abstract class _FingerprintClustering<CT extends _FingerprintCluster<?>>
         break;
       }
       list.add(this._create(AlphabeticNumberAppender.UPPER_CASE_INSTANCE
-          .toString((clusterIndex - 1), ETextCase.IN_SENTENCE),
-          selection));
+          .toString(clusterIndex, ETextCase.IN_SENTENCE), selection));
     }
 
     if (total != names.size()) {

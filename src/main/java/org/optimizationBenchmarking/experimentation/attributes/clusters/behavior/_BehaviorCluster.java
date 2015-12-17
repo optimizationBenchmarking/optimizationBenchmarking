@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
+package org.optimizationBenchmarking.experimentation.attributes.clusters.behavior;
 
 import org.optimizationBenchmarking.experimentation.attributes.clusters.ICluster;
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
@@ -10,21 +10,19 @@ import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
- * A performance fingerprint cluster is a cluster which holds experiments
- * or instances belonging to one similarity group according to their
- * performance fingerprint.
+ * A cluster based on algorithm behavior.
  *
  * @param <CCT>
  *          the clustering type
  */
-class _FingerprintCluster<CCT extends _FingerprintClustering<?>> extends
-    ShadowExperimentSet<CCT> implements ICluster {
+class _BehaviorCluster<CCT extends _BehaviorClustering<?>>
+    extends ShadowExperimentSet<CCT> implements ICluster {
 
   /** the name of the cluster */
   private final String m_name;
 
   /**
-   * create the property value group
+   * create behavior cluster
    *
    * @param owner
    *          the owning element set
@@ -33,7 +31,7 @@ class _FingerprintCluster<CCT extends _FingerprintClustering<?>> extends
    * @param selection
    *          the data selection
    */
-  _FingerprintCluster(final CCT owner, final String name,
+  _BehaviorCluster(final CCT owner, final String name,
       final DataSelection selection) {
     super(owner, selection);
     this.m_name = name;

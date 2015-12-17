@@ -3,9 +3,9 @@ package examples.org.optimizationBenchmarking.utils.ml.clustering;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.ClusteringTools;
 import org.optimizationBenchmarking.utils.ml.clustering.impl.abstr.DistanceClusteringJobBuilder;
 import org.optimizationBenchmarking.utils.ml.clustering.impl.dist.EuclideanDistance;
+import org.optimizationBenchmarking.utils.ml.clustering.impl.dist.MeasureBasedDistanceMatrixBuilder;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusterer;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusteringJob;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IClusteringJobBuilder;
@@ -58,8 +58,8 @@ final class _SingleClusteringJob
       ((IDataClusteringJobBuilder) builder).setData(this.m_ds.data);
     } else {
       ((DistanceClusteringJobBuilder) builder).setDistanceMatrix(//
-          ClusteringTools.dataToDistanceMatrix(this.m_ds.data,
-              new EuclideanDistance()));
+          new MeasureBasedDistanceMatrixBuilder(this.m_ds.data, //
+              new EuclideanDistance()).call());
     }
     job = builder.create();
     builder = null;

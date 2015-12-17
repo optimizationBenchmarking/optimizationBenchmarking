@@ -1,15 +1,19 @@
 package org.optimizationBenchmarking.utils.ml.clustering.impl.abstr;
 
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
-import org.optimizationBenchmarking.utils.ml.clustering.impl.dist.EuclideanDistance;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IDataClusteringJobBuilder;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IDistanceClusteringJobBuilder;
-import org.optimizationBenchmarking.utils.ml.clustering.spec.IDistanceMeasure;
 
 /** The base class for distance clustering job builders. */
-public class DistanceClusteringJobBuilder
+public final class DistanceClusteringJobBuilder
     extends ClusteringJobBuilder<DistanceClusteringJobBuilder>
     implements IDistanceClusteringJobBuilder, IDataClusteringJobBuilder {
+
+  /**
+   * is the matrix a distance matrix ({@code true}) or a data matrix (
+   * {@code false})?
+   */
+  boolean m_matrixIsDistanceMatrix;
 
   /**
    * create the clustering job builder
@@ -17,8 +21,7 @@ public class DistanceClusteringJobBuilder
    * @param clusterer
    *          the owning clusterer
    */
-  protected DistanceClusteringJobBuilder(
-      final DistanceClusterer clusterer) {
+  DistanceClusteringJobBuilder(final DistanceClusterer clusterer) {
     super(clusterer);
   }
 
@@ -26,31 +29,24 @@ public class DistanceClusteringJobBuilder
   @Override
   protected void validate() {
     super.validate();
-    ClusteringJobBuilder.checkMatrix(this.m_matrix, true);
+    ClusteringJobBuilder.checkMatrix(this.m_matrix,
+        this.m_matrixIsDistanceMatrix);
   }
 
   /** {@inheritDoc} */
   @Override
   public final DistanceClusteringJobBuilder setDistanceMatrix(
       final IMatrix matrix) {
-    return this.setMatrix(matrix, true);
-  }
-
-  /**
-   * Create the distance measure to be used for converting data matrices to
-   * distance matrices in {@link #setData(IMatrix)}.
-   *
-   * @return the distance measure
-   */
-  protected IDistanceMeasure createDistanceMeasure() {
-    return new EuclideanDistance();
+    this.setMatrix(matrix, true);
+    this.m_matrixIsDistanceMatrix = true;
+    return this;
   }
 
   /** {@inheritDoc} */
   @Override
   public final DistanceClusteringJobBuilder setData(final IMatrix matrix) {
-    ClusteringJobBuilder.checkMatrix(matrix, false);
-    return this.setDistanceMatrix(ClusteringTools.dataToDistanceMatrix(//
-        matrix, this.createDistanceMeasure()));
+    this.setMatrix(matrix, false);
+    this.m_matrixIsDistanceMatrix = false;
+    return this;
   }
 }

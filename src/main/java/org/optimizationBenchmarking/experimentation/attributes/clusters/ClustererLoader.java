@@ -1,7 +1,8 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters;
 
+import org.optimizationBenchmarking.experimentation.attributes.clusters.behavior.AlgorithmBehaviorClusterer;
+import org.optimizationBenchmarking.experimentation.attributes.clusters.behavior.InstanceBehaviorClusterer;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.byInstance.ByInstanceGrouping;
-import org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint.InstanceFingerprintClusterer;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.PropertyValueSelector;
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
@@ -42,12 +43,15 @@ public final class ClustererLoader {
       case PropertyValueSelector.CHOICE_INSTANCES_BY_FEATURE_VALUE: {
         return PropertyValueSelector.configure(data, config);
       }
-      case InstanceFingerprintClusterer.CHOICE_INSTANCES_BY_PERFORMANCE: {
-        return InstanceFingerprintClusterer.INSTANCE;
+      case InstanceBehaviorClusterer.CHOICE_INSTANCES_BY_ALGORITHM_BEHAVIOR: {
+        return InstanceBehaviorClusterer.INSTANCE;
+      }
+      case AlgorithmBehaviorClusterer.CHOICE_INSTANCES_BY_ALGORITHM_BEHAVIOR: {
+        return AlgorithmBehaviorClusterer.INSTANCE;
       }
       default: {
         throw new IllegalArgumentException(((//
-            "Unknown grouping scheme: '" + grouping) + '\'') + '.');//$NON-NLS-1$
+        "Unknown grouping scheme: '" + grouping) + '\'') + '.');//$NON-NLS-1$
       }
     }
   }

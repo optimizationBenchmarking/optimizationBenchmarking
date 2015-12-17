@@ -3,20 +3,21 @@
 	xmlns:cd="http://www.optimizationBenchmarking.org/formats/configuration/configurationDef.1.0.xsd"
 	allowsMore="false">
 
-  <cd:instance name="grouping"
-    description="If this parameter is specified, the experimental data will be divided into different groups and the statistics are computed / diagrams are drawn for each group separately."
-    class="java.lang.String"
-    parser="org.optimizationBenchmarking.utils.parsers.StrictStringParser"
-    default="instances by experimental results" allowsMore="false">
-    <cd:choice name="instances by experimental results"
-      description="We try to distinguish the benchmark instances according to how the algorithms perform on them. This is done by fist computing some key statistics about the experimental results and then clustering the benchmark instances according to them. The resulting clustering only contains instances for which all experiments have data." />
-    <cd:choice name="single instances"
-      description="Each benchmark instance forms its own group." />
-    <cd:choice name="instances by feature values"
-      description="We take a benchmark instance feature and divide it into several intervals, which are used to form groups containing the benchmark instances exhibiting the corresponding values of the given feature." />
-    <cd:choice name="experiments by parameter values"
-      description="We take an experiment parameter and divide it into several intervals, which are used to form groups containing the experiments exhibiting the corresponding values of the given parameter." />
-  </cd:instance>
+	<cd:instance name="grouping"
+		description="If this parameter is specified, the experimental data will be divided into different groups and the statistics are computed / diagrams are drawn for each group separately."
+		class="java.lang.String" parser="org.optimizationBenchmarking.utils.parsers.StrictStringParser"
+		default="instances by algorithm behavior" allowsMore="false">
+		<cd:choice name="instances by algorithm behavior"
+			description="We try to distinguish the benchmark instances according to how the algorithms behave on them. We therefore first model the runtime behaviors of each algorithm on each instance, then cluster the instances based on these models." />
+		<cd:choice name="algorithms by behavior"
+			description="Experiments (algorithm setups) are grouped by the runtime behavior over all benchmark instances." />
+		<cd:choice name="single instances"
+			description="Each benchmark instance forms its own group." />
+		<cd:choice name="instances by feature values"
+			description="We take a benchmark instance feature and divide it into several intervals, which are used to form groups containing the benchmark instances exhibiting the corresponding values of the given feature." />
+		<cd:choice name="experiments by parameter values"
+			description="We take an experiment parameter and divide it into several intervals, which are used to form groups containing the experiments exhibiting the corresponding values of the given parameter." />
+	</cd:instance>
 
 	<cd:inherit
 		class="org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.PropertyValueSelector" />

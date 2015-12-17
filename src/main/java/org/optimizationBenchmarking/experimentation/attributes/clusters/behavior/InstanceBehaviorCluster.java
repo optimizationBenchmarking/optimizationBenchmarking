@@ -1,19 +1,19 @@
-package org.optimizationBenchmarking.experimentation.attributes.clusters.fingerprint;
+package org.optimizationBenchmarking.experimentation.attributes.clusters.behavior;
 
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
- * A performance fingerprint cluster is a cluster which holds instances
- * belonging to one similarity group according to their performance
- * fingerprint.
+ * A instance behavior cluster is a cluster which holds instances belonging
+ * to one similarity group according to the runtime behavior of algorithms
+ * on them.
  */
-public class InstanceFingerprintCluster extends
-    _FingerprintCluster<InstanceFingerprintClustering> {
+public class InstanceBehaviorCluster
+    extends _BehaviorCluster<InstanceBehaviorClustering> {
 
   /**
-   * create the property value group
+   * create the instance behavior cluster
    *
    * @param owner
    *          the owning element set
@@ -22,7 +22,7 @@ public class InstanceFingerprintCluster extends
    * @param selection
    *          the data selection
    */
-  InstanceFingerprintCluster(final InstanceFingerprintClustering owner,
+  InstanceBehaviorCluster(final InstanceBehaviorClustering owner,
       final String name, final DataSelection selection) {
     super(owner, name, selection);
   }

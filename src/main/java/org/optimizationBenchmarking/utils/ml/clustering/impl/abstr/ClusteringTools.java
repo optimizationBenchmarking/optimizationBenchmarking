@@ -6,9 +6,7 @@ import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.math.MathUtils;
 import org.optimizationBenchmarking.utils.math.combinatorics.CanonicalPermutation;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
-import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleDistanceMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
-import org.optimizationBenchmarking.utils.ml.clustering.spec.IDistanceMeasure;
 
 /** Tools for clustering */
 public final class ClusteringTools {
@@ -16,33 +14,6 @@ public final class ClusteringTools {
   /** the forbidden constructor */
   private ClusteringTools() {
     ErrorUtils.doNotCall();
-  }
-
-  /**
-   * Convert a data matrix to a distance matrix.
-   *
-   * @param matrix
-   *          the matrix to convert
-   * @param dist
-   *          the distance measure
-   * @return the distance matrix
-   */
-  public static final DoubleDistanceMatrix1D dataToDistanceMatrix(
-      final IMatrix matrix, final IDistanceMeasure dist) {
-    final int m;
-    final double[] data;
-    int i, j, k;
-
-    m = matrix.m();
-    data = new double[(m * (m - 1)) >>> 1];
-    k = (-1);
-    for (i = 0; i < m; i++) {
-      for (j = (i + 1); j < m; j++) {
-        data[++k] = dist.compute(matrix, i, matrix, j);
-      }
-    }
-
-    return new DoubleDistanceMatrix1D(data, m);
   }
 
   /**

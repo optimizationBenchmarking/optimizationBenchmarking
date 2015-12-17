@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
-import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IFittingResult;
 
 /**
@@ -37,7 +36,6 @@ public final class DimensionRelationshipAndData
   protected final DimensionRelationshipData compute(
       final IInstanceRuns data, final Logger logger) {
     final DimensionRelationshipData res;
-    final DoubleMatrix1D matrix;
     IFittingResult fitting1, fitting2;
     _DimensionRelationshipViaSideEffect side;
 
@@ -53,9 +51,8 @@ public final class DimensionRelationshipAndData
     if (fitting1 != null) {
       // Oh, a fitting has already been computed before. We just need to
       // set up the quality measure.
-      matrix = this._getDataMatrix(data);
       return new DimensionRelationshipData(fitting1, //
-          matrix, this._getMeasure(matrix));
+          this._getMeasure(this._getDataMatrix(data)));
     }
 
     // No fitting has been computed yet. Let's do it.
@@ -74,8 +71,7 @@ public final class DimensionRelationshipAndData
 
     if (fitting1 != fitting2) {
       // Oh, there was already a fitting ... then use the stored one
-      return new DimensionRelationshipData(fitting2, res.data,
-          res.measure);
+      return new DimensionRelationshipData(fitting2, res.measure);
     }
     return res;
   }

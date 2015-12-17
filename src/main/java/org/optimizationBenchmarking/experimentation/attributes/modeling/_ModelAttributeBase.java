@@ -194,6 +194,6 @@ abstract class _ModelAttributeBase<R> extends Attribute<IInstanceRuns, R> {
                 ((this.m_dimTypesAndClazz & 2) != 0)))//
             .setQualityMeasure(measure)//
             .setPoints(matrix).create().call(), //
-        matrix, measure);
+        measure);
   }
 }

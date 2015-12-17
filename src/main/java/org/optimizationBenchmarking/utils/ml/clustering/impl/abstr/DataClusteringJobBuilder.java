@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.ml.clustering.spec.IDataClusteringJobBuilder;
 
 /** The base class for data clustering job builders. */
-public class DataClusteringJobBuilder
+public final class DataClusteringJobBuilder
     extends ClusteringJobBuilder<DataClusteringJobBuilder>
     implements IDataClusteringJobBuilder {
 
@@ -14,7 +14,7 @@ public class DataClusteringJobBuilder
    * @param clusterer
    *          the owning clusterer
    */
-  protected DataClusteringJobBuilder(final DataClusterer clusterer) {
+  DataClusteringJobBuilder(final DataClusterer clusterer) {
     super(clusterer);
   }
 
