@@ -30,20 +30,55 @@ if((m != 1) && ((dimDist[1]==1) || (dimDist[2]==1))) {
 }#
 ##
 ## 2. Clustering Step
-##
+## 2.1. Use Partitioning Around Medoids
+## 
 rcommUsePackage("fpc");#
 #
 if(nCluster > 0) {#
   # The number of clusters has been supplied, directly use it.
-  pamResult <- pam(x=distance, k=nCluster, diss=TRUE);#
+  pamResult    <- pam(x=distance, k=nCluster, diss=TRUE);#
+  clusterRange <- nCluster:nCluster;
 } else {#
   # No cluster number has been supplied. Try to find the best one.
-  pamResult <- pamk(data=distance, krange=2:(min(m-1,10)), diss=TRUE)$pamobject;#
+  clusterRange <- 2:(min(m-1, 12));
+  pamResult    <- pamk(data=distance, krange=clusterRange, diss=TRUE)$pamobject;#
 }#
 #
-## 3. Output preparation
-##
 clusters <- pamResult$clustering;#
 quality  <- pamResult$silinfo$avg.width;#
 #
-rm(pamResult)#
+##
+## 2.2. Use Hierarchical Clustering
+##
+rcommUsePackage("stats");#
+#
+rcommExec( {#
+hclustList <- list(#
+  hclust(distances, method="centroid"),#
+  hclust(distances, method="ward.D"),#
+  hclust(distances, method="ward.D2"),#
+  hclust(distances, method="single"),#
+  hclust(distances, method="complete"),#
+  hclust(distances, method="average"),#
+  hclust(distances, method="mcquitty"),#
+  hclust(distances, method="median"));#
+#
+  for(i in clusterRange) {#
+    for(hres in hclustList) {#
+      hclustering <- as.vector(cutree(hres, k=i));#
+      hquality    <- cluster.stats(d=distances, clustering=hclustering)$avg.silwidth;#
+      if(hquality > quality) {#
+        quality   <- hquality;#
+        clusters  <- hclustering;#
+      }#
+    }#
+  }#
+});#
+#
+rcommExec( {#
+ rm(hclustList);#
+ rm(hres); })#
+#
+## 3. Return Results
+quality <- (1 - quality);#
+#

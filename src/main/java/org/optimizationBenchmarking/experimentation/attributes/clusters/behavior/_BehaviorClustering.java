@@ -13,7 +13,6 @@ import org.optimizationBenchmarking.experimentation.data.spec.INamedElementSet;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.numbers.AlphabeticNumberAppender;
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A behavior-based clustering uses algorithm behavior to divide algorithms
@@ -126,32 +125,5 @@ abstract class _BehaviorClustering<CT extends _BehaviorCluster<?>>
   @Override
   public final ArrayListView<CT> getData() {
     return this.m_data;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final ETextCase printShortName(final ITextOutput textOut,
-      final ETextCase textCase) {
-    return textCase.appendWord("fingerprint", textOut); //$NON-NLS-1$
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final ETextCase printLongName(final ITextOutput textOut,
-      final ETextCase textCase) {
-    return textCase.appendWord("fingerprint", textOut); //$NON-NLS-1$
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final ETextCase printDescription(final ITextOutput textOut,
-      final ETextCase textCase) {
-    return textCase.appendWord("fingerprint", textOut); //$NON-NLS-1$
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final String getPathComponentSuggestion() {
-    return "fingerprint"; //$NON-NLS-1$
   }
 }

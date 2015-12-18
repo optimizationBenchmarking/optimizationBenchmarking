@@ -5,6 +5,8 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElement;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElementSet;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The algorithm behavior clustering contains a division of experiments or
@@ -36,5 +38,34 @@ public final class AlgorithmBehaviorClustering
   final AlgorithmBehaviorCluster _create(final String name,
       final DataSelection selection) {
     return new AlgorithmBehaviorCluster(this, name, selection);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ETextCase printShortName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return textCase.appendWord("algorithm behavior clustering", textOut); //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ETextCase printLongName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return textCase.appendWord("clustering by algorithm behavior", //$NON-NLS-1$
+        textOut);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return textCase.appendWord("Clustering by Algorithm Behavior", //$NON-NLS-1$
+        textOut);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getPathComponentSuggestion() {
+    return "algorithmBehavior"; //$NON-NLS-1$
   }
 }

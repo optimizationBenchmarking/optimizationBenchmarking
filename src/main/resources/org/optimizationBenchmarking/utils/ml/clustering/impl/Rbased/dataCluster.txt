@@ -170,5 +170,5 @@ rm(data);
 rm(cluster.n);
 rm(hierarchicalClustering);
 clusters <- bestClustering$clustering;
-quality  <- bestClustering$silhouette;
+quality  <- 1-bestClustering$silhouette;
 rm(bestClustering);

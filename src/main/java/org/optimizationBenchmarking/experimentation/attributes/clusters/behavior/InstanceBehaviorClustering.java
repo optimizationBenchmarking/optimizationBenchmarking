@@ -5,6 +5,8 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElement;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElementSet;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The instance behavior clustering contains a division of experiments or
@@ -36,5 +38,32 @@ public final class InstanceBehaviorClustering
   final InstanceBehaviorCluster _create(final String name,
       final DataSelection selection) {
     return new InstanceBehaviorCluster(this, name, selection);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ETextCase printShortName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return textCase.appendWord("instance behavior clustering", textOut); //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ETextCase printLongName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return textCase.appendWord("clustering by instance behavior", textOut); //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return textCase.appendWord("Clustering by Instance Behavior", textOut); //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getPathComponentSuggestion() {
+    return "instanceBehavior"; //$NON-NLS-1$
   }
 }
