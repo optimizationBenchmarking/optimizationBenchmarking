@@ -141,7 +141,7 @@ public final class PropertyValueSelector
         PropertyValueGrouper.configure(property, config));
   }
 
-  /** {@inhertitDoc} */
+  /** {@inheritDoc} */
   @Override
   public final String toString() {
     return this.m_property + " by " + this.m_grouper.toString();//$NON-NLS-1$

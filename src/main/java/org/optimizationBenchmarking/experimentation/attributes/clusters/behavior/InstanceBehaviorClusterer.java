@@ -43,7 +43,7 @@ public final class InstanceBehaviorClusterer extends
     return data.getInstances();
   }
 
-  /** {@inhertitDoc} */
+  /** {@inheritDoc} */
   @Override
   public final String toString() {
     return "by instances according to algorithm performance"; //$NON-NLS-1$

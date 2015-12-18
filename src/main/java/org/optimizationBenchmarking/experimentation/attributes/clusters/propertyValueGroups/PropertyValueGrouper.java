@@ -330,7 +330,7 @@ public final class PropertyValueGrouper
     return all;
   }
 
-  /** {@inhertitDoc} */
+  /** {@inheritDoc} */
   @Override
   public final String toString() {
     return this.m_groupingMode.toString();

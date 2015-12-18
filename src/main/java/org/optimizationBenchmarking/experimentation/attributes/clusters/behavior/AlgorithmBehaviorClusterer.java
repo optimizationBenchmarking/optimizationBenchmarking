@@ -45,7 +45,7 @@ public final class AlgorithmBehaviorClusterer extends
     return data;
   }
 
-  /** {@inhertitDoc} */
+  /** {@inheritDoc} */
   @Override
   public final String toString() {
     return "by algorithm performance"; //$NON-NLS-1$

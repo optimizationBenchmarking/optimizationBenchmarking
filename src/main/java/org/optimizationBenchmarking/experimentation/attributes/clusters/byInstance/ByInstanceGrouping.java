@@ -87,7 +87,7 @@ public final class ByInstanceGrouping
     return groups;
   }
 
-  /** {@inhertitDoc} */
+  /** {@inheritDoc} */
   @Override
   public final String toString() {
     return "by instance"; //$NON-NLS-1$
