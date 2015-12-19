@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.AddN;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
-import org.optimizationBenchmarking.utils.ml.fitting.impl.SampleBasedParameterGuesser;
+import org.optimizationBenchmarking.utils.ml.fitting.impl.guessers.SampleBasedParameterGuesser;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IParameterGuesser;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.ParametricUnaryFunction;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;

@@ -7,6 +7,7 @@ import org.optimizationBenchmarking.utils.math.MathUtils;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.ml.fitting.impl.guessers.ParameterValueChecker;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IParameterGuesser;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -189,6 +190,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  */
 public final class LogisticModelWithOffsetOverLogX
     extends LogisticModelOverLogX {
+  /** the checker for parameter {@code d} */
+  static final __CheckerD D = new __CheckerD();
 
   /** create */
   public LogisticModelWithOffsetOverLogX() {
@@ -397,11 +400,11 @@ public final class LogisticModelWithOffsetOverLogX
       final double x2, final double y2, final double b, final double c) {
     final double x2c, px;
 
-    x2c = LogisticModelOverLogX._pow(x2, c);
-    px = LogisticModelOverLogX._pow(x1, ((LogisticModelOverLogX._log(x2c))
-        / (LogisticModelOverLogX._log(x2))));
-    return (LogisticModelOverLogX._add(b * y1 * px, -b * y2 * x2c, y1,
-        -y2)) / (b * (px - x2c));
+    x2c = _ModelBase._pow(x2, c);
+    px = _ModelBase._pow(x1,
+        ((_ModelBase._log(x2c)) / (_ModelBase._log(x2))));
+    return (_ModelBase._add(b * y1 * px, -b * y2 * x2c, y1, -y2))
+        / (b * (px - x2c));
   }
 
   /**
@@ -424,10 +427,9 @@ public final class LogisticModelWithOffsetOverLogX
    */
   static final double _c_x1y1x2y2ad(final double x1, final double y1,
       final double x2, final double y2, final double a, final double d) {
-    return (LogisticModelOverLogX
+    return (_ModelBase
         ._log(((d - y2) * ((d + a) - y1)) / ((d - y1) * ((d + a) - y2))))
-        / (LogisticModelOverLogX._log(x1)
-            - LogisticModelOverLogX._log(x2));
+        / (_ModelBase._log(x1) - _ModelBase._log(x2));
   }
 
   /**
@@ -455,22 +457,22 @@ public final class LogisticModelWithOffsetOverLogX
       final double c) {
     final double powx1c, powx2c, powx3c;
 
-    powx1c = LogisticModelOverLogX._pow(x1, c);
-    powx2c = LogisticModelOverLogX._pow(x2, c);
-    powx3c = LogisticModelOverLogX._pow(x3, c);
+    powx1c = _ModelBase._pow(x1, c);
+    powx2c = _ModelBase._pow(x2, c);
+    powx3c = _ModelBase._pow(x3, c);
 
-    return LogisticModelOverLogX._choose(//
-        -(LogisticModelOverLogX._add((powx2c - powx1c) * y3,
-            (powx1c - powx3c) * y2, (powx3c - powx2c) * y1))
-            / (LogisticModelOverLogX._add(
+    return ParameterValueChecker.choose(//
+        -(_ModelBase._add((powx2c - powx1c) * y3, (powx1c - powx3c) * y2,
+            (powx3c - powx2c) * y1))
+            / (_ModelBase._add(
                 ((powx1c * powx3c) - (powx1c * powx2c)) * y1,
                 ((powx1c * powx2c) - (powx2c * powx3c)) * y2,
                 (powx2c - powx1c) * powx3c * y3)), //
-        (LogisticModelOverLogX._pow(x1, (-c))
-            * LogisticModelOverLogX._pow(x2, (-c))
-            * (LogisticModelOverLogX._add(-y2 * powx1c, y3 * powx1c,
-                y1 * powx2c, -y3 * powx2c)))
-            / (y2 - y1));
+        (_ModelBase._pow(x1, (-c)) * _ModelBase._pow(x2, (-c))
+            * (_ModelBase._add(-y2 * powx1c, y3 * powx1c, y1 * powx2c,
+                -y3 * powx2c)))
+            / (y2 - y1), //
+        LogisticModelOverLogX.B);
   }
 
   /**
@@ -499,72 +501,69 @@ public final class LogisticModelWithOffsetOverLogX
     final double powx1c, powx2c, powx3c, powx12c, powx22c, powx32c, sy1,
         sy2, sy3, powx1cpowx2c, powx1cmpowx2c;
 
-    powx1c = LogisticModelOverLogX._pow(x1, c);
-    powx2c = LogisticModelOverLogX._pow(x2, c);
-    powx3c = LogisticModelOverLogX._pow(x3, c);
-    powx12c = LogisticModelOverLogX._pow(x1, 2d * c);
-    powx22c = LogisticModelOverLogX._pow(x2, 2d * c);
-    powx32c = LogisticModelOverLogX._pow(x3, 2d * c);
+    powx1c = _ModelBase._pow(x1, c);
+    powx2c = _ModelBase._pow(x2, c);
+    powx3c = _ModelBase._pow(x3, c);
+    powx12c = _ModelBase._pow(x1, 2d * c);
+    powx22c = _ModelBase._pow(x2, 2d * c);
+    powx32c = _ModelBase._pow(x3, 2d * c);
     sy1 = (y1 * y1);
     sy2 = y2 * y2;
     sy3 = (y3 * y3);
     powx1cpowx2c = powx1c * powx2c;
     powx1cmpowx2c = powx1c - powx2c;
 
-    return LogisticModelOverLogX
-        ._choose(//
-            ((LogisticModelOverLogX
-                ._add(
-                    ((((LogisticModelOverLogX._add((powx1cmpowx2c)
-                        * powx32c, (powx22c - powx12c) * powx3c,
-                    -powx1c * powx22c, powx12c * powx2c)) * y1)
-                + ((LogisticModelOverLogX._add((powx2c - powx1c) * powx32c,
-                    (powx12c - powx22c) * powx3c, powx1c * powx22c,
-                    -powx12c * powx2c)) * y2)) * sy3),
-            ((((LogisticModelOverLogX._add((powx2c - powx1c) * powx32c,
+    return ParameterValueChecker.choose(//
+        ((_ModelBase._add(
+            ((((_ModelBase._add((powx1cmpowx2c) * powx32c,
+                (powx22c - powx12c) * powx3c, -powx1c * powx22c,
+                powx12c * powx2c)) * y1)
+            + ((_ModelBase._add((powx2c - powx1c) * powx32c,
+                (powx12c - powx22c) * powx3c, powx1c * powx22c,
+                -powx12c * powx2c)) * y2)) * sy3),
+            ((((_ModelBase._add((powx2c - powx1c) * powx32c,
                 (powx12c - powx22c) * powx3c, powx1c * powx22c,
                 -powx12c * powx2c)) * (sy1))
-                + ((LogisticModelOverLogX._add((powx1cmpowx2c) * powx32c,
+                + ((_ModelBase._add((powx1cmpowx2c) * powx32c,
                     (powx22c - powx12c) * powx3c, -powx1c * powx22c,
                     powx12c * powx2c)) * (sy2)))
                 * y3),
-            ((LogisticModelOverLogX._add((-powx12c * powx2c),
-                powx1c * powx22c, (powx12c - powx22c) * powx3c,
-                (powx2c - powx1c) * powx32c)) * y1 * (sy2)),
-            ((LogisticModelOverLogX._add(powx12c * powx2c,
-                -powx1c * powx22c, (powx22c - powx12c) * powx3c,
-                (powx1cmpowx2c) * powx32c)) * (sy1) * y2)))
-            / (LogisticModelOverLogX._add(
-                ((LogisticModelOverLogX._add(powx1c * powx32c,
+            ((_ModelBase._add((-powx12c * powx2c), powx1c * powx22c,
+                (powx12c - powx22c) * powx3c, (powx2c - powx1c) * powx32c))
+                * y1 * (sy2)),
+            ((_ModelBase._add(powx12c * powx2c, -powx1c * powx22c,
+                (powx22c - powx12c) * powx3c, (powx1cmpowx2c) * powx32c))
+                * (sy1) * y2)))
+            / (_ModelBase._add(
+                ((_ModelBase._add(powx1c * powx32c,
                     -2 * powx1cpowx2c * powx3c, powx1c * powx22c))
                 * (sy1)),
-                ((LogisticModelOverLogX._add(
-                    ((-powx1c) - powx2c) * powx32c,
-                    (LogisticModelOverLogX._add(powx12c, 2 * powx1cpowx2c,
-                        powx22c)) * powx3c,
+                ((_ModelBase._add(((-powx1c) - powx2c) * powx32c,
+                    (_ModelBase._add(powx12c, 2 * powx1cpowx2c, powx22c))
+                        * powx3c,
                     -powx1c * powx22c, -powx12c * powx2c)) * y1 * y2),
-                ((LogisticModelOverLogX._add(powx2c * powx32c,
+                ((_ModelBase._add(powx2c * powx32c,
                     -2 * powx1cpowx2c * powx3c, powx12c * powx2c))
                     * (sy2)),
-                ((((LogisticModelOverLogX._add((-powx12c * powx2c),
-                    powx1c * powx22c,
-                    (LogisticModelOverLogX._add((-powx22c),
-                        2 * powx1cpowx2c, -powx12c)) * powx3c,
+                ((((_ModelBase._add((-powx12c * powx2c), powx1c * powx22c,
+                    (_ModelBase._add((-powx22c), 2 * powx1cpowx2c,
+                        -powx12c)) * powx3c,
                     (powx1cmpowx2c) * powx32c)) * y2)
-                    + ((LogisticModelOverLogX._add(powx12c * powx2c,
+                    + ((_ModelBase._add(powx12c * powx2c,
                         -powx1c * powx22c,
-                        +(LogisticModelOverLogX._add((-powx22c),
-                            2 * powx1cpowx2c, -powx12c)) * powx3c,
+                        +(_ModelBase._add((-powx22c), 2 * powx1cpowx2c,
+                            -powx12c)) * powx3c,
                         +(powx2c - powx1c) * powx32c)) * y1))
                     * y3),
-                ((LogisticModelOverLogX._add(powx22c, -2 * powx1cpowx2c,
-                    powx12c)) * powx3c * (sy3))))), //
-        ((LogisticModelOverLogX._add(-y1 * y2 * powx1c, y1 * y3 * powx1c,
+                ((_ModelBase._add(powx22c, -2 * powx1cpowx2c, powx12c))
+                    * powx3c * (sy3))))), //
+        ((_ModelBase._add(-y1 * y2 * powx1c, y1 * y3 * powx1c,
             y2 * y3 * powx1c, -sy3 * powx1c)
-            + LogisticModelOverLogX._add(y1 * y2 * powx2c,
-                -y1 * y3 * powx2c, -y2 * y3 * powx2c, sy3 * powx2c))
-            / (LogisticModelOverLogX._add(y2 * powx1c, -y3 * powx1c,
-                -y1 * powx2c, y3 * powx2c))));
+            + _ModelBase._add(y1 * y2 * powx2c, -y1 * y3 * powx2c,
+                -y2 * y3 * powx2c, sy3 * powx2c))
+            / (_ModelBase._add(y2 * powx1c, -y3 * powx1c, -y1 * powx2c,
+                y3 * powx2c))), //
+        LogisticModelOverLogX.A);
   }
 
   /**
@@ -592,19 +591,20 @@ public final class LogisticModelWithOffsetOverLogX
       final double c) {
     final double powx1c, powx2c, powx3c;
 
-    powx1c = LogisticModelOverLogX._pow(x1, c);
-    powx2c = LogisticModelOverLogX._pow(x2, c);
-    powx3c = LogisticModelOverLogX._pow(x3, c);
+    powx1c = _ModelBase._pow(x1, c);
+    powx2c = _ModelBase._pow(x2, c);
+    powx3c = _ModelBase._pow(x3, c);
 
-    return LogisticModelOverLogX._choose(//
-        LogisticModelOverLogX._add(-y1 * y2 * powx1c, y1 * y3 * powx1c,
+    return ParameterValueChecker.choose(//
+        _ModelBase._add(-y1 * y2 * powx1c, y1 * y3 * powx1c,
             y1 * y2 * powx2c, -y2 * y3 * powx2c)
-            / LogisticModelOverLogX._add(-y2 * powx1c, y3 * powx1c,
-                y1 * powx2c, -y3 * powx2c), //
+            / _ModelBase._add(-y2 * powx1c, y3 * powx1c, y1 * powx2c,
+                -y3 * powx2c), //
         -(((((powx1c - powx3c) * y1) + ((powx3c - powx2c) * y2)) * y3)
             + ((powx2c - powx1c) * y1 * y2))
-            / (LogisticModelOverLogX._add((powx3c - powx2c) * y1,
-                +(powx1c - powx3c) * y2, +(powx2c - powx1c) * y3)));
+            / (_ModelBase._add((powx3c - powx2c) * y1,
+                +(powx1c - powx3c) * y2, +(powx2c - powx1c) * y3)), //
+        LogisticModelWithOffsetOverLogX.D);
   }
 
   /**
@@ -627,37 +627,24 @@ public final class LogisticModelWithOffsetOverLogX
    */
   static final double _d_x1y1x2y2ac(final double x1, final double y1,
       final double x2, final double y2, final double a, final double c) {
-    final double d1, d2, x1c, x2c;
+    final double d1, x1c, x2c;
 
-    x1c = LogisticModelOverLogX._pow(x1, c);
-    x2c = LogisticModelOverLogX._pow(x2, c);
+    x1c = _ModelBase._pow(x1, c);
+    x2c = _ModelBase._pow(x2, c);
 
-    d1 = (LogisticModelOverLogX
-        ._sqrt(LogisticModelOverLogX
-            ._sqr(LogisticModelOverLogX._add(-a * x1c, a * x2c, y1 * x1c,
-                y2 * x1c, -y1 * x2c, -y2 * x2c))
+    d1 = (_ModelBase
+        ._sqrt(_ModelBase
+            ._sqr(_ModelBase._add(-a * x1c, a * x2c, y1 * x1c, y2 * x1c,
+                -y1 * x2c, -y2 * x2c))
         - (4d * (x2c - x1c)
-            * (LogisticModelOverLogX._add(a * y1 * x1c, -a * y2 * x2c,
-                -y1 * y2 * x1c, y1 * y2 * x2c))))
-        + LogisticModelOverLogX._add(a * x1c, -a * x2c, -y1 * x1c,
-            -y2 * x1c, y1 * x2c, y2 * x2c))
+            * (_ModelBase._add(a * y1 * x1c, -a * y2 * x2c, -y1 * y2 * x1c,
+                y1 * y2 * x2c))))
+        + _ModelBase._add(a * x1c, -a * x2c, -y1 * x1c, -y2 * x1c,
+            y1 * x2c, y2 * x2c))
         / (2d * (x2c - x1c));
-    d2 = -d1;
 
-    return LogisticModelOverLogX._choose(d1, d2);
-  }
-
-  /**
-   * _check an {@code d} value for the logistic model with offset over
-   * log-scaled {@code x}, i.e., {@code a/(1+b*x^c)+d}.
-   *
-   * @param d
-   *          the {@code d} value
-   * @return {@code true} if the {@code d} value is OK, {@code false}
-   *         otherwise
-   */
-  static final boolean _checkD(final double d) {
-    return (MathUtils.isFinite(d) && (Math.abs(d) < 1e30d));
+    return ParameterValueChecker.choose(d1, -d1,
+        LogisticModelWithOffsetOverLogX.D);
   }
 
   /** the parameter guesser */
@@ -733,7 +720,7 @@ public final class LogisticModelWithOffsetOverLogX
             // find B based on the existing or new A, C and D values
             newB = LogisticModelWithOffsetOverLogX._b_x1y1x2y2ad(x0, y0,
                 x1, y1, (hasA ? newA : oldA), (hasD ? newD : oldD));
-            if (LogisticModelOverLogX._checkB(newB)) {
+            if (LogisticModelOverLogX.B.check(newB)) {
               changed = hasB = true;
               break findB;
             }
@@ -741,21 +728,21 @@ public final class LogisticModelWithOffsetOverLogX
             newB = LogisticModelWithOffsetOverLogX._b_xyacd(x0, y0,
                 (hasA ? newA : bestGuess[0]), (hasC ? newC : oldC),
                 (hasD ? newD : oldD));
-            if (LogisticModelOverLogX._checkB(newB)) {
+            if (LogisticModelOverLogX.B.check(newB)) {
               changed = hasB = true;
               break findB;
             }
 
             newB = LogisticModelWithOffsetOverLogX._b_x1y1x2y2cd(x0, y0,
                 x1, y1, (hasC ? newC : oldC), (hasD ? newD : oldD));
-            if (LogisticModelOverLogX._checkB(newB)) {
+            if (LogisticModelOverLogX.B.check(newB)) {
               changed = hasB = true;
               break findB;
             }
 
             newB = LogisticModelWithOffsetOverLogX._b_x1y1x2y2x3y3c(x0, y0,
                 x1, y1, x2, y2, (hasC ? newC : oldC));
-            if (LogisticModelOverLogX._checkB(newB)) {
+            if (LogisticModelOverLogX.B.check(newB)) {
               changed = hasB = true;
               break findB;
             }
@@ -768,7 +755,7 @@ public final class LogisticModelWithOffsetOverLogX
             // find C based on the existing or new A and B values
             newC = LogisticModelWithOffsetOverLogX._c_x1y1x2y2ad(x0, y0,
                 x1, y1, (hasA ? newA : oldA), (hasD ? newD : oldD));
-            if (LogisticModelOverLogX._checkC(newC)) {
+            if (LogisticModelOverLogX.C.check(newC)) {
               changed = hasC = true;
               break findC;
             }
@@ -776,7 +763,7 @@ public final class LogisticModelWithOffsetOverLogX
             newC = LogisticModelWithOffsetOverLogX._c_xyabd(x0, y0,
                 (hasA ? newA : oldA), (hasB ? newB : oldB),
                 (hasD ? newD : oldD));
-            if (LogisticModelOverLogX._checkC(newC)) {
+            if (LogisticModelOverLogX.C.check(newC)) {
               changed = hasC = true;
               break findC;
             }
@@ -790,7 +777,7 @@ public final class LogisticModelWithOffsetOverLogX
             if (hasB) {
               newA = LogisticModelWithOffsetOverLogX._a_xybcd(x0, y0, newB,
                   (hasC ? newC : oldC), (hasD ? newD : oldD));
-              if (LogisticModelOverLogX._checkA(newA)) {
+              if (LogisticModelOverLogX.A.check(newA)) {
                 changed = hasA = true;
                 break findA;
               }
@@ -798,14 +785,14 @@ public final class LogisticModelWithOffsetOverLogX
 
             newA = LogisticModelWithOffsetOverLogX._a_x1y1x2y2cd(x0, y0,
                 x1, y1, (hasC ? newC : oldC), (hasD ? newD : oldD));
-            if (LogisticModelOverLogX._checkA(newA)) {
+            if (LogisticModelOverLogX.A.check(newA)) {
               changed = hasA = true;
               break findA;
             }
 
             newA = LogisticModelWithOffsetOverLogX._a_x1y1x2y2x3y3c(x0, y0,
                 x1, y1, x2, y2, (hasC ? newC : oldC));
-            if (LogisticModelOverLogX._checkA(newA)) {
+            if (LogisticModelOverLogX.A.check(newA)) {
               changed = hasA = true;
               break findA;
             }
@@ -813,7 +800,7 @@ public final class LogisticModelWithOffsetOverLogX
             if (!hasB) {
               newA = LogisticModelWithOffsetOverLogX._a_xybcd(x0, y0, oldB,
                   (hasC ? newC : oldC), (hasD ? newD : oldD));
-              if (LogisticModelOverLogX._checkA(newA)) {
+              if (LogisticModelOverLogX.A.check(newA)) {
                 changed = hasA = true;
                 break findA;
               }
@@ -825,19 +812,19 @@ public final class LogisticModelWithOffsetOverLogX
           findD: {
             newD = LogisticModelWithOffsetOverLogX._d_x1y1x2y2ac(x0, y0,
                 x1, y1, (hasA ? newA : oldA), (hasC ? newC : oldC));
-            if (LogisticModelWithOffsetOverLogX._checkD(newD)) {
+            if (LogisticModelWithOffsetOverLogX.D.check(newD)) {
               changed = hasD = true;
               break findD;
             }
             newD = LogisticModelWithOffsetOverLogX._d_x1y1x2y2bc(x0, y0,
                 x1, y1, (hasB ? newB : oldB), (hasC ? newC : oldC));
-            if (LogisticModelWithOffsetOverLogX._checkD(newD)) {
+            if (LogisticModelWithOffsetOverLogX.D.check(newD)) {
               changed = hasD = true;
               break findD;
             }
             newD = LogisticModelWithOffsetOverLogX._d_x1y1x2y2x3y3c(x0, y0,
                 x1, y1, x2, y2, (hasC ? newC : oldC));
-            if (LogisticModelWithOffsetOverLogX._checkD(newD)) {
+            if (LogisticModelWithOffsetOverLogX.D.check(newD)) {
               changed = hasD = true;
               break findD;
             }
@@ -849,8 +836,8 @@ public final class LogisticModelWithOffsetOverLogX
           emergency: {
             if (!hasD) {
               newD = Math.min(Math.min(y0, y1), y2);// Math.min(y2, y3));
-              changed = hasD = LogisticModelWithOffsetOverLogX
-                  ._checkD(newD);
+              changed = hasD = LogisticModelWithOffsetOverLogX.D
+                  .check(newD);
               if (changed) {
                 break emergency;
               }
@@ -892,6 +879,21 @@ public final class LogisticModelWithOffsetOverLogX
       destGuess[1] = newB;
       destGuess[2] = newC;
       destGuess[3] = newD;
+    }
+  }
+
+  /** the checker for parameter {@code c}. */
+  private static final class __CheckerD extends ParameterValueChecker {
+
+    /** create */
+    __CheckerD() {
+      super();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final boolean check(final double value) {
+      return (MathUtils.isFinite(value) && (Math.abs(value) < 1e30d));
     }
   }
 }

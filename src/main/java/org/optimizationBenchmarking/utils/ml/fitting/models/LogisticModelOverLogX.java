@@ -5,17 +5,12 @@ import java.util.Random;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.math.MathUtils;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.AddN;
-import org.optimizationBenchmarking.utils.math.functions.power.Exp;
-import org.optimizationBenchmarking.utils.math.functions.power.Ln;
-import org.optimizationBenchmarking.utils.math.functions.power.Pow;
-import org.optimizationBenchmarking.utils.math.functions.power.Sqrt;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
-import org.optimizationBenchmarking.utils.ml.fitting.impl.SamplePermutationBasedParameterGuesser;
+import org.optimizationBenchmarking.utils.ml.fitting.impl.guessers.ParameterValueChecker;
+import org.optimizationBenchmarking.utils.ml.fitting.impl.guessers.SamplePermutationBasedParameterGuesser;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.IParameterGuesser;
-import org.optimizationBenchmarking.utils.ml.fitting.spec.ParametricUnaryFunction;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -67,91 +62,37 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * </li>
  * </ol>
  */
-public class LogisticModelOverLogX extends ParametricUnaryFunction {
+public class LogisticModelOverLogX extends _ModelBase {
+
+  /** the checker for parameter {@code a} */
+  static final _CheckerA A = new _CheckerA();
+  /** the checker for parameter {@code b} */
+  static final _CheckerB B = new _CheckerB();
+  /** the checker for parameter {@code c} */
+  static final _CheckerC C = new _CheckerC();
 
   /** create */
   public LogisticModelOverLogX() {
     super();
   }
 
-  /**
-   * compute the square root
-   *
-   * @param a
-   *          the number
-   * @return the result
-   */
-  static final double _sqrt(final double a) {
-    return Sqrt.INSTANCE.computeAsDouble(a);
-  }
-
-  /**
-   * compute the exponent
-   *
-   * @param a
-   *          the number
-   * @return the exponent
-   */
-  static final double _exp(final double a) {
-    return Exp.INSTANCE.computeAsDouble(a);
-  }
-
-  /**
-   * compute the square
-   *
-   * @param a
-   *          the number
-   * @return the result
-   */
-  static final double _sqr(final double a) {
-    return a * a;
-  }
-
-  /**
-   * compute the power
-   *
-   * @param a
-   *          the base
-   * @param b
-   *          the power
-   * @return the result
-   */
-  static final double _pow(final double a, final double b) {
-    return Pow.INSTANCE.computeAsDouble(a, b);
-  }
-
-  /**
-   * compute the natural logarithm
-   *
-   * @param a
-   *          the number
-   * @return the logarithm
-   */
-  static final double _log(final double a) {
-    return Ln.INSTANCE.computeAsDouble(a);
-  }
-
-  /**
-   * sum up some numbers
-   *
-   * @param summands
-   *          the numbers to sum up
-   * @return the sum
-   */
-  static final double _add(final double... summands) {
-    return AddN.destructiveSum(summands);
-  }
-
   /** {@inheritDoc} */
   @Override
   public double value(final double x, final double[] parameters) {
-    double res;
+    final double a;
+    double res, b;
 
-    res = (1d + (parameters[1] * //
-        LogisticModelOverLogX._pow(x, parameters[2])));
-    if ((Math.abs(res) > 0d) && MathUtils.isFinite(res) && //
-        MathUtils.isFinite(res = (parameters[0] / res))) {
-      return res;
+    if ((a = parameters[0]) != 0d) {
+      if (((b = parameters[1]) != 0d) && //
+          ((res = _ModelBase._pow(x, parameters[2])) != 0d)) {
+        if (((res = (1d + (b * res))) != 0d) && //
+            MathUtils.isFinite(res) && //
+            MathUtils.isFinite(res = (a / res))) {
+          return res;
+        }
+        return 0d;
+      }
+      return (MathUtils.isFinite(a) ? a : 0d);
     }
     return 0d;
   }
@@ -163,7 +104,7 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
     final double b, xc, bxc, axc, div;
     double g0;
 
-    xc = LogisticModelOverLogX._pow(x, parameters[2]);
+    xc = _ModelBase._pow(x, parameters[2]);
 
     if (Math.abs(xc) <= 0d) {
       gradient[0] = 1d;
@@ -173,14 +114,14 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
 
     b = parameters[1];
     bxc = (b * xc);
-    if (Math.abs(bxc) <= 0) {
+    if (bxc <= 0) {
       gradient[0] = 1d;
       gradient[1] = gradient[2] = 0d;
       return;
     }
 
     g0 = (1d + bxc);
-    if ((Math.abs(g0) > 0d) && MathUtils.isFinite(g0)
+    if ((g0 != 0d) && MathUtils.isFinite(g0)
         && MathUtils.isFinite(g0 = (1d / g0))) {
       gradient[0] = g0;
     } else {
@@ -188,20 +129,21 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
     }
 
     axc = (parameters[0] * xc);
-    if (Math.abs(axc) <= 0d) {
+    if (axc == 0d) {
       gradient[1] = gradient[2] = 0d;
       return;
     }
 
-    div = LogisticModelOverLogX._add(1d, 2d * bxc, xc * xc * b * b);
-    if ((Math.abs(div) > 0d) && MathUtils.isFinite(div)) {
+    // div = _add(1d, 2d * bxc, xc * xc * b * b);
+    div = _ModelBase._add(1d, 2d * bxc, bxc * bxc);
+    if ((div != 0d) && MathUtils.isFinite(div)) {
       g0 = ((-axc) / div);
       if (MathUtils.isFinite(g0)) {
         gradient[1] = g0;
       } else {
         gradient[1] = 0d;
       }
-      g0 = ((-(b * axc * LogisticModelOverLogX._log(x))) / div);
+      g0 = ((-(b * axc * _ModelBase._log(x))) / div);
       if (MathUtils.isFinite(g0)) {
         gradient[2] = g0;
       } else {
@@ -264,107 +206,6 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
   }
 
   /**
-   * check an {@code a} value for the logistic model over log-scaled
-   * {@code x}, i.e., {@code a/(1+b*x^c)}.
-   *
-   * @param a
-   *          the {@code a} value
-   * @return {@code true} if the {@code a} value is OK, {@code false}
-   *         otherwise
-   */
-  static final boolean _checkA(final double a) {
-    final double abs;
-    if (MathUtils.isFinite(a)) {
-      abs = Math.abs(a);
-      return ((abs > 1e-12d) && (abs < 1e100));
-    }
-    return false;
-  }
-
-  /**
-   * _check an {@code b} value for the logistic model over log-scaled
-   * {@code x}, i.e., {@code a/(1+b*x^c)}.
-   *
-   * @param b
-   *          the {@code b} value
-   * @return {@code true} if the {@code b} value is OK, {@code false}
-   *         otherwise
-   */
-  static final boolean _checkB(final double b) {
-    final double abs;
-    if (MathUtils.isFinite(b)) {
-      abs = Math.abs(b);
-      if (abs > 1e-10d) {
-        if (abs < 1e10d) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  /**
-   * _check an {@code c} value for the logistic model over log-scaled
-   * {@code x}, i.e., {@code a/(1+b*x^c)}.
-   *
-   * @param c
-   *          the {@code c} value
-   * @return {@code true} if the {@code b} value is OK, {@code false}
-   *         otherwise
-   */
-  static final boolean _checkC(final double c) {
-    return (MathUtils.isFinite(c) && (c > 1e-4d) && (c < 1e4d));
-  }
-
-  /**
-   * choose amongst two numbers
-   *
-   * @param a1
-   *          the first number
-   * @param a2
-   *          the second number
-   * @return their mean, if finite, or any of the two numbers which is
-   *         finite, or mean
-   */
-  static final double _choose(final double a1, final double a2) {
-    final double med;
-    final int cmp;
-
-    if (a1 == a2) {
-      if (a1 == 0d) {
-        return 0d;
-      }
-      return a1;
-    }
-
-    med = ((0.5d * a1) + (0.5d * a2));
-    if (MathUtils.isFinite(med)) {
-      return med;
-    }
-    if (MathUtils.isFinite(a1)) {
-      if (MathUtils.isFinite(a2)) {
-        cmp = Integer.compare(Math.abs(Math.getExponent(a1)),
-            Math.abs(Math.getExponent(a2)));
-        if (cmp < 0) {
-          return a1;
-        }
-        if (cmp == 0) {
-          if (Math.abs(a1) < Math.abs(a2)) {
-            return a1;
-          }
-        }
-        return a2;
-      }
-
-      return a1;
-    }
-    if (MathUtils.isFinite(a2)) {
-      return a2;
-    }
-    return med;
-  }
-
-  /**
    * Compute {@code a} from one point {@code (x,y)} and known {@code b} and
    * {@code c} values.
    *
@@ -380,8 +221,7 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
    */
   static final double _a_xybc(final double x, final double y,
       final double b, final double c) {
-    return ((x <= 0d) ? y
-        : (((b * LogisticModelOverLogX._pow(x, c)) + 1d) * y));
+    return ((x <= 0d) ? y : (((b * _ModelBase._pow(x, c)) + 1d) * y));
   }
 
   /**
@@ -404,8 +244,8 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
       final double x2, final double y2, final double c) {
     final double x2c, x1c;
 
-    x1c = LogisticModelOverLogX._pow(x1, c);
-    x2c = LogisticModelOverLogX._pow(x2, c);
+    x1c = _ModelBase._pow(x1, c);
+    x2c = _ModelBase._pow(x2, c);
     return (((x2c - x1c) * y1 * y2) / ((x2c * y2) - (x1c * y1)));
   }
 
@@ -427,8 +267,8 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
    */
   static final double _b_x1y1x2y2c(final double x1, final double y1,
       final double x2, final double y2, final double c) {
-    return ((y1 - y2) / ((LogisticModelOverLogX._pow(x2, c) * y2)
-        - (LogisticModelOverLogX._pow(x1, c) * y1)));
+    return ((y1 - y2)
+        / ((_ModelBase._pow(x2, c) * y2) - (_ModelBase._pow(x1, c) * y1)));
   }
 
   /**
@@ -451,13 +291,13 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
       final double x2, final double y2, final double a) {
     final double lx1, lx2;
 
-    lx1 = LogisticModelOverLogX._log(x1);
-    lx2 = LogisticModelOverLogX._log(x2);
-    return LogisticModelOverLogX._exp(LogisticModelOverLogX._add(//
-        (lx1 * LogisticModelOverLogX._log(a - y2)), //
-        -(lx2 * LogisticModelOverLogX._log(a - y1)), //
-        -(lx1 * LogisticModelOverLogX._log(y2)), //
-        (lx2 * LogisticModelOverLogX._log(y1))) / (lx1 - lx2));
+    lx1 = _ModelBase._log(x1);
+    lx2 = _ModelBase._log(x2);
+    return _ModelBase._exp(_ModelBase._add(//
+        (lx1 * _ModelBase._log(a - y2)), //
+        -(lx2 * _ModelBase._log(a - y1)), //
+        -(lx1 * _ModelBase._log(y2)), //
+        (lx2 * _ModelBase._log(y1))) / (lx1 - lx2));
   }
 
   /**
@@ -478,12 +318,13 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
       final double a, final double c) {
     final double xc, xcy;
 
-    xc = LogisticModelOverLogX._pow(x, c);
+    xc = _ModelBase._pow(x, c);
     xcy = (xc * y);
 
-    return LogisticModelOverLogX._choose(//
+    return ParameterValueChecker.choose(//
         ((a - y) / xcy), //
-        ((a / xcy) - (1d / xc)));
+        ((a / xcy) - (1d / xc)), //
+        LogisticModelOverLogX.B);
   }
 
   /**
@@ -504,17 +345,18 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
       final double a, final double b) {
     final double lx, by;
 
-    lx = LogisticModelOverLogX._log(x);
+    lx = _ModelBase._log(x);
     if ((b <= (-1d)) && (0d < x) && (x < 1d) && (Math.abs(a) <= 0d)
         && (Math.abs(y) <= 0d)) {
       return Math.nextUp(Math.nextUp(//
-          LogisticModelOverLogX._log(-1d / b) / lx));
+          _ModelBase._log(-1d / b) / lx));
     }
 
     by = b * y;
-    return LogisticModelOverLogX._choose(//
-        LogisticModelOverLogX._log((a / by) - (1 / b)) / lx, //
-        LogisticModelOverLogX._log((a - y) / by) / lx);
+    return ParameterValueChecker.choose(//
+        _ModelBase._log((a / by) - (1 / b)) / lx, //
+        _ModelBase._log((a - y) / by) / lx, //
+        LogisticModelOverLogX.C);
   }
 
   /** the parameter guesser */
@@ -620,17 +462,17 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
           // find B based on the existing or new A and C values
           newB = LogisticModelOverLogX._b_x1y1x2y2a(x0, y0, x1, y1,
               (hasA ? newA : oldA));
-          if (LogisticModelOverLogX._checkB(newB)) {
+          if (LogisticModelOverLogX.B.check(newB)) {
             changed = hasB = true;
           } else {
             newB = LogisticModelOverLogX._b_xyac(x0, y0,
                 (hasA ? newA : bestGuess[0]), (hasC ? newC : oldC));
-            if (LogisticModelOverLogX._checkB(newB)) {
+            if (LogisticModelOverLogX.B.check(newB)) {
               changed = hasB = true;
             } else {
               newB = LogisticModelOverLogX._b_x1y1x2y2c(x0, y0, x1, y1,
                   (hasC ? newC : oldC));
-              if (LogisticModelOverLogX._checkB(newB)) {
+              if (LogisticModelOverLogX.B.check(newB)) {
                 changed = hasB = true;
               }
             }
@@ -641,7 +483,7 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
           // find C based on the existing or new A and B values
           newC = LogisticModelOverLogX._c_xyab(x0, y0,
               (hasA ? newA : oldA), (hasB ? newB : oldB));
-          if (LogisticModelOverLogX._checkC(newC)) {
+          if (LogisticModelOverLogX.C.check(newC)) {
             changed = hasC = true;
           }
         }
@@ -652,7 +494,7 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
             if (hasB) {
               newA = LogisticModelOverLogX._a_xybc(x0, y0, newB,
                   (hasC ? newC : oldC));
-              if (LogisticModelOverLogX._checkA(newA)) {
+              if (LogisticModelOverLogX.A.check(newA)) {
                 changed = hasA = true;
                 break findA;
               }
@@ -660,7 +502,7 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
 
             newA = LogisticModelOverLogX._a_x1y1x2y2c(x0, y0, x1, y1,
                 (hasC ? newC : oldC));
-            if (LogisticModelOverLogX._checkA(newA)) {
+            if (LogisticModelOverLogX.A.check(newA)) {
               changed = hasA = true;
               break findA;
             }
@@ -668,7 +510,7 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
             if (!hasB) {
               newA = LogisticModelOverLogX._a_xybc(x0, y0, oldB,
                   (hasC ? newC : oldC));
-              if (LogisticModelOverLogX._checkA(newA)) {
+              if (LogisticModelOverLogX.A.check(newA)) {
                 changed = hasA = true;
                 break findA;
               }
@@ -698,6 +540,67 @@ public class LogisticModelOverLogX extends ParametricUnaryFunction {
       destGuess[0] = newA;
       destGuess[1] = newB;
       destGuess[2] = newC;
+    }
+  }
+
+  /** the checker for parameter {@code a}. */
+  static final class _CheckerA extends ParameterValueChecker {
+
+    /** create */
+    _CheckerA() {
+      super();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final boolean check(final double value) {
+      final double abs;
+      if (MathUtils.isFinite(value)) {
+        abs = Math.abs(value);
+        return ((abs > 1e-12d) && (abs < 1e100));
+      }
+      return false;
+    }
+  }
+
+  /** the checker for parameter {@code b}. */
+  static final class _CheckerB extends ParameterValueChecker {
+
+    /** create */
+    _CheckerB() {
+      super();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final boolean check(final double value) {
+
+      final double abs;
+      if (MathUtils.isFinite(value)) {
+        abs = Math.abs(value);
+        if (abs > 1e-10d) {
+          if (abs < 1e10d) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+  }
+
+  /** the checker for parameter {@code c}. */
+  static final class _CheckerC extends ParameterValueChecker {
+
+    /** create */
+    _CheckerC() {
+      super();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final boolean check(final double value) {
+      return (MathUtils.isFinite(value) && (value > 1e-4d)
+          && (value < 1e4d));
     }
   }
 }

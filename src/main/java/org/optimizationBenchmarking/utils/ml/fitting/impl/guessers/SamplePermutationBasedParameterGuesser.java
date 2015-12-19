@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.ml.fitting.impl;
+package org.optimizationBenchmarking.utils.ml.fitting.impl.guessers;
 
 import java.util.Random;
 

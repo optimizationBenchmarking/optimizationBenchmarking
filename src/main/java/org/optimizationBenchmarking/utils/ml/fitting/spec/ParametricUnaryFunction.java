@@ -10,6 +10,7 @@ import org.optimizationBenchmarking.utils.math.text.DoubleConstantParameters;
 import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.math.text.NamedMathRenderable;
+import org.optimizationBenchmarking.utils.ml.fitting.impl.guessers.DefaultParameterGuesser;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**

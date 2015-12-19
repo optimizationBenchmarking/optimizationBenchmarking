@@ -1,11 +1,10 @@
-package org.optimizationBenchmarking.utils.ml.fitting.impl;
+package org.optimizationBenchmarking.utils.ml.fitting.impl.guessers;
 
 import java.util.Random;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.math.functions.trigonometric.Hypot;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
-import org.optimizationBenchmarking.utils.ml.fitting.spec.DefaultParameterGuesser;
 
 /**
  * <p>

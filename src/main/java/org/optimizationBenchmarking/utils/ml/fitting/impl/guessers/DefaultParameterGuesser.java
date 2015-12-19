@@ -1,6 +1,8 @@
-package org.optimizationBenchmarking.utils.ml.fitting.spec;
+package org.optimizationBenchmarking.utils.ml.fitting.impl.guessers;
 
 import java.util.Random;
+
+import org.optimizationBenchmarking.utils.ml.fitting.spec.IParameterGuesser;
 
 /**
  * An internal default implementation of the {@link IParameterGuesser}

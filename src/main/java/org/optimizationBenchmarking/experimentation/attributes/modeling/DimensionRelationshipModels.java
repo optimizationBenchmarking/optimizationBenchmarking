@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.attributes.modeling;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.ml.fitting.models.ExponentialDecayModel;
 import org.optimizationBenchmarking.utils.ml.fitting.models.LogisticModelWithOffsetOverLogX;
 import org.optimizationBenchmarking.utils.ml.fitting.models.QuadraticModel;
 import org.optimizationBenchmarking.utils.ml.fitting.spec.ParametricUnaryFunction;
@@ -75,8 +76,8 @@ public final class DimensionRelationshipModels {
     /** the models */
     static final ArrayListView<ParametricUnaryFunction> MODELS = //
     new ArrayListView<>(new ParametricUnaryFunction[] { //
-        new QuadraticModel(), //
         new LogisticModelWithOffsetOverLogX(), //
+        new ExponentialDecayModel(),//
     });
   }
 
@@ -86,7 +87,7 @@ public final class DimensionRelationshipModels {
     /** The models attempted for relationships of equal-type dimensions */
     static final ArrayListView<ParametricUnaryFunction> MODELS = //
     new ArrayListView<>(new ParametricUnaryFunction[] { //
-        __TimeObjective.MODELS.get(0),// new QuadraticModel(),//
+        new QuadraticModel(),//
     });
   }
 
