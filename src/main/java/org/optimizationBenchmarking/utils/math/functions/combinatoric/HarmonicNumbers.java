@@ -27,7 +27,8 @@ public final class HarmonicNumbers extends UnaryFunction {
    *          the end
    * @return The <code>n</code>'th harmonic number.
    */
-  private static final double harmonic(final long start, final long end) {
+  private static final double __harmonic(final long start,
+      final long end) {
     long i;
 
     if (start > end) {
@@ -39,8 +40,8 @@ public final class HarmonicNumbers extends UnaryFunction {
     }
 
     i = ((start + end) >> 1);
-    return (HarmonicNumbers.harmonic(start, i) + HarmonicNumbers.harmonic(
-        i + 1L, end));
+    return (HarmonicNumbers.__harmonic(start, i) + //
+        HarmonicNumbers.__harmonic(i + 1L, end));
   }
 
   /**
@@ -50,14 +51,14 @@ public final class HarmonicNumbers extends UnaryFunction {
    *          The index of the harmonic number to be created.
    * @return The <code>n</code>'th harmonic number.
    */
-  public static final double harmonic(final long n) {
-    return HarmonicNumbers.harmonic(1, n);
+  private static final double __harmonic(final long n) {
+    return HarmonicNumbers.__harmonic(1, n);
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1) {
-    return HarmonicNumbers.harmonic(Math.round(x1));
+    return HarmonicNumbers.__harmonic(Math.round(x1));
   }
 
   // default, automatic serialization replacement and resolve routines for
